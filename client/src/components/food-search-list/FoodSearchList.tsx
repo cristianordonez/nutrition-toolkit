@@ -1,6 +1,10 @@
 import React from 'react';
 import FoodSearchItem from './food-search-item/FoodSearchItem';
 import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 
 type RecipeNutrients = {
    nutrients: [];
@@ -60,11 +64,17 @@ type MenuItemNutrients = {
    ];
 };
 
-const FoodSearchList = ({ apiData, route }: any) => {
+const FoodSearchList = ({ apiData, route, handleLoadMore }: any) => {
    console.log('apiData:', apiData);
 
    return (
       <>
+         <Stack direction='row' spacing={1}>
+            <MenuBookIcon />
+            <Typography variant='h4' component='h1'>
+               Results
+            </Typography>
+         </Stack>
          <Grid container spacing={2}>
             {route === 'recipes' &&
                apiData.map((item: RecipeItem) => (
@@ -102,6 +112,9 @@ const FoodSearchList = ({ apiData, route }: any) => {
                   />
                ))}
          </Grid>
+         <Button fullWidth onClick={handleLoadMore}>
+            Load More
+         </Button>
       </>
    );
 };

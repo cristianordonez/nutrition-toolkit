@@ -1,6 +1,6 @@
 const url = 'https://api.spoonacular.com';
 import axios from 'axios';
-import { Query } from '../types/QueryType';
+import { Query } from '../../types/QueryType';
 
 interface User {
    username: string;
@@ -26,13 +26,18 @@ const connectUser = async (user: User) => {
 };
 
 const getSpoonacularRecipes = async (recipeQuery: Query): Promise<object> => {
+   console.log('recipeQuery:', recipeQuery);
    //if user does not send diet or intolerance, must enter in false instead for request to function
    let dietQuery = recipeQuery.diet.length ? recipeQuery.diet : false;
    let intoleranceQuery = recipeQuery.intolerance.length
       ? recipeQuery.intolerance
       : false;
    const recipes = await axios.get(
-      `${url}/recipes/complexSearch?apiKey=${process.env.SPOONACULAR_API_KEY}&query=${recipeQuery.query}&type=${recipeQuery.type}&$minCalories=${recipeQuery.minCalories}&maxCalories=${recipeQuery.maxCalories}&minCarbs=${recipeQuery.minCarbs}&maxCarbs=${recipeQuery.maxCarbs}&minProtein=${recipeQuery.minProtein}&maxProtein=${recipeQuery.maxProtein}&minFat=${recipeQuery.minFat}&maxFat=${recipeQuery.maxFat}&intolerances=${intoleranceQuery}&diet=${dietQuery}&addRecipeNutrition=true`
+      `${url}/recipes/complexSearch?apiKey=${process.env.SPOONACULAR_API_KEY}&query=${recipeQuery.query}
+      &type=${recipeQuery.type}&$minCalories=${recipeQuery.minCalories}&maxCalories=${recipeQuery.maxCalories}
+      &minCarbs=${recipeQuery.minCarbs}&maxCarbs=${recipeQuery.maxCarbs}&minProtein=${recipeQuery.minProtein}
+      &maxProtein=${recipeQuery.maxProtein}&minFat=${recipeQuery.minFat}&maxFat=${recipeQuery.maxFat}
+      &intolerances=${intoleranceQuery}&diet=${dietQuery}&number=${recipeQuery.number}&offset=${recipeQuery.offset}&addRecipeNutrition=true`
    );
    return recipes.data.results;
 };

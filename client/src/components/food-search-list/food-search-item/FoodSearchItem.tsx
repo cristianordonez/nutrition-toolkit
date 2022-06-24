@@ -29,7 +29,6 @@ const FoodSearchItem = ({
    url,
 }: any) => {
    //item that appears in every item is image, title, nutrition,
-   console.log('nutrition in foodsearchitem:', nutrition);
 
    let calories, carbs, fat, protein;
 
@@ -51,7 +50,6 @@ const FoodSearchItem = ({
       fat = nutrition.fat;
       carbs = nutrition.carbs;
    }
-   console.log('url:', url);
 
    return (
       <>
@@ -77,9 +75,7 @@ const FoodSearchItem = ({
                         <Typography variant='overline'>{title}</Typography>
                      )}
                      {route === 'menuItems' && (
-                        <Typography variant='overline'>
-                           {restaurantChain}
-                        </Typography>
+                        <Typography variant='h6'>{restaurantChain}</Typography>
                      )}
                      <div className='search-item-nutrition'>
                         {/* CALORIES */}

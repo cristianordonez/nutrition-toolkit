@@ -1,7 +1,7 @@
 //#connects server to the models
 import { Request, Response } from 'express';
 import * as apiHelpers from '../API/api';
-import { Query } from '../types/QueryType';
+import { Query } from '../../types/QueryType';
 
 const getRecipes = async function (req: Request, res: Response) {
    const query = req.query as unknown as Query;
