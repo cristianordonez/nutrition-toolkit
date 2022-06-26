@@ -1,10 +1,11 @@
-import { createPool } from 'mysql2';
+import { Pool, Client } from 'pg';
 
-// create the connection to database
-const pool = createPool({
-   host: '127.0.0.1',
-   user: 'root',
-   database: 'meal-planner',
+const pool = new Pool({
+   user: process.env.USER,
+   host: process.env.HOST,
+   database: process.env.DATABASE,
+   password: process.env.PASSWORD,
+   port: 5432,
 });
 
 export { pool };

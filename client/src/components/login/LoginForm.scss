@@ -1,0 +1,14 @@
+@use '../../index.scss' as *;
+
+.login-form {
+   @include flex-center();
+   flex-direction: column;
+   gap: 1em;
+   .login-form-account-text {
+      align-self: center;
+   }
+}
+.login-form-text {
+   text-transform: none;
+   align-self: flex-start;
+}

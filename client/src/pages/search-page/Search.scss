@@ -1,0 +1,9 @@
+@use '../../index.scss' as *;
+
+.search-page {
+   padding-top: 100px;
+   @include devices(mobile) {
+      padding-left: 0;
+   }
+   padding-left: 350px;
+}

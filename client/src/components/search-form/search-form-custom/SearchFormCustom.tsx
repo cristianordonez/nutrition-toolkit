@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import FormControl from '@mui/material/FormControl';
@@ -116,8 +116,9 @@ const SearchFormCustom = ({
                <Stack direction='row'>
                   {/* MIN KCAL */}
                   <FormControl
+                     fullWidth
                      variant='standard'
-                     sx={{ m: 1, mt: 3, width: '25ch' }}
+                     sx={{ m: 1, mt: 3 }}
                   >
                      <Input
                         id='minCalories'
@@ -136,8 +137,9 @@ const SearchFormCustom = ({
                   </FormControl>
                   {/* MAX KCAL */}
                   <FormControl
+                     fullWidth
                      variant='standard'
-                     sx={{ m: 1, mt: 3, width: '25ch' }}
+                     sx={{ m: 1, mt: 3 }}
                   >
                      <Input
                         id='maxCalories'
@@ -162,7 +164,8 @@ const SearchFormCustom = ({
                   {/* MIN CARBS */}
                   <FormControl
                      variant='standard'
-                     sx={{ m: 1, mt: 3, width: '25ch' }}
+                     fullWidth
+                     sx={{ m: 1, mt: 3 }}
                   >
                      <Input
                         id='minCarbs'
@@ -182,7 +185,8 @@ const SearchFormCustom = ({
                   {/* MAX CARBS */}
                   <FormControl
                      variant='standard'
-                     sx={{ m: 1, mt: 3, width: '25ch' }}
+                     fullWidth
+                     sx={{ m: 1, mt: 3 }}
                   >
                      <Input
                         id='maxCarbs'
@@ -206,7 +210,8 @@ const SearchFormCustom = ({
                   {/* MIN PROTEIN */}
                   <FormControl
                      variant='standard'
-                     sx={{ m: 1, mt: 3, width: '25ch' }}
+                     fullWidth
+                     sx={{ m: 1, mt: 3 }}
                   >
                      <Input
                         id='minProtein'
@@ -223,10 +228,11 @@ const SearchFormCustom = ({
                      />
                      <FormHelperText>Minimum Protein</FormHelperText>
                   </FormControl>
-                  {/* MAX KCAL */}
+                  {/* MAX PROTEIN */}
                   <FormControl
                      variant='standard'
-                     sx={{ m: 1, mt: 3, width: '25ch' }}
+                     fullWidth
+                     sx={{ m: 1, mt: 3 }}
                   >
                      <Input
                         id='maxProtein'
@@ -250,7 +256,8 @@ const SearchFormCustom = ({
                   {/* MIN FAT*/}
                   <FormControl
                      variant='standard'
-                     sx={{ m: 1, mt: 3, width: '25ch' }}
+                     fullWidth
+                     sx={{ m: 1, mt: 3 }}
                   >
                      <Input
                         id='minFat'
@@ -270,7 +277,8 @@ const SearchFormCustom = ({
                   {/* FAT */}
                   <FormControl
                      variant='standard'
-                     sx={{ m: 1, mt: 3, width: '25ch' }}
+                     fullWidth
+                     sx={{ m: 1, mt: 3 }}
                   >
                      <Input
                         id='maxFat'
