@@ -1,30 +1,22 @@
 import React, { useEffect } from 'react';
+import axios from 'axios';
 import {
    Paper,
    Typography,
    Grid,
    Slider,
    Input,
-   FormControl,
-   FormLabel,
-   FormControlLabel,
-   Radio,
+   Button,
    ToggleButtonGroup,
    ToggleButton,
-   RadioGroup,
 } from '@mui/material';
-// import Paper from '@mui/material/Paper';
-// import Typography from '@mui/material/Typography';
-// import FormControl from '@mui/material/FormControl';
-// import FormLabel from '@mui/material/FormLabel';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Radio from '@mui/material/Radio';
-// import RadioGroup from '@mui/material/RadioGroup';
+import { useMetrics } from '../../hooks/useMetrics';
+import { useNavigate } from 'react-router-dom';
 
-export const MacroCalculatorForm = () => {
+export const MacroCalculatorForm = ({ handleFinalSignUpForm }: any) => {
+   let navigate = useNavigate();
    //GENDER HANDLERS
-   const [gender, setGender] = React.useState('web');
-
+   const [gender, setGender] = React.useState('male');
    const handleGenderChange = (
       event: React.MouseEvent<HTMLElement>,
       newAlignment: string
@@ -33,8 +25,7 @@ export const MacroCalculatorForm = () => {
    };
 
    //ACTIVITY LEVEL HANDLERS
-   const [activityLevel, setActivityLevel] = React.useState(0);
-
+   const [activityLevel, setActivityLevel] = React.useState(1);
    const handleActivityLevelChange = (
       event: React.MouseEvent<HTMLElement>,
       newActivityLevel: number
@@ -46,18 +37,15 @@ export const MacroCalculatorForm = () => {
    const [age, setAge] = React.useState<
       number | string | Array<number | string>
    >(18);
-
    const handleSliderChange = (event: Event, newValue: number | number[]) => {
       setAge(newValue);
    };
-
    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setAge(event.target.value === '' ? '' : Number(event.target.value));
    };
-
    const handleBlur = () => {
-      if (age < 0) {
-         setAge(0);
+      if (age < 18) {
+         setAge(18);
       } else if (age > 100) {
          setAge(100);
       }
@@ -66,23 +54,21 @@ export const MacroCalculatorForm = () => {
    //HEIGHT HANDLERS
    const [height, setHeight] = React.useState<
       number | string | Array<number | string>
-   >(48);
-
+   >(60);
    const handleHeightSliderChange = (
       event: Event,
       newValue: number | number[]
    ) => {
       setHeight(newValue);
    };
-
    const handleHeightInputChange = (
       event: React.ChangeEvent<HTMLInputElement>
    ) => {
       setHeight(event.target.value === '' ? '' : Number(event.target.value));
    };
    const handleHeightBlur = () => {
-      if (height < 0) {
-         setHeight(0);
+      if (height < 54) {
+         setHeight(54);
       } else if (height > 84) {
          setHeight(84);
       }
@@ -91,36 +77,52 @@ export const MacroCalculatorForm = () => {
    //WEIGHT HANDLERS
    const [weight, setWeight] = React.useState<
       number | string | Array<number | string>
-   >(80);
-
+   >(200);
    const handleWeightSliderChange = (
       event: Event,
       newValue: number | number[]
    ) => {
       setWeight(newValue);
    };
-
    const handleWeightInputChange = (
       event: React.ChangeEvent<HTMLInputElement>
    ) => {
       setWeight(event.target.value === '' ? '' : Number(event.target.value));
    };
-
    const handleWeightBlur = () => {
-      if (weight < 0) {
-         setWeight(0);
+      if (weight < 70) {
+         setWeight(70);
       } else if (weight > 400) {
          setWeight(400);
       }
    };
 
-   let marks = [
-      { value: 0, label: '0' },
-      { value: 400, label: '400' },
-   ];
+   //handles submission of metrics, then navigates to search page
+   const handleSubmit = async (event: React.SyntheticEvent) => {
+      event.preventDefault();
+      const metrics = useMetrics({
+         gender,
+         age,
+         height,
+         weight,
+         activityLevel,
+      });
+      try {
+         let response = await axios.post(`/api/metrics`, metrics);
+         console.log('response:', response);
+         navigate(`/${response.data}/search`);
+      } catch (err) {
+         console.log('err:', err);
+      }
+   };
+
    return (
       <>
-         <Paper component={'form'} className='signup-form'>
+         <Paper
+            onSubmit={handleSubmit}
+            component={'form'}
+            className='signup-form'
+         >
             <Typography variant='h6'>
                Complete setting up your account
             </Typography>
@@ -162,17 +164,20 @@ export const MacroCalculatorForm = () => {
                      value={typeof age === 'number' ? age : 0}
                      onChange={handleSliderChange}
                      aria-labelledby='input-slider'
+                     min={18}
+                     max={100}
                   />
                </Grid>
                <Grid item>
                   <Input
                      value={age}
                      size='small'
+                     required
                      onChange={handleInputChange}
                      onBlur={handleBlur}
                      inputProps={{
-                        step: 10,
-                        min: 0,
+                        step: 1,
+                        min: 18,
                         max: 100,
                         type: 'number',
                         'aria-labelledby': 'input-slider',
@@ -190,6 +195,8 @@ export const MacroCalculatorForm = () => {
                      value={typeof height === 'number' ? height : 0}
                      onChange={handleHeightSliderChange}
                      aria-labelledby='height-input-slider'
+                     min={54}
+                     max={84}
                   />
                </Grid>
                <Grid item>
@@ -199,8 +206,8 @@ export const MacroCalculatorForm = () => {
                      onChange={handleHeightInputChange}
                      onBlur={handleHeightBlur}
                      inputProps={{
-                        step: 10,
-                        min: 0,
+                        step: 1,
+                        min: 54,
                         max: 84,
                         type: 'number',
                         'aria-labelledby': 'input-slider',
@@ -217,7 +224,7 @@ export const MacroCalculatorForm = () => {
                   <Slider
                      value={typeof weight === 'number' ? weight : 0}
                      onChange={handleWeightSliderChange}
-                     min={0}
+                     min={70}
                      max={400}
                      aria-labelledby='weight-input-slider'
                   />
@@ -229,8 +236,8 @@ export const MacroCalculatorForm = () => {
                      onChange={handleWeightInputChange}
                      onBlur={handleWeightBlur}
                      inputProps={{
-                        // step: 20,
-                        min: 0,
+                        step: 1,
+                        min: 70,
                         max: 400,
                         type: 'number',
                         'aria-labelledby': 'input-slider',
@@ -238,6 +245,9 @@ export const MacroCalculatorForm = () => {
                   />
                </Grid>
             </Grid>
+            <Button fullWidth type='submit'>
+               Complete creating account
+            </Button>
          </Paper>
       </>
    );

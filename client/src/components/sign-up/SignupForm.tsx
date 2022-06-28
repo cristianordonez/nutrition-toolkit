@@ -21,7 +21,7 @@ export const SignupForm = ({
    //after user is created, navigate to the next page with successful response
    return (
       <>
-         {!showNextPage ? (
+         {showNextPage ? (
             <MacroCalculatorForm />
          ) : (
             <Paper
@@ -55,5 +55,3 @@ export const SignupForm = ({
       </>
    );
 };
-
-// export default SignupForm;

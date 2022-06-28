@@ -1,26 +1,53 @@
 import React, { useState } from 'react';
 
 interface Metrics {
-   gender: string;
-   age: number;
-   height: number;
-   weight: number;
-   activityLevel: number;
+   gender: string | number;
+   age: string | number;
+   height: string | number;
+   weight: string | number;
+   activityLevel: string | number;
 }
 
-export const useMetrics = (props: Metrics) => {
-   const [values, setValues] = useState({
-      total_carbohydrates: 0,
-      min_carbs_per_meal: 0,
-      max_carbs_per_meal: 0,
-      total_protein: 0,
-      min_protein_per_meal: 0,
-      max_protein_per_meal: 0,
-      total_fat: 0,
-      min_fat_per_meal: 0,
-      max_fat_per_meal: 0,
-      total_calories: 0,
-      min_calories_per_meal: 0,
-      max_calories_per_meal: 0,
-   });
+interface Goals {
+   total_carbohydrates: number;
+   min_carbs_per_meal: number;
+   max_carbs_per_meal: number;
+   total_protein: number;
+   min_protein_per_meal: number;
+   max_protein_per_meal: number;
+   total_fat: number;
+   min_fat_per_meal: number;
+   max_fat_per_meal: number;
+   total_calories: number;
+   min_calories_per_meal: number;
+   max_calories_per_meal: number;
+}
+
+//calculations are primarily for diabetes
+export const useMetrics = (props: any) => {
+   let weightInKg = props.weight / 2.2;
+   let heightInCm = Math.floor(props.height * 2.54);
+   let additionalCalories = props.gender === 'female' ? -161 : 5;
+   let rmr =
+      10 * weightInKg + 6.25 * heightInCm - 5 * props.age + additionalCalories;
+   let result = {} as Goals;
+   result.total_calories = Math.floor(rmr * props.activityLevel);
+   result.min_calories_per_meal = Math.floor(result.total_calories / 3 - 100);
+   result.max_calories_per_meal = Math.floor(result.total_calories / 3 + 100);
+   result.total_carbohydrates = Math.floor((rmr * 0.45) / 4); //divide by 4 to get grams from kcal
+   result.min_carbs_per_meal = Math.floor(result.total_carbohydrates / 3 - 5);
+   result.max_carbs_per_meal = Math.floor(result.total_carbohydrates / 3 + 5);
+   result.total_protein = Math.floor(weightInKg);
+   result.min_protein_per_meal = Math.floor(result.total_protein / 3 - 5);
+   result.max_protein_per_meal = Math.floor(result.total_protein / 3 + 5);
+
+   let caloriesLeft =
+      result.total_calories -
+      (result.total_carbohydrates * 4 + result.total_protein * 4);
+   console.log('caloriesLeft:', caloriesLeft);
+   result.total_fat = Math.floor(caloriesLeft / 9);
+   result.min_fat_per_meal = Math.floor(result.total_fat / 3 - 5);
+   result.max_fat_per_meal = Math.floor(result.total_fat / 3 + 5);
+   console.log('result:', result);
+   return result;
 };

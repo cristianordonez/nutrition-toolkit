@@ -96,7 +96,7 @@ passport.serializeUser((user: any, done) => {
 
 passport.deserializeUser((id: string, cb) => {
    pool.query(
-      'SELECT username, email, spoonacular_username FROM users WHERE id = $1',
+      'SELECT id, username, email, spoonacular_username FROM users WHERE id = $1',
       [parseInt(id, 10)],
       (err, results) => {
          if (err) {

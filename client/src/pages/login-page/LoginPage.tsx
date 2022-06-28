@@ -48,7 +48,6 @@ export const LoginPage = () => {
    const handleCreateAccountChange = (
       event: React.ChangeEvent<HTMLInputElement>
    ) => {
-      console.log('signupValues:', signupValues);
       setSignupValues({
          ...signupValues,
          [event.target.name]: event.target.value,
@@ -69,6 +68,7 @@ export const LoginPage = () => {
                signupValues
             );
             console.log('response:', response);
+            setOpenErrorAlert(false);
             setShowNextPage(true);
          } catch (err: any) {
             console.log('err:', err);
@@ -78,10 +78,10 @@ export const LoginPage = () => {
       }
    };
 
-   //handles signing up user then redirecting to search page
-   const handleFinalSignupForm = (event: React.SyntheticEvent) => {
-      event.preventDefault();
-   };
+   // //handles signing up user then redirecting to search page
+   // const handleFinalSignupForm = (event: React.SyntheticEvent) => {
+   //    event.preventDefault();
+   // };
 
    const handleLogin = async (event: React.SyntheticEvent) => {
       event.preventDefault();

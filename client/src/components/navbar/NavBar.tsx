@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { MouseEventHandler, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,11 +12,15 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const pages = ['Macro Calculator', 'Search', 'Meal Plan'];
 const settings = ['Profile', 'Logout'];
 
 const NavBar = () => {
+   let navigate = useNavigate();
+
    const [isOpen, setIsOpen] = useState(false);
 
    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -37,8 +41,19 @@ const NavBar = () => {
       setAnchorElNav(null);
    };
 
-   const handleCloseUserMenu = () => {
+   const handleMenuClick = () => {
       setAnchorElUser(null);
+   };
+
+   const handleLogout = async () => {
+      try {
+         let response = await axios.post('/api/logout');
+
+         console.log('response:', response);
+         navigate('/');
+      } catch (err) {
+         console.log('err:', err);
+      }
    };
 
    return (
@@ -139,7 +154,7 @@ const NavBar = () => {
                      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                         <Avatar
                            alt='Remy Sharp'
-                           src='/static/images/avatar/2.jpg'
+                           // src='/static/images/avatar/2.jpg'
                         />
                      </IconButton>
                   </Tooltip>
@@ -157,13 +172,14 @@ const NavBar = () => {
                         horizontal: 'right',
                      }}
                      open={Boolean(anchorElUser)}
-                     onClose={handleCloseUserMenu}
+                     onClose={handleMenuClick}
                   >
-                     {settings.map((setting) => (
-                        <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                           <Typography textAlign='center'>{setting}</Typography>
-                        </MenuItem>
-                     ))}
+                     <MenuItem onClick={handleMenuClick}>
+                        <Typography textAlign='center'>User Profile</Typography>
+                     </MenuItem>
+                     <MenuItem onClick={handleLogout}>
+                        <Typography textAlign='center'>Logout</Typography>
+                     </MenuItem>
                   </Menu>
                </Box>
             </Toolbar>

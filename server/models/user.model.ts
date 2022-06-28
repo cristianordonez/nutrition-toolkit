@@ -17,7 +17,7 @@ const create = async function (user: User) {
       spoonacular_username, spoonacular_password, spoonacular_hash, hash)
       VALUES ('${user.username}', '${user.email}',
        '${user.spoonacular_username}', '${user.spoonacular_password}', '${user.spoonacular_hash}',
-        '${user.hash}')`;
+        '${user.hash}') RETURNING id`;
    let dbResponse = await pool.query(createQuery);
    return dbResponse;
 };

@@ -1,4 +1,4 @@
-import { Request, Response, Router } from 'express';
+import { NextFunction, Request, Response, Router } from 'express';
 import { createAccount, createMetrics } from '../controllers/user.controller';
 import passport from 'passport';
 const router = Router();
@@ -25,7 +25,7 @@ router.post('/metrics', (req: Request, res: Response) => {
 router.post(
    '/login',
    passport.authenticate('local', {
-      failureRedirect: '/api/error',
+      failureRedirect: `/api/error`,
       failureMessage: true,
    }),
    (req: Request, res: Response) => {
@@ -34,6 +34,15 @@ router.post(
    }
 );
 
+router.post('/logout', (req: any, res: Response, next: NextFunction) => {
+   req.logout(function (err: any) {
+      if (err) {
+         return next(err);
+      }
+      req.session.destroy();
+      res.json('You have been logged out.');
+   });
+});
 //endpoint that gets redirect to when there is error logging in,
 // used so that client can be sent error message from server
 router.get('/error', (req: Request, res: Response) => {
