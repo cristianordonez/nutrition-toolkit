@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './home-page/Home';
-import LoginPage from './login-page/LoginPage';
+import { LoginPage } from './login-page/LoginPage';
 import MacroCalculator from './macro-calculator-page/MacroCalculator';
 import MealPlan from './meal-plan-page/MealPlan';
 import Search from './search-page/Search';

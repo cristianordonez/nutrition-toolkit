@@ -7,4 +7,4 @@ router.get('/', (req: any, res: any) => {
    controller.getRecipes(req, res);
 });
 
-export default router;
+export { router };

@@ -1,10 +1,10 @@
 import { Request, Response, Router } from 'express';
-import * as controller from '../controllers/groceryproducts.controller';
+import { getGroceryProducts } from '../controllers/groceryproducts.controller';
 const router = Router();
 
 //handles creating account
 router.get('/', (req: Request, res: Response) => {
-   controller.getGroceryProducts(req, res);
+   getGroceryProducts(req, res);
 });
 
-export default router;
+export { router };

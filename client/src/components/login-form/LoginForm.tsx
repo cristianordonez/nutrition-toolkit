@@ -7,11 +7,12 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
 
-const LoginForm = ({
+export const LoginForm = ({
    handleRedirectToSignup,
    usernameTextField,
    emailTextField,
    passwordTextField,
+   handleLogin,
 }: any) => {
    return (
       <>
@@ -20,15 +21,19 @@ const LoginForm = ({
                <img src={LoginImage} />
             </Grid>
             <Grid item xs={12} md={6}>
-               <Paper className='login-form'>
+               <Paper
+                  component={'form'}
+                  onSubmit={handleLogin}
+                  className='login-form'
+               >
                   <Typography variant='h6'>Welcome Back...</Typography>
                   <Typography variant='subtitle1'>
                      Please enter your details
                   </Typography>
                   {usernameTextField}
-                  {emailTextField}
+                  {/* {emailTextField} */}
                   {passwordTextField}
-                  <Button fullWidth variant='contained'>
+                  <Button type='submit' fullWidth variant='contained'>
                      Log In
                   </Button>
                   <Stack direction='row'>
@@ -54,5 +59,3 @@ const LoginForm = ({
       </>
    );
 };
-
-export default LoginForm;
