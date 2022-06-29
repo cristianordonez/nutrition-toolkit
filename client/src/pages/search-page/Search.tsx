@@ -17,6 +17,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
+//todo change 0
 interface Goals {
    total_carbohydrates: 0;
    min_carbs_per_meal: 0;
@@ -83,10 +84,38 @@ export const Search = () => {
          });
          foodItems.data.length ? setOpenSnackbar(false) : setOpenSnackbar(true);
          setAPIData(foodItems.data);
+         setLoading(false); //used to trigger the loading circle
+      } catch (err) {
+         setLoading(false); //used to trigger the loading circle
+         console.log('err', err);
+      }
+   };
+
+   //# handles submission when it comes from suggested goals form
+   //# must be different because values are coming from goals state object
+   const handleSuggestedSubmit = async (event: React.SyntheticEvent) => {
+      try {
+         setLoading(true); //used to trigger the loading circle
+         event.preventDefault();
+         let suggestedValues: any = values;
+         suggestedValues.minCalories = goals.min_calories_per_meal;
+         suggestedValues.maxCalories = goals.max_calories_per_meal;
+         suggestedValues.minCarbs = goals.min_carbs_per_meal;
+         suggestedValues.maxCarbs = goals.max_carbs_per_meal;
+         suggestedValues.minProtein = goals.min_protein_per_meal;
+         suggestedValues.maxProtein = goals.max_protein_per_meal;
+         suggestedValues.minFat = goals.min_fat_per_meal;
+         suggestedValues.maxFat = goals.max_fat_per_meal;
+         console.log('suggestedValues:', suggestedValues);
+         let foodItems = await axios.get(`/api/${route}`, {
+            params: suggestedValues,
+         });
+         foodItems.data.length ? setOpenSnackbar(false) : setOpenSnackbar(true);
+         setAPIData(foodItems.data);
          setLoading(false);
       } catch (err) {
-         setLoading(false);
-         console.log('err', err);
+         console.log('err:', err);
+         setLoading(false); //used to trigger the loading circle
       }
    };
 
@@ -120,10 +149,11 @@ export const Search = () => {
       });
    }, []);
 
-   //# sets searchform component to variable so it can be rendered in two different views
+   //# searchForm component is rendered in the sidebar as well as on main content of page
    const searchForm: JSX.Element = (
       <SearchForm
          handleSubmit={handleSubmit}
+         handleSuggestedSubmit={handleSuggestedSubmit}
          route={route}
          setRoute={setRoute}
          handleChange={handleChange}
@@ -131,6 +161,7 @@ export const Search = () => {
          setCurrentTab={setCurrentTab}
          values={values}
          setValues={setValues}
+         goals={goals}
       />
    );
 

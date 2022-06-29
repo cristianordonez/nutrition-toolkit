@@ -1,47 +1,41 @@
 import React from 'react';
-import { SelectChangeEvent } from '@mui/material/Select';
-import {
-   TextField,
-   MenuItem,
-   Select,
-   Input,
-   InputAdornment,
-   Button,
-   Typography,
-   InputLabel,
-   FormHelperText,
-   FormControl,
-   Stack,
-} from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import { NutrientInputForm } from '../NutrientInputForm';
+
+import { Button, Typography, Stack } from '@mui/material';
+import { NutrientInputForm } from '../helper-components/NutrientInputForm';
+import { SearchInput } from '../helper-components/SearchInput';
+import { QueryTextField } from '../helper-components/QueryTextField';
+import { TypeDropDown } from '../helper-components/TypeDropDown';
+import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 
 interface Props {
    route: any;
    values: any;
-   setRoute: any;
-   setValues: any;
+
    handleSubmit: any;
+   handleRouteChange: any;
+   handleInputChange: any;
+   handleTypeSelect: any;
 }
 
 const SearchFormCustom = ({
    route,
    values,
-   setRoute,
-   setValues,
    handleSubmit,
-}: Props): JSX.Element => {
-   const handleRouteChange = (event: SelectChangeEvent) => {
-      setRoute(event.target.value);
-   };
+   handleRouteChange,
+   handleInputChange,
+   handleTypeSelect,
+}: Props): ReactJSXElement => {
+   // const handleRouteChange = (event: SelectChangeEvent) => {
+   //    setRoute(event.target.value);
+   // };
 
-   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValues({ ...values, [event.target.id]: event.target.value });
-   };
+   // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+   //    setValues({ ...values, [event.target.id]: event.target.value });
+   // };
 
-   const handleTypeSelect = (event: SelectChangeEvent) => {
-      setValues({ ...values, type: event.target.value });
-   };
+   // const handleTypeSelect = (event: SelectChangeEvent) => {
+   //    setValues({ ...values, type: event.target.value });
+   // };
 
    return (
       <>
@@ -52,269 +46,60 @@ const SearchFormCustom = ({
                   from large list of restaurants
                </Typography>
                {/* ROUTES */}
-               <FormControl>
-                  <InputLabel>Search</InputLabel>
-                  <Select
-                     value={route}
-                     onChange={handleRouteChange}
-                     label='Search'
-                     required
-                  >
-                     <MenuItem value={'recipes'}>Recipes</MenuItem>
-                     <MenuItem value={'groceryProducts'}>
-                        Grocery Products
-                     </MenuItem>
-                     <MenuItem value={'menuItems'}>Menu items</MenuItem>
-                  </Select>
-                  <FormHelperText>
-                     Choose the type of item you are searching for.
-                  </FormHelperText>
-               </FormControl>
+
+               <SearchInput
+                  route={route}
+                  handleRouteChange={handleRouteChange}
+               />
                {/* QUERY */}
-               <TextField
-                  id='query'
-                  required
-                  InputProps={{
-                     startAdornment: (
-                        <InputAdornment position='start'>
-                           <SearchIcon />
-                        </InputAdornment>
-                     ),
-                  }}
-                  label='Item'
-                  helperText='Enter an ingredient or item you want your search to contain (i.e. chicken, greek yogurt, etc.)'
-                  value={values.query}
-                  onChange={handleInputChange}
+
+               <QueryTextField
+                  query={values.query}
+                  handleInputChange={handleInputChange}
                />
                {/* TYPE */}
-               <FormControl>
-                  <InputLabel>Type</InputLabel>
-                  <Select
-                     value={values.type}
-                     onChange={handleTypeSelect}
-                     label='Type'
-                     required
-                     id='type'
-                  >
-                     <MenuItem value={'maincourse'}>Main Course</MenuItem>
-                     <MenuItem value={'sidedish'}>Side Dish</MenuItem>
-                     <MenuItem value={'dessert'}>Dessert</MenuItem>
-                     <MenuItem value={'appetizer'}>Appetizer</MenuItem>
-                     <MenuItem value={'salad'}>Salad</MenuItem>
-                     <MenuItem value={'bread'}>Bread</MenuItem>
-                     <MenuItem value={'breakfast'}>Breakfast</MenuItem>
-                     <MenuItem value={'soup'}>Soup</MenuItem>
-                     <MenuItem value={'beverage'}>Beverage</MenuItem>
-                     <MenuItem value={'sauce'}>Sauce</MenuItem>
-                     <MenuItem value={'marinade'}>Marinade</MenuItem>
-                     <MenuItem value={'fingerfood'}>Fingerfood</MenuItem>
-                     <MenuItem value={'snack'}>Snack</MenuItem>
-                     <MenuItem value={'drink'}>Drink</MenuItem>
-                  </Select>
-                  <FormHelperText>
-                     Choose the type of item you are searching for.
-                  </FormHelperText>
-               </FormControl>
-               <Typography variant='h6'>Choose Calorie Range</Typography>
+
+               <TypeDropDown
+                  type={values.type}
+                  handleTypeSelect={handleTypeSelect}
+               />
                {/* CALORIES */}
-               <Stack direction='row'>
-                  {/* MIN KCAL */}
-                  <NutrientInputForm
-                     value={values.minCalories}
-                     id={'minCalories'}
-                     handleInputChange={handleInputChange}
-                     measurement={'kcal'}
-                     formHelperText={'Minimum Calories'}
-                  />
-                  {/* MAX KCAL */}
-                  <NutrientInputForm
-                     value={values.maxCalories}
-                     id={'maxCalories'}
-                     handleInputChange={handleInputChange}
-                     measurement={'kcal'}
-                     formHelperText={'Maximum Calories'}
-                  />
-               </Stack>
-               <Typography variant='h6'>Choose Carb Range</Typography>
+               <Typography variant='h6'>Choose Calorie Range</Typography>
+               <NutrientInputForm
+                  handleInputChange={handleInputChange}
+                  measurement={'kcal'}
+                  nutrient={'Calories'}
+                  minValue={values.minCalories}
+                  maxValue={values.maxCalories}
+               />
                {/* CARBS */}
-               <Stack direction='row'>
-                  {/* MIN CARBS */}
-                  <NutrientInputForm
-                     value={values.minCarbs}
-                     id={'minCarbs'}
-                     handleInputChange={handleInputChange}
-                     measurement={'g'}
-                     formHelperText={'Minimum Carbs'}
-                  />
-                  {/* <FormControl
-                     variant='standard'
-                     fullWidth
-                     sx={{ m: 1, mt: 3 }}
-                  >
-                     <Input
-                        id='minCarbs'
-                        type='number'
-                        required
-                        value={values.minCarbs}
-                        onChange={handleInputChange}
-                        endAdornment={
-                           <InputAdornment position='end'>g</InputAdornment>
-                        }
-                        inputProps={{
-                           'aria-label': 'minimum carbs',
-                        }}
-                     />
-                     <FormHelperText>Minimum Carbs</FormHelperText>
-                  </FormControl> */}
-                  {/* MAX CARBS */}
-                  <NutrientInputForm
-                     value={values.maxCarbs}
-                     id={'maxCarbs'}
-                     handleInputChange={handleInputChange}
-                     measurement={'g'}
-                     formHelperText={'Maximum Carbs'}
-                  />
-                  {/* <FormControl
-                     variant='standard'
-                     fullWidth
-                     sx={{ m: 1, mt: 3 }}
-                  >
-                     <Input
-                        id='maxCarbs'
-                        type='number'
-                        required
-                        value={values.maxCarbs}
-                        onChange={handleInputChange}
-                        endAdornment={
-                           <InputAdornment position='end'>g</InputAdornment>
-                        }
-                        inputProps={{
-                           'aria-label': 'maximum carbs',
-                        }}
-                     />
-                     <FormHelperText>Maximum Carbs</FormHelperText>
-                  </FormControl> */}
-               </Stack>
-               <Typography variant='h6'>Choose Protein Range</Typography>
+               <Typography variant='h6'>Choose Carb Range</Typography>
+               <NutrientInputForm
+                  handleInputChange={handleInputChange}
+                  measurement={'g'}
+                  nutrient={'Carbs'}
+                  minValue={values.minCarbs}
+                  maxValue={values.maxCarbs}
+               />
+
                {/* PROTEIN */}
-               <Stack direction='row'>
-                  {/* MIN PROTEIN */}
-                  <NutrientInputForm
-                     value={values.minProtein}
-                     id={'minProtein'}
-                     handleInputChange={handleInputChange}
-                     measurement={'g'}
-                     formHelperText={'Minimum Protein'}
-                  />
-                  {/* <FormControl
-                     variant='standard'
-                     fullWidth
-                     sx={{ m: 1, mt: 3 }}
-                  >
-                     <Input
-                        id='minProtein'
-                        required
-                        type='number'
-                        value={values.minProtein}
-                        onChange={handleInputChange}
-                        endAdornment={
-                           <InputAdornment position='end'>g</InputAdornment>
-                        }
-                        inputProps={{
-                           'aria-label': 'minimum protein',
-                        }}
-                     />
-                     <FormHelperText>Minimum Protein</FormHelperText>
-                  </FormControl> */}
-                  {/* MAX PROTEIN */}
-                  <NutrientInputForm
-                     value={values.maxProtein}
-                     id={'maxProtein'}
-                     handleInputChange={handleInputChange}
-                     measurement={'g'}
-                     formHelperText={'Maximum Protein'}
-                  />
-                  {/* <FormControl
-                     variant='standard'
-                     fullWidth
-                     sx={{ m: 1, mt: 3 }}
-                  >
-                     <Input
-                        id='maxProtein'
-                        required
-                        type='number'
-                        value={values.maxProtein}
-                        onChange={handleInputChange}
-                        endAdornment={
-                           <InputAdornment position='end'>g</InputAdornment>
-                        }
-                        inputProps={{
-                           'aria-label': 'maximum protein',
-                        }}
-                     />
-                     <FormHelperText>Maximum Protein</FormHelperText>
-                  </FormControl> */}
-               </Stack>
-               <Typography variant='h6'>Choose Fat Range</Typography>
+               <Typography variant='h6'>Choose Protein Range</Typography>
+               <NutrientInputForm
+                  handleInputChange={handleInputChange}
+                  measurement={'g'}
+                  nutrient={'Protein'}
+                  minValue={values.minProtein}
+                  maxValue={values.maxProtein}
+               />
                {/* FAT */}
-               <Stack direction='row'>
-                  {/* MIN FAT*/}
-                  <NutrientInputForm
-                     value={values.minFat}
-                     id={'minFat'}
-                     handleInputChange={handleInputChange}
-                     measurement={'kcal'}
-                     formHelperText={'Minimum Fat'}
-                  />
-                  {/* <FormControl
-                     variant='standard'
-                     fullWidth
-                     sx={{ m: 1, mt: 3 }}
-                  >
-                     <Input
-                        id='minFat'
-                        type='number'
-                        required
-                        value={values.minFat}
-                        onChange={handleInputChange}
-                        endAdornment={
-                           <InputAdornment position='end'>g</InputAdornment>
-                        }
-                        inputProps={{
-                           'aria-label': 'minimum fat',
-                        }}
-                     />
-                     <FormHelperText>Minimum Fat</FormHelperText>
-                  </FormControl> */}
-                  {/* FAT */}
-                  <NutrientInputForm
-                     value={values.maxFat}
-                     id={'maxFat'}
-                     handleInputChange={handleInputChange}
-                     measurement={'g'}
-                     formHelperText={'Maximum Fat'}
-                  />
-                  {/* <FormControl
-                     variant='standard'
-                     fullWidth
-                     sx={{ m: 1, mt: 3 }}
-                  >
-                     <Input
-                        id='maxFat'
-                        required
-                        type='number'
-                        value={values.maxFat}
-                        onChange={handleInputChange}
-                        endAdornment={
-                           <InputAdornment position='end'>g</InputAdornment>
-                        }
-                        inputProps={{
-                           'aria-label': 'maximum fat',
-                        }}
-                     />
-                     <FormHelperText>Maximum Fat</FormHelperText>
-                  </FormControl> */}
-               </Stack>
+               <Typography variant='h6'>Choose Fat Range</Typography>
+               <NutrientInputForm
+                  handleInputChange={handleInputChange}
+                  measurement={'g'}
+                  nutrient={'Fat'}
+                  minValue={values.minFat}
+                  maxValue={values.maxFat}
+               />
                <Button type='submit'>Submit</Button>
             </Stack>
          </form>
