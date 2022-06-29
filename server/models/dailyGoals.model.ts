@@ -16,7 +16,7 @@ interface Goals {
    max_calories_per_meal: number;
 }
 
-const createGoals = (goals: Goals) => {
+export const createGoals = (goals: Goals) => {
    //get id from req.session then update all goals
    console.log('goals:', goals);
    let dbQuery = `INSERT INTO daily_goals (total_carbohydrates, min_carbs_per_meal,
@@ -35,4 +35,9 @@ const createGoals = (goals: Goals) => {
    return response;
 };
 
-export { createGoals };
+export const getGoals = (user_id: string) => {
+   console.log('userId:', user_id);
+   let dbQuery = `SELECT * FROM daily_goals WHERE user_id = ${user_id}`;
+   let response = pool.query(dbQuery);
+   return response;
+};

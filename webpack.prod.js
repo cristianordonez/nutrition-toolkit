@@ -7,6 +7,7 @@ module.exports = merge(common, {
    mode: 'production',
    optimization: {
       minimize: true,
+      usedExports: true,
       minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
    },
 });

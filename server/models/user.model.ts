@@ -1,5 +1,3 @@
-//# connects controllers to the database
-
 import { pool } from '../database/db';
 
 type User = {
@@ -11,8 +9,13 @@ type User = {
    hash: string;
 };
 
-//creates a new user and stores in database;
-const create = async function (user: User) {
+type Intolerances = {
+   user_id: number;
+   intolerances: string;
+};
+
+//# creates a new user and stores in database;
+export const create = async function (user: User) {
    const createQuery = `INSERT INTO users (username, email,
       spoonacular_username, spoonacular_password, spoonacular_hash, hash)
       VALUES ('${user.username}', '${user.email}',
@@ -22,13 +25,8 @@ const create = async function (user: User) {
    return dbResponse;
 };
 
-type Intolerances = {
-   user_id: number;
-   intolerances: string;
-};
-
-//creates a new user and stores in database;
-const createUserIntolerances = function (intolerances: Intolerances) {
+//# creates a new user and stores in database;
+export const createUserIntolerances = function (intolerances: Intolerances) {
    let dbQuery = `UPDATE users SET intolerances = '{${intolerances.intolerances}}'
    `;
    console.log('dbQuery:', dbQuery);
@@ -37,17 +35,16 @@ const createUserIntolerances = function (intolerances: Intolerances) {
    return result;
 };
 
-//check if user already exists by their email address
-const getByEmail = async function (email: string) {
+//# check if user already exists by their email address
+export const getByEmail = async function (email: string) {
    const getQuery = `SELECT * FROM users WHERE email='${email}'`;
    let user = await pool.query(getQuery);
    return user;
 };
 
-const getByUsername = async function (username: string) {
+//# retrieves user based on username
+export const getByUsername = async function (username: string) {
    const getQuery = `SELECT * FROM users WHERE username='${username}'`;
    let user = await pool.query(getQuery);
    return user;
 };
-
-export { create, getByEmail, getByUsername, createUserIntolerances };

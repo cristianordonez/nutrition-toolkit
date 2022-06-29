@@ -1,20 +1,19 @@
 import React from 'react';
 import './Sidebar.scss';
-import DailyGoals from '../daily-goals/DailyGoals';
-import Drawer from '@mui/material/Drawer';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
+import { DailyGoals } from '../daily-goals/DailyGoals';
+import { IconButton, Toolbar, Drawer } from '@mui/material';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
-const Sidebar = ({
+export const Sidebar = ({
    mobileOpen,
    handleDrawerToggle,
    searchForm,
    apiData,
+   goals,
 }: any) => {
    const drawerWidth = 350;
-
+   console.log('goals:', goals);
    return (
       <>
          {/* MOBILE */}
@@ -45,7 +44,7 @@ const Sidebar = ({
                   <ArrowBackIosIcon />
                </IconButton>
             </Toolbar>
-            {apiData.length ? searchForm : <DailyGoals />}
+            {apiData.length ? searchForm : <DailyGoals goals={goals} />}
          </Drawer>
          {/* DESKTOP */}
          <Drawer
@@ -61,10 +60,8 @@ const Sidebar = ({
                },
             }}
          >
-            {apiData.length ? searchForm : <DailyGoals />}
+            {apiData.length ? searchForm : <DailyGoals goals={goals} />}
          </Drawer>
       </>
    );
 };
-
-export default Sidebar;

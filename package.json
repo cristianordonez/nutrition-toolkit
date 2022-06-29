@@ -6,8 +6,8 @@
    "scripts": {
       "test": "jest",
       "cypress": "cypress open",
-      "dev": "concurrently -n 'webpack,server' -c 'bgBlue.bold,bgGreen.bold' \"npx webpack serve --open --config webpack.dev.js\" \"nodemon server/server.js\"",
-      "start": "webpack --config webpack.prod.js && node server/server.js"
+      "dev": "concurrently -n 'webpack,server' -c 'bgBlue.bold,bgGreen.bold' \"npx webpack serve --config webpack.dev.js\" \"nodemon server/server.js\"",
+      "start": "webpack --config webpack.prod.js && nodemon server/server.js"
    },
    "repository": {
       "type": "git",

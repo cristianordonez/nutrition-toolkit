@@ -4,10 +4,11 @@ import Home from './home-page/Home';
 import { LoginPage } from './login-page/LoginPage';
 import MacroCalculator from './macro-calculator-page/MacroCalculator';
 import MealPlan from './meal-plan-page/MealPlan';
-import Search from './search-page/Search';
+import { Search } from './search-page/Search';
 import NavBar from '../components/navbar/NavBar';
+import { AuthProvider } from '../context/authContext';
 
-const App = () => {
+export const App = () => {
    //todo use routes params to get user info
 
    return (
@@ -19,12 +20,17 @@ const App = () => {
             {/* LOGIN PAGE */}
             <Route path='/login' element={<LoginPage />} />
             {/* PROTECTED PAGE */}
-            <Route path='/:customer_id/search' element={<Search />} />
+            <Route
+               path='/:user_id/search'
+               element={
+                  <AuthProvider>
+                     <Search />
+                  </AuthProvider>
+               }
+            />
             {/* <Route path='/macro-calculator' element={<MacroCalculator />} /> */}
             {/* <Route path='/meal-plan' element={<MealPlan />} /> */}
          </Routes>
       </>
    );
 };
-
-export default App;

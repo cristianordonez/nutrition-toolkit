@@ -1,11 +1,10 @@
 //#connects server to the models
 import { Request, Response } from 'express';
-import * as apiHelpers from '../API/api';
 import { Query } from '../../types/QueryType';
+import * as apiHelpers from '../API/api';
 
-const getMenuItems = async function (req: Request, res: Response) {
+export const getMenuItems = async function (req: Request, res: Response) {
    const query = req.query as unknown as Query;
-
    try {
       let menuItems = await apiHelpers.getSpoonacularMenuItems(query);
       res.send(menuItems);
@@ -14,5 +13,3 @@ const getMenuItems = async function (req: Request, res: Response) {
       res.status(400).send('Could not get menu items.');
    }
 };
-
-export { getMenuItems };

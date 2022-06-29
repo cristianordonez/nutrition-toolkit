@@ -3,11 +3,8 @@ import './LoginPage.scss';
 import { LoginForm } from '../../components/login-form/LoginForm';
 import { SignupForm } from '../../components/sign-up/SignupForm';
 import { TextField, Snackbar, Alert } from '@mui/material';
-// import TextField from '@mui/material/TextField';
-// import Snackbar from '@mui/material/Snackbar';
-// import Alert from '@mui/material/Alert';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export const LoginPage = () => {
    let navigate = useNavigate();
@@ -63,16 +60,14 @@ export const LoginPage = () => {
          setError(true);
       } else {
          try {
-            let response: any = await axios.post(
-               `${__API__}/signup`,
-               signupValues
-            );
-            console.log('response:', response);
+            let response: any = await axios.post(`/api/signup`, signupValues);
             setOpenErrorAlert(false);
             setShowNextPage(true);
          } catch (err: any) {
             console.log('err:', err);
-            setErrorMessage(err.response.data);
+            setErrorMessage(
+               'An account with that username or email already exists. Try loggin in instead.'
+            );
             setOpenErrorAlert(true);
          }
       }
@@ -86,14 +81,13 @@ export const LoginPage = () => {
    const handleLogin = async (event: React.SyntheticEvent) => {
       event.preventDefault();
       try {
-         let url = `${__API__}/login`;
-         let response = await axios.post(`${__API__}/login`, loginValues);
+         let response = await axios.post(`/api/login`, loginValues);
          if (response.status === 201) {
             setError(false);
-            navigate(`/${response.data.id}/search`);
+            navigate(`/${response.data.id}/search`, { replace: true });
          }
       } catch (err: any) {
-         setErrorMessage(err.response.data); //error message used in the snackbar
+         setErrorMessage('No matching username and password found.'); //error message used in the snackbar
          setError(true); //used to show error helper text in text field
          handleErrorAlert();
          console.log('err:', err);

@@ -111,10 +111,10 @@ passport.deserializeUser((id: string, cb) => {
 });
 
 //ROUTES
-app.use('/', authRoute);
-app.use('/recipes', recipesRoute);
-app.use('/menuItems', menuItemsRoute);
-app.use('/groceryProducts', groceryProductsRoute);
+app.use('/api', authRoute);
+app.use('/api/recipes', recipesRoute);
+app.use('/api/menuItems', menuItemsRoute);
+app.use('/api/groceryProducts', groceryProductsRoute);
 
 //START SERVER
 app.listen(port, () => {

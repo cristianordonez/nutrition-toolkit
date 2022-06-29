@@ -7,18 +7,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const BundleAnalyzerPlugin =
    require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-let apiHost;
-
-let setupAPI = function () {
-   if (process.env.NODE_ENV === 'production') {
-      apiHost = JSON.stringify('http://localhost:8080');
-   } else if (process.env.NODE_ENV === 'development') {
-      apiHost = JSON.stringify('/api');
-   }
-};
-
-setupAPI();
-
 module.exports = {
    resolve: {
       extensions: ['.js', '.json', '.ts', '.tsx'],
@@ -53,9 +41,6 @@ module.exports = {
          template: 'template.html',
       }),
       new MiniCssExtractPlugin(),
-      new webpack.DefinePlugin({
-         __API__: apiHost,
-      }),
       //! uncomment this line to visualize webpack bundles in browser
       // new BundleAnalyzerPlugin(),
    ],

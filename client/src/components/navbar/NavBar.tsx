@@ -48,7 +48,6 @@ const NavBar = () => {
    const handleLogout = async () => {
       try {
          let response = await axios.post('/api/logout');
-
          console.log('response:', response);
          navigate('/');
       } catch (err) {

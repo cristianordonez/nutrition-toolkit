@@ -1,7 +1,7 @@
 import React from 'react';
 import './index.scss';
 import ReactDOM from 'react-dom/client';
-import App from './pages/App';
+import { App } from './pages/App';
 import { BrowserRouter } from 'react-router-dom';
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { ThemeProvider } from '@emotion/react';

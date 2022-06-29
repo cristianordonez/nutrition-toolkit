@@ -25,6 +25,13 @@ const connectUser = async (user: User) => {
    return spoonacularUser;
 };
 
+//TODO add these headers to request
+//   headers: {
+//     'X-RapidAPI-Key': 'c6665925edmsh97ba6837b984c0bp1c8afbjsn5d9d65b60153',
+//     'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+//   }
+// };
+
 const getSpoonacularRecipes = async (recipeQuery: Query): Promise<object> => {
    console.log('recipeQuery:', recipeQuery);
    //if user does not send diet or intolerance, must enter in false instead for request to function

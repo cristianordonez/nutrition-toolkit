@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-import Typography from '@mui/material/Typography';
 import ScreenSearchDesktopIcon from '@mui/icons-material/ScreenSearchDesktop';
-import Stack from '@mui/material/Stack';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+import { Stack, Tabs, Tab, Typography } from '@mui/material';
 import SearchFormSuggested from './search-form-suggested/SearchFormSuggested';
 import SearchFormCustom from './search-form-custom/SearchFormCustom';
 
-const SearchForm = ({
+export const SearchForm = ({
    handleSubmit,
    route,
    setRoute,
@@ -48,5 +45,3 @@ const SearchForm = ({
       </>
    );
 };
-
-export default SearchForm;
