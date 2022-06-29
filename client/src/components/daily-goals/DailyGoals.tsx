@@ -1,15 +1,8 @@
 import React from 'react';
-import {
-   Typography,
-   CircularProgress,
-   Dialog,
-   DialogContent,
-   Box,
-   TextField,
-   Button,
-   DialogActions,
-   DialogTitle,
-} from '@mui/material';
+import './DailyGoals.scss';
+import { Typography, CircularProgress } from '@mui/material';
+import { GoalCardItem } from './goal-card-item/GoalCardItem';
+
 interface Props {
    goals: {
       user_id: number;
@@ -29,10 +22,31 @@ interface Props {
 }
 
 export const DailyGoals = ({ goals }: Props) => {
+   let nutrients = ['Carbohydrates', 'Protein', 'Fat'];
    return (
-      <>
+      <div className='daily-goals'>
          <Typography variant='h6'>Daily Macronutrient Goals</Typography>
-         <CircularProgress variant='indeterminate' size={25} />
-      </>
+         <CircularProgress
+            variant='determinate'
+            size={200}
+            value={100}
+            thickness={1}
+         />
+         <div className='daily-goals-heading'>
+            <Typography variant='body1'>Total</Typography>
+            <Typography variant='body1'>
+               <em>{goals.total_calories}</em>
+            </Typography>
+            <Typography variant='body1'>Calories</Typography>
+         </div>
+         <div className='daily-goals-items'>
+            <GoalCardItem
+               count={goals.total_carbohydrates}
+               type={'Carbohydrates'}
+            />
+            <GoalCardItem count={goals.total_protein} type={'Protein'} />
+            <GoalCardItem count={goals.total_fat} type={'Fat'} />
+         </div>
+      </div>
    );
 };

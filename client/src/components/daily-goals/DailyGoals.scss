@@ -1,0 +1,13 @@
+@use '../../index.scss' as *;
+
+.daily-goals {
+   @include flex-center-column();
+   .daily-goals-heading {
+      position: relative;
+      bottom: 20%;
+      @include flex-center-column();
+   }
+   .daily-goals-items {
+      @include flex-center-column();
+   }
+}

@@ -1,16 +1,20 @@
 import React from 'react';
-import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
-import FormControl from '@mui/material/FormControl';
-import FormHelperText from '@mui/material/FormHelperText';
-import InputLabel from '@mui/material/InputLabel';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import InputAdornment from '@mui/material/InputAdornment';
-import Input from '@mui/material/Input';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import { SelectChangeEvent } from '@mui/material/Select';
+import {
+   TextField,
+   MenuItem,
+   Select,
+   Input,
+   InputAdornment,
+   Button,
+   Typography,
+   InputLabel,
+   FormHelperText,
+   FormControl,
+   Stack,
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { NutrientInputForm } from '../NutrientInputForm';
 
 interface Props {
    route: any;
@@ -115,54 +119,34 @@ const SearchFormCustom = ({
                {/* CALORIES */}
                <Stack direction='row'>
                   {/* MIN KCAL */}
-                  <FormControl
-                     fullWidth
-                     variant='standard'
-                     sx={{ m: 1, mt: 3 }}
-                  >
-                     <Input
-                        id='minCalories'
-                        type='number'
-                        required
-                        value={values.minCalories}
-                        onChange={handleInputChange}
-                        endAdornment={
-                           <InputAdornment position='end'>kcal</InputAdornment>
-                        }
-                        inputProps={{
-                           'aria-label': 'minimum calories',
-                        }}
-                     />
-                     <FormHelperText>Minimum Calories</FormHelperText>
-                  </FormControl>
+                  <NutrientInputForm
+                     value={values.minCalories}
+                     id={'minCalories'}
+                     handleInputChange={handleInputChange}
+                     measurement={'kcal'}
+                     formHelperText={'Minimum Calories'}
+                  />
                   {/* MAX KCAL */}
-                  <FormControl
-                     fullWidth
-                     variant='standard'
-                     sx={{ m: 1, mt: 3 }}
-                  >
-                     <Input
-                        id='maxCalories'
-                        type='number'
-                        required
-                        value={values.maxCalories}
-                        onChange={handleInputChange}
-                        endAdornment={
-                           <InputAdornment position='end'>kcal</InputAdornment>
-                        }
-                        inputProps={{
-                           'aria-label': 'maximum calories',
-                        }}
-                     />
-                     <FormHelperText>Maximum Calories</FormHelperText>
-                  </FormControl>
+                  <NutrientInputForm
+                     value={values.maxCalories}
+                     id={'maxCalories'}
+                     handleInputChange={handleInputChange}
+                     measurement={'kcal'}
+                     formHelperText={'Maximum Calories'}
+                  />
                </Stack>
-
                <Typography variant='h6'>Choose Carb Range</Typography>
                {/* CARBS */}
                <Stack direction='row'>
                   {/* MIN CARBS */}
-                  <FormControl
+                  <NutrientInputForm
+                     value={values.minCarbs}
+                     id={'minCarbs'}
+                     handleInputChange={handleInputChange}
+                     measurement={'g'}
+                     formHelperText={'Minimum Carbs'}
+                  />
+                  {/* <FormControl
                      variant='standard'
                      fullWidth
                      sx={{ m: 1, mt: 3 }}
@@ -181,9 +165,16 @@ const SearchFormCustom = ({
                         }}
                      />
                      <FormHelperText>Minimum Carbs</FormHelperText>
-                  </FormControl>
+                  </FormControl> */}
                   {/* MAX CARBS */}
-                  <FormControl
+                  <NutrientInputForm
+                     value={values.maxCarbs}
+                     id={'maxCarbs'}
+                     handleInputChange={handleInputChange}
+                     measurement={'g'}
+                     formHelperText={'Maximum Carbs'}
+                  />
+                  {/* <FormControl
                      variant='standard'
                      fullWidth
                      sx={{ m: 1, mt: 3 }}
@@ -202,13 +193,20 @@ const SearchFormCustom = ({
                         }}
                      />
                      <FormHelperText>Maximum Carbs</FormHelperText>
-                  </FormControl>
+                  </FormControl> */}
                </Stack>
                <Typography variant='h6'>Choose Protein Range</Typography>
                {/* PROTEIN */}
                <Stack direction='row'>
                   {/* MIN PROTEIN */}
-                  <FormControl
+                  <NutrientInputForm
+                     value={values.minProtein}
+                     id={'minProtein'}
+                     handleInputChange={handleInputChange}
+                     measurement={'g'}
+                     formHelperText={'Minimum Protein'}
+                  />
+                  {/* <FormControl
                      variant='standard'
                      fullWidth
                      sx={{ m: 1, mt: 3 }}
@@ -227,9 +225,16 @@ const SearchFormCustom = ({
                         }}
                      />
                      <FormHelperText>Minimum Protein</FormHelperText>
-                  </FormControl>
+                  </FormControl> */}
                   {/* MAX PROTEIN */}
-                  <FormControl
+                  <NutrientInputForm
+                     value={values.maxProtein}
+                     id={'maxProtein'}
+                     handleInputChange={handleInputChange}
+                     measurement={'g'}
+                     formHelperText={'Maximum Protein'}
+                  />
+                  {/* <FormControl
                      variant='standard'
                      fullWidth
                      sx={{ m: 1, mt: 3 }}
@@ -248,13 +253,20 @@ const SearchFormCustom = ({
                         }}
                      />
                      <FormHelperText>Maximum Protein</FormHelperText>
-                  </FormControl>
+                  </FormControl> */}
                </Stack>
                <Typography variant='h6'>Choose Fat Range</Typography>
                {/* FAT */}
                <Stack direction='row'>
                   {/* MIN FAT*/}
-                  <FormControl
+                  <NutrientInputForm
+                     value={values.minFat}
+                     id={'minFat'}
+                     handleInputChange={handleInputChange}
+                     measurement={'kcal'}
+                     formHelperText={'Minimum Fat'}
+                  />
+                  {/* <FormControl
                      variant='standard'
                      fullWidth
                      sx={{ m: 1, mt: 3 }}
@@ -273,9 +285,16 @@ const SearchFormCustom = ({
                         }}
                      />
                      <FormHelperText>Minimum Fat</FormHelperText>
-                  </FormControl>
+                  </FormControl> */}
                   {/* FAT */}
-                  <FormControl
+                  <NutrientInputForm
+                     value={values.maxFat}
+                     id={'maxFat'}
+                     handleInputChange={handleInputChange}
+                     measurement={'g'}
+                     formHelperText={'Maximum Fat'}
+                  />
+                  {/* <FormControl
                      variant='standard'
                      fullWidth
                      sx={{ m: 1, mt: 3 }}
@@ -294,7 +313,7 @@ const SearchFormCustom = ({
                         }}
                      />
                      <FormHelperText>Maximum Fat</FormHelperText>
-                  </FormControl>
+                  </FormControl> */}
                </Stack>
                <Button type='submit'>Submit</Button>
             </Stack>
