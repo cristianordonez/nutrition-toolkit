@@ -85,11 +85,11 @@ export const SearchForm = ({
             <SearchFormSuggested
                route={route}
                values={values}
-               handleSuggestedSubmit={handleSuggestedSubmit}
                handleRouteChange={handleRouteChange}
                handleInputChange={handleInputChange}
                handleTypeSelect={handleTypeSelect}
                goals={goals}
+               handleSuggestedSubmit={handleSuggestedSubmit}
             />
          )}
       </>

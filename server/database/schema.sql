@@ -1,123 +1,75 @@
+CREATE TABLE users (
+	username varchar(50) NOT NULL,
+	email varchar(45) NOT NULL,
+	spoonacular_username varchar(45) NOT NULL,
+	spoonacular_password varchar(45) NOT NULL,
+	spoonacular_hash varchar(45) NOT NULL,
+	hash varchar(100) NOT NULL,
+	id serial4 NOT NULL,
+	intolerances _text NULL,
+	CONSTRAINT users_pk PRIMARY KEY (id)
+);
 
 
--- -----------------------------------------------------
--- Table users`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS users` ;
+-- public.daily_goals definition
 
-CREATE TABLE IF NOT EXISTS users (
-  username VARCHAR(50) NOT NULL,
-  first_name VARCHAR(25) NOT NULL,
-  last_name VARCHAR(45) NOT NULL,
-  email VARCHAR(45) NOT NULL,
-  spoonacular_username VARCHAR(45) NOT NULL,
-  spoonacular_password VARCHAR(45) NOT NULL,
-  spoonacular_hash VARCHAR(45) NOT NULL,
-  hash VARCHAR(100) NOT NULL,
-  id_user VARCHAR(45) NOT NULL,
-  PRIMARY KEY (id_user),
-  UNIQUE INDEX EMAIL_UNIQUE (email ASC) VISIBLE,
-  UNIQUE INDEX USERNAME_UNIQUE (username ASC) VISIBLE,
-  UNIQUE INDEX USER_ID_UNIQUE (id_user ASC) VISIBLE)
+-- Drop table
 
+-- DROP TABLE public.daily_goals;
 
-
--- -----------------------------------------------------
--- Table diet_types`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS diet_types ;
-
-CREATE TABLE IF NOT EXISTS diet_types (
-  type VARCHAR(45) NOT NULL,
-  id_type VARCHAR(45) NOT NULL,
-  PRIMARY KEY (id_type),
-  UNIQUE INDEX TYPE (type ASC) VISIBLE,
-  UNIQUE INDEX TYPE_ID_UNIQUE (id_type ASC) VISIBLE)
-ENGINE = InnoDB;
+CREATE TABLE public.daily_goals (
+	total_carbohydrates int4 NULL,
+	min_carbs_per_meal int4 NULL,
+	max_carbs_per_meal int4 NULL,
+	total_protein int4 NULL,
+	min_protein_per_meal int4 NULL,
+	max_protein_per_meal int4 NULL,
+	total_fat int4 NULL,
+	min_fat_per_meal int4 NULL,
+	max_fat_per_meal int4 NULL,
+	total_calories int4 NULL,
+	min_calories_per_meal int4 NULL,
+	max_calories_per_meal int4 NULL,
+	user_id int4 NOT NULL,
+	id serial4 NOT NULL,
+	CONSTRAINT daily_goals_pk PRIMARY KEY (id),
+	CONSTRAINT daily_goals_unique UNIQUE (user_id)
+);
 
 
--- -----------------------------------------------------
--- Table diet_intolerances`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS diet_intolerances` ;
+-- public.daily_goals foreign keys
 
-CREATE TABLE IF NOT EXISTS diet_intolerances (
-  id_intolerance VARCHAR(45) NOT NULL,
-  intolerance VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (id_intolerance),
-  UNIQUE INDEX INTOLERANCE_ID_UNIQUE (id_intolerance ASC) VISIBLE)
+ALTER TABLE public.daily_goals ADD CONSTRAINT daily_goals_fk FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
--- -----------------------------------------------------
--- Table user_intolerances`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS user_intolerances` ;
+-- public.user_intolerances definition
 
-CREATE TABLE IF NOT EXISTS user_intolerances (
-  iduser_intolerances VARCHAR(45) NOT NULL,
-  intolerance_id VARCHAR(45) NOT NULL,
-  user_intolerance_id VARCHAR(45) NOT NULL,
-  PRIMARY KEY (iduser_intolerances),
-  CONSTRAINT intolerance_id
-    FOREIGN KEY (intolerance_id)
-    REFERENCES diet_intolerances (id_intolerance)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT user_intolerance_id
-    FOREIGN KEY (user_intolerance_id)
-    REFERENCES users (id_user)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+-- Drop table
+
+-- DROP TABLE public.user_intolerances;
+
+CREATE TABLE public.user_intolerances (
+	user_id int4 NOT NULL,
+	id serial4 NOT NULL,
+	intolerances _text NULL,
+	CONSTRAINT user_intolerances_pk PRIMARY KEY (id)
+);
 
 
+-- public.user_intolerances foreign keys
 
--- -----------------------------------------------------
--- Table user_diettypes`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS user_diettypes` ;
+ALTER TABLE public.user_intolerances ADD CONSTRAINT user_intolerances_fk FOREIGN KEY (user_id) REFERENCES public.users(id);
 
-CREATE TABLE IF NOT EXISTS user_diettypes (
-  iduser_diettypes VARCHAR(45) NOT NULL,
-  user_diet_id VARCHAR(45) NOT NULL,
-  type_id VARCHAR(45) NOT NULL,
-  PRIMARY KEY (iduser_diettypes),
-  CONSTRAINT user_diet_id
-    FOREIGN KEY (user_diet_id)
-    REFERENCES users (id_user)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT diet_types_id
-    FOREIGN KEY (type_id)
-    REFERENCES diet_types (id_type)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+-- public."session" definition
 
+-- Drop table
 
+-- DROP TABLE public."session";
 
--- -----------------------------------------------------
--- Table daily_goals`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS daily_goals ;
-
-CREATE TABLE IF NOT EXISTS daily_goals (
-  id_daily_goals INT NOT NULL,
-  total_carbohydrates INT NULL DEFAULT NULL,
-  min_carbs_per_meal INT NULL DEFAULT NULL,
-  max_carbs_per_meal INT NULL DEFAULT NULL,
-  total_protein INT NULL DEFAULT NULL,
-  min_protein_per_meal INT NULL DEFAULT NULL,
-  max_protein_per_meal INT NULL DEFAULT NULL,
-  total_fat INT NULL DEFAULT NULL,
-  min_fat_per_meal INT NULL DEFAULT NULL,
-  max_fat_per_meal INT NULL DEFAULT NULL,
-  total_calories INT NULL DEFAULT NULL,
-  min_calories_per_meal INT NULL DEFAULT NULL,
-  max_calories_per_meal INT NULL DEFAULT NULL,
-  user_id VARCHAR(45) NOT NULL,
-  PRIMARY KEY (id_daily_goals),
-  CONSTRAINT userId
-    FOREIGN KEY (user_id)
-    REFERENCES users (id_user)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-
+CREATE TABLE public."session" (
+	sid varchar NOT NULL,
+	sess json NOT NULL,
+	expire timestamp(6) NOT NULL,
+	CONSTRAINT session_pkey PRIMARY KEY (sid)
+);
+CREATE INDEX "IDX_session_expire" ON public.session USING btree (expire);

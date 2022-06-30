@@ -10,7 +10,6 @@ import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 interface Props {
    route: any;
    values: any;
-
    handleSubmit: any;
    handleRouteChange: any;
    handleInputChange: any;

@@ -75,3 +75,4 @@ npm run cypress
 -  [React code-splitting](https://reactjs.org/docs/code-splitting.html)
 -  [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)
    https://spoonacular.com/food-api/docs
+   https://www.rithmschool.com/courses/intermediate-node-express/api-tests-with-jest

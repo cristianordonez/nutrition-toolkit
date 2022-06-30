@@ -40,8 +40,10 @@ export const createAccount = async (req: Request, res: Response) => {
          user.hash = hash;
          let dbResponse = await userModel.create(user); // then, send data to model to store all info in db
          let session: any = req.session; // put user id into req.sessions
+         // let req.session = req.session as any;
          session.user_id = dbResponse.rows[0].id;
-         res.send('You have successfully created an account!');
+         console.log('req.session:', req.session);
+         res.status(201).send('You have successfully created an account!');
       }
    } catch (err) {
       console.log('err:', err);
@@ -51,7 +53,7 @@ export const createAccount = async (req: Request, res: Response) => {
 
 //# handles initial setting of daily goals and intolerances
 export const createMetrics = async (req: Request, res: Response) => {
-   console.log('req.session:', req.session);
+   console.log('req.session in create metrics controller:', req.session);
 
    try {
       let session: any = req.session;
