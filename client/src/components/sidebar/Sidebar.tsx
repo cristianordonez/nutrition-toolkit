@@ -13,7 +13,6 @@ export const Sidebar = ({
    goals,
 }: any) => {
    const drawerWidth = 350;
-   console.log('goals:', goals);
    return (
       <>
          {/* MOBILE */}

@@ -40,8 +40,7 @@ router.post(
       failureMessage: true,
    }),
    (req: Request, res: Response) => {
-      console.log('req:', req.user);
-      res.status(201).send(req.user);
+      res.status(200).send(req.user);
    }
 );
 
@@ -52,7 +51,7 @@ router.post('/logout', (req: any, res: Response, next: NextFunction) => {
          return next(err);
       }
       req.session.destroy();
-      res.json('You have been logged out.');
+      res.status(200).send('You have been logged out');
    });
 });
 

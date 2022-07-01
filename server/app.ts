@@ -102,10 +102,8 @@ passport.deserializeUser((id: string, cb) => {
       [parseInt(id, 10)],
       (err, results) => {
          if (err) {
-            console.log('err in deserialize user:', err);
             return cb(err);
          } else {
-            console.log('results in deserialize user:', results);
             cb(null, results.rows[0]);
          }
       }
@@ -118,4 +116,4 @@ app.use('/api/recipes', recipesRoute);
 app.use('/api/menuItems', menuItemsRoute);
 app.use('/api/groceryProducts', groceryProductsRoute);
 
-export default app;
+export default app; //export to be used for tests and in server.js

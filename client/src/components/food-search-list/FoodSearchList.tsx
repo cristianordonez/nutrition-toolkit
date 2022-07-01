@@ -65,8 +65,6 @@ type MenuItemNutrients = {
 };
 
 const FoodSearchList = ({ apiData, route, handleLoadMore }: any) => {
-   console.log('apiData:', apiData);
-
    return (
       <>
          <Stack direction='row' spacing={1}>

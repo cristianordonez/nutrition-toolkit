@@ -8,7 +8,6 @@ interface Props {
 }
 
 export const QueryTextField = ({ query, handleInputChange }: Props) => {
-   console.log('handleInputChange:', handleInputChange);
    return (
       <TextField
          id='query'

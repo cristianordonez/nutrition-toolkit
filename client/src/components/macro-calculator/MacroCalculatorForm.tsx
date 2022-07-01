@@ -109,7 +109,6 @@ export const MacroCalculatorForm = ({ handleFinalSignUpForm }: any) => {
       });
       try {
          let response = await axios.post(`/api/metrics`, metrics);
-         console.log('response:', response);
          navigate(`/${response.data}/search`);
       } catch (err) {
          console.log('err:', err);

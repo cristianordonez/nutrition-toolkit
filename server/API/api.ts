@@ -33,7 +33,6 @@ const connectUser = async (user: User) => {
 // };
 
 const getSpoonacularRecipes = async (recipeQuery: Query): Promise<object> => {
-   console.log('recipeQuery:', recipeQuery);
    //if user does not send diet or intolerance, must enter in false instead for request to function
    let dietQuery = recipeQuery.diet.length ? recipeQuery.diet : false;
    let intoleranceQuery = recipeQuery.intolerance.length

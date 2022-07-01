@@ -4,7 +4,7 @@
    "description": "Meal planning app",
    "main": "server.js",
    "scripts": {
-      "test": "jest",
+      "test": "jest --runInBand --detectOpenHandles",
       "cypress": "cypress open",
       "dev": "concurrently -n 'webpack,server' -c 'bgBlue.bold,bgGreen.bold' \"npx webpack serve --config webpack.dev.js\" \"nodemon server/server.js\"",
       "start": "webpack --config webpack.prod.js && nodemon server/server.js"

@@ -141,7 +141,6 @@ export const Search = () => {
    useEffect(() => {
       let promise = axios.get('/api/metrics');
       promise.then((results) => {
-         console.log('results:', results);
          setGoals(results.data);
       });
       promise.catch((err) => {
