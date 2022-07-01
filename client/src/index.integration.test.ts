@@ -6,7 +6,7 @@ process.env.NODE_ENV = 'test'; //set NODE_ENV to 'test' so that test database is
 import supertest from 'supertest';
 import { expect } from '../../jestGlobals';
 import app from '../../server/app';
-import { pool } from '../../server/database/db';
+import { db } from '../../server/database/db';
 const request = supertest(app);
 
 let userQuery = `CREATE TABLE users (
@@ -44,8 +44,8 @@ let cookie: any; //create cookie variable to be set so that sessions are not res
 let testCookie: any; //used for the account in the before and after hooks
 
 beforeAll(async () => {
-   await pool.query(userQuery);
-   await pool.query(goalsQuery);
+   await db.query(userQuery);
+   await db.query(goalsQuery);
    let beforeResponse = await request.post('/api/signup').send({
       username: 'test',
       email: 'test@email.com',
@@ -55,11 +55,10 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-   await pool.query('DROP TABLE users');
-   await pool.query('DROP TABLE daily_goals');
+   await db.query('DROP TABLE users');
+   await db.query('DROP TABLE daily_goals');
    await request.post('/api/logout').set('Cookie', testCookie);
    // pool.end();
-   await pool.end();
 });
 
 console.log('request:', request);

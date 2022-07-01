@@ -1,4 +1,5 @@
-import { pool } from '../database/db';
+import { db } from '../database/db';
+console.log('db:', db);
 
 type User = {
    username: string;
@@ -21,7 +22,7 @@ export const create = async function (user: User) {
       VALUES ('${user.username}', '${user.email}',
        '${user.spoonacular_username}', '${user.spoonacular_password}', '${user.spoonacular_hash}',
         '${user.hash}') RETURNING id`;
-   let dbResponse = await pool.query(createQuery);
+   let dbResponse = await db.query(createQuery);
    return dbResponse;
 };
 
@@ -30,7 +31,7 @@ export const createUserIntolerances = function (intolerances: Intolerances) {
    let dbQuery = `UPDATE users SET intolerances = '{${intolerances.intolerances}}'
    `;
    console.log('dbQuery:', dbQuery);
-   let result = pool.query(dbQuery);
+   let result = db.query(dbQuery);
 
    return result;
 };
@@ -38,13 +39,13 @@ export const createUserIntolerances = function (intolerances: Intolerances) {
 //# check if user already exists by their email address
 export const getByEmail = async function (email: string) {
    const getQuery = `SELECT * FROM users WHERE email='${email}'`;
-   let user = await pool.query(getQuery);
+   let user = await db.query(getQuery);
    return user;
 };
 
 //# retrieves user based on username
 export const getByUsername = async function (username: string) {
    const getQuery = `SELECT * FROM users WHERE username='${username}'`;
-   let user = await pool.query(getQuery);
+   let user = await db.query(getQuery);
    return user;
 };

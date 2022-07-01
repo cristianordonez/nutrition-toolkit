@@ -1,11 +1,15 @@
-import { Pool, Client } from 'pg';
-const db = process.env.NODE_ENV === 'test' ? 'mealplans-test' : 'mealplans';
+const database =
+   process.env.NODE_ENV === 'test' ? 'mealplans-test' : 'mealplans';
 
-console.log('db:', db);
-export const pool = new Pool({
+const pgp = require('pg-promise')();
+
+const cn = {
    user: process.env.USER,
    host: process.env.HOST,
-   database: db,
+   database: database,
    password: process.env.PASSWORD,
    port: 5432,
-});
+};
+
+// Creating a new database instance from the connection details:
+export const db = pgp(cn);

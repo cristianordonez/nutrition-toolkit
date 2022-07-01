@@ -5,6 +5,7 @@ import * as apiHelpers from '../API/api';
 
 export const getRecipes = async function (req: Request, res: Response) {
    const query = req.query as unknown as Query;
+   console.log('query:', query);
    try {
       if (req.query) {
          let recipes = await apiHelpers.getSpoonacularRecipes(query);

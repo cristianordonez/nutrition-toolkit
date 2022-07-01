@@ -1,19 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './LoginForm.scss';
 import LoginImage from '../../../img/healthy-eating.svg';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
+import { Grid, Stack, Paper, Button } from '@mui/material';
 import { Typography } from '@mui/material';
+import { PasswordTextField } from '../text-fields/PasswordTextField';
+import { UsernameTextField } from '../text-fields/UsernameTextField';
+import { useNavigate } from 'react-router-dom';
+
+import axios from 'axios';
 
 export const LoginForm = ({
+   showSignup,
    handleRedirectToSignup,
-   usernameTextField,
-   emailTextField,
-   passwordTextField,
-   handleLogin,
+   error,
+   setError,
+   errorMessage,
+   setErrorMessage,
+   handleErrorAlert,
 }: any) => {
+   const [loginValues, setLoginValues] = useState({
+      username: '',
+      password: '',
+      email: '',
+   });
+   const handleLoginChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setLoginValues({
+         ...loginValues,
+         [event.target.name]: event.target.value,
+      });
+   };
+
+   const navigate = useNavigate();
+
+   const handleLogin = async (event: React.SyntheticEvent) => {
+      event.preventDefault();
+      try {
+         let response = await axios.post(`/api/login`, loginValues);
+         if (response.status === 200) {
+            setError(false);
+            navigate(`/${response.data.id}/search`, { replace: true });
+         }
+      } catch (err: any) {
+         setErrorMessage('No matching username and password found.'); //error message used in the snackbar
+         setError(true); //used to show error helper text in text field
+         handleErrorAlert();
+         console.log('err:', err);
+      }
+   };
+
    return (
       <>
          <Grid container>
@@ -30,9 +64,16 @@ export const LoginForm = ({
                   <Typography variant='subtitle1'>
                      Please enter your details
                   </Typography>
-                  {usernameTextField}
-                  {/* {emailTextField} */}
-                  {passwordTextField}
+                  <UsernameTextField
+                     showSignup={showSignup}
+                     handleLoginChange={handleLoginChange}
+                  />
+                  <PasswordTextField
+                     error={error}
+                     showSignup={showSignup}
+                     errorMessage={errorMessage}
+                     handleLoginChange={handleLoginChange}
+                  />
                   <Button type='submit' fullWidth variant='contained'>
                      Log In
                   </Button>

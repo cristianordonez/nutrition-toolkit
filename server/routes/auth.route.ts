@@ -4,6 +4,7 @@ import passport from 'passport';
 const router = Router();
 
 router.get('/', (req: Request, res: Response) => {
+   console.log('req.session:', req.session);
    res.status(200).json({
       status: 'success',
       data: {
@@ -40,6 +41,10 @@ router.post(
       failureMessage: true,
    }),
    (req: Request, res: Response) => {
+      console.log('req.user:', req.user);
+      let session: any = req.session;
+      let user: any = req.user;
+      session.user_id = user.id;
       res.status(200).send(req.user);
    }
 );
@@ -59,6 +64,7 @@ router.post('/logout', (req: any, res: Response, next: NextFunction) => {
 //# used so that client can be sent error message from server
 router.get('/error', (req: Request, res: Response) => {
    let session: any = req.session;
+   console.log('session in error route:', session);
    res.status(500).send('Incorrect username or password.');
 });
 

@@ -108,7 +108,9 @@ export const MacroCalculatorForm = ({ handleFinalSignUpForm }: any) => {
          activityLevel,
       });
       try {
+         console.log('metrics:', metrics);
          let response = await axios.post(`/api/metrics`, metrics);
+         console.log('response:', response);
          navigate(`/${response.data}/search`);
       } catch (err) {
          console.log('err:', err);

@@ -11,12 +11,11 @@ import { router as recipesRoute } from './routes/recipe.route';
 import { router as menuItemsRoute } from './routes/menuitems.route';
 import { router as groceryProductsRoute } from './routes/groceryproducts.route';
 import { Strategy as LocalStrategy } from 'passport-local';
-import { pool } from './database/db';
+import { db } from './database/db';
 // import pgSession from 'connect-pg-simple';
 
 import bcrypt from 'bcrypt';
 const pgSession = require('connect-pg-simple')(session);
-const port = 8080;
 const app = express();
 
 //MIDDLEWARE
@@ -28,19 +27,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
 
+const database =
+   process.env.NODE_ENV === 'test' ? 'mealplans-test' : 'mealplans';
+
 const conObject = {
    user: process.env.USER,
    password: process.env.PASSWORD,
    host: process.env.HOST, // or whatever it may be
    port: 5432,
-   database: process.env.DATABASE,
+   database: database,
 };
 
 const pgStoreConfig = {
    conObject: conObject,
-   //conString: 'postgres://mehmood:mehmood@localhost:5432/test_db', // or this
-   // conObject: conObject,// or this,
-   // pool: new (require('pg').Pool({ /* pool options here*/}))// or this
+   // conString: `postgres://${process.env.USER}:${process.env.PASSWORD}@${process.env.HOST}:5432/${database}`,
 };
 
 app.use(
@@ -61,53 +61,50 @@ app.use(passport.session());
 
 passport.use(
    new LocalStrategy((username, password, cb) => {
-      pool.query(
-         'SELECT id, username, hash, email FROM users WHERE username=$1',
-         [username],
-         (err, result) => {
-            if (err) {
-               console.log('err:', err);
-               return cb(err);
-            }
-            if (result.rows.length > 0) {
-               const first = result.rows[0];
+      db.query(
+         `SELECT id, username, hash, email FROM users WHERE username='${username}'`
+      )
+         .then(function (result: any) {
+            if (result.length) {
+               const first = result[0];
                bcrypt.compare(password, first.hash, function (err, res) {
                   if (res) {
                      cb(null, {
                         id: first.id,
                         username: first.username,
-                        // email: first.email,
                      });
                   } else {
-                     cb(null, false, { message: 'bad password' });
+                     cb(null, false, { message: 'Incorrect password' });
                   }
                });
-            } else {
-               cb(null, false);
             }
-         }
-      );
+         })
+         .catch(function (err: any) {
+            console.log('err in passport use local strategy:', err);
+            return cb(err);
+         });
    })
 );
 
 //determines which data of user object should be stored in session to be accessed
 // below in the deserializeUser function
 passport.serializeUser((user: any, done) => {
+   console.log('here in serialize user');
+   console.log('user:', user);
    done(null, user.id);
 });
 
 passport.deserializeUser((id: string, cb) => {
-   pool.query(
-      'SELECT id, username, email, spoonacular_username FROM users WHERE id = $1',
-      [parseInt(id, 10)],
-      (err, results) => {
-         if (err) {
-            return cb(err);
-         } else {
-            cb(null, results.rows[0]);
-         }
-      }
-   );
+   db.query(
+      `SELECT id, username, email, spoonacular_username FROM users WHERE id=${id}`
+   )
+      .then(function (results: any) {
+         cb(null, results[0]);
+      })
+      .catch(function (err: any) {
+         console.log('err in deserialize user:', err);
+         return cb(err);
+      });
 });
 
 //ROUTES

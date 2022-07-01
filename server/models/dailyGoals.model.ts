@@ -1,4 +1,4 @@
-import { pool } from '../database/db';
+import { db } from '../database/db';
 
 interface Goals {
    user_id: number;
@@ -30,12 +30,14 @@ export const createGoals = (goals: Goals) => {
          max_carbs_per_meal=${goals.max_carbs_per_meal}, total_protein=${goals.total_protein}, min_protein_per_meal=${goals.min_protein_per_meal}, max_protein_per_meal=${goals.max_protein_per_meal},
           total_fat=${goals.total_fat}, min_fat_per_meal=${goals.min_fat_per_meal}, max_fat_per_meal=${goals.max_fat_per_meal},
            total_calories=${goals.total_calories}, min_calories_per_meal=${goals.min_calories_per_meal}, max_calories_per_meal=${goals.max_calories_per_meal} `;
-   let response = pool.query(dbQuery);
+   let response = db.query(dbQuery);
    return response;
 };
 
 export const getGoals = (user_id: string) => {
+   console.log('user_id:', user_id);
+   console.log('here in get goals');
    let dbQuery = `SELECT * FROM daily_goals WHERE user_id = ${user_id}`;
-   let response = pool.query(dbQuery);
+   let response = db.query(dbQuery);
    return response;
 };
