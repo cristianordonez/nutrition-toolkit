@@ -4,7 +4,7 @@
    "description": "Meal planning app",
    "main": "server.js",
    "scripts": {
-      "test": "jest --runInBand --detectOpenHandles",
+      "test": "jest",
       "cypress": "cypress open",
       "dev": "concurrently -n 'webpack,server' -c 'bgBlue.bold,bgGreen.bold' \"npx webpack serve --config webpack.dev.js\" \"nodemon server/server.js\"",
       "start": "webpack --config webpack.prod.js && nodemon server/server.js"
@@ -51,8 +51,9 @@
       "@babel/core": "^7.18.2",
       "@babel/preset-env": "^7.18.2",
       "@babel/preset-react": "^7.17.12",
+      "@testing-library/jest-dom": "^5.16.4",
       "@testing-library/react": "^13.3.0",
-      "@testing-library/user-event": "^14.2.0",
+      "@testing-library/user-event": "^14.2.1",
       "@types/bcrypt": "^5.0.0",
       "@types/compression": "^1.7.2",
       "@types/connect-pg-simple": "^7.0.0",

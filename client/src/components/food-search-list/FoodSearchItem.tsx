@@ -17,7 +17,7 @@ type NutrientType = {
    unit: string;
 };
 
-const FoodSearchItem = ({
+export const FoodSearchItem = ({
    route,
    image,
    title,
@@ -120,5 +120,3 @@ const FoodSearchItem = ({
       </>
    );
 };
-
-export default FoodSearchItem;

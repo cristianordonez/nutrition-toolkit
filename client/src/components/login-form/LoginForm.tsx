@@ -6,7 +6,6 @@ import { Typography } from '@mui/material';
 import { PasswordTextField } from '../text-fields/PasswordTextField';
 import { UsernameTextField } from '../text-fields/UsernameTextField';
 import { useNavigate } from 'react-router-dom';
-
 import axios from 'axios';
 
 export const LoginForm = ({
@@ -18,19 +17,19 @@ export const LoginForm = ({
    setErrorMessage,
    handleErrorAlert,
 }: any) => {
+   const navigate = useNavigate();
+
    const [loginValues, setLoginValues] = useState({
       username: '',
       password: '',
-      email: '',
    });
+
    const handleLoginChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setLoginValues({
          ...loginValues,
          [event.target.name]: event.target.value,
       });
    };
-
-   const navigate = useNavigate();
 
    const handleLogin = async (event: React.SyntheticEvent) => {
       event.preventDefault();
@@ -74,7 +73,12 @@ export const LoginForm = ({
                      errorMessage={errorMessage}
                      handleLoginChange={handleLoginChange}
                   />
-                  <Button type='submit' fullWidth variant='contained'>
+                  <Button
+                     data-testid='login-btn'
+                     type='submit'
+                     fullWidth
+                     variant='contained'
+                  >
                      Log In
                   </Button>
                   <Stack direction='row'>
@@ -87,6 +91,7 @@ export const LoginForm = ({
                      <Button variant='text' onClick={handleRedirectToSignup}>
                         <Typography
                            align='center'
+                           data-testid='create-account-btn'
                            className='login-form-text'
                            variant='caption'
                         >

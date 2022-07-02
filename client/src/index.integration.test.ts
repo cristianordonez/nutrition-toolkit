@@ -58,7 +58,6 @@ afterAll(async () => {
    await db.query('DROP TABLE users');
    await db.query('DROP TABLE daily_goals');
    await request.post('/api/logout').set('Cookie', testCookie);
-   // pool.end();
 });
 
 console.log('request:', request);
@@ -113,7 +112,7 @@ describe('Authentication routes', () => {
          password: 'password',
       });
       expect(loginResponse.statusCode).toBe(200);
-      expect(loginResponse.body).toEqual({ id: 2, username: 'test user' });
+      expect(loginResponse.body.username).toEqual('test user');
    });
 
    test('GET /metrics: should allow user to retrieve metrics from database', async () => {

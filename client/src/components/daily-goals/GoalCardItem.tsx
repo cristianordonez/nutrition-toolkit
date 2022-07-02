@@ -1,6 +1,6 @@
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
+import { Card, CardContent, Typography } from '@mui/material';
 import React from 'react';
-import { Card, CardContent, CardActions, Typography } from '@mui/material';
 
 interface Props {
    count: number;

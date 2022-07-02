@@ -15,6 +15,7 @@ export const ConfirmPasswordTextField = ({
    return (
       <TextField
          required
+         data-testid='confirm-password-textfield'
          error={error}
          label='Confirm Password'
          onChange={handleCreateAccountChange}

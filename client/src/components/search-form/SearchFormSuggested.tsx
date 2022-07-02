@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button, Typography, Stack } from '@mui/material';
-import { NutrientInputForm } from '../helper-components/NutrientInputForm';
-import { SearchInput } from '../helper-components/SearchInput';
-import { QueryTextField } from '../helper-components/QueryTextField';
-import { TypeDropDown } from '../helper-components/TypeDropDown';
+import { NutrientInputForm } from './NutrientInputForm';
+import { SearchInput } from './SearchInput';
+import { QueryTextField } from './QueryTextField';
+import { TypeDropDown } from './TypeDropDown';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 
 // interface Goals {
@@ -31,7 +31,7 @@ interface Props {
    handleSuggestedSubmit: any;
 }
 
-const SearhFormSuggested = ({
+export const SearchFormSuggested = ({
    route,
    values,
    handleRouteChange,
@@ -114,5 +114,3 @@ const SearhFormSuggested = ({
       </>
    );
 };
-
-export default SearhFormSuggested;

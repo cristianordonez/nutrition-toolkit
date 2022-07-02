@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import ScreenSearchDesktopIcon from '@mui/icons-material/ScreenSearchDesktop';
 import { Stack, Tabs, Tab, Typography } from '@mui/material';
-import SearchFormSuggested from './search-form-suggested/SearchFormSuggested';
-import SearchFormCustom from './search-form-custom/SearchFormCustom';
+import { SearchFormSuggested } from './SearchFormSuggested';
+import { SearchFormCustom } from './SearchFormCustom';
 import { SelectChangeEvent } from '@mui/material/Select';
 
 //todo change 0
@@ -32,6 +32,7 @@ interface Props {
    goals: Goals;
    handleSuggestedSubmit: any;
 }
+
 export const SearchForm = ({
    handleSubmit,
    route,

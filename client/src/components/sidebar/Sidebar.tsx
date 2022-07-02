@@ -1,8 +1,7 @@
 import React from 'react';
 import './Sidebar.scss';
-import { DailyGoals } from '../daily-goals/DailyGoals';
+import { DailyGoals } from '../daily-goals';
 import { IconButton, Toolbar, Drawer } from '@mui/material';
-import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 export const Sidebar = ({

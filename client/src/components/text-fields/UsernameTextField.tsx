@@ -14,13 +14,16 @@ export const UsernameTextField = ({
 }: Props) => {
    return (
       <TextField
+         inputProps={{ 'data-testid': 'username-textfield' }}
          required
          onChange={showSignup ? handleCreateAccountChange : handleLoginChange}
          label='Username'
          type='text'
          variant='filled'
          name='username'
+         placeholder='Username'
          fullWidth
+         id='username'
          helperText={'Enter your username'}
       />
    );

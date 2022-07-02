@@ -5,7 +5,7 @@ declare module '*.svg' {
 
 declare global {
    namespace Express {
-      interface User {
+      export interface User {
          id: string;
       }
    }

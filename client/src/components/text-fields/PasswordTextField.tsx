@@ -19,6 +19,7 @@ export const PasswordTextField = ({
    return (
       <TextField
          required
+         data-testid='password-textfield'
          error={error}
          onChange={showSignup ? handleCreateAccountChange : handleLoginChange}
          label='Password'

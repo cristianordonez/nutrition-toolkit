@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Search.scss';
-import { SearchForm } from '../../components/search-form/SearchForm';
-import FoodSearchList from '../../components/food-search-list/FoodSearchList';
+// import { SearchForm } from '../../components/search-form';
+import { SearchForm } from '../../components/search-form';
+import { FoodSearchList } from '../../components/food-search-list';
 import {
    Grid,
    Toolbar,
@@ -13,7 +14,6 @@ import {
 } from '@mui/material';
 import { Sidebar } from '../../components/sidebar/Sidebar';
 import { useAuth } from '../../context/authContext';
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 

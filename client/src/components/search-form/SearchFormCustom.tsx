@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { Button, Typography, Stack } from '@mui/material';
-import { NutrientInputForm } from '../helper-components/NutrientInputForm';
-import { SearchInput } from '../helper-components/SearchInput';
-import { QueryTextField } from '../helper-components/QueryTextField';
-import { TypeDropDown } from '../helper-components/TypeDropDown';
+import { NutrientInputForm } from './NutrientInputForm';
+import { SearchInput } from './SearchInput';
+import { QueryTextField } from './QueryTextField';
+import { TypeDropDown } from './TypeDropDown';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
    handleTypeSelect: any;
 }
 
-const SearchFormCustom = ({
+export const SearchFormCustom = ({
    route,
    values,
    handleSubmit,
@@ -24,18 +24,6 @@ const SearchFormCustom = ({
    handleInputChange,
    handleTypeSelect,
 }: Props): ReactJSXElement => {
-   // const handleRouteChange = (event: SelectChangeEvent) => {
-   //    setRoute(event.target.value);
-   // };
-
-   // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-   //    setValues({ ...values, [event.target.id]: event.target.value });
-   // };
-
-   // const handleTypeSelect = (event: SelectChangeEvent) => {
-   //    setValues({ ...values, type: event.target.value });
-   // };
-
    return (
       <>
          <form onSubmit={handleSubmit}>
@@ -105,5 +93,3 @@ const SearchFormCustom = ({
       </>
    );
 };
-
-export default SearchFormCustom;

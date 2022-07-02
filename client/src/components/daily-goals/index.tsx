@@ -1,7 +1,7 @@
 import React from 'react';
-import './DailyGoals.scss';
+import './index.scss';
 import { Typography, CircularProgress } from '@mui/material';
-import { GoalCardItem } from './goal-card-item/GoalCardItem';
+import { GoalCardItem } from './GoalCardItem';
 
 interface Props {
    goals: {

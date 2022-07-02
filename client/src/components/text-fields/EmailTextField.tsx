@@ -10,6 +10,7 @@ export const EmailTextField = ({ handleCreateAccountChange }: Props) => {
       <TextField
          required
          onChange={handleCreateAccountChange}
+         data-testid='email-textfield'
          label='Email'
          type='email'
          name='email'
