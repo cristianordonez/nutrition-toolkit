@@ -1,12 +1,17 @@
 import axios from 'axios';
-import { Query, User, Account } from './types';
+import {
+   QueryInterface,
+   UserInterface,
+   AccountInterface,
+   MealPlanInterface,
+} from './types';
 
 const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/';
 const X_RAPIDAPI_KEY = process.env.X_RAPIDAPI_KEY;
 const X_RAPIDAPI_HOST = process.env.X_RAPIDAPI_HOST;
 
-export const connectUser = async (user: User) => {
-   const spoonacularUser = await axios.post<Account>(
+export const connectUser = async (user: UserInterface) => {
+   const spoonacularUser = await axios.post<AccountInterface>(
       `${url}/users/connect`,
       user,
       {
@@ -20,7 +25,7 @@ export const connectUser = async (user: User) => {
 };
 
 export const getSpoonacularRecipes = async (
-   recipeQuery: Query
+   recipeQuery: QueryInterface
 ): Promise<object> => {
    //if user does not send diet or intolerance, must enter in false instead for request to function
    // const options = {
@@ -60,7 +65,7 @@ export const getSpoonacularRecipes = async (
    return recipes.data.results;
 };
 
-export const getSpoonacularMenuItems = async (menuQuery: Query) => {
+export const getSpoonacularMenuItems = async (menuQuery: QueryInterface) => {
    //does not use intolerance or diet since API does not accept those values for this request
    const menuItems = await axios.get(`${url}food/menuItems/search`, {
       params: {
@@ -90,7 +95,7 @@ export const getSpoonacularMenuItems = async (menuQuery: Query) => {
 };
 
 export const getSpoonacularGroceryProducts = async (
-   groceryProductsQuery: Query
+   groceryProductsQuery: QueryInterface
 ) => {
    //does not use type, intolerance or diet since API does not accept those values for this request
    const groceryProducts = await axios.get(`${url}food/products/search`, {
@@ -120,18 +125,6 @@ export const getSpoonacularGroceryProducts = async (
    return groceryProducts.data.products;
 };
 
-interface MealPlanItem {
-   date: number;
-   slot: number;
-   position: number;
-   type: string;
-   value: {
-      id: number;
-      servings: number;
-      title: string;
-      imageType: string;
-   };
-}
 export const addToSpoonacularMealplan = async () => {};
 export const deleteFromSpoonacularMealplan = async () => {};
 export const getFromSpoonacularMealplanDay = async () => {};

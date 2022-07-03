@@ -37,9 +37,8 @@ const months: Months = {
    Dec: 11,
 };
 
+//takes in date string and returns date in unix format to provide to API
 export const getFormattedDate = (date: Date | null): FormattedDate => {
-   // const result = {} as FormattedDate;
-   console.log('date:', date);
    let currentDate = date + '';
    let arr = currentDate.split(' ');
    let timeComponents = arr[4];
@@ -54,6 +53,5 @@ export const getFormattedDate = (date: Date | null): FormattedDate => {
       min: parseInt(min),
       sec: parseInt(sec),
    };
-   console.log('result:', result);
    return result;
 };

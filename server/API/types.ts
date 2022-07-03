@@ -1,4 +1,4 @@
-export interface User {
+export interface UserInterface {
    username: string;
    firstName: string;
    lastName: string;
@@ -6,14 +6,14 @@ export interface User {
    password: string;
 }
 
-export interface Account {
+export interface AccountInterface {
    status: string;
    username: string;
    spoonacularPassword: string;
    hash: string;
 }
 
-export interface Query {
+export interface QueryInterface {
    query: string;
    type: string;
    intolerance: string;
@@ -27,4 +27,17 @@ export interface Query {
    maxFat: number;
    number: number; //number of items to return
    offset: number; //number of results to skip, useful for lazy loading
+}
+
+export interface MealPlanInterface {
+   date: number;
+   slot: number;
+   position: number;
+   type: string;
+   value: {
+      id: number;
+      servings: number;
+      title: string;
+      imageType: string;
+   };
 }

@@ -18,11 +18,13 @@ type NutrientType = {
    amount: number;
    percentOfDailyNeeds: number;
    unit: string;
+   id: number;
 };
 
 export const FoodSearchItem = ({
    route,
    image,
+   imageType,
    title,
    nutrition,
    description,
@@ -30,6 +32,7 @@ export const FoodSearchItem = ({
    ingredientList,
    restaurantChain,
    url,
+   id,
 }: any) => {
    //item that appears in every item is image, title, nutrition,
    const [openDialog, setOpenDialog] = useState<boolean>(false);
@@ -133,6 +136,10 @@ export const FoodSearchItem = ({
          <AddToCartModal
             openDialog={openDialog}
             handleOpeningDialog={handleOpeningDialog}
+            route={route}
+            imageType={imageType}
+            title={title}
+            id={id}
          />
       </>
    );

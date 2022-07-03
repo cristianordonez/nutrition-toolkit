@@ -5,9 +5,14 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import { RecipeItem, GroceryItem, MenuItem } from './types';
+import {
+   RecipeItemInterface,
+   GroceryItemInterface,
+   MenuItemInterface,
+} from './types';
 
 export const FoodSearchList = ({ apiData, route, handleLoadMore }: any) => {
+   console.log('apiData:', apiData);
    return (
       <>
          <Stack direction='row' spacing={1}>
@@ -18,9 +23,11 @@ export const FoodSearchList = ({ apiData, route, handleLoadMore }: any) => {
          </Stack>
          <Grid container spacing={2}>
             {route === 'recipes' &&
-               apiData.map((item: RecipeItem) => (
+               apiData.map((item: RecipeItemInterface) => (
                   <FoodSearchItem
                      key={item.id}
+                     id={item.id}
+                     imageType={item.imageType}
                      image={item.image}
                      title={item.title}
                      nutrition={item.nutrition}
@@ -29,9 +36,11 @@ export const FoodSearchList = ({ apiData, route, handleLoadMore }: any) => {
                   />
                ))}
             {route === 'groceryProducts' &&
-               apiData.map((item: GroceryItem) => (
+               apiData.map((item: GroceryItemInterface) => (
                   <FoodSearchItem
                      key={item.id}
+                     id={item.id}
+                     imageType={item.imageType}
                      description={item.description}
                      image={item.image}
                      title={item.title}
@@ -42,9 +51,11 @@ export const FoodSearchList = ({ apiData, route, handleLoadMore }: any) => {
                   />
                ))}
             {route === 'menuItems' &&
-               apiData.map((item: MenuItem) => (
+               apiData.map((item: MenuItemInterface) => (
                   <FoodSearchItem
                      key={item.id}
+                     id={item.id}
+                     imageType={item.imageType}
                      image={item.image}
                      title={item.title}
                      nutrition={item.nutrition}

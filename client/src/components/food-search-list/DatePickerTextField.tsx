@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
-import { Grid, TextField, Box } from '@mui/material';
-import getUnixTime from 'date-fns/getUnixTime';
-import fromUnixTime from 'date-fns/fromUnixTime';
+import { TextField, Box } from '@mui/material';
 import { getFormattedDate } from './getFormattedDateFunc';
+import getUnixTime from 'date-fns/getUnixTime';
+import { MealPlanInterface } from '../../../../server/API/types';
 
-export const DatePickerTextField = () => {
+interface Props {
+   setData: Dispatch<SetStateAction<MealPlanInterface>>;
+   data: MealPlanInterface;
+}
+
+export const DatePickerTextField = ({ setData, data }: Props) => {
    const [value, setValue] = React.useState<Date | null>(new Date(Date.now()));
 
    const handleChange = (newValue: Date | null) => {
@@ -17,7 +22,9 @@ export const DatePickerTextField = () => {
       let { year, month, day, hour, min, sec } = getFormattedDate(newValue);
 
       const result = getUnixTime(new Date(year, month, day, hour, min, sec));
-      console.log('result:', result);
+
+      // setData(...data, data.date: result)
+      setData({ ...data, date: result });
    };
 
    return (

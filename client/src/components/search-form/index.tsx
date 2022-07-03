@@ -5,7 +5,6 @@ import { SearchFormSuggested } from './SearchFormSuggested';
 import { SearchFormCustom } from './SearchFormCustom';
 import { SelectChangeEvent } from '@mui/material/Select';
 
-//todo change 0
 interface Goals {
    total_carbohydrates: 0;
    min_carbs_per_meal: 0;
