@@ -11,8 +11,8 @@ import axios from 'axios';
 export const LoginForm = ({
    showSignup,
    handleRedirectToSignup,
-   error,
-   setError,
+   showTextFieldError,
+   setShowTextFieldError,
    errorMessage,
    setErrorMessage,
    handleErrorAlert,
@@ -36,12 +36,12 @@ export const LoginForm = ({
       try {
          let response = await axios.post(`/api/login`, loginValues);
          if (response.status === 200) {
-            setError(false);
+            setShowTextFieldError(false);
             navigate(`/${response.data.id}/search`, { replace: true });
          }
       } catch (err: any) {
-         setErrorMessage('No matching username and password found.'); //error message used in the snackbar
-         setError(true); //used to show error helper text in text field
+         setErrorMessage('No matching username and password found.'); //showTextFieldError message used in the snackbar
+         setShowTextFieldError(true); //used to show showTextFieldError helper text in text field
          handleErrorAlert();
          console.log('err:', err);
       }
@@ -68,7 +68,7 @@ export const LoginForm = ({
                      handleLoginChange={handleLoginChange}
                   />
                   <PasswordTextField
-                     error={error}
+                     showTextFieldError={showTextFieldError}
                      showSignup={showSignup}
                      errorMessage={errorMessage}
                      handleLoginChange={handleLoginChange}

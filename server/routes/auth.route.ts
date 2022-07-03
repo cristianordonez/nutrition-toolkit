@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import * as controller from '../controllers/user.controller';
+import * as userController from '../controllers/user.controller';
 import passport from 'passport';
 const router = Router();
 
@@ -16,21 +16,21 @@ router.get('/', (req: Request, res: Response) => {
 
 //# handles checking if user is logged in for protected routes
 router.get('/authentication', (req: Request, res: Response) => {
-   controller.checkAuthentication(req, res);
+   userController.checkAuthentication(req, res);
 });
 
 //# handles creating account
 router.post('/signup', (req: Request, res: Response) => {
-   controller.createAccount(req, res);
+   userController.createAccount(req, res);
 });
 
 //# handles updating the users metrics at signup
 router.post('/metrics', (req: Request, res: Response) => {
-   controller.createMetrics(req, res);
+   userController.createMetrics(req, res);
 });
 
 router.get('/metrics', (req: Request, res: Response) => {
-   controller.getMetrics(req, res);
+   userController.getMetrics(req, res);
 });
 
 //# handles logging the user in

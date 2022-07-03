@@ -27,12 +27,6 @@ export const connectUser = async (user: UserInterface) => {
 export const getSpoonacularRecipes = async (
    recipeQuery: QueryInterface
 ): Promise<object> => {
-   //if user does not send diet or intolerance, must enter in false instead for request to function
-   // const options = {
-   //    method: 'GET',
-   //    url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch',
-
-   // };
    let intoleranceQuery = recipeQuery.intolerance.length
       ? recipeQuery.intolerance
       : false;
@@ -125,7 +119,27 @@ export const getSpoonacularGroceryProducts = async (
    return groceryProducts.data.products;
 };
 
-export const addToSpoonacularMealplan = async () => {};
+export const addToSpoonacularMealplan = async (
+   data: MealPlanInterface,
+   username: string,
+   hash: string
+) => {
+   const response = await axios.post(
+      `${url}mealplanner/${username}/items`,
+      data,
+      {
+         params: {
+            hash: `${hash}`,
+         },
+         headers: {
+            'content-type': 'application/json',
+            'X-RapidAPI-Key': `${X_RAPIDAPI_KEY}`,
+            'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
+         },
+      }
+   );
+   return response;
+};
 export const deleteFromSpoonacularMealplan = async () => {};
 export const getFromSpoonacularMealplanDay = async () => {};
 export const getFromSpoonacularMealplanWeek = async () => {};

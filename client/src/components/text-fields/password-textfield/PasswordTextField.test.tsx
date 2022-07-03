@@ -15,7 +15,7 @@ describe('PasswordTextField Component ', () => {
       const user = userEvent.setup();
       render(
          <PasswordTextField
-            error={false}
+            showTextFieldError={false}
             errorMessage='this is an error message'
             showSignup={false}
             handleCreateAccountChange={mockedFn}
@@ -31,7 +31,7 @@ describe('PasswordTextField Component ', () => {
       const user = userEvent.setup();
       render(
          <PasswordTextField
-            error={false}
+            showTextFieldError={false}
             errorMessage='this is an error message'
             showSignup={true}
             handleLoginChange={mockedFn}

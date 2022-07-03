@@ -140,6 +140,7 @@ export const FoodSearchItem = ({
             imageType={imageType}
             title={title}
             id={id}
+            setOpenDialog={setOpenDialog}
          />
       </>
    );

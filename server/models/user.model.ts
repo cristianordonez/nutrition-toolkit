@@ -17,7 +17,7 @@ type Intolerances = {
 
 //# creates a new user and stores in database;
 export const create = async function (user: User) {
-   const createQuery = `INSERT INTO users (username, email,
+   let createQuery = `INSERT INTO users (username, email,
       spoonacular_username, spoonacular_password, spoonacular_hash, hash)
       VALUES ('${user.username}', '${user.email}',
        '${user.spoonacular_username}', '${user.spoonacular_password}', '${user.spoonacular_hash}',
@@ -38,14 +38,22 @@ export const createUserIntolerances = function (intolerances: Intolerances) {
 
 //# check if user already exists by their email address
 export const getByEmail = async function (email: string) {
-   const getQuery = `SELECT * FROM users WHERE email='${email}'`;
+   let getQuery = `SELECT * FROM users WHERE email='${email}'`;
    let user = await db.query(getQuery);
    return user;
 };
 
 //# retrieves user based on username
 export const getByUsername = async function (username: string) {
-   const getQuery = `SELECT * FROM users WHERE username='${username}'`;
+   let getQuery = `SELECT * FROM users WHERE username='${username}'`;
    let user = await db.query(getQuery);
    return user;
+};
+
+//# retrieves spoonacular hash based on username
+export const getHashByUsername = async (username: string) => {
+   let getQuery = `SELECT spoonacular_hash FROM users WHERE users.spoonacular_username='${username}'`;
+   console.log('getQuery:', getQuery);
+   let hash = await db.query(getQuery);
+   return hash;
 };

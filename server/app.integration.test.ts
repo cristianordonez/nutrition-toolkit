@@ -4,9 +4,9 @@
 
 process.env.NODE_ENV = 'test'; //set NODE_ENV to 'test' so that test database is used
 import supertest from 'supertest';
-import { expect } from '../../jestGlobals';
-import app from '../../server/app';
-import { db } from '../../server/database/db';
+import { expect } from '../jestGlobals';
+import app from './app';
+import { db } from './database/db';
 const request = supertest(app);
 
 let userQuery = `CREATE TABLE users (

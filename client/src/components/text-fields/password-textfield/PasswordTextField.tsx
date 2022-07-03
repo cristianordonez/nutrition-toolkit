@@ -2,7 +2,7 @@ import React from 'react';
 import { TextField } from '@mui/material';
 
 interface Props {
-   error: boolean;
+   showTextFieldError: boolean;
    errorMessage: string;
    showSignup: boolean;
    handleCreateAccountChange?(event: React.SyntheticEvent): any;
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const PasswordTextField = ({
-   error,
+   showTextFieldError,
    errorMessage,
    showSignup,
    handleCreateAccountChange,
@@ -19,7 +19,7 @@ export const PasswordTextField = ({
    return (
       <TextField
          required
-         error={error}
+         error={showTextFieldError}
          onChange={showSignup ? handleCreateAccountChange : handleLoginChange}
          label='Password'
          placeholder='Password'
@@ -27,7 +27,7 @@ export const PasswordTextField = ({
          name='password'
          variant='filled'
          fullWidth
-         helperText={error ? errorMessage : 'Enter your password'}
+         helperText={showTextFieldError ? errorMessage : 'Enter your password'}
       />
    );
 };

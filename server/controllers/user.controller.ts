@@ -21,7 +21,8 @@ export const createAccount = async (req: Request, res: Response) => {
       let checkForExistingUsername: any = await userModel.getByUsername(
          req.body.username
       );
-
+      console.log('checkForExistingEmail:', checkForExistingEmail);
+      console.log('checkForExistingUsername:', checkForExistingUsername);
       if (
          checkForExistingEmail.length || // if either email or username already exists in db, cancel the request
          checkForExistingUsername.length

@@ -10,12 +10,14 @@ import axios from 'axios';
 
 export const SignupForm = ({
    showSignup,
+   setShowSignup,
    handleRedirectToSignup,
-   error,
-   setError,
+   showTextFieldError,
+   setShowTextFieldError,
    errorMessage,
    setErrorMessage,
    setOpenErrorAlert,
+   setAlertSeverity,
 }: any) => {
    const [showNextPage, setShowNextPage] = useState(false); //handles showing page 2 when creating account
 
@@ -37,7 +39,7 @@ export const SignupForm = ({
 
    //handles turning off errors on textfield if user redirects here after submitting wrong credentials
    useEffect(() => {
-      setError(false);
+      setShowTextFieldError(false);
    }, []);
 
    const handleInitialSignupForm = async (event: React.SyntheticEvent) => {
@@ -45,7 +47,7 @@ export const SignupForm = ({
       if (signupValues.password !== signupValues.confirmedPassword) {
          setErrorMessage('Your passwords do not match');
          setOpenErrorAlert(true);
-         setError(true);
+         setShowTextFieldError(true);
       } else {
          try {
             let response: any = await axios.post(`/api/signup`, signupValues);
@@ -65,7 +67,13 @@ export const SignupForm = ({
    return (
       <>
          {showNextPage ? (
-            <MacroCalculatorForm />
+            <MacroCalculatorForm
+               setOpenErrorAlert={setOpenErrorAlert}
+               setErrorMessage={setErrorMessage}
+               setShowNextPage={setShowNextPage}
+               setShowSignup={setShowSignup}
+               setAlertSeverity={setAlertSeverity}
+            />
          ) : (
             <Paper
                onSubmit={handleInitialSignupForm}
@@ -85,14 +93,14 @@ export const SignupForm = ({
                   handleCreateAccountChange={handleCreateAccountChange}
                />
                <PasswordTextField
-                  error={error}
+                  showTextFieldError={showTextFieldError}
                   showSignup={showSignup}
                   handleCreateAccountChange={handleCreateAccountChange}
                   errorMessage={errorMessage}
                />
                <ConfirmPasswordTextField
                   errorMessage={errorMessage}
-                  error={error}
+                  showTextFieldError={showTextFieldError}
                   handleCreateAccountChange={handleCreateAccountChange}
                />
                <Button

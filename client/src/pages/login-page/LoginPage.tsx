@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import './LoginPage.scss';
 import { LoginForm } from '../../components/login-form/LoginForm';
 import { SignupForm } from '../../components/sign-up/SignupForm';
-import { Snackbar, Alert } from '@mui/material';
+import { Snackbar, Alert, AlertColor } from '@mui/material';
 
 export const LoginPage = () => {
    const [showSignup, setShowSignup] = useState(false);
-   const [error, setError] = useState(false); //this is used to show the error helper text on textfields
+   const [alertSeverity, setAlertSeverity] = useState<AlertColor | undefined>(
+      'success'
+   );
+   const [showTextFieldError, setShowTextFieldError] = useState(false); //this is used to show the showTextFieldError helper text on textfields
    const [openErrorAlert, setOpenErrorAlert] = useState(false);
    const [errorMessage, setErrorMessage] = useState(''); //message displayed on snackbar
 
@@ -25,9 +28,11 @@ export const LoginPage = () => {
          {showSignup ? (
             <SignupForm
                showSignup={showSignup}
+               setShowSignup={setShowSignup}
+               setAlertSeverity={setAlertSeverity}
                handleRedirectToSignup={handleRedirectToSignup}
-               error={error}
-               setError={setError}
+               showTextFieldError={showTextFieldError}
+               setShowTextFieldError={setShowTextFieldError}
                errorMessage={errorMessage}
                setErrorMessage={setErrorMessage}
                setOpenErrorAlert={setOpenErrorAlert}
@@ -36,8 +41,8 @@ export const LoginPage = () => {
             <LoginForm
                showSignup={showSignup}
                handleRedirectToSignup={handleRedirectToSignup}
-               error={error}
-               setError={setError}
+               showTextFieldError={showTextFieldError}
+               setShowTextFieldError={setShowTextFieldError}
                errorMessage={errorMessage}
                setErrorMessage={setErrorMessage}
                handleErrorAlert={handleErrorAlert}
@@ -50,7 +55,7 @@ export const LoginPage = () => {
          >
             <Alert
                onClose={handleErrorAlert}
-               severity='error'
+               severity={alertSeverity}
                sx={{ width: '100%' }}
             >
                {errorMessage}

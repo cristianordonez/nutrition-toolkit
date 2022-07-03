@@ -15,7 +15,7 @@ describe('ConfirmPasswordTextField Component ', () => {
       const user = userEvent.setup();
       render(
          <ConfirmPasswordTextField
-            error={false}
+            showTextFieldError={false}
             errorMessage='this is a message'
             handleCreateAccountChange={mockedFn}
          />

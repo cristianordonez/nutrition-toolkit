@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import axios from 'axios';
 import {
    Paper,
@@ -6,6 +6,7 @@ import {
    Button,
    ToggleButtonGroup,
    ToggleButton,
+   AlertColor,
 } from '@mui/material';
 import { HeightInputField } from './HeightInputField';
 import { WeightInputField } from './WeightInputField';
@@ -13,11 +14,24 @@ import { AgeInputField } from './AgeInputField';
 import { useMetrics } from '../../hooks/useMetrics';
 import { useNavigate } from 'react-router-dom';
 
-export const MacroCalculatorForm = ({ handleFinalSignUpForm }: any) => {
+interface Props {
+   setOpenErrorAlert: Dispatch<SetStateAction<boolean>>;
+   setErrorMessage: Dispatch<SetStateAction<string>>;
+   setShowNextPage: Dispatch<SetStateAction<boolean>>;
+   setShowSignup: Dispatch<SetStateAction<boolean>>;
+   setAlertSeverity: Dispatch<SetStateAction<AlertColor | undefined>>;
+}
+
+export const MacroCalculatorForm = ({
+   setOpenErrorAlert,
+   setErrorMessage,
+   setShowNextPage,
+   setShowSignup,
+   setAlertSeverity,
+}: Props) => {
    let navigate = useNavigate();
    const [activityLevel, setActivityLevel] = React.useState<number>(1);
    const [gender, setGender] = React.useState('male');
-
    const [age, setAge] = React.useState<any>(18);
    const [height, setHeight] = React.useState<any>(60);
    const [weight, setWeight] = React.useState<any>(200);
@@ -49,7 +63,14 @@ export const MacroCalculatorForm = ({ handleFinalSignUpForm }: any) => {
       });
       try {
          let response = await axios.post(`/api/metrics`, metrics);
-         navigate(`/${response.data}/search`);
+         console.log('response:', response);
+         setErrorMessage(
+            'You have successfully created an account. Please login.'
+         );
+         setAlertSeverity('success');
+         setOpenErrorAlert(true);
+         setShowNextPage(false);
+         setShowSignup(false);
       } catch (err) {
          console.log('err:', err);
       }

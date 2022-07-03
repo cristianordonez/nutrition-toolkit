@@ -1,4 +1,10 @@
-import React, { MouseEventHandler, useState } from 'react';
+import React, {
+   MouseEventHandler,
+   Dispatch,
+   SetStateAction,
+   SyntheticEvent,
+   useState,
+} from 'react';
 import { DialogSelectServings } from './DialogSelectServings';
 import { DialogSelectSlot } from './DialogSelectSlot';
 import { SelectChangeEvent } from '@mui/material/Select';
@@ -22,6 +28,7 @@ interface Props {
    imageType: string;
    title: string;
    id: number;
+   setOpenDialog: Dispatch<SetStateAction<boolean>>;
 }
 
 export const AddToCartModal = ({
@@ -31,6 +38,7 @@ export const AddToCartModal = ({
    imageType,
    title,
    id,
+   setOpenDialog,
 }: Props) => {
    let currentType;
    if (route === 'recipes') {
@@ -54,22 +62,12 @@ export const AddToCartModal = ({
       },
    });
 
-   console.log('data:', data);
-
-   //todo get slot either 1 2 or 3 and update state
-   //todo update servings from textfield
-   const slotItems = [
-      { value: 1, name: 'Breakfast' },
-      { value: 2, name: 'Lunch' },
-      { value: 3, name: 'Dinner' },
-   ];
-
-   const handleSubmit = () => {};
-
+   //# handles updating state when changing the slot select field
    const handleSelectSlot = (event: SelectChangeEvent) => {
       setData({ ...data, slot: parseInt(event.target.value) });
    };
 
+   //#handles updating state when changing the servings select field
    const handleSelectServings = (event: SelectChangeEvent) => {
       setData((data) => {
          return {
@@ -82,10 +80,22 @@ export const AddToCartModal = ({
       });
    };
 
+   //# handles adding the item to the mealplan
+   const handleSubmit = async (event: SyntheticEvent) => {
+      event.preventDefault();
+      try {
+         let response = axios.post('/api/mealplan', data);
+         console.log('respons:', response);
+         setOpenDialog(false);
+      } catch (err) {
+         console.log('err:', err);
+      }
+   };
+
    return (
       <Dialog open={openDialog}>
          <DialogTitle>Enter custom calorie and carbohydrate</DialogTitle>
-         <form>
+         <form onSubmit={handleSubmit}>
             <DialogContent>
                <Box display='flex' flexDirection='column' gap='10px'>
                   <DatePickerTextField setData={setData} data={data} />
