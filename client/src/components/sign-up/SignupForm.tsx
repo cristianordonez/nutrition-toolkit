@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import './SignupForm.scss';
 import { Typography, Paper, Button } from '@mui/material';
 import { MacroCalculatorForm } from '../macro-calculator-form';
-import { ConfirmPasswordTextField } from '../text-fields/ConfirmPasswordTextField';
-import { EmailTextField } from '../text-fields/EmailTextField';
-import { PasswordTextField } from '../text-fields/PasswordTextField';
-import { UsernameTextField } from '../text-fields/UsernameTextField';
+import { ConfirmPasswordTextField } from '../text-fields/confirm-password-textfield/ConfirmPasswordTextField';
+import { EmailTextField } from '../text-fields/email-textfield/EmailTextField';
+import { PasswordTextField } from '../text-fields/password-textfield/PasswordTextField';
+import { UsernameTextField } from '../text-fields/username-textfield/UsernameTextField';
 import axios from 'axios';
 
 export const SignupForm = ({
@@ -71,6 +71,7 @@ export const SignupForm = ({
                onSubmit={handleInitialSignupForm}
                component={'form'}
                className='signup-form'
+               data-testid='signup-form'
             >
                <Typography variant='h6'>Create an account</Typography>
                <Typography variant='subtitle1'>
@@ -94,7 +95,12 @@ export const SignupForm = ({
                   error={error}
                   handleCreateAccountChange={handleCreateAccountChange}
                />
-               <Button type='submit' fullWidth variant='contained'>
+               <Button
+                  data-testid='initial-signup-form-btn'
+                  type='submit'
+                  fullWidth
+                  variant='contained'
+               >
                   Create Account
                </Button>
 

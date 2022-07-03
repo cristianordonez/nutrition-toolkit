@@ -6,15 +6,14 @@ import bcrypt from 'bcrypt';
 
 const saltRounds = 10;
 
-type Body = {
+interface Body {
    username: string;
    email: string;
    password: string;
-};
+}
 
 //# create initial account if not already exists
 export const createAccount = async (req: Request, res: Response) => {
-   console.log('req.body:', req.body);
    try {
       let checkForExistingEmail: any = await userModel.getByEmail(
          req.body.email
@@ -80,9 +79,7 @@ export const checkAuthentication = async (req: any, res: Response) => {
 export const getMetrics = async (req: any, res: Response) => {
    try {
       let user_id = req.session.user_id;
-      console.log('req.session.user_id:', req.session);
       let userGoals: any = await dailyGoalsModel.getGoals(user_id);
-      console.log('userGoals:', userGoals);
       res.json(userGoals[0]);
    } catch (err) {
       console.log('err:', err);

@@ -12,6 +12,7 @@ export const EmailTextField = ({ handleCreateAccountChange }: Props) => {
          onChange={handleCreateAccountChange}
          data-testid='email-textfield'
          label='Email'
+         placeholder='Email'
          type='email'
          name='email'
          variant='filled'

@@ -1,73 +1,138 @@
-const url = 'https://api.spoonacular.com';
 import axios from 'axios';
-import { Query } from '../../types/QueryType';
+import { Query, User, Account } from './types';
 
-interface User {
-   username: string;
-   firstName: string;
-   lastName: string;
-   email: string;
-   password: string;
-}
+const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/';
+const X_RAPIDAPI_KEY = process.env.X_RAPIDAPI_KEY;
+const X_RAPIDAPI_HOST = process.env.X_RAPIDAPI_HOST;
 
-interface Account {
-   status: string;
-   username: string;
-   spoonacularPassword: string;
-   hash: string;
-}
-
-const connectUser = async (user: User) => {
+export const connectUser = async (user: User) => {
    const spoonacularUser = await axios.post<Account>(
-      `${url}/users/connect?apiKey=${process.env.SPOONACULAR_API_KEY}`,
-      user
+      `${url}/users/connect`,
+      user,
+      {
+         headers: {
+            'X-RapidAPI-Key': `${X_RAPIDAPI_KEY}`,
+            'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
+         },
+      }
    );
    return spoonacularUser;
 };
 
-//TODO add these headers to request
-//   headers: {
-//     'X-RapidAPI-Key': 'c6665925edmsh97ba6837b984c0bp1c8afbjsn5d9d65b60153',
-//     'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
-//   }
-// };
-
-const getSpoonacularRecipes = async (recipeQuery: Query): Promise<object> => {
+export const getSpoonacularRecipes = async (
+   recipeQuery: Query
+): Promise<object> => {
    //if user does not send diet or intolerance, must enter in false instead for request to function
-   console.log('recipeQuery:', recipeQuery);
-   let dietQuery = recipeQuery.diet.length ? recipeQuery.diet : false;
+   // const options = {
+   //    method: 'GET',
+   //    url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch',
+
+   // };
    let intoleranceQuery = recipeQuery.intolerance.length
       ? recipeQuery.intolerance
       : false;
-   const recipes = await axios.get(
-      `${url}/recipes/complexSearch?apiKey=${process.env.SPOONACULAR_API_KEY}&query=${recipeQuery.query}
-      &type=${recipeQuery.type}&$minCalories=${recipeQuery.minCalories}&maxCalories=${recipeQuery.maxCalories}
-      &minCarbs=${recipeQuery.minCarbs}&maxCarbs=${recipeQuery.maxCarbs}&minProtein=${recipeQuery.minProtein}
-      &maxProtein=${recipeQuery.maxProtein}&minFat=${recipeQuery.minFat}&maxFat=${recipeQuery.maxFat}
-      &intolerances=${intoleranceQuery}&diet=${dietQuery}&number=${recipeQuery.number}&offset=${recipeQuery.offset}&addRecipeNutrition=true`
-   );
+
+   let recipes = await axios.get(`${url}recipes/complexSearch`, {
+      params: {
+         query: `${recipeQuery.query}`,
+         intolerances: `${intoleranceQuery}`,
+         type: `${recipeQuery.type}`,
+         instructionsRequired: 'true',
+         addRecipeInformation: 'true',
+         sort: 'calories',
+         sortDirection: 'asc',
+         minCarbs: `${recipeQuery.minCarbs}`,
+         maxCarbs: `${recipeQuery.maxCarbs}`,
+         minProtein: `${recipeQuery.minProtein}`,
+         maxProtein: ` ${recipeQuery.maxProtein}`,
+         minCalories: `${recipeQuery.minCalories}`,
+         maxCalories: `${recipeQuery.maxCalories}`,
+         minFat: `${recipeQuery.minFat}`,
+         maxFat: `${recipeQuery.maxFat}`,
+         offset: `${recipeQuery.offset}`,
+         number: `${recipeQuery.number}`,
+      },
+      headers: {
+         'X-RapidAPI-Key': `${X_RAPIDAPI_KEY}`,
+         'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
+      },
+   });
    return recipes.data.results;
 };
 
-const getSpoonacularMenuItems = async (menuQuery: Query) => {
+export const getSpoonacularMenuItems = async (menuQuery: Query) => {
    //does not use intolerance or diet since API does not accept those values for this request
-   const menuItems = await axios.get(
-      `${url}/food/menuItems/search?apiKey=${process.env.SPOONACULAR_API_KEY}&query=${menuQuery.query}&type=${menuQuery.type}&$minCalories=${menuQuery.minCalories}&maxCalories=${menuQuery.maxCalories}&minCarbs=${menuQuery.minCarbs}&maxCarbs=${menuQuery.maxCarbs}&minProtein=${menuQuery.minProtein}&maxProtein=${menuQuery.maxProtein}&minFat=${menuQuery.minFat}&maxFat=${menuQuery.maxFat}&number=${menuQuery.number}&offset=${menuQuery.offset}&addMenuItemInformation=true`
-   );
+   const menuItems = await axios.get(`${url}food/menuItems/search`, {
+      params: {
+         query: `${menuQuery.query}`,
+         type: `${menuQuery.type}`,
+         addMenuItemInformation: 'true',
+         sort: 'calories',
+         sortDirection: 'asc',
+         minCarbs: `${menuQuery.minCarbs}`,
+         maxCarbs: `${menuQuery.maxCarbs}`,
+         minProtein: `${menuQuery.minProtein}`,
+         maxProtein: ` ${menuQuery.maxProtein}`,
+         minCalories: `${menuQuery.minCalories}`,
+         maxCalories: `${menuQuery.maxCalories}`,
+         minFat: `${menuQuery.minFat}`,
+         maxFat: `${menuQuery.maxFat}`,
+         offset: `${menuQuery.offset}`,
+         number: `${menuQuery.number}`,
+      },
+      headers: {
+         'X-RapidAPI-Key': `${X_RAPIDAPI_KEY}`,
+         'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
+      },
+   });
+   console.log('menuItems:', menuItems);
    return menuItems.data.menuItems;
 };
 
-const getSpoonacularGroceryProducts = async (groceryProductsQuery: Query) => {
+export const getSpoonacularGroceryProducts = async (
+   groceryProductsQuery: Query
+) => {
    //does not use type, intolerance or diet since API does not accept those values for this request
-   const groceryProducts = await axios.get(
-      `${url}/food/products/search?apiKey=${process.env.SPOONACULAR_API_KEY}&query=${groceryProductsQuery.query}&$minCalories=${groceryProductsQuery.minCalories}&maxCalories=${groceryProductsQuery.maxCalories}&minCarbs=${groceryProductsQuery.minCarbs}&maxCarbs=${groceryProductsQuery.maxCarbs}&minProtein=${groceryProductsQuery.minProtein}&maxProtein=${groceryProductsQuery.maxProtein}&minFat=${groceryProductsQuery.minFat}&maxFat=${groceryProductsQuery.maxFat}&number=${groceryProductsQuery.number}&offset=${groceryProductsQuery.offset}&addProductInformation=true`
-   );
+   const groceryProducts = await axios.get(`${url}food/products/search`, {
+      params: {
+         query: `${groceryProductsQuery.query}`,
+         type: `${groceryProductsQuery.type}`,
+         addProductInformation: 'true',
+         sort: 'calories',
+         sortDirection: 'asc',
+         maxCarbs: `${groceryProductsQuery.maxCarbs}`,
+         minCarbs: `${groceryProductsQuery.minCarbs}`,
+         minProtein: `${groceryProductsQuery.minProtein}`,
+         maxProtein: ` ${groceryProductsQuery.maxProtein}`,
+         minCalories: `${groceryProductsQuery.minCalories}`,
+         maxCalories: `${groceryProductsQuery.maxCalories}`,
+         minFat: `${groceryProductsQuery.minFat}`,
+         maxFat: `${groceryProductsQuery.maxFat}`,
+         offset: `${groceryProductsQuery.offset}`,
+         number: `${groceryProductsQuery.number}`,
+      },
+      headers: {
+         'X-RapidAPI-Key': `${X_RAPIDAPI_KEY}`,
+         'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
+      },
+   });
+   console.log('groceryProducts:', groceryProducts);
    return groceryProducts.data.products;
 };
 
-export {
-   connectUser,
-   getSpoonacularRecipes,
-   getSpoonacularMenuItems,
-   getSpoonacularGroceryProducts,
-};
+interface MealPlanItem {
+   date: number;
+   slot: number;
+   position: number;
+   type: string;
+   value: {
+      id: number;
+      servings: number;
+      title: string;
+      imageType: string;
+   };
+}
+export const addToSpoonacularMealplan = async () => {};
+export const deleteFromSpoonacularMealplan = async () => {};
+export const getFromSpoonacularMealplanDay = async () => {};
+export const getFromSpoonacularMealplanWeek = async () => {};

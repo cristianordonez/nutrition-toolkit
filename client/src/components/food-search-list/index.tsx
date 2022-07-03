@@ -5,11 +5,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import {
-   RecipeItem,
-   GroceryItem,
-   MenuItem,
-} from '../../../../types/FoodItemInterface';
+import { RecipeItem, GroceryItem, MenuItem } from './types';
 
 export const FoodSearchList = ({ apiData, route, handleLoadMore }: any) => {
    return (

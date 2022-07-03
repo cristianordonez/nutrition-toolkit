@@ -18,6 +18,7 @@ export const ConfirmPasswordTextField = ({
          data-testid='confirm-password-textfield'
          error={error}
          label='Confirm Password'
+         placeholder='Confirm Password'
          onChange={handleCreateAccountChange}
          type='password'
          name='confirmedPassword'

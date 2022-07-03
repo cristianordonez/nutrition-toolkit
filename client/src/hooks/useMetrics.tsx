@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
 
-interface Metrics {
-   gender: string | number;
-   age: string | number;
-   height: string | number;
-   weight: string | number;
-   activityLevel: string | number;
-}
-
 interface Goals {
    total_carbohydrates: number;
    min_carbs_per_meal: number;
@@ -23,15 +15,22 @@ interface Goals {
    max_calories_per_meal: number;
 }
 
+import { MetricsInterface } from './useMetrics.interface';
+
 //calculations are primarily for diabetes
-export const useMetrics = (props: any) => {
-   let weightInKg = props.weight / 2.2;
-   let heightInCm = Math.floor(props.height * 2.54);
-   let additionalCalories = props.gender === 'female' ? -161 : 5;
-   let rmr =
-      10 * weightInKg + 6.25 * heightInCm - 5 * props.age + additionalCalories;
+export const useMetrics = ({
+   age,
+   weight,
+   gender,
+   height,
+   activityLevel,
+}: MetricsInterface) => {
+   let weightInKg = weight / 2.2;
+   let heightInCm = Math.floor(height * 2.54);
+   let additionalCalories = gender === 'female' ? -161 : 5;
+   let rmr = 10 * weightInKg + 6.25 * heightInCm - 5 * age + additionalCalories;
    let result = {} as Goals;
-   result.total_calories = Math.floor(rmr * props.activityLevel);
+   result.total_calories = Math.floor(rmr * activityLevel);
    result.min_calories_per_meal = Math.floor(result.total_calories / 3 - 100);
    result.max_calories_per_meal = Math.floor(result.total_calories / 3 + 100);
    result.total_carbohydrates = Math.floor((rmr * 0.45) / 4); //divide by 4 to get grams from kcal
@@ -44,10 +43,8 @@ export const useMetrics = (props: any) => {
    let caloriesLeft =
       result.total_calories -
       (result.total_carbohydrates * 4 + result.total_protein * 4);
-   console.log('caloriesLeft:', caloriesLeft);
    result.total_fat = Math.floor(caloriesLeft / 9);
    result.min_fat_per_meal = Math.floor(result.total_fat / 3 - 5);
    result.max_fat_per_meal = Math.floor(result.total_fat / 3 + 5);
-   console.log('result:', result);
    return result;
 };

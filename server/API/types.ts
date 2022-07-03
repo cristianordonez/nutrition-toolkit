@@ -1,7 +1,21 @@
+export interface User {
+   username: string;
+   firstName: string;
+   lastName: string;
+   email: string;
+   password: string;
+}
+
+export interface Account {
+   status: string;
+   username: string;
+   spoonacularPassword: string;
+   hash: string;
+}
+
 export interface Query {
    query: string;
    type: string;
-   diet: string;
    intolerance: string;
    minCalories: number;
    maxCalories: number;

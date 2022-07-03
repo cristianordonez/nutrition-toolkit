@@ -56,6 +56,7 @@ export const SearchForm = ({
    const handleTypeSelect = (event: SelectChangeEvent) => {
       setValues({ ...values, type: event.target.value });
    };
+   console.log('currentTab:', currentTab);
    return (
       <>
          <Stack direction='row' spacing={1}>

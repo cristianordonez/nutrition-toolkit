@@ -43,7 +43,6 @@ export const Search = () => {
    const [values, setValues] = useState({
       query: '',
       type: '',
-      diet: '',
       intolerance: '',
       minCalories: '',
       maxCalories: '',
@@ -76,11 +75,13 @@ export const Search = () => {
 
    //# handles submission to search for food items
    const handleSubmit = async (event: React.SyntheticEvent) => {
+      let newValues = { ...values, offset: 0 }; //declare new values so that there are no async bugs, and reset offset to 0 in case user changed it
+      setValues(newValues);
       try {
          setLoading(true);
          event.preventDefault();
          let foodItems = await axios.get(`/api/${route}`, {
-            params: values,
+            params: newValues,
          });
          foodItems.data.length ? setOpenSnackbar(false) : setOpenSnackbar(true);
          setAPIData(foodItems.data);
@@ -94,6 +95,8 @@ export const Search = () => {
    //# handles submission when it comes from suggested goals form
    //# must be different because values are coming from goals state object
    const handleSuggestedSubmit = async (event: React.SyntheticEvent) => {
+      let newValues = { ...values, offset: 0 }; //declare new values so that there are no async bugs, and reset offset to 0 in case user changed it
+      setValues(newValues);
       try {
          setLoading(true); //used to trigger the loading circle
          event.preventDefault();
@@ -187,6 +190,7 @@ export const Search = () => {
                   goals={goals}
                   mobileOpen={mobileOpen}
                   handleDrawerToggle={handleDrawerToggle}
+                  // pass down component here
                   searchForm={searchForm}
                   apiData={apiData}
                />

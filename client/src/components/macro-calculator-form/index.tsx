@@ -15,18 +15,12 @@ import { useNavigate } from 'react-router-dom';
 
 export const MacroCalculatorForm = ({ handleFinalSignUpForm }: any) => {
    let navigate = useNavigate();
-   const [activityLevel, setActivityLevel] = React.useState(1);
+   const [activityLevel, setActivityLevel] = React.useState<number>(1);
    const [gender, setGender] = React.useState('male');
 
-   const [age, setAge] = React.useState<
-      number | string | Array<number | string>
-   >(18);
-   const [height, setHeight] = React.useState<
-      number | string | Array<number | string>
-   >(60);
-   const [weight, setWeight] = React.useState<
-      number | string | Array<number | string>
-   >(200);
+   const [age, setAge] = React.useState<any>(18);
+   const [height, setHeight] = React.useState<any>(60);
+   const [weight, setWeight] = React.useState<any>(200);
 
    const handleGenderChange = (
       event: React.MouseEvent<HTMLElement>,
@@ -67,6 +61,7 @@ export const MacroCalculatorForm = ({ handleFinalSignUpForm }: any) => {
             onSubmit={handleSubmit}
             component={'form'}
             className='signup-form'
+            data-testid='macro-calculator-signup-form'
          >
             <Typography variant='h6'>
                Complete setting up your account
@@ -101,7 +96,7 @@ export const MacroCalculatorForm = ({ handleFinalSignUpForm }: any) => {
             </ToggleButtonGroup>
             {/* AGE HEIGHT AND WEIGHT*/}
             <AgeInputField age={age} setAge={setAge} />
-            <HeightInputField height={height} setHeight={setAge} />
+            <HeightInputField height={height} setHeight={setHeight} />
             <WeightInputField weight={weight} setWeight={setWeight} />
 
             <Button fullWidth type='submit'>

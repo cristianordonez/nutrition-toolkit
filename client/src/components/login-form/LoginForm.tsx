@@ -3,8 +3,8 @@ import './LoginForm.scss';
 import LoginImage from '../../../img/healthy-eating.svg';
 import { Grid, Stack, Paper, Button } from '@mui/material';
 import { Typography } from '@mui/material';
-import { PasswordTextField } from '../text-fields/PasswordTextField';
-import { UsernameTextField } from '../text-fields/UsernameTextField';
+import { PasswordTextField } from '../text-fields/password-textfield/PasswordTextField';
+import { UsernameTextField } from '../text-fields/username-textfield/UsernameTextField';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 

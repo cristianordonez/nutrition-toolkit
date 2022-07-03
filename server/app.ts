@@ -5,11 +5,11 @@ import bodyParser from 'body-parser';
 import compression from 'compression';
 import session from 'express-session';
 import passport from 'passport';
-
 import { router as authRoute } from './routes/auth.route';
 import { router as recipesRoute } from './routes/recipe.route';
 import { router as menuItemsRoute } from './routes/menuitems.route';
 import { router as groceryProductsRoute } from './routes/groceryproducts.route';
+import { router as mealplanRoute } from './routes/mealplan.route';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { db } from './database/db';
 // import pgSession from 'connect-pg-simple';
@@ -40,7 +40,6 @@ const conObject = {
 
 const pgStoreConfig = {
    conObject: conObject,
-   // conString: `postgres://${process.env.USER}:${process.env.PASSWORD}@${process.env.HOST}:5432/${database}`,
 };
 
 app.use(
@@ -89,8 +88,6 @@ passport.use(
 //determines which data of user object should be stored in session to be accessed
 // below in the deserializeUser function
 passport.serializeUser((user: any, done) => {
-   console.log('here in serialize user');
-   console.log('user:', user);
    done(null, user.id);
 });
 
@@ -112,5 +109,6 @@ app.use('/api', authRoute);
 app.use('/api/recipes', recipesRoute);
 app.use('/api/menuItems', menuItemsRoute);
 app.use('/api/groceryProducts', groceryProductsRoute);
+app.use('/api/mealplan', mealplanRoute);
 
 export default app; //export to be used for tests and in server.js

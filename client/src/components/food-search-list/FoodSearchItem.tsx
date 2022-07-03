@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './FoodSearchItem.scss';
-import Paper from '@mui/material/Paper';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
+import {
+   Paper,
+   Card,
+   CardActions,
+   CardMedia,
+   CardContent,
+   Typography,
+   Button,
+   Grid,
+} from '@mui/material';
+import { AddToCartModal } from './AddToCartModal';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 type NutrientType = {
@@ -29,6 +32,12 @@ export const FoodSearchItem = ({
    url,
 }: any) => {
    //item that appears in every item is image, title, nutrition,
+   const [openDialog, setOpenDialog] = useState<boolean>(false);
+
+   //open the dialog window when add to cart button is clicked
+   const handleOpeningDialog = () => {
+      setOpenDialog(!openDialog);
+   };
 
    let calories, carbs, fat, protein;
 
@@ -109,7 +118,11 @@ export const FoodSearchItem = ({
                      </div>
                   </CardContent>
                   <CardActions>
-                     <Button fullWidth variant='outlined'>
+                     <Button
+                        onClick={handleOpeningDialog}
+                        fullWidth
+                        variant='outlined'
+                     >
                         <AddShoppingCartIcon />
                         Add to Mealplan
                      </Button>
@@ -117,6 +130,10 @@ export const FoodSearchItem = ({
                </Card>
             </Paper>
          </Grid>
+         <AddToCartModal
+            openDialog={openDialog}
+            handleOpeningDialog={handleOpeningDialog}
+         />
       </>
    );
 };

@@ -3,26 +3,26 @@ import { TextField } from '@mui/material';
 
 interface Props {
    error: boolean;
+   errorMessage: string;
    showSignup: boolean;
    handleCreateAccountChange?(event: React.SyntheticEvent): any;
    handleLoginChange?(event: React.SyntheticEvent): any;
-   errorMessage: string;
 }
 
 export const PasswordTextField = ({
    error,
+   errorMessage,
    showSignup,
    handleCreateAccountChange,
    handleLoginChange,
-   errorMessage,
 }: Props) => {
    return (
       <TextField
          required
-         data-testid='password-textfield'
          error={error}
          onChange={showSignup ? handleCreateAccountChange : handleLoginChange}
          label='Password'
+         placeholder='Password'
          type='password'
          name='password'
          variant='filled'
