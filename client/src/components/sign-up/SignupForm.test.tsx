@@ -22,8 +22,8 @@ describe('SignupForm Component ', () => {
          <SignupForm
             showSignup={true}
             handleRedirectToSignup={mockedFn}
-            setError={mockedFn}
-            error={false}
+            setShowTextFieldError={mockedFn}
+            showTextFieldError={false}
             setErrorMessage={mockedFn}
             setOpenErrorAlert={mockedFn}
          />

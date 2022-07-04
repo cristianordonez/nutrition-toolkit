@@ -33,6 +33,9 @@ export const FoodSearchItem = ({
    restaurantChain,
    url,
    id,
+   setAlertMessage,
+   setOpenSnackbar,
+   setAlertSeverity,
 }: any) => {
    //item that appears in every item is image, title, nutrition,
    const [openDialog, setOpenDialog] = useState<boolean>(false);
@@ -141,6 +144,9 @@ export const FoodSearchItem = ({
             title={title}
             id={id}
             setOpenDialog={setOpenDialog}
+            setAlertMessage={setAlertMessage}
+            setOpenSnackbar={setOpenSnackbar}
+            setAlertSeverity={setAlertSeverity}
          />
       </>
    );

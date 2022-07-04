@@ -49,6 +49,7 @@ export const LoginPage = () => {
             />
          )}
          <Snackbar
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
             open={openErrorAlert}
             autoHideDuration={8000}
             onClose={handleErrorAlert}

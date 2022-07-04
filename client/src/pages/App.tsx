@@ -2,9 +2,9 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './home-page/Home';
 import { LoginPage } from './login-page/LoginPage';
-import MacroCalculator from './macro-calculator-page/MacroCalculator';
+import { MacroCalculatorPage } from './macro-calculator-page/MacroCalculatorPage';
 import MealPlan from './meal-plan-page/MealPlan';
-import { Search } from './search-page/Search';
+import { SearchPage } from './search-page/SearchPage';
 import NavBar from '../components/navbar/NavBar';
 import { AuthProvider } from '../context/authContext';
 
@@ -24,7 +24,7 @@ export const App = () => {
                path='/:user_id/search'
                element={
                   <AuthProvider>
-                     <Search />
+                     <SearchPage />
                   </AuthProvider>
                }
             />

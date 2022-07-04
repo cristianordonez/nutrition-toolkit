@@ -18,7 +18,12 @@ jest.mock('react-router-dom', () => ({
 
 describe('LoginForm Component ', () => {
    test('Error message is shown when error is true', async () => {
-      render(<LoginForm error={true} errorMessage='this should display' />);
+      render(
+         <LoginForm
+            showTextFieldError={true}
+            errorMessage='this should display'
+         />
+      );
       expect(screen.getByText('this should display')).toBeDefined();
    });
 

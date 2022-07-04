@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './Search.scss';
+import './SearchPage.scss';
 // import { SearchForm } from '../../components/search-form';
 import { SearchForm } from '../../components/search-form';
 import { FoodSearchList } from '../../components/food-search-list';
@@ -7,10 +7,10 @@ import {
    Grid,
    Toolbar,
    IconButton,
-   Stack,
    Alert,
    CircularProgress,
    Snackbar,
+   AlertColor,
 } from '@mui/material';
 import { Sidebar } from '../../components/sidebar/Sidebar';
 import { useAuth } from '../../context/authContext';
@@ -33,13 +33,19 @@ interface Goals {
    max_calories_per_meal: 0;
 }
 
-export const Search = () => {
+export const SearchPage = () => {
    const isLoading = useAuth(); //used to check if data is still being retrieved from database
    const [apiData, setAPIData] = useState([]);
-   const [loading, setLoading] = useState(false);
+   const [loading, setLoading] = useState<boolean>(false);
    const [route, setRoute] = useState<string>('recipes');
    const [currentTab, setCurrentTab] = useState<string>('custom-search');
-   const [openSnackbar, setOpenSnackbar] = useState(false);
+   const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
+   const [alertMessage, setAlertMessage] = useState<string>(
+      'No options matched your search. Try again with a broader search.'
+   );
+   const [alertSeverity, setAlertSeverity] = useState<AlertColor | undefined>(
+      'error'
+   );
    const [values, setValues] = useState({
       query: '',
       type: '',
@@ -202,6 +208,9 @@ export const Search = () => {
                            apiData={apiData}
                            route={route}
                            handleLoadMore={handleLoadMore}
+                           setAlertMessage={setAlertMessage}
+                           setOpenSnackbar={setOpenSnackbar}
+                           setAlertSeverity={setAlertSeverity}
                         />
                      </Grid>
                   </>
@@ -213,19 +222,17 @@ export const Search = () => {
                   </>
                )}
                {/* ERROR SNACKBAR */}
-               <Stack direction='row' spacing={2}>
-                  <Snackbar
-                     anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                     open={openSnackbar}
-                     autoHideDuration={6000}
-                     onClose={handleClose}
-                  >
-                     <Alert onClose={handleClose} severity='error'>
-                        No options matched your search. Try again with a broader
-                        search.{' '}
-                     </Alert>
-                  </Snackbar>
-               </Stack>
+
+               <Snackbar
+                  anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                  open={openSnackbar}
+                  autoHideDuration={6000}
+                  onClose={handleClose}
+               >
+                  <Alert onClose={handleClose} severity={alertSeverity}>
+                     {alertMessage}
+                  </Alert>
+               </Snackbar>
             </Grid>
          )}
       </>

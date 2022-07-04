@@ -11,7 +11,14 @@ import {
    MenuItemInterface,
 } from './types';
 
-export const FoodSearchList = ({ apiData, route, handleLoadMore }: any) => {
+export const FoodSearchList = ({
+   apiData,
+   route,
+   handleLoadMore,
+   setAlertMessage,
+   setOpenSnackbar,
+   setAlertSeverity,
+}: any) => {
    console.log('apiData:', apiData);
    return (
       <>
@@ -33,6 +40,9 @@ export const FoodSearchList = ({ apiData, route, handleLoadMore }: any) => {
                      nutrition={item.nutrition}
                      route={route}
                      url={item.spoonacularSourceUrl}
+                     setAlertMessage={setAlertMessage}
+                     setOpenSnackbar={setOpenSnackbar}
+                     setAlertSeverity={setAlertSeverity}
                   />
                ))}
             {route === 'groceryProducts' &&
@@ -48,6 +58,9 @@ export const FoodSearchList = ({ apiData, route, handleLoadMore }: any) => {
                      price={item.price}
                      ingredientList={item.ingredientList}
                      route={route}
+                     setAlertMessage={setAlertMessage}
+                     setOpenSnackbar={setOpenSnackbar}
+                     setAlertSeverity={setAlertSeverity}
                   />
                ))}
             {route === 'menuItems' &&
@@ -61,6 +74,9 @@ export const FoodSearchList = ({ apiData, route, handleLoadMore }: any) => {
                      nutrition={item.nutrition}
                      route={route}
                      restaurantChain={item.restaurantChain}
+                     setAlertMessage={setAlertMessage}
+                     setOpenSnackbar={setOpenSnackbar}
+                     setAlertSeverity={setAlertSeverity}
                   />
                ))}
          </Grid>

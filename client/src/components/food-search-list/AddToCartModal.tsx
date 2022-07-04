@@ -15,6 +15,7 @@ import {
    Box,
    DialogActions,
    Button,
+   AlertColor,
 } from '@mui/material';
 import { DatePickerTextField } from './DatePickerTextField';
 import { MealPlanInterface } from '../../../../server/API/types'; //interface from api handler
@@ -29,6 +30,9 @@ interface Props {
    title: string;
    id: number;
    setOpenDialog: Dispatch<SetStateAction<boolean>>;
+   setAlertMessage: Dispatch<SetStateAction<string>>;
+   setOpenSnackbar: Dispatch<SetStateAction<boolean>>;
+   setAlertSeverity: Dispatch<SetStateAction<AlertColor | undefined>>;
 }
 
 export const AddToCartModal = ({
@@ -39,6 +43,9 @@ export const AddToCartModal = ({
    title,
    id,
    setOpenDialog,
+   setAlertMessage,
+   setOpenSnackbar,
+   setAlertSeverity,
 }: Props) => {
    let currentType;
    if (route === 'recipes') {
@@ -84,8 +91,11 @@ export const AddToCartModal = ({
    const handleSubmit = async (event: SyntheticEvent) => {
       event.preventDefault();
       try {
-         let response = axios.post('/api/mealplan', data);
+         let response = await axios.post('/api/mealplan', data);
          console.log('respons:', response);
+         setAlertSeverity('success');
+         setAlertMessage('Item has been added to your mealplan!');
+         setOpenSnackbar(true);
          setOpenDialog(false);
       } catch (err) {
          console.log('err:', err);
