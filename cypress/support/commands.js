@@ -23,3 +23,16 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+import 'cypress-jest-adapter';
+import '@testing-library/cypress/add-commands';
+
+//todo custom command to login user
+// Cypress.Commands.add('login', (userType, options = {}) => {
+//    const types = {
+//       user: {
+//          username: '',
+//       },
+//    };
+// });
+
+//todo custom command to logout user

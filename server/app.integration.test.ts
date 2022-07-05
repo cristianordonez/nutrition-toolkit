@@ -1,51 +1,21 @@
 /**
  * @jest-environment node
  */
-
 process.env.NODE_ENV = 'test'; //set NODE_ENV to 'test' so that test database is used
 import supertest from 'supertest';
 import { expect } from '../jestGlobals';
 import app from './app';
 import { db } from './database/db';
+const { schemas } = require('./database/SQL'); //import the sql queries
+
 const request = supertest(app);
-
-let userQuery = `CREATE TABLE users (
-	username varchar(50) NOT NULL,
-	email varchar(45) NOT NULL,
-	spoonacular_username varchar(45) NOT NULL,
-	spoonacular_password varchar(45) NOT NULL,
-	spoonacular_hash varchar(100) NOT NULL,
-	hash varchar(100) NOT NULL,
-	id serial4 NOT NULL,
-	intolerances _text NULL,
-	CONSTRAINT users_pk PRIMARY KEY (id)
-);`;
-
-let goalsQuery = `CREATE TABLE daily_goals (
-	total_carbohydrates int4 NULL,
-	min_carbs_per_meal int4 NULL,
-	max_carbs_per_meal int4 NULL,
-	total_protein int4 NULL,
-	min_protein_per_meal int4 NULL,
-	max_protein_per_meal int4 NULL,
-	total_fat int4 NULL,
-	min_fat_per_meal int4 NULL,
-	max_fat_per_meal int4 NULL,
-	total_calories int4 NULL,
-	min_calories_per_meal int4 NULL,
-	max_calories_per_meal int4 NULL,
-	user_id int4 NOT NULL,
-	id serial4 NOT NULL,
-	CONSTRAINT daily_goals_pk PRIMARY KEY (id),
-	CONSTRAINT daily_goals_unique UNIQUE (user_id)
-);`;
 
 let cookie: any; //create cookie variable to be set so that sessions are not reset
 let testCookie: any; //used for the account in the before and after hooks
 
 beforeAll(async () => {
-   await db.query(userQuery);
-   await db.query(goalsQuery);
+   await db.query(schemas.users);
+   await db.query(schemas.daily_goals);
    let beforeResponse = await request.post('/api/signup').send({
       username: 'test',
       email: 'test@email.com',
@@ -55,8 +25,8 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-   await db.query('DROP TABLE users');
    await db.query('DROP TABLE daily_goals');
+   await db.query('DROP TABLE users');
    await request.post('/api/logout').set('Cookie', testCookie);
 });
 
