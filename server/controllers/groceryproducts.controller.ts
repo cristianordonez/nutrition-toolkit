@@ -1,7 +1,6 @@
-//#connects server to the models
 import { Request, Response } from 'express';
 import * as apiHelpers from '../API/api';
-import { Query } from './types';
+import { Query } from './controllers.types';
 
 export const getGroceryProducts = async function (req: Request, res: Response) {
    const query = req.query as unknown as Query;

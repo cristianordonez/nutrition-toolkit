@@ -9,7 +9,7 @@ const Home = (props: any) => {
    return (
       <>
          <Button>
-            <Link to='/login'>Log in</Link>
+            <Link to='/login' data-testid='home-page'>Log in</Link>
          </Button>
       </>
    );

@@ -8,10 +8,10 @@ import { renderHook } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useMetrics } from './useMetrics';
 import userEvent from '@testing-library/user-event';
-import { MetricsInterface } from './useMetrics.interface';
+import { MetricsType } from './useMetrics.types';
 
 interface Props {
-   goals: MetricsInterface;
+   goals: MetricsType;
 }
 
 const goals = {

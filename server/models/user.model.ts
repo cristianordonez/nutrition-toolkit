@@ -1,5 +1,4 @@
 import { db } from '../database/db';
-console.log('db:', db);
 
 type User = {
    username: string;
@@ -17,12 +16,15 @@ type Intolerances = {
 
 //# creates a new user and stores in database;
 export const create = async function (user: User) {
+   console.log('here in user model create')
    let createQuery = `INSERT INTO users (username, email,
       spoonacular_username, spoonacular_password, spoonacular_hash, hash)
       VALUES ('${user.username}', '${user.email}',
        '${user.spoonacular_username}', '${user.spoonacular_password}', '${user.spoonacular_hash}',
         '${user.hash}') RETURNING id`;
+        console.log(createQuery)
    let dbResponse = await db.query(createQuery);
+   console.log('dbresponse in create user model', dbResponse)
    return dbResponse;
 };
 

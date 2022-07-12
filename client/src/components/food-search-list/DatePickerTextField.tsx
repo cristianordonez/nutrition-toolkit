@@ -6,11 +6,11 @@ import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { TextField, Box } from '@mui/material';
 import { getFormattedDate } from './getFormattedDateFunc';
 import getUnixTime from 'date-fns/getUnixTime';
-import { MealPlanInterface } from '../../../../server/API/types';
+import { MealPlanType } from '../../../../server/API/api.types';
 
 interface Props {
-   setData: Dispatch<SetStateAction<MealPlanInterface>>;
-   data: MealPlanInterface;
+   setData: Dispatch<SetStateAction<MealPlanType>>;
+   data: MealPlanType;
 }
 
 export const DatePickerTextField = ({ setData, data }: Props) => {

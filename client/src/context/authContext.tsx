@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { Snackbar, Alert } from '@mui/material';
 import { useParams } from 'react-router-dom';
 
-type Props = {
+interface Props {
    children: React.ReactNode;
 };
 

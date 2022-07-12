@@ -26,13 +26,52 @@
 import 'cypress-jest-adapter';
 import '@testing-library/cypress/add-commands';
 
-//todo custom command to login user
-// Cypress.Commands.add('login', (userType, options = {}) => {
-//    const types = {
-//       user: {
-//          username: '',
-//       },
-//    };
-// });
+//custom command to login user
+Cypress.Commands.add('login', (userType, options = {}) => {
+  
+
+
+   cy.request({
+    url: '/api/signup',
+    method: 'POST',
+    body: {
+        username: 'TEST_USER',
+        email: 'testemail@testemail.com',
+        password: 'password',
+    }
+   })
+    cy.request({
+        url: '/api/metrics',
+        method: 'POST',
+        body:   {
+            total_carbohydrates: 200,
+            min_carbs_per_meal: 20,
+            max_carbs_per_meal: 40,
+            total_protein: 85,
+            min_protein_per_meal: 20,
+            max_protein_per_meal: 35,
+            total_fat: 75,
+            min_fat_per_meal: 10,
+            max_fat_per_meal: 25,
+            total_calories: 2000,
+            min_calories_per_meal: 400,
+            max_calories_per_meal: 650,
+          }
+    })
+     let response = cy.request({
+        url: '/api/login',
+        method: 'POST',
+        body: {
+            username: 'TEST_USER',
+            password: 'password'
+        }
+    })
+   cy.visit(`/123/search`)
+});
 
 //todo custom command to logout user
+Cypress.Commands.add('logout', () => {
+    cy.contains('Login').should('not.exist')
+    cy.findByTestId('avatar').click()
+    cy.contains('Logout').click()
+  })

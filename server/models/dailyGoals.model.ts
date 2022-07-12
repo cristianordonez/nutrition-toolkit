@@ -1,6 +1,6 @@
 import { db } from '../database/db';
 
-interface Goals {
+type Goals = {
    user_id: number;
    total_carbohydrates: number;
    min_carbs_per_meal: number;

@@ -40,7 +40,9 @@ router.post(
       failureRedirect: `/error`,
       failureMessage: true,
    }),
+   
    (req: Request, res: Response) => {
+      console.log('here in login route')
       console.log('req.user:', req.user);
       let session: any = req.session;
       let user: any = req.user;

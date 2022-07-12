@@ -47,6 +47,7 @@ export const HeightInputField = ({ height, setHeight }: Props) => {
                   size='small'
                   onChange={handleHeightInputChange}
                   onBlur={handleHeightBlur}
+                  data-testid='height-input'
                   inputProps={{
                      step: 1,
                      min: 54,

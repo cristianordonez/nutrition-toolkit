@@ -4,7 +4,9 @@
    "description": "Meal planning app",
    "main": "server.js",
    "scripts": {
-      "test": "jest",
+      "test": "concurrently -n 'jest,Cypress' -c 'bgGreen.bold, bgBlue.bold' \"npm:jest\" \"npm:cypress-CI\" ",
+      "cypress-CI": "npx cypress run --record --key 8fe96491-f3d2-4a36-93eb-6cd5688f93e0 ",
+      "jest": "jest",
       "cypress": "cypress open",
       "dev": "concurrently -n 'webpack,server' -c 'bgBlue.bold,bgGreen.bold' \"npx webpack serve --config webpack.dev.js\" \"nodemon server/server.js\"",
       "start": "webpack --config webpack.prod.js && nodemon server/server.js"
@@ -39,6 +41,7 @@
       "express-session": "^1.17.3",
       "mini-css-extract-plugin": "^2.6.0",
       "mysql2": "^2.3.3",
+      "nodemon": "^2.0.19",
       "passport": "^0.6.0",
       "passport-local": "^1.0.0",
       "pg": "^8.7.3",

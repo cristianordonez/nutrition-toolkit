@@ -1,4 +1,4 @@
-export interface RecipeItemInterface {
+export interface RecipeItemType {
    id: number;
    image: string;
    imageType: string;
@@ -8,7 +8,7 @@ export interface RecipeItemInterface {
    spoonacularSourceUrl: string;
    servings: number;
 }
-export interface GroceryItemInterface {
+export interface GroceryItemType {
    id: number;
    aisle: string;
    importantBadges: string[];
@@ -27,7 +27,7 @@ export interface GroceryItemInterface {
    ingredientList: string;
 }
 
-export interface MenuItemInterface {
+export interface MenuItemType {
    id: number;
    image: string;
    imageType: string;

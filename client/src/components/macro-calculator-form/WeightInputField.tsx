@@ -48,6 +48,7 @@ export const WeightInputField = ({ weight, setWeight }: Props) => {
                   size='small'
                   onChange={handleWeightInputChange}
                   onBlur={handleWeightBlur}
+                  data-testid='weight-input'
                   inputProps={{
                      step: 1,
                      min: 70,

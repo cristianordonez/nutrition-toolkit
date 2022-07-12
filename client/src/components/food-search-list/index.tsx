@@ -6,10 +6,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import {
-   RecipeItemInterface,
-   GroceryItemInterface,
-   MenuItemInterface,
-} from './types';
+   RecipeItemType,
+   GroceryItemType,
+   MenuItemType,
+} from './index.types';
 
 export const FoodSearchList = ({
    apiData,
@@ -18,8 +18,7 @@ export const FoodSearchList = ({
    setAlertMessage,
    setOpenSnackbar,
    setAlertSeverity,
-}: any) => {
-   console.log('apiData:', apiData);
+}: any) => {   
    return (
       <>
          <Stack direction='row' spacing={1}>
@@ -30,7 +29,7 @@ export const FoodSearchList = ({
          </Stack>
          <Grid container spacing={2}>
             {route === 'recipes' &&
-               apiData.map((item: RecipeItemInterface) => (
+               apiData.map((item: RecipeItemType) => (
                   <FoodSearchItem
                      key={item.id}
                      id={item.id}
@@ -46,7 +45,7 @@ export const FoodSearchList = ({
                   />
                ))}
             {route === 'groceryProducts' &&
-               apiData.map((item: GroceryItemInterface) => (
+               apiData.map((item: GroceryItemType) => (
                   <FoodSearchItem
                      key={item.id}
                      id={item.id}
@@ -64,7 +63,7 @@ export const FoodSearchList = ({
                   />
                ))}
             {route === 'menuItems' &&
-               apiData.map((item: MenuItemInterface) => (
+               apiData.map((item: MenuItemType) => (
                   <FoodSearchItem
                      key={item.id}
                      id={item.id}

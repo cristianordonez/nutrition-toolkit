@@ -56,7 +56,7 @@ export const SignupForm = ({
          } catch (err: any) {
             console.log('err:', err);
             setErrorMessage(
-               'An account with that username or email already exists. Try loggin in instead.'
+               'An account with that username or email already exists. Try logging in instead.'
             );
             setOpenErrorAlert(true);
          }

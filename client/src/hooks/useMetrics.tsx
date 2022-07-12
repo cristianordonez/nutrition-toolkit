@@ -15,7 +15,7 @@ interface Goals {
    max_calories_per_meal: number;
 }
 
-import { MetricsInterface } from './useMetrics.interface';
+import { MetricsType } from './useMetrics.types';
 
 //calculations are primarily for diabetes
 export const useMetrics = ({
@@ -24,7 +24,7 @@ export const useMetrics = ({
    gender,
    height,
    activityLevel,
-}: MetricsInterface) => {
+}: MetricsType) => {
    let weightInKg = weight / 2.2;
    let heightInCm = Math.floor(height * 2.54);
    let additionalCalories = gender === 'female' ? -161 : 5;

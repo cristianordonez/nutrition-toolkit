@@ -6,7 +6,7 @@ import bcrypt from 'bcrypt';
 
 const saltRounds = 10;
 
-interface Body {
+type Body = {
    username: string;
    email: string;
    password: string;
@@ -15,14 +15,15 @@ interface Body {
 //# create initial account if not already exists
 export const createAccount = async (req: Request, res: Response) => {
    try {
+      console.log('here in create account')
       let checkForExistingEmail: any = await userModel.getByEmail(
          req.body.email
       ); //  first check if user email or username already exists
       let checkForExistingUsername: any = await userModel.getByUsername(
          req.body.username
       );
-      console.log('checkForExistingEmail:', checkForExistingEmail);
-      console.log('checkForExistingUsername:', checkForExistingUsername);
+      console.log('checkForExistingEmail:', checkForExistingEmail)
+      console.log('checkForExistinguSERNAME:', checkForExistingUsername)
       if (
          checkForExistingEmail.length || // if either email or username already exists in db, cancel the request
          checkForExistingUsername.length
@@ -46,7 +47,7 @@ export const createAccount = async (req: Request, res: Response) => {
          res.status(201).send('You have successfully created an account!');
       }
    } catch (err) {
-      console.log('err:', err);
+      console.log('err in createaccount controller:', err);
       res.status(500).send('Unable to create an account.');
    }
 };

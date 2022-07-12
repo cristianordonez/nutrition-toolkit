@@ -18,7 +18,7 @@ import axios from 'axios';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 //todo change 0
-interface Goals {
+type Goals = {
    total_carbohydrates: 0;
    min_carbs_per_meal: 0;
    max_carbs_per_meal: 0;

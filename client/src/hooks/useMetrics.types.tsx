@@ -1,4 +1,4 @@
-export interface MetricsInterface {
+export type MetricsType = {
    age: number;
    weight: number;
    gender: string;

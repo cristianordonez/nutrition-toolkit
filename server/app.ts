@@ -18,6 +18,7 @@ import bcrypt from 'bcrypt';
 const pgSession = require('connect-pg-simple')(session);
 const app = express();
 
+console.log('here in app.ts')
 //MIDDLEWARE
 app.use(compression());
 
@@ -28,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const database =
-   process.env.NODE_ENV === 'test' ? 'mealplans-test' : 'mealplans';
+   process.env.NODE_ENV === 'test' ? 'mealplans_test' : 'mealplans';
 
 const conObject = {
    user: process.env.USER,

@@ -21,4 +21,4 @@ CREATE TABLE daily_goals (
 
 -- public.daily_goals foreign keys
 
-ALTER TABLE daily_goals ADD CONSTRAINT daily_goals_fk FOREIGN KEY (user_id) REFERENCES users(id);
+ALTER TABLE daily_goals ADD CONSTRAINT daily_goals_fk FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;

@@ -1,6 +1,7 @@
 /**
  * @jest-environment node
  */
+//! Jest tests use a test database, not production database
 process.env.NODE_ENV = 'test'; //set NODE_ENV to 'test' so that test database is used
 import supertest from 'supertest';
 import { expect } from '../jestGlobals';
@@ -14,6 +15,7 @@ let cookie: any; //create cookie variable to be set so that sessions are not res
 let testCookie: any; //used for the account in the before and after hooks
 
 beforeAll(async () => {
+   await db.query(schemas.session)
    await db.query(schemas.users);
    await db.query(schemas.daily_goals);
    let beforeResponse = await request.post('/api/signup').send({
@@ -25,6 +27,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+   await db.query( `DROP TABLE session`)
    await db.query('DROP TABLE daily_goals');
    await db.query('DROP TABLE users');
    await request.post('/api/logout').set('Cookie', testCookie);
@@ -33,7 +36,7 @@ afterAll(async () => {
 console.log('request:', request);
 
 describe('Authentication routes', () => {
-   test('POST /login: should allow user to login if they have account', async () => {
+   test('POST /login: should allow user to access base url with no errors', async () => {
       let currentResponse = await request.get('/api');
       expect(currentResponse.statusCode).toBe(200);
    });
@@ -42,6 +45,7 @@ describe('Authentication routes', () => {
          username: 'test',
          password: 'password',
       });
+      console.log('currentresponse in api tests', currentResponse)
       expect(currentResponse.statusCode).toBe(200);
    });
    test('POST /signup: it should allow user to create an account and then set session', async () => {

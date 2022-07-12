@@ -63,7 +63,6 @@ export const MacroCalculatorForm = ({
       });
       try {
          let response = await axios.post(`/api/metrics`, metrics);
-         console.log('response:', response);
          setErrorMessage(
             'You have successfully created an account. Please login.'
          );

@@ -76,3 +76,13 @@ npm run cypress
 -  [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)
    https://spoonacular.com/food-api/docs
    https://www.rithmschool.com/courses/intermediate-node-express/api-tests-with-jest
+
+
+https://stackoverflow.com/questions/42749033/fatal-password-authentication-failed-for-user-root-postgresql
+
+
+https://stackoverflow.com/questions/3949876/how-to-switch-databases-in-psql
+
+https://stackoverflow.com/questions/65877048/pgadmin-on-ubuntu-20-04-fatal-password-authentication-failed-for-user
+
+

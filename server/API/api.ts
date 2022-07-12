@@ -1,17 +1,17 @@
 import axios from 'axios';
 import {
-   QueryInterface,
-   UserInterface,
-   AccountInterface,
-   MealPlanInterface,
-} from './types';
+   QueryType,
+   UserType,
+   AccountType,
+   MealPlanType,
+} from './api.types';
 
 const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/';
 const X_RAPIDAPI_KEY = process.env.X_RAPIDAPI_KEY;
 const X_RAPIDAPI_HOST = process.env.X_RAPIDAPI_HOST;
 
-export const connectUser = async (user: UserInterface) => {
-   const spoonacularUser = await axios.post<AccountInterface>(
+export const connectUser = async (user: UserType) => {
+   const spoonacularUser = await axios.post<AccountType>(
       `${url}/users/connect`,
       user,
       {
@@ -21,11 +21,12 @@ export const connectUser = async (user: UserInterface) => {
          },
       }
    );
+   console.log(spoonacularUser);
    return spoonacularUser;
 };
 
 export const getSpoonacularRecipes = async (
-   recipeQuery: QueryInterface
+   recipeQuery: QueryType
 ): Promise<object> => {
    let intoleranceQuery = recipeQuery.intolerance.length
       ? recipeQuery.intolerance
@@ -59,7 +60,7 @@ export const getSpoonacularRecipes = async (
    return recipes.data.results;
 };
 
-export const getSpoonacularMenuItems = async (menuQuery: QueryInterface) => {
+export const getSpoonacularMenuItems = async (menuQuery: QueryType) => {
    //does not use intolerance or diet since API does not accept those values for this request
    const menuItems = await axios.get(`${url}food/menuItems/search`, {
       params: {
@@ -89,7 +90,7 @@ export const getSpoonacularMenuItems = async (menuQuery: QueryInterface) => {
 };
 
 export const getSpoonacularGroceryProducts = async (
-   groceryProductsQuery: QueryInterface
+   groceryProductsQuery: QueryType
 ) => {
    //does not use type, intolerance or diet since API does not accept those values for this request
    const groceryProducts = await axios.get(`${url}food/products/search`, {
@@ -120,7 +121,7 @@ export const getSpoonacularGroceryProducts = async (
 };
 
 export const addToSpoonacularMealplan = async (
-   data: MealPlanInterface,
+   data: MealPlanType,
    username: string,
    hash: string
 ) => {

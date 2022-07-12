@@ -47,6 +47,7 @@ export const AgeInputField = ({ age, setAge }: Props) => {
                   required
                   onChange={handleAgeInputChange}
                   onBlur={handleAgeBlur}
+                  data-testid='age-input'
                   inputProps={{
                      step: 1,
                      min: 18,

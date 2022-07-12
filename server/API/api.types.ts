@@ -1,19 +1,17 @@
-export interface UserInterface {
+export type UserType = {
    username: string;
-   firstName: string;
-   lastName: string;
    email: string;
    password: string;
 }
 
-export interface AccountInterface {
+export type AccountType = {
    status: string;
    username: string;
    spoonacularPassword: string;
    hash: string;
 }
 
-export interface QueryInterface {
+export type QueryType = {
    query: string;
    type: string;
    intolerance: string;
@@ -29,7 +27,7 @@ export interface QueryInterface {
    offset: number; //number of results to skip, useful for lazy loading
 }
 
-export interface MealPlanInterface {
+export type MealPlanType = {
    date: number;
    slot: number;
    position: number;
