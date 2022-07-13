@@ -70,7 +70,7 @@ export const FoodSearchItem = ({
       <>
          <Grid item xs={12} sm={6} md={4} xl={3}>
             <Paper elevation={1} className='food-search-paper'>
-               <Card className='search-item'>
+               <Card className='search-item' data-testid='food-search-item'>
                   <CardMedia
                      component='img'
                      alt='food item image'

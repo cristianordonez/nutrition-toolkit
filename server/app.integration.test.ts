@@ -2,20 +2,22 @@
  * @jest-environment node
  */
 //! Jest tests use a test database, not production database
+//? Supertest cannot be used to find req.user when using passport, so avoid these tests
+
 process.env.NODE_ENV = 'test'; //set NODE_ENV to 'test' so that test database is used
+import axios from 'axios';
 import supertest from 'supertest';
 import { expect } from '../jestGlobals';
 import app from './app';
 import { db } from './database/db';
 const { schemas } = require('./database/SQL'); //import the sql queries
-
 const request = supertest(app);
 
 let cookie: any; //create cookie variable to be set so that sessions are not reset
 let testCookie: any; //used for the account in the before and after hooks
 
 beforeAll(async () => {
-   await db.query(schemas.session)
+   await db.query(schemas.session);
    await db.query(schemas.users);
    await db.query(schemas.daily_goals);
    let beforeResponse = await request.post('/api/signup').send({
@@ -33,21 +35,13 @@ afterAll(async () => {
    await request.post('/api/logout').set('Cookie', testCookie);
 });
 
-console.log('request:', request);
-
 describe('Authentication routes', () => {
-   test('POST /login: should allow user to access base url with no errors', async () => {
+
+   test('GET /: should allow user to access base url with no errors', async () => {
       let currentResponse = await request.get('/api');
       expect(currentResponse.statusCode).toBe(200);
    });
-   test('POST /login: should allow user to login if they have account', async () => {
-      let currentResponse = await request.post('/api/login').send({
-         username: 'test',
-         password: 'password',
-      });
-      console.log('currentresponse in api tests', currentResponse)
-      expect(currentResponse.statusCode).toBe(200);
-   });
+
    test('POST /signup: it should allow user to create an account and then set session', async () => {
       let response = await request.post('/api/signup').send({
          username: 'test user',
@@ -57,6 +51,7 @@ describe('Authentication routes', () => {
       expect(response.statusCode).toBe(201);
       cookie = response.headers['set-cookie']; //update cookie here so session is saved
    });
+
    test('POST /metrics: it should allow user to add metrics', async () => {
       let body = {
          total_carbohydrates: 200,
@@ -96,6 +91,7 @@ describe('Authentication routes', () => {
       expect(metricsResponse.statusCode).toBe(200);
       expect(metricsResponse.body.min_carbs_per_meal).toBe(45);
    });
+
    test('POST /logout: should allow user to logout', async () => {
       let logoutResponse = await request
          .post('/api/logout')
@@ -105,4 +101,4 @@ describe('Authentication routes', () => {
    });
 });
 
-//describe block testing the spoonacular endpoints
+//todo test ONLY three routes to search for recipes 

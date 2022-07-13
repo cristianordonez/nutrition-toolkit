@@ -33,6 +33,7 @@ export const AuthProvider = ({ children }: Props) => {
    useEffect(() => {
       let promise = axios.get('/api/authentication');
       promise.then((response) => {
+         console.log('response in authcontext :', response)
          setIsLoading(false);
       });
       promise.catch((err) => {

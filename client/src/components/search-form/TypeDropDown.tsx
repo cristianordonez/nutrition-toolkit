@@ -21,6 +21,7 @@ export const TypeDropDown = ({ type, handleTypeSelect }: Props) => {
             label='Type'
             required
             id='type'
+            data-testid='select-type-dropdown'
          >
             <MenuItem value={'maincourse'}>Main Course</MenuItem>
             <MenuItem value={'sidedish'}>Side Dish</MenuItem>

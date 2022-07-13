@@ -12,7 +12,7 @@ const X_RAPIDAPI_HOST = process.env.X_RAPIDAPI_HOST;
 
 export const connectUser = async (user: UserType) => {
    const spoonacularUser = await axios.post<AccountType>(
-      `${url}/users/connect`,
+      `${url}users/connect`,
       user,
       {
          headers: {
@@ -116,15 +116,17 @@ export const getSpoonacularGroceryProducts = async (
          'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
       },
    });
-   console.log('groceryProducts:', groceryProducts);
+ 
    return groceryProducts.data.products;
 };
 
+//adds a specific item to mealplan of user 
 export const addToSpoonacularMealplan = async (
    data: MealPlanType,
    username: string,
    hash: string
 ) => {
+   console.log('hash in api get meal plan day:', hash)
    const response = await axios.post(
       `${url}mealplanner/${username}/items`,
       data,
@@ -133,7 +135,6 @@ export const addToSpoonacularMealplan = async (
             hash: `${hash}`,
          },
          headers: {
-            'content-type': 'application/json',
             'X-RapidAPI-Key': `${X_RAPIDAPI_KEY}`,
             'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
          },
@@ -141,6 +142,22 @@ export const addToSpoonacularMealplan = async (
    );
    return response;
 };
-export const deleteFromSpoonacularMealplan = async () => {};
-export const getFromSpoonacularMealplanDay = async () => {};
+
+type SelectedDay = {
+   date: string;
+}
+//gets item for specific day
+export const getFromSpoonacularMealplanDay = async (username: string, selectedDay: SelectedDay, hash: string) => {
+   console.log('hash: ', hash)
+   const response = await axios.post(`${url}mealplanner/${username}/day/${selectedDay.date}?hash=${hash}`,
+   {
+      headers: {
+
+         'X-RapidAPI-Key': `${X_RAPIDAPI_KEY}`,
+         'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
+      },
+   });
+   return response;
+};
 export const getFromSpoonacularMealplanWeek = async () => {};
+export const deleteFromSpoonacularMealplan = async () => {};

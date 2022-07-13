@@ -1,5 +1,10 @@
 import React from 'react';
 
-const MealPlan = () => {};
+export const MealPlan = () => {
+    return (
+        <>
+        </>
+    )
+};
 
-export default MealPlan;
+

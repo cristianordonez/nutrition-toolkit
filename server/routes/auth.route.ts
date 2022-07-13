@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response, Router } from 'express';
+import { NextFunction, Request, Response, Router, Express } from 'express';
 import * as userController from '../controllers/user.controller';
 import passport from 'passport';
 const router = Router();
@@ -33,6 +33,13 @@ router.get('/metrics', (req: Request, res: Response) => {
    userController.getMetrics(req, res);
 });
 
+
+declare module 'express-session' {
+   interface SessionData {
+     user_id: number;
+   }
+ }
+
 //# handles logging the user in
 router.post(
    '/login',
@@ -40,14 +47,16 @@ router.post(
       failureRedirect: `/error`,
       failureMessage: true,
    }),
-   
    (req: Request, res: Response) => {
-      console.log('here in login route')
-      console.log('req.user:', req.user);
-      let session: any = req.session;
+      console.log('2. req.user:', req.user);
+   
       let user: any = req.user;
-      session.user_id = user.id;
-      res.status(200).send(req.user);
+  
+      // req.session = req.session as any;
+      req.session.user_id = user.id;
+      req.session.save();
+      console.log('3. req.session: ', req.session)
+      res.status(200).send('Successfully logged in.');
    }
 );
 

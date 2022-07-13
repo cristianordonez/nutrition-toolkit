@@ -20,6 +20,7 @@ export const SearchInput = ({ route, handleRouteChange }: Props) => {
             onChange={handleRouteChange}
             label='Search'
             required
+            data-testid='select-search-input'
          >
             <MenuItem value={'recipes'}>Recipes</MenuItem>
             <MenuItem value={'groceryProducts'}>Grocery Products</MenuItem>

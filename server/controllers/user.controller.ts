@@ -43,7 +43,7 @@ export const createAccount = async (req: Request, res: Response) => {
          user.hash = hash;
          let dbResponse = await userModel.create(user); // then, send data to model to store all info in db
          let session: any = req.session; // put user id into req.sessions
-         session.user_id = dbResponse[0].id;
+         session.user_id = dbResponse[0].id; //save user_id to session so that it can be retrieved with next request when getting metrics
          res.status(201).send('You have successfully created an account!');
       }
    } catch (err) {
@@ -80,6 +80,7 @@ export const checkAuthentication = async (req: any, res: Response) => {
 //# gets metrics from user from database
 export const getMetrics = async (req: any, res: Response) => {
    try {
+      console.log('6. req.session in getmetrics user controller: ', req.session)
       let user_id = req.session.user_id;
       let userGoals: any = await dailyGoalsModel.getGoals(user_id);
       res.json(userGoals[0]);

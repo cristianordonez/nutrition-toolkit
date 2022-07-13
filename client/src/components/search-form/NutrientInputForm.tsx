@@ -29,6 +29,7 @@ export const NutrientInputForm = ({
                   id={`min${nutrient}`}
                   type='number'
                   required
+                  data-testid='textfield-min-nutrient'
                   value={minValue}
                   onChange={handleInputChange}
                   endAdornment={
@@ -45,6 +46,7 @@ export const NutrientInputForm = ({
             <FormControl fullWidth variant='standard' sx={{ m: 1, mt: 3 }}>
                <Input
                   id={`max${nutrient}`}
+                  data-testid='textfield-max-nutrient'
                   type='number'
                   required
                   value={maxValue}

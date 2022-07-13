@@ -1,16 +1,9 @@
-
-
 describe('The Login Page', () => {
-   
-   // reset and seed the database prior to all test
-   // before(() => {
-   //    cy.task('db:seed');
-   // });
-
-   //then drop the database after all tests are completed
    after(() => {
-      cy.task('db:teardown');
+      
+      cy.task('db:teardown'); //deletes all users and sessions from database 
    });
+
 
    it('Successfully allows user to create an account', () => {
       cy.visit('/');
@@ -28,6 +21,7 @@ describe('The Login Page', () => {
       cy.findByTestId('weight-input').type('{backspace}{backspace}{backspace}150')
       cy.contains('Complete creating account').click();
       cy.contains('You have successfully created an account. Please login.').should('be.visible')
+  
    });
    it('Allows user to login after creating an account', () => {
       cy.visit('/');
@@ -36,5 +30,6 @@ describe('The Login Page', () => {
       cy.findByPlaceholderText('Password').type('password');
       cy.findByTestId('login-btn').click();
       cy.get('.daily-goals').contains('1614').should('be.visible')
+      cy.logout();
    })
 });

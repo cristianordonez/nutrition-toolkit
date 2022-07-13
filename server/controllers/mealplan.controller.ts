@@ -3,19 +3,23 @@ import { Request, Response } from 'express';
 import * as apiHelpers from '../API/api';
 import { getHashByUsername } from '../models/user.model';
 
+type User = {
+   id: number;
+   username: string;
+   email: string;
+   spoonacular_username: string;
+}
+
 export const addMealPlanItem = async function (req: Request, res: Response) {
-   let user = req.user as any;
-   let session = req.session as any;
+   const user = req.user as User;
    console.log('user:', user);
    let hash = await getHashByUsername(user.spoonacular_username);
-
    try {
-      let response = await apiHelpers.addToSpoonacularMealplan(
+      const response = await apiHelpers.addToSpoonacularMealplan(
          req.body,
          user.spoonacular_username,
          hash[0].spoonacular_hash
       );
-      console.log('response:', response);
       res.status(201).send(response.data.status);
    } catch (err) {
       console.log('err:', err);
@@ -23,21 +27,39 @@ export const addMealPlanItem = async function (req: Request, res: Response) {
    }
 };
 
-export const deleteMealPlanItem = async function (req: Request, res: Response) {
-   try {
-   } catch (err) {
-      console.log('err:', err);
-   }
-};
 
+type selectedDay = {
+   date: string;
+}
+
+
+type Hash = [{spoonacular_hash: string}];
+
+//todo
 export const getMealPlanDay = async function (req: Request, res: Response) {
+   const mealplanDay = req.query as selectedDay;
+   const user = req.user as User;
+   console.log('user from req.user', user);
+   let hash = await getHashByUsername(user.spoonacular_username); //returns Hash type
+   try {
+      let response = await apiHelpers.getFromSpoonacularMealplanDay(user.spoonacular_username, mealplanDay, hash[0].spoonacular_hash);
+      console.log('response in get meal plan day', response)
+   } catch (err) {
+      console.log('err:', err);
+   }
+};
+
+//todo
+export const getMealPlanWeek = async function (req: Request, res: Response) {
    try {
    } catch (err) {
       console.log('err:', err);
    }
 };
 
-export const getMealPlanWeek = async function (req: Request, res: Response) {
+
+//todo
+export const deleteMealPlanItem = async function (req: Request, res: Response) {
    try {
    } catch (err) {
       console.log('err:', err);

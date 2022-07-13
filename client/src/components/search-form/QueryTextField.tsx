@@ -12,6 +12,7 @@ export const QueryTextField = ({ query, handleInputChange }: Props) => {
       <TextField
          id='query'
          required
+         data-testid='query-text-field'
          InputProps={{
             startAdornment: (
                <InputAdornment position='start'>

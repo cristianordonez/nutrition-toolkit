@@ -121,7 +121,7 @@ export const AddToCartModal = ({
             </DialogContent>
             <DialogActions>
                <Button onClick={handleOpeningDialog}>Cancel</Button>
-               <Button type='submit'>Submit</Button>
+               <Button data-testid='add-mealplan-btn' aria-label='submit form to add to meal plan' type='submit'>Submit</Button>
             </DialogActions>
          </form>
       </Dialog>

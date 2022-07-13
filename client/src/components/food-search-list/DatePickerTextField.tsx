@@ -44,6 +44,7 @@ export const DatePickerTextField = ({ setData, data }: Props) => {
             <DesktopDatePicker
                label='Date desktop'
                inputFormat='MM/dd/yyyy'
+               data-testid='date-picker-textfield'
                value={value}
                onChange={handleChange}
                renderInput={(params) => <TextField {...params} />}

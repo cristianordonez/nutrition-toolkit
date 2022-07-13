@@ -16,8 +16,9 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { NavLink } from 'react-router-dom';
 
-const pages = ['Macro Calculator', 'Search', 'Meal Plan'];
+const pages = ['Search', 'Macro Calculator', 'Meal Plan'];
 const settings = ['Profile', 'Logout'];
 
 const NavBar = () => {
@@ -139,13 +140,7 @@ const NavBar = () => {
                </Typography>
                <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                   {pages.map((page) => (
-                     <Button
-                        key={page}
-                        onClick={handleCloseNavMenu}
-                        sx={{ my: 2, color: 'white', display: 'block' }}
-                     >
-                        {page}
-                     </Button>
+                     <NavLink key={page} to={`/${page.toLowerCase().replace(/ /g, '')}`}>{page}</NavLink>
                   ))}
                </Box>
 
@@ -177,7 +172,7 @@ const NavBar = () => {
                      <MenuItem onClick={handleMenuClick}>
                         <Typography textAlign='center'>User Profile</Typography>
                      </MenuItem>
-                     <MenuItem onClick={handleLogout}>
+                     <MenuItem onClick={handleLogout} data-testid='logout-btn'>
                         <Typography textAlign='center'>Logout</Typography>
                      </MenuItem>
                   </Menu>

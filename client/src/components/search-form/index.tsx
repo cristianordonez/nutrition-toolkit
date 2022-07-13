@@ -5,7 +5,7 @@ import { SearchFormSuggested } from './SearchFormSuggested';
 import { SearchFormCustom } from './SearchFormCustom';
 import { SelectChangeEvent } from '@mui/material/Select';
 
-interface Goals {
+type Goals = {
    total_carbohydrates: 0;
    min_carbs_per_meal: 0;
    max_carbs_per_meal: 0;

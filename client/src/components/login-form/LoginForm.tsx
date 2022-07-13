@@ -35,9 +35,11 @@ export const LoginForm = ({
       event.preventDefault();
       try {
          let response = await axios.post(`/api/login`, loginValues);
+         console.log('1. response: ', response)
          if (response.status === 200) {
+            console.log('4. here in handlelogin before navigation')
             setShowTextFieldError(false);
-            navigate(`/${response.data.id}/search`, { replace: true });
+            navigate(`/search`, { replace: true });
          }
       } catch (err: any) {
          setErrorMessage('No matching username and password found.'); //showTextFieldError message used in the snackbar
