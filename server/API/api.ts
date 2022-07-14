@@ -61,7 +61,7 @@ export const getSpoonacularRecipes = async (
 };
 
 export const getSpoonacularRecipeById = async (id: number) => {
-   const currentUrl = `${url}recipes/${id}/information`
+   const currentUrl = `${url}recipes/${id}/information?includeNutrition=true`
    let recipeInfo = await axios.get(currentUrl, {
       headers: {
          'X-RapidAPI-Key': `${X_RAPIDAPI_KEY}`,

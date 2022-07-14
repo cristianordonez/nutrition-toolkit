@@ -1,5 +1,6 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
 import './FoodSearchItem.scss';
+import {FoodItem} from '../../shared/FoodItem';
 import {
    Paper,
    Card,
@@ -36,8 +37,8 @@ interface Props {
    url?: string;
    restaurantChain?: string;
    setAlertMessage: Dispatch<SetStateAction<string>>;
-   setOpenSnackbar: Dispatch<SetStateAction<boolean>>;
-   setAlertSeverity:Dispatch<SetStateAction<AlertColor | undefined>>;
+   setOpenSnackbar: Dispatch<SetStateAction<boolean>> ;
+   setAlertSeverity: Dispatch<SetStateAction<AlertColor | undefined>>;
 }
 
 export const FoodSearchItem = ({
@@ -83,11 +84,23 @@ export const FoodSearchItem = ({
       fat = nutrition.fat;
       carbs = nutrition.carbs;
    }
-console.log('url:', url)
+
    return (
       <>
          <Grid item xs={12} sm={6} md={4} xl={3}>
-            <Paper elevation={1} className='food-search-paper'>
+            <FoodItem 
+                 route={route}
+                 image={image}
+                 title={title}
+                 restaurantChain={restaurantChain}
+                 calories={calories}
+                 carbs={carbs}
+                 protein={protein}
+                 fat={fat}
+                 url={url}
+                 handleOpeningDialog={handleOpeningDialog}
+            />
+            {/* <Paper elevation={1} className='food-search-paper'>
                <Card className='search-item' data-testid='food-search-item'>
                   <CardMedia
                      component='img'
@@ -97,13 +110,9 @@ console.log('url:', url)
                   />
                   <CardContent>
                      {route === 'recipes' ? (
-                    
-                          
                               <Typography variant='overline'>
                                  {title}
                               </Typography>
-                       
-                   
                      ) : (
                         <Typography variant='overline'>{title}</Typography>
                      )}
@@ -111,28 +120,24 @@ console.log('url:', url)
                         <Typography variant='h6'>{restaurantChain}</Typography>
                      )}
                      <div className='search-item-nutrition'>
-                        {/* CALORIES */}
                         <div className='search-item-nutrient'>
                            <Typography variant='subtitle2'>
                               <strong>Calories</strong>
                            </Typography>
                            <Typography variant='body1'>{calories}</Typography>
                         </div>
-                        {/*   CARBS  */}
                         <div className='search-item-nutrient'>
                            <Typography variant='subtitle2'>
                               <strong>Carbs</strong>
                            </Typography>
                            <Typography variant='body1'>{carbs}</Typography>
                         </div>
-                        {/* PROTEIN */}
                         <div className='search-item-nutrient'>
                            <Typography variant='subtitle2'>
                               <strong>Protein</strong>
                            </Typography>
                            <Typography variant='body1'>{protein}</Typography>
                         </div>
-                        {/* FAT */}
                         <div className='search-item-nutrient'>
                            <Typography variant='subtitle2'>
                               <strong>Fat</strong>
@@ -163,7 +168,7 @@ console.log('url:', url)
                      </Button>
                   </CardActions>
                </Card>
-            </Paper>
+            </Paper> */}
          </Grid>
          <AddToCartModal
             openDialog={openDialog}
