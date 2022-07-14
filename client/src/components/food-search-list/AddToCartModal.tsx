@@ -91,6 +91,7 @@ export const AddToCartModal = ({
    const handleSubmit = async (event: SyntheticEvent) => {
       event.preventDefault();
       try {
+         console.log('data in handle submit to add item ', data)
          let response = await axios.post('/api/mealplan', data);
          console.log('respons:', response);
          setAlertSeverity('success');

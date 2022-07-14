@@ -1,4 +1,4 @@
-interface FormattedDate {
+type FormattedDate = {
    year: number;
    month: number;
    day: number;
@@ -7,7 +7,7 @@ interface FormattedDate {
    sec: number;
 }
 
-interface Months {
+type Months = {
    Jan: number;
    Feb: number;
    Mar: number;

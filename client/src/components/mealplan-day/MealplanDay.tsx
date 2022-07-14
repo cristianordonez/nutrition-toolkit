@@ -1,8 +1,7 @@
 import React from 'react';
 
-export const MacroCalculatorPage = () => {
-    
+export const MealplanDay = () => {
     return (
         <></>
     )
-};
+}

@@ -123,12 +123,12 @@ export const getSpoonacularGroceryProducts = async (
 //adds a specific item to mealplan of user 
 export const addToSpoonacularMealplan = async (
    data: MealPlanType,
-   username: string,
+   spoonacularUsername: string,
    hash: string
 ) => {
-   console.log('hash in api get meal plan day:', hash)
+console.log('data in add to meal plan:', data);
    const response = await axios.post(
-      `${url}mealplanner/${username}/items`,
+      `${url}mealplanner/${spoonacularUsername}/items`,
       data,
       {
          params: {
@@ -143,21 +143,26 @@ export const addToSpoonacularMealplan = async (
    return response;
 };
 
-type SelectedDay = {
-   date: string;
-}
-//gets item for specific day
-export const getFromSpoonacularMealplanDay = async (username: string, selectedDay: SelectedDay, hash: string) => {
-   console.log('hash: ', hash)
-   const response = await axios.post(`${url}mealplanner/${username}/day/${selectedDay.date}?hash=${hash}`,
-   {
-      headers: {
 
-         'X-RapidAPI-Key': `${X_RAPIDAPI_KEY}`,
-         'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
-      },
-   });
+//gets item for specific day
+export const getFromSpoonacularMealplanDay = async (spoonacularUsername: string, selectedDay: string, spoonacularHash: string) => {
+   let options = {
+      method: 'GET',
+      url: `${url}mealplanner/${spoonacularUsername}/day/${selectedDay}`,
+      params: {hash: spoonacularHash},
+      headers: {
+        'X-RapidAPI-Key': `${X_RAPIDAPI_KEY}`,
+        'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
+      }
+    };
+   let response = await axios.request(options);
    return response;
 };
-export const getFromSpoonacularMealplanWeek = async () => {};
+
+
+export const getFromSpoonacularMealplanWeek = async (spoonacular_username: string, selectedWeek: string, spoonacular_hash: string) => {
+let response = await axios.get(`${url}mealplanner/${spoonacular_username}/week/${selectedWeek}`, {params: {hash: spoonacular_hash}, headers: {  'X-RapidAPI-Key': `${X_RAPIDAPI_KEY}`,
+'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,}})
+return response;
+};
 export const deleteFromSpoonacularMealplan = async () => {};

@@ -34,7 +34,7 @@ type Goals = {
 }
 
 export const SearchPage = () => {
-    const isLoading = false;//useAuth(); //used to check if data is still being retrieved from database
+   const isLoading = useAuth(); //used to check if data is still being retrieved from database
    const [apiData, setAPIData] = useState([]);
    const [loading, setLoading] = useState<boolean>(false);
    const [route, setRoute] = useState<string>('recipes');
@@ -148,7 +148,6 @@ export const SearchPage = () => {
    //# at first render grabs the users metrics from db, no need to send userId as
    //# it will be stored in the express session
    useEffect(() => {
-      console.log('5. here in useEffect for search page')
       let promise = axios.get('/api/metrics', {withCredentials: true});
       promise.then((results) => {
          setGoals(results.data);

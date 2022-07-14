@@ -20,6 +20,7 @@ export const addMealPlanItem = async function (req: Request, res: Response) {
          user.spoonacular_username,
          hash[0].spoonacular_hash
       );
+      console.log('response in add meal plan item:', response)
       res.status(201).send(response.data.status);
    } catch (err) {
       console.log('err:', err);
@@ -35,25 +36,39 @@ type selectedDay = {
 
 type Hash = [{spoonacular_hash: string}];
 
-//todo
+//gets all meals for certain day using date in form of string
 export const getMealPlanDay = async function (req: Request, res: Response) {
    const mealplanDay = req.query as selectedDay;
    const user = req.user as User;
    console.log('user from req.user', user);
-   let hash = await getHashByUsername(user.spoonacular_username); //returns Hash type
    try {
-      let response = await apiHelpers.getFromSpoonacularMealplanDay(user.spoonacular_username, mealplanDay, hash[0].spoonacular_hash);
-      console.log('response in get meal plan day', response)
+      let hash = await getHashByUsername(user.spoonacular_username); //returns Hash type
+      let mealplanDayItems = await apiHelpers.getFromSpoonacularMealplanDay(user.spoonacular_username, mealplanDay.date, hash[0].spoonacular_hash);
+      console.log('response in get meal plan day', mealplanDayItems.data)
+      res.status(200).send(mealplanDayItems.data)
    } catch (err) {
       console.log('err:', err);
+      res.status(400).send('Bad Request.')
    }
 };
 
-//todo
+
+type selectedWeek = {
+   date: string;
+}
+
+//gets all meal plans for a selected week 
 export const getMealPlanWeek = async function (req: Request, res: Response) {
+   const mealplanWeek = req.query as selectedWeek;
+   const user = req.user as User;
    try {
+      let hash = await getHashByUsername(user.spoonacular_username); //returns Hash type
+      let mealplanWeekItems = await apiHelpers.getFromSpoonacularMealplanWeek(user.spoonacular_username, mealplanWeek.date, hash[0].spoonacular_hash)
+      console.log('mealplanweekitems:', mealplanWeekItems)
+      res.status(200).send(mealplanWeekItems.data);
    } catch (err) {
       console.log('err:', err);
+      res.status(400).send('No meal plan items found.')
    }
 };
 

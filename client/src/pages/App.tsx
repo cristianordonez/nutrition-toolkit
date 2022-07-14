@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './home-page/Home';
 import { LoginPage } from './login-page/LoginPage';
 import { MacroCalculatorPage } from './macro-calculator-page/MacroCalculatorPage';
-import {MealPlan} from './meal-plan-page/MealPlan';
+import {MealPlanPage} from './meal-plan-page/MealPlanPage';
 import { SearchPage } from './search-page/SearchPage';
 import NavBar from '../components/navbar/NavBar';
 import { AuthProvider } from '../context/authContext';
@@ -30,7 +30,7 @@ export const App = () => {
                path='/mealplan'
                element={
                   <AuthProvider>
-                     <MealPlan />
+                     <MealPlanPage/>
                   </AuthProvider>
                }
             />
