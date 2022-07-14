@@ -7,4 +7,9 @@ router.get('/', (req: Request, res: Response) => {
    menuItemController.getMenuItems(req, res);
 });
 
+router.get('/:id', (req: Request, res: Response) => {
+   menuItemController.getMenuItemById(req,res);
+})
+
+
 export { router };

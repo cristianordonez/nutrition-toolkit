@@ -2,7 +2,7 @@
 // either login or other one
 
 import React, { useState } from 'react';
-import { expect } from '../../../jestGlobals';
+import { expect } from '../../../../jestGlobals';
 
 import { renderHook } from '@testing-library/react';
 import '@testing-library/jest-dom';

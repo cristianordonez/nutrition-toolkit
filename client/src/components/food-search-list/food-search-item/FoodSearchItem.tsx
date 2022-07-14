@@ -11,10 +11,10 @@ import {
    Grid,
    AlertColor,
 } from '@mui/material';
-import { AddToCartModal } from './AddToCartModal';
+import { AddToCartModal } from '../AddToCartModal';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import {GroceryItemNutrition, RecipeItemNutrition, MenuItemNutrition} from './index.types';
+import {GroceryItemNutrition, RecipeItemNutrition, MenuItemNutrition} from '../index.types';
 
 type NutrientType = {
    name: string;

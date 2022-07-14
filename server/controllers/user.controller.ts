@@ -15,15 +15,13 @@ type Body = {
 //# create initial account if not already exists
 export const createAccount = async (req: Request, res: Response) => {
    try {
-      console.log('here in create account')
       let checkForExistingEmail: any = await userModel.getByEmail(
          req.body.email
       ); //  first check if user email or username already exists
       let checkForExistingUsername: any = await userModel.getByUsername(
          req.body.username
       );
-      console.log('checkForExistingEmail:', checkForExistingEmail)
-      console.log('checkForExistinguSERNAME:', checkForExistingUsername)
+ 
       if (
          checkForExistingEmail.length || // if either email or username already exists in db, cancel the request
          checkForExistingUsername.length

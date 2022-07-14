@@ -13,3 +13,19 @@ export const getMenuItems = async function (req: Request, res: Response) {
       res.status(400).send('Could not get menu items.');
    }
 };
+
+
+type Params = {
+   id: number;
+}
+
+export const getMenuItemById = async function (req: Request, res: Response) {
+   let params = req.params as unknown as Params;
+   try {
+      let menuItemInfo = await apiHelpers.getSpoonacularMenuItemById(params.id)
+      res.status(200).send(menuItemInfo);
+   } catch(err) {
+      console.log('err in get menu item by id', err)
+      res.status(400).send('Could not get menu item information');
+   }
+}

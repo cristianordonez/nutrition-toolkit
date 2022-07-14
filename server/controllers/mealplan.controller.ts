@@ -12,7 +12,6 @@ type User = {
 
 export const addMealPlanItem = async function (req: Request, res: Response) {
    const user = req.user as User;
-   console.log('user:', user);
    let hash = await getHashByUsername(user.spoonacular_username);
    try {
       const response = await apiHelpers.addToSpoonacularMealplan(
@@ -20,7 +19,6 @@ export const addMealPlanItem = async function (req: Request, res: Response) {
          user.spoonacular_username,
          hash[0].spoonacular_hash
       );
-      console.log('response in add meal plan item:', response)
       res.status(201).send(response.data.status);
    } catch (err) {
       console.log('err:', err);
@@ -40,11 +38,10 @@ type Hash = [{spoonacular_hash: string}];
 export const getMealPlanDay = async function (req: Request, res: Response) {
    const mealplanDay = req.query as selectedDay;
    const user = req.user as User;
-   console.log('user from req.user', user);
+
    try {
       let hash = await getHashByUsername(user.spoonacular_username); //returns Hash type
       let mealplanDayItems = await apiHelpers.getFromSpoonacularMealplanDay(user.spoonacular_username, mealplanDay.date, hash[0].spoonacular_hash);
-      console.log('response in get meal plan day', mealplanDayItems.data)
       res.status(200).send(mealplanDayItems.data)
    } catch (err) {
       console.log('err:', err);

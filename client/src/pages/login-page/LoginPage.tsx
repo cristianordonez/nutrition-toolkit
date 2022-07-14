@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './LoginPage.scss';
 import { LoginForm } from '../../components/login-form/LoginForm';
 import { SignupForm } from '../../components/sign-up/SignupForm';
+import { CustomAlert } from '../../components/shared/CustomAlert';
 import { Snackbar, Alert, AlertColor } from '@mui/material';
 
 export const LoginPage = () => {
@@ -48,7 +49,7 @@ export const LoginPage = () => {
                handleErrorAlert={handleErrorAlert}
             />
          )}
-         <Snackbar
+         {/* <Snackbar
             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
             open={openErrorAlert}
             autoHideDuration={8000}
@@ -61,7 +62,9 @@ export const LoginPage = () => {
             >
                {errorMessage}
             </Alert>
-         </Snackbar>
+         </Snackbar> */}
+         <CustomAlert openAlert={openErrorAlert} handleAlert={handleErrorAlert} alertSeverity={alertSeverity} alertMessage={errorMessage}/>
+
       </div>
    );
 };

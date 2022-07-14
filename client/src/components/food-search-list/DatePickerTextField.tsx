@@ -16,6 +16,7 @@ interface Props {
    data: MealPlanType;
 }
 
+//! if error persists, consider using startOfDay function from date-fns
 //fixed error with day being one day ahead
 //material ui returns a date in string format Jan 12 2022 for example, but spoonacular requires Unix time
 export const DatePickerTextField = ({ setData, data }: Props) => {

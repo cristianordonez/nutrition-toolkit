@@ -7,4 +7,8 @@ router.get('/', (req: Request, res: Response) => {
    recipeController.getRecipes(req, res);
 });
 
+router.get('/:id', (req: Request, res: Response) => {
+   recipeController.getRecipeById(req,res);
+})
+
 export { router };

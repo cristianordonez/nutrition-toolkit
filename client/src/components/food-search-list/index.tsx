@@ -1,5 +1,5 @@
 import React from 'react';
-import { FoodSearchItem } from './FoodSearchItem';
+import { FoodSearchItem } from './food-search-item/FoodSearchItem';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';

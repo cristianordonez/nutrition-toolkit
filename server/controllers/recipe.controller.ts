@@ -15,3 +15,20 @@ export const getRecipes = async function (req: Request, res: Response) {
       res.status(400).send('Could not get recipes.');
    }
 };
+
+type Params = {
+   id: number;
+}
+
+export const getRecipeById = async function (req: Request, res: Response) {
+   let params = req.params as unknown as Params;
+   try {
+      let recipeInfo = await apiHelpers.getSpoonacularRecipeById(params.id)
+      
+      res.status(200).send(recipeInfo);
+
+   } catch(err) {
+      console.log('err in get recipe by id', err)
+      res.status(400).send('Could not get recipe information');
+   }
+}

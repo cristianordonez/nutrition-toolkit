@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './SearchPage.scss';
-// import { SearchForm } from '../../components/search-form';
 import { SearchForm } from '../../components/search-form';
+import { CustomAlert } from '../../components/shared/CustomAlert';
 import { FoodSearchList } from '../../components/food-search-list';
 import {
    Grid,
@@ -222,17 +222,7 @@ export const SearchPage = () => {
                   </>
                )}
                {/* ERROR SNACKBAR */}
-
-               <Snackbar
-                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                  open={openSnackbar}
-                  autoHideDuration={6000}
-                  onClose={handleClose}
-               >
-                  <Alert onClose={handleClose} severity={alertSeverity}>
-                     {alertMessage}
-                  </Alert>
-               </Snackbar>
+               <CustomAlert openAlert={openSnackbar} handleAlert={handleClose} alertSeverity={alertSeverity} alertMessage={alertMessage}/>
             </Grid>
          )}
       </>

@@ -14,3 +14,18 @@ export const getGroceryProducts = async function (req: Request, res: Response) {
       res.status(400).send('Could not get grocery products.');
    }
 };
+
+type Params = {
+   id: number;
+}
+
+export const getProductById = async function (req: Request, res: Response) {
+   let params = req.params as unknown as Params;
+   try {
+      let productInfo = await apiHelpers.getSpoonacularProductById(params.id)
+      res.status(200).send(productInfo);
+   } catch(err) {
+      console.log('err in get product by id', err)
+      res.status(400).send('Could not get product information');
+   }
+}

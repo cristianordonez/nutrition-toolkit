@@ -60,6 +60,18 @@ export const getSpoonacularRecipes = async (
    return recipes.data.results;
 };
 
+export const getSpoonacularRecipeById = async (id: number) => {
+   const currentUrl = `${url}recipes/${id}/information`
+   let recipeInfo = await axios.get(currentUrl, {
+      headers: {
+         'X-RapidAPI-Key': `${X_RAPIDAPI_KEY}`,
+         'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
+      },
+   })
+
+   return recipeInfo.data; //must return only the .data object otherwise will get JSON type error
+}
+
 export const getSpoonacularMenuItems = async (menuQuery: QueryType) => {
    //does not use intolerance or diet since API does not accept those values for this request
    const menuItems = await axios.get(`${url}food/menuItems/search`, {
@@ -89,6 +101,19 @@ export const getSpoonacularMenuItems = async (menuQuery: QueryType) => {
    return menuItems.data.menuItems;
 };
 
+export const getSpoonacularMenuItemById = async (id: number) => {
+   console.log(id);
+   const currentUrl = `${url}food/menuItems/${id}`
+   let menuItemInfo = await axios.get(currentUrl, {
+      headers: {
+         'X-RapidAPI-Key': `${X_RAPIDAPI_KEY}`,
+         'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
+      },
+   })
+   return menuItemInfo.data; //must return only the .data object otherwise will get JSON type error
+}
+
+
 export const getSpoonacularGroceryProducts = async (
    groceryProductsQuery: QueryType
 ) => {
@@ -116,9 +141,23 @@ export const getSpoonacularGroceryProducts = async (
          'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
       },
    });
- 
    return groceryProducts.data.products;
 };
+
+
+export const getSpoonacularProductById = async (id: number) => {
+   const currentUrl = `${url}food/products/${id}`
+   console.log('currentUrl:', currentUrl);
+   let productInfo = await axios.get(currentUrl, {
+      headers: {
+         'X-RapidAPI-Key': `${X_RAPIDAPI_KEY}`,
+         'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
+      },
+   })
+   return productInfo.data; //must return only the .data object otherwise will get JSON type error
+}
+
+
 
 //adds a specific item to mealplan of user 
 export const addToSpoonacularMealplan = async (

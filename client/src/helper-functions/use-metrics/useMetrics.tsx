@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { MetricsType } from './useMetrics.types';
 
 type Goals = {
    total_carbohydrates: number;
@@ -15,7 +15,6 @@ type Goals = {
    max_calories_per_meal: number;
 }
 
-import { MetricsType } from './useMetrics.types';
 
 //calculations are primarily for diabetes
 export const useMetrics = ({
@@ -31,20 +30,20 @@ export const useMetrics = ({
    let rmr = 10 * weightInKg + 6.25 * heightInCm - 5 * age + additionalCalories;
    let result = {} as Goals;
    result.total_calories = Math.floor(rmr * activityLevel);
-   result.min_calories_per_meal = Math.floor(result.total_calories / 3 - 100);
-   result.max_calories_per_meal = Math.floor(result.total_calories / 3 + 100);
+   result.min_calories_per_meal = Math.floor(result.total_calories / 3 - 150);
+   result.max_calories_per_meal = Math.floor(result.total_calories / 3 + 150);
    result.total_carbohydrates = Math.floor((rmr * 0.45) / 4); //divide by 4 to get grams from kcal
-   result.min_carbs_per_meal = Math.floor(result.total_carbohydrates / 3 - 5);
+   result.min_carbs_per_meal = Math.floor(result.total_carbohydrates / 3 - 5); //carbs are searched for in range of +/- 5 grams, to focus on diabetes
    result.max_carbs_per_meal = Math.floor(result.total_carbohydrates / 3 + 5);
    result.total_protein = Math.floor(weightInKg);
-   result.min_protein_per_meal = Math.floor(result.total_protein / 3 - 5);
-   result.max_protein_per_meal = Math.floor(result.total_protein / 3 + 5);
+   result.min_protein_per_meal = Math.floor(result.total_protein / 3 - 10); //protein is searched for in range of +/- 10 grams
+   result.max_protein_per_meal = Math.floor(result.total_protein / 3 + 10);
 
    let caloriesLeft =
       result.total_calories -
       (result.total_carbohydrates * 4 + result.total_protein * 4);
    result.total_fat = Math.floor(caloriesLeft / 9);
-   result.min_fat_per_meal = Math.floor(result.total_fat / 3 - 5);
-   result.max_fat_per_meal = Math.floor(result.total_fat / 3 + 5);
+   result.min_fat_per_meal = Math.floor(result.total_fat / 3 - 10); //fat is searched for in range of +/- 10 grams
+   result.max_fat_per_meal = Math.floor(result.total_fat / 3 + 10);
    return result;
 };
