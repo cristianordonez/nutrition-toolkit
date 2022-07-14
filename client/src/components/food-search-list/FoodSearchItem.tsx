@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Dispatch, SetStateAction } from 'react';
 import './FoodSearchItem.scss';
 import {
    Paper,
@@ -9,9 +9,12 @@ import {
    Typography,
    Button,
    Grid,
+   AlertColor,
 } from '@mui/material';
 import { AddToCartModal } from './AddToCartModal';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import {GroceryItemNutrition, RecipeItemNutrition, MenuItemNutrition} from './index.types';
 
 type NutrientType = {
    name: string;
@@ -21,6 +24,22 @@ type NutrientType = {
    id: number;
 };
 
+interface Props {
+   id: number;
+   imageType: string;
+   image: string;
+   title: string;
+   nutrition: GroceryItemNutrition | RecipeItemNutrition | MenuItemNutrition | any;
+   description?: string;
+   ingredientList?: string;
+   route: string;
+   url?: string;
+   restaurantChain?: string;
+   setAlertMessage: Dispatch<SetStateAction<string>>;
+   setOpenSnackbar: Dispatch<SetStateAction<boolean>>;
+   setAlertSeverity:Dispatch<SetStateAction<AlertColor | undefined>>;
+}
+
 export const FoodSearchItem = ({
    route,
    image,
@@ -28,7 +47,6 @@ export const FoodSearchItem = ({
    title,
    nutrition,
    description,
-   price,
    ingredientList,
    restaurantChain,
    url,
@@ -36,7 +54,7 @@ export const FoodSearchItem = ({
    setAlertMessage,
    setOpenSnackbar,
    setAlertSeverity,
-}: any) => {
+}: Props) => {
    //item that appears in every item is image, title, nutrition,
    const [openDialog, setOpenDialog] = useState<boolean>(false);
 
@@ -65,7 +83,7 @@ export const FoodSearchItem = ({
       fat = nutrition.fat;
       carbs = nutrition.carbs;
    }
-
+console.log('url:', url)
    return (
       <>
          <Grid item xs={12} sm={6} md={4} xl={3}>
@@ -79,13 +97,13 @@ export const FoodSearchItem = ({
                   />
                   <CardContent>
                      {route === 'recipes' ? (
-                        <CardActions>
-                           <a href={url} target='_blank'>
+                    
+                          
                               <Typography variant='overline'>
                                  {title}
                               </Typography>
-                           </a>
-                        </CardActions>
+                       
+                   
                      ) : (
                         <Typography variant='overline'>{title}</Typography>
                      )}
@@ -124,6 +142,17 @@ export const FoodSearchItem = ({
                      </div>
                   </CardContent>
                   <CardActions>
+                     {route === 'recipes' && 
+                     <a href={url} target='_blank'>
+                       <Button
+                       fullWidth
+                       variant='outlined'
+                    >
+                       <MenuBookIcon />
+                       View Recipe
+                    </Button>
+                    </a>
+                     }
                      <Button
                         onClick={handleOpeningDialog}
                         fullWidth

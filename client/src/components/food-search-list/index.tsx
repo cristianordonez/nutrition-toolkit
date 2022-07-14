@@ -19,6 +19,7 @@ export const FoodSearchList = ({
    setOpenSnackbar,
    setAlertSeverity,
 }: any) => {   
+   console.log('apiData:', apiData)
    return (
       <>
          <Stack direction='row' spacing={1}>
@@ -38,7 +39,7 @@ export const FoodSearchList = ({
                      title={item.title}
                      nutrition={item.nutrition}
                      route={route}
-                     url={item.spoonacularSourceUrl}
+                     url={item.sourceUrl}
                      setAlertMessage={setAlertMessage}
                      setOpenSnackbar={setOpenSnackbar}
                      setAlertSeverity={setAlertSeverity}
@@ -54,7 +55,7 @@ export const FoodSearchList = ({
                      image={item.image}
                      title={item.title}
                      nutrition={item.nutrition}
-                     price={item.price}
+                    
                      ingredientList={item.ingredientList}
                      route={route}
                      setAlertMessage={setAlertMessage}

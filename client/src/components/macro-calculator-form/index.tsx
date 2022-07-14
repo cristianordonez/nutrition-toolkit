@@ -11,7 +11,7 @@ import {
 import { HeightInputField } from './HeightInputField';
 import { WeightInputField } from './WeightInputField';
 import { AgeInputField } from './AgeInputField';
-import { useMetrics } from '../../hooks/useMetrics';
+import { useMetrics } from '../../helper-functions/use-metrics/useMetrics';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {

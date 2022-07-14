@@ -7,14 +7,13 @@ import getDay from 'date-fns/getDay'; //returns day in form of index, where 0 is
 import fromUnixTime from 'date-fns/getUnixTime';
 import format from 'date-fns/format';
 
-//! items are getting added to wrong day, are one day ahead
 
 //spoonacular api needs date in format '2022-07-13' 
 export const MealPlanPage = () => {
     useEffect(() => {
-    //    const currentDay = format(Date.now(), 'yyyy-MM-dd')
+       const currentDay = format(Date.now(), 'yyyy-MM-dd')
         // console.log('currentDay: ', currentDay);
-        axios.get('/api/mealplan/day', {params: {date: '2022-07-13'}, withCredentials: true}).then(response => {
+        axios.get('/api/mealplan/day', {params: {date: currentDay}, withCredentials: true}).then(response => {
             console.log('response in meal plan:', response)
         })
     })
@@ -30,5 +29,3 @@ export const MealPlanPage = () => {
         </>
     )
 };
-
-

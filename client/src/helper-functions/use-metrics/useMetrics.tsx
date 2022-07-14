@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-interface Goals {
+type Goals = {
    total_carbohydrates: number;
    min_carbs_per_meal: number;
    max_carbs_per_meal: number;

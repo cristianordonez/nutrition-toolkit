@@ -1,14 +1,19 @@
-export interface RecipeItemType {
+export type RecipeItemType = {
    id: number;
    image: string;
    imageType: string;
-   nutrition: { nutrients: [] };
+   nutrition: RecipeItemNutrition;
    title: string;
    sourceUrl: string;
    spoonacularSourceUrl: string;
    servings: number;
 }
-export interface GroceryItemType {
+
+export type RecipeItemNutrition = {
+    nutrients: [];
+}
+
+export type GroceryItemType = {
    id: number;
    aisle: string;
    importantBadges: string[];
@@ -17,35 +22,39 @@ export interface GroceryItemType {
    image: string;
    imageType: string;
    title: string;
-   nutrition: {
-      calories: number;
-      carbs: string;
-      fat: string;
-      protein: string;
-   };
+   nutrition: GroceryItemNutrition;
    price: number;
    ingredientList: string;
 }
 
-export interface MenuItemType {
-   id: number;
-   image: string;
-   imageType: string;
-   title: string;
-   nutrition: {
+export type GroceryItemNutrition = {
       calories: number;
       carbs: string;
       fat: string;
       protein: string;
-      nutrients: [
-         {
-            name: string;
-            amount: number;
-            unit: string;
-            percentOfDailyNeeds: number;
-         }
-      ];
-   };
+}
+
+export type MenuItemType = {
+   id: number;
+   image: string;
+   imageType: string;
+   title: string;
+   nutrition: MenuItemNutrition;
    restaurantChain: string;
    servingSize: string;
+}
+
+export type MenuItemNutrition = {
+   calories: number;
+   carbs: string;
+   fat: string;
+   protein: string;
+   nutrients: [
+      {
+         name: string;
+         amount: number;
+         unit: string;
+         percentOfDailyNeeds: number;
+      }
+   ];
 }

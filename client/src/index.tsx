@@ -6,7 +6,11 @@ import { BrowserRouter } from 'react-router-dom';
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { ThemeProvider } from '@emotion/react';
 
-let theme = createTheme();
+let theme = createTheme({
+   palette: {
+      mode: 'dark',
+   }
+});
 theme = responsiveFontSizes(theme);
 
 const root = ReactDOM.createRoot(document.getElementById('root') as Element);

@@ -18,7 +18,7 @@ describe('The Mealplan Page', () => {
  
     it('Should allow user to view their recipes', () => {
        cy.contains('Meal Plan').click();
-       cy.addItemsToMealplan(); 
+      //  cy.addItemsToMealplan(); 
       // cy.request({
       //    url: '/api/mealplan/day',
       //    method: 'GET',
