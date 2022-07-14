@@ -51,12 +51,9 @@ export const FoodSearchList = ({
                      key={item.id}
                      id={item.id}
                      imageType={item.imageType}
-                     description={item.description}
                      image={item.image}
                      title={item.title}
                      nutrition={item.nutrition}
-                    
-                     ingredientList={item.ingredientList}
                      route={route}
                      setAlertMessage={setAlertMessage}
                      setOpenSnackbar={setOpenSnackbar}

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { MealplanItemType } from '.';
+import { FoodItem } from '../shared/FoodItem';
 import {
     Paper,
     Card,
@@ -40,6 +41,10 @@ type FoodItemType = {
 export const MealplanItem = ({position, slot, type, id, imageType, servings, title }: Props) => {
     const [itemData, setItemData] = useState<null | FoodItemType>(null); //will hold value of the items data after calling endpoint
 
+    const handleOpeningDialog = () => {
+        console.log('change this')
+    }
+
     useEffect(()=> {
         let url:string = `/api/recipes/${id}`; //set initial value for url to avoid typescript error
         if (type === 'RECIPE') {
@@ -59,13 +64,30 @@ export const MealplanItem = ({position, slot, type, id, imageType, servings, tit
         })
     }, [id])
 
+    if (itemData) {
 
         return (
+            
             <>
-          
+            {type === 'RECIPE' && 
+          <FoodItem 
+             route={type}
+             image={itemData?.image}
+             title={itemData?.title}
+             restaurantChain={itemData?.restaurantChain}
+            nutrition={itemData?.nutrition}
+             url={itemData?.url}
+             handleOpeningDialog={handleOpeningDialog}
+          />
+            }
     
             </>
         )
+    } else {
+        return (
+            <div>no items yet</div>
+        )
+    }
 
     
 }
