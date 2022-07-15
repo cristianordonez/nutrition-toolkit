@@ -18,7 +18,7 @@ import {
    AlertColor,
 } from '@mui/material';
 import { DatePickerTextField } from './DatePickerTextField';
-import { MealPlanType } from '../../../../server/API/api.types'; //interface from api handler
+import { addToMealPlanType } from '../../../../server/API/api.types'; //interface from api handler
 import axios from 'axios';
 import getUnixTime from 'date-fns/getUnixTime';
 
@@ -56,7 +56,7 @@ export const AddToCartModal = ({
       currentType = 'MENU_ITEM';
    }
 
-   const [data, setData] = useState<MealPlanType>({
+   const [data, setData] = useState<addToMealPlanType | any>({
       date: getUnixTime(Date.now()),
       slot: 1,
       position: 0, // the order in the slot
@@ -76,7 +76,7 @@ export const AddToCartModal = ({
 
    //#handles updating state when changing the servings select field
    const handleSelectServings = (event: SelectChangeEvent) => {
-      setData((data) => {
+      setData((data:addToMealPlanType) => {
          return {
             ...data,
             value: {

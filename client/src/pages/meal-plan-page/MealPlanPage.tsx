@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { SidebarMealplan } from '../../components/sidebar-mealplan';
 import { MealplanDay } from '../../components/mealplan-day';
 import { CustomAlert } from '../../components/shared/CustomAlert';
+
 import { Typography, Tabs, Tab, AlertColor } from '@mui/material';
 import axios from 'axios';
 import format from 'date-fns/format';
@@ -17,6 +18,7 @@ export const MealPlanPage = () => {
     const [alertMessage, setAlertMessage] = useState<string>('')
     const [currentDay, setCurrentDay] = useState(format(Date.now(), 'yyyy-MM-dd'))//spoonacular api needs date in format '2022-07-13'
 
+    console.log('currentDay:', currentDay);
     const handleClose = (event: React.SyntheticEvent | Event) => {
         setOpenSnackbar(false);
      };
@@ -27,8 +29,6 @@ export const MealPlanPage = () => {
 
       console.log('dayIndex: ', dayIndex)
     useEffect(() => {
-       
-
             axios.get('/api/mealplan/day', {params: {date: currentDay}, withCredentials: true}).then(response => {
             console.log('response in meal plan:', response)
             setMealplanItems(response.data.items);
@@ -36,8 +36,7 @@ export const MealPlanPage = () => {
         })
     }, [])
 
-    //todo first get current date, send with above request to api, then update current meals 
-
+//todo edit the new drop down calendar component and give it the current day props 
     return (
         <>
         <SidebarMealplan />
@@ -47,7 +46,7 @@ export const MealPlanPage = () => {
         </Tabs>
         <MealplanDay setMealPlanItems={setMealplanItems} currentDay={currentDay} mealplanItems={mealplanItems} setOpenSnackbar={setOpenSnackbar} setAlertSeverity={setAlertSeverity} setAlertMessage={setAlertMessage}/>
         <CustomAlert openAlert={openSnackbar} handleAlert={handleClose} alertSeverity={alertSeverity} alertMessage={alertMessage}/>
-        
+
         </>
     )
 };

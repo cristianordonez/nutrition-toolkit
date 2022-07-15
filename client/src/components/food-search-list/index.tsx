@@ -6,9 +6,6 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import {
-   RecipeItemType,
-   GroceryItemType,
-   MenuItemType,
    FoodItemType
 } from './food-search-list.types';
 

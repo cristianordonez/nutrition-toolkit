@@ -3,7 +3,7 @@ import {
    QueryType,
    UserType,
    AccountType,
-   MealPlanType,
+   addToMealPlanType,
 } from './api.types';
 
 const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/';
@@ -161,7 +161,7 @@ export const getSpoonacularProductById = async (id: number) => {
 
 //adds a specific item to mealplan of user 
 export const addToSpoonacularMealplan = async (
-   data: MealPlanType,
+   data: addToMealPlanType,
    spoonacularUsername: string,
    hash: string
 ) => {

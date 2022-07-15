@@ -27,15 +27,15 @@ export type QueryType = {
    offset: number; //number of results to skip, useful for lazy loading
 }
 
-export type MealPlanType = {
-   date: number;
-   slot: number;
-   position: number;
-   type: string;
-   value: {
-      id: number;
-      servings: number;
-      title: string;
-      imageType: string;
+export type addToMealPlanType = {
+   date?: number | undefined;
+   slot?: number | undefined;
+   position?: number | undefined;
+   type?: string | undefined;
+   value?: { 
+      id: number | undefined;
+      servings: number | undefined;
+      title: string | undefined;
+      imageType: string | undefined;
    };
 }
