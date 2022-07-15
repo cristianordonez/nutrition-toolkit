@@ -42,7 +42,7 @@ export const DatePickerTextField = ({ setData, data }: Props) => {
                inputFormat='MM/dd/yyyy'
                value={value}
                onChange={handleChange}
-               renderInput={(params) => <TextField {...params} />}
+               renderInput={(params) => <TextField {...params} variant='standard'/>}
             />
          </Box>
          {/* desktop */}
@@ -53,7 +53,7 @@ export const DatePickerTextField = ({ setData, data }: Props) => {
                data-testid='date-picker-textfield'
                value={value}
                onChange={handleChange}
-               renderInput={(params) => <TextField {...params} />}
+               renderInput={(params) => <TextField {...params} variant='standard'/>}
             />
          </Box>
       </LocalizationProvider>

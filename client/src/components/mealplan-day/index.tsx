@@ -1,6 +1,7 @@
 import React, {Dispatch, SetStateAction, useState, useEffect} from 'react';
 import {MealplanItem} from './MealplanItem';
 import { AlertColor, Typography } from '@mui/material';
+
 export type MealplanItemType = {
     id: number; 
     position: number;
@@ -21,30 +22,31 @@ interface Props {
     setAlertMessage: Dispatch<SetStateAction<string>>;
     setMealPlanItems: Dispatch<SetStateAction<[]>>; 
     currentDay: string;
+    breakfastItems: MealplanItemType[];
+    lunchItems: MealplanItemType[];
+    dinnerItems: MealplanItemType[];
 }
 
 
 //gets list of meal plan items, then renders one mealplanitem component per item
-export const MealplanDay = ({mealplanItems, setMealPlanItems, setOpenSnackbar, setAlertSeverity, setAlertMessage, currentDay}: Props) => {
+export const MealplanDay = ({mealplanItems, setMealPlanItems, setOpenSnackbar, setAlertSeverity, setAlertMessage, currentDay, breakfastItems, lunchItems, dinnerItems}: Props) => {
     console.log('mealplanItems', mealplanItems)
-    const [breakfastItems, setBreakfastItems] = useState<MealplanItemType[]>([]);
-    const [lunchItems, setLunchItems] = useState<MealplanItemType[]>([]);
-    const [dinnerItems, setDinnerItems] = useState<MealplanItemType[]>([]);
 
-    useEffect(() => {
-        mealplanItems.forEach(item => {
-            if (item.slot === 1) {
-                let currentBreakfastItems = [...breakfastItems, item];
-                setBreakfastItems(currentBreakfastItems);
-            } else if (item.slot === 2) {
-                let currentLunchItems = [...lunchItems, item];
-                setLunchItems(currentLunchItems);
-            } else {
-                let currentDinnerItems = [...dinnerItems, item];
-                setDinnerItems(currentDinnerItems);
-            }
-        })
-    }, [mealplanItems])
+    console.log('breakfastItems:', breakfastItems)
+    // useEffect(() => {
+    //     mealplanItems.forEach(item => {
+    //         if (item.slot === 1) {
+    //             let currentBreakfastItems = [...breakfastItems, item];
+    //             setBreakfastItems(currentBreakfastItems);
+    //         } else if (item.slot === 2) {
+    //             let currentLunchItems = [...lunchItems, item];
+    //             setLunchItems(currentLunchItems);
+    //         } else {
+    //             let currentDinnerItems = [...dinnerItems, item];
+    //             setDinnerItems(currentDinnerItems);
+    //         }
+    //     })
+    // }, [mealplanItems])
 
     if (mealplanItems.length) {
     return (
@@ -112,6 +114,7 @@ export const MealplanDay = ({mealplanItems, setMealPlanItems, setOpenSnackbar, s
         </>
     )
         } else {
-            return (<>Loading...</>)
+            //todo render a sample mealplan here
+            return (<></>)
         }
 }

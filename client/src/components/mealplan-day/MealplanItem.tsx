@@ -66,7 +66,7 @@ export const MealplanItem = ({position, slot, type, id, shoppingListId, setMealP
         )
     } else {
         return (
-            <div>no items yet</div>
+            <div>Loading...</div>
         )
     }
 
