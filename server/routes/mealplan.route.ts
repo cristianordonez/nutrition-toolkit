@@ -19,7 +19,7 @@ router.get('/week', (req: Request, res: Response) => {
 });
 
 //handles deleting item from user mealplan
-router.delete('/', (req: Request, res: Response) => {
+router.delete('/delete/:id', (req: Request, res: Response) => {
    mealplanController.deleteMealPlanItem(req, res);
 });
 

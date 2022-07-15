@@ -1,17 +1,8 @@
-import React, {useState, useEffect} from 'react';
-import { MealplanItemType } from '.';
-import { FoodItem } from '../shared/FoodItem';
-import {
-    Paper,
-    Card,
-    CardActions,
-    CardMedia,
-    CardContent,
-    Typography,
-    Button,
-    Grid,
- } from '@mui/material';
- import { GroceryItemNutrition, RecipeItemNutrition, MenuItemNutrition } from '../food-search-list/index.types';
+import React, {useState, useEffect, Dispatch, SetStateAction} from 'react';
+import { ConfirmDeleteDialog } from './ConfirmDeleteDialog';
+import { FoodItemContents } from '../shared/FoodItemContents';
+import { AlertColor } from '@mui/material';
+import { GroceryItemNutrition, RecipeItemNutrition, MenuItemNutrition, FoodItemType } from '../food-search-list/food-search-list.types';
 import axios from 'axios';
 
 interface Props {
@@ -19,30 +10,23 @@ interface Props {
     slot: number;
     type: string;
     id: number;
+    shoppingListId: number;
     imageType: string;
     servings: number;
     title: string;
-
+    setOpenSnackbar: Dispatch<SetStateAction<boolean>>;
+    setAlertSeverity: Dispatch<SetStateAction<AlertColor | undefined>>
+    setAlertMessage: Dispatch<SetStateAction<string>>;
+    setMealPlanItems: Dispatch<SetStateAction<[]>>; 
+    currentDay:string;
 }
 
-type FoodItemType = {
-    id: number;
-    imageType: string;
-    image: string;
-    title: string;
-    nutrition: GroceryItemNutrition | RecipeItemNutrition | MenuItemNutrition | any;
-    description?: string;
-    ingredientList?: string;
-    route: string;
-    url?: string;
-    restaurantChain?: string;
-}
-
-export const MealplanItem = ({position, slot, type, id, imageType, servings, title }: Props) => {
+export const MealplanItem = ({position, slot, type, id, shoppingListId, setMealPlanItems, currentDay, imageType, servings, title, setOpenSnackbar, setAlertSeverity, setAlertMessage }: Props) => {
     const [itemData, setItemData] = useState<null | FoodItemType>(null); //will hold value of the items data after calling endpoint
+   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
     const handleOpeningDialog = () => {
-        console.log('change this')
+       setOpenDialog(!openDialog)
     }
 
     useEffect(()=> {
@@ -65,22 +49,19 @@ export const MealplanItem = ({position, slot, type, id, imageType, servings, tit
     }, [id])
 
     if (itemData) {
-
         return (
-            
             <>
-            {type === 'RECIPE' && 
-          <FoodItem 
+          <FoodItemContents 
              route={type}
              image={itemData?.image}
              title={itemData?.title}
-             restaurantChain={itemData?.restaurantChain}
+             restaurantChain={itemData?.restaurantChain || undefined}
             nutrition={itemData?.nutrition}
-             url={itemData?.url}
+             url={itemData?.sourceUrl || undefined}
              handleOpeningDialog={handleOpeningDialog}
+             isMealPlanItem={true} //used to add a X icon to delete mealplans
           />
-            }
-    
+            <ConfirmDeleteDialog setMealPlanItems={setMealPlanItems} currentDay={currentDay} setOpenSnackbar={setOpenSnackbar} setAlertSeverity={setAlertSeverity} setAlertMessage={setAlertMessage} shoppingListId={shoppingListId} openDialog={openDialog} setOpenDialog={setOpenDialog} handleOpeningDialog={handleOpeningDialog}/>
             </>
         )
     } else {

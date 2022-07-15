@@ -1,23 +1,12 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
 import './FoodSearchItem.scss';
-import {FoodItem} from '../../shared/FoodItem';
+import {FoodItemContents} from '../../shared/FoodItemContents';
 import {
-   Paper,
-   Card,
-   CardActions,
-   CardMedia,
-   CardContent,
-   Typography,
-   Button,
    Grid,
    AlertColor,
 } from '@mui/material';
 import { AddToCartModal } from '../AddToCartModal';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import {GroceryItemNutrition, RecipeItemNutrition, MenuItemNutrition} from '../index.types';
-
-
+import {GroceryItemNutrition, RecipeItemNutrition, MenuItemNutrition} from '../food-search-list.types';
 
 interface Props {
    id: number;
@@ -54,42 +43,18 @@ export const FoodSearchItem = ({
       setOpenDialog(!openDialog);
    };
 
-   // let calories, carbs, fat, protein;
-
-   // if (route === 'recipes') {
-   //    nutrition.nutrients.forEach((nutrient: NutrientType) => {
-   //       if (nutrient.name === 'Calories') {
-   //          calories = Math.floor(nutrition.nutrients[0].amount);
-   //       } else if (nutrient.name === 'Protein') {
-   //          protein = Math.floor(nutrition.nutrients[1].amount) + 'g';
-   //       } else if (nutrient.name === 'Fat') {
-   //          fat = Math.floor(nutrition.nutrients[1].amount) + 'g';
-   //       } else if (nutrient.name === 'Carbohydrates') {
-   //          carbs = Math.floor(nutrition.nutrients[3].amount) + 'g';
-   //       }
-   //    });
-   // } else {
-   //    calories = nutrition.calories;
-   //    protein = nutrition.protein;
-   //    fat = nutrition.fat;
-   //    carbs = nutrition.carbs;
-   // }
-
    return (
       <>
          <Grid item xs={12} sm={6} md={4} xl={3}>
-            <FoodItem 
+            <FoodItemContents 
                  route={route}
                  image={image}
                  title={title}
                  restaurantChain={restaurantChain}
-               //   calories={calories}
-               //   carbs={carbs}
-               //   protein={protein}
-               //   fat={fat}
-               nutrition={nutrition}
+                  nutrition={nutrition}
                  url={url}
                  handleOpeningDialog={handleOpeningDialog}
+                 isMealPlanItem={false} //used to add a X icon to delete mealplans
             />
            
          </Grid>

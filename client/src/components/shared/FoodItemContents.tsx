@@ -1,9 +1,10 @@
 import React, {MouseEventHandler} from 'react';
-import { Paper, Card, CardMedia, CardContent, Typography, CardActions, Button  } from '@mui/material';
+import { Paper, Card, CardMedia, CardContent, Typography, CardActions, Button, IconButton  } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import {GroceryItemNutrition, RecipeItemNutrition, MenuItemNutrition} from '../food-search-list/index.types';
-
+import ClearIcon from '@mui/icons-material/Clear';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
+import {GroceryItemNutrition, RecipeItemNutrition, MenuItemNutrition} from '../food-search-list/food-search-list.types';
 
 interface Props {
     route: string;
@@ -11,8 +12,9 @@ interface Props {
     title: string | undefined;
     restaurantChain: string | undefined;
     nutrition: GroceryItemNutrition | RecipeItemNutrition | MenuItemNutrition | any;
-    url: string | undefined;
+    url?: string | undefined;
     handleOpeningDialog: MouseEventHandler<HTMLButtonElement>;
+    isMealPlanItem?: boolean;
 }
 
 type NutrientType = {
@@ -23,7 +25,7 @@ type NutrientType = {
     id: number;
  };
 
-export const FoodItem = ({route, image, title, restaurantChain, nutrition, url, handleOpeningDialog}: Props) => {
+export const FoodItemContents = ({route, image, title, restaurantChain, nutrition, url, handleOpeningDialog, isMealPlanItem}: Props) => {
     let calories, carbs, fat, protein;
 
     if (route === 'recipes' || 'RECIPE') {
@@ -47,6 +49,12 @@ export const FoodItem = ({route, image, title, restaurantChain, nutrition, url, 
 
     return (
         <Paper elevation={1} className='food-search-paper'>
+         {/* opens the dialog to confirm delete */}
+         {isMealPlanItem &&
+         <IconButton onClick={handleOpeningDialog}>
+            <ClearIcon />
+         </IconButton>
+         }
         <Card className='search-item' data-testid='food-search-item'>
            <CardMedia
               component='img'
@@ -55,14 +63,10 @@ export const FoodItem = ({route, image, title, restaurantChain, nutrition, url, 
               image={image}
            />
            <CardContent>
-              {route === 'recipes' || 'RECIPE' ? (
-                       <Typography variant='overline'>
-                          {title}
-                       </Typography>
-              ) : (
+          
                  <Typography variant='overline'>{title}</Typography>
-              )}
-              {route === 'menuItems' || 'MENU_ITEM' && (
+              
+              {route === 'menuItems' || route === 'MENU_ITEM' && (
                  <Typography variant='h6'>{restaurantChain}</Typography>
               )}
               <div className='search-item-nutrition'>
@@ -97,7 +101,7 @@ export const FoodItem = ({route, image, title, restaurantChain, nutrition, url, 
               </div>
            </CardContent>
            <CardActions>
-              {route === 'recipes' && 
+              {route === 'recipes' || route === 'RECIPE' && 
               <a href={url} target='_blank'>
                 <Button
                 fullWidth
@@ -108,6 +112,18 @@ export const FoodItem = ({route, image, title, restaurantChain, nutrition, url, 
              </Button>
              </a>
               }
+              {/* Configure the bottom button depending on if it is mealplan item or search item */}
+              {isMealPlanItem ?
+                  <Button
+                  // onClick={handleOpeningDialog}
+                  fullWidth
+                  variant='outlined'
+               >
+                  <RestaurantIcon />
+                  Not Eaten
+               </Button>
+               :
+
               <Button
                  onClick={handleOpeningDialog}
                  fullWidth
@@ -116,6 +132,7 @@ export const FoodItem = ({route, image, title, restaurantChain, nutrition, url, 
                  <AddShoppingCartIcon />
                  Add to Mealplan
               </Button>
+                }
            </CardActions>
         </Card>
      </Paper>

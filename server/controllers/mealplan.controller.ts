@@ -31,7 +31,6 @@ type selectedDay = {
    date: string;
 }
 
-
 type Hash = [{spoonacular_hash: string}];
 
 //gets all meals for certain day using date in form of string
@@ -62,7 +61,7 @@ export const getMealPlanWeek = async function (req: Request, res: Response) {
       let hash = await getHashByUsername(user.spoonacular_username); //returns Hash type
       let mealplanWeekItems = await apiHelpers.getFromSpoonacularMealplanWeek(user.spoonacular_username, mealplanWeek.date, hash[0].spoonacular_hash)
       console.log('mealplanweekitems:', mealplanWeekItems)
-      res.status(200).send(mealplanWeekItems.data);
+      res.status(200).send('Successfully deleted mealplan item.');
    } catch (err) {
       console.log('err:', err);
       res.status(400).send('No meal plan items found.')
@@ -70,10 +69,16 @@ export const getMealPlanWeek = async function (req: Request, res: Response) {
 };
 
 
-//todo
 export const deleteMealPlanItem = async function (req: Request, res: Response) {
+   const id = req.params.id;
+   const user = req.user as User;
    try {
+      let hash = await getHashByUsername(user.spoonacular_username); //returns Hash type
+      let successResponse = await apiHelpers.deleteFromSpoonacularMealplan(user.spoonacular_username, id, hash[0].spoonacular_hash)
+      console.log(successResponse.data)
+      res.status(200).send('Item has been deleted.')
    } catch (err) {
-      console.log('err:', err);
+      res.status(400).send('Unable to delete item.')
+      console.log('err deleting item from mealplan:', err);
    }
 };

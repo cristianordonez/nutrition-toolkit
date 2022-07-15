@@ -15,6 +15,7 @@ export const MealPlanPage = () => {
     const [openSnackbar, setOpenSnackbar] = useState<boolean>(false)
     const [alertSeverity, setAlertSeverity] = useState<AlertColor | undefined>('error')
     const [alertMessage, setAlertMessage] = useState<string>('')
+    const [currentDay, setCurrentDay] = useState(format(Date.now(), 'yyyy-MM-dd'))//spoonacular api needs date in format '2022-07-13'
 
     const handleClose = (event: React.SyntheticEvent | Event) => {
         setOpenSnackbar(false);
@@ -26,8 +27,8 @@ export const MealPlanPage = () => {
 
       console.log('dayIndex: ', dayIndex)
     useEffect(() => {
-        const currentDay = format(Date.now(), 'yyyy-MM-dd') //spoonacular api needs date in format '2022-07-13' 
-        
+       
+
             axios.get('/api/mealplan/day', {params: {date: currentDay}, withCredentials: true}).then(response => {
             console.log('response in meal plan:', response)
             setMealplanItems(response.data.items);
@@ -44,7 +45,7 @@ export const MealPlanPage = () => {
         <Tabs value={dayIndex} onChange={handleTabChange}>
             {days.map(day => <Tab key={day} label={day}/>)}
         </Tabs>
-        <MealplanDay mealplanItems={mealplanItems}/>
+        <MealplanDay setMealPlanItems={setMealplanItems} currentDay={currentDay} mealplanItems={mealplanItems} setOpenSnackbar={setOpenSnackbar} setAlertSeverity={setAlertSeverity} setAlertMessage={setAlertMessage}/>
         <CustomAlert openAlert={openSnackbar} handleAlert={handleClose} alertSeverity={alertSeverity} alertMessage={alertMessage}/>
         
         </>

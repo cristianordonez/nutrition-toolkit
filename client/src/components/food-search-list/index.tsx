@@ -9,7 +9,8 @@ import {
    RecipeItemType,
    GroceryItemType,
    MenuItemType,
-} from './index.types';
+   FoodItemType
+} from './food-search-list.types';
 
 export const FoodSearchList = ({
    apiData,
@@ -30,7 +31,7 @@ export const FoodSearchList = ({
          </Stack>
          <Grid container spacing={2}>
             {route === 'recipes' &&
-               apiData.map((item: RecipeItemType) => (
+               apiData.map((item: FoodItemType) => (
                   <FoodSearchItem
                      key={item.id}
                      id={item.id}
@@ -39,38 +40,8 @@ export const FoodSearchList = ({
                      title={item.title}
                      nutrition={item.nutrition}
                      route={route}
-                     url={item.sourceUrl}
-                     setAlertMessage={setAlertMessage}
-                     setOpenSnackbar={setOpenSnackbar}
-                     setAlertSeverity={setAlertSeverity}
-                  />
-               ))}
-            {route === 'groceryProducts' &&
-               apiData.map((item: GroceryItemType) => (
-                  <FoodSearchItem
-                     key={item.id}
-                     id={item.id}
-                     imageType={item.imageType}
-                     image={item.image}
-                     title={item.title}
-                     nutrition={item.nutrition}
-                     route={route}
-                     setAlertMessage={setAlertMessage}
-                     setOpenSnackbar={setOpenSnackbar}
-                     setAlertSeverity={setAlertSeverity}
-                  />
-               ))}
-            {route === 'menuItems' &&
-               apiData.map((item: MenuItemType) => (
-                  <FoodSearchItem
-                     key={item.id}
-                     id={item.id}
-                     imageType={item.imageType}
-                     image={item.image}
-                     title={item.title}
-                     nutrition={item.nutrition}
-                     route={route}
-                     restaurantChain={item.restaurantChain}
+                     url={item.sourceUrl} //only found in recipe item
+                     restaurantChain={item.restaurantChain || undefined} //only found in menu items
                      setAlertMessage={setAlertMessage}
                      setOpenSnackbar={setOpenSnackbar}
                      setAlertSeverity={setAlertSeverity}

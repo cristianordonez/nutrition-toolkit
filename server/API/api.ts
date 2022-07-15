@@ -204,4 +204,20 @@ let response = await axios.get(`${url}mealplanner/${spoonacular_username}/week/$
 'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,}})
 return response;
 };
-export const deleteFromSpoonacularMealplan = async () => {};
+
+
+export const deleteFromSpoonacularMealplan = async (spoonacularUsername:string, id: string | number, spoonacularHash: string) => {
+  console.log('id:', id);
+  console.log('spoonacularHash:', spoonacularHash)
+   let currentUrl = `${url}mealplanner/${spoonacularUsername}/items/${id}?hash=${spoonacularHash}`
+   console.log('currenturl:', currentUrl)
+   console.log('spoonacularusernae:', spoonacularUsername)
+   const response = await axios.delete(currentUrl, {
+
+      headers: {
+        'X-RapidAPI-Key': `${X_RAPIDAPI_KEY}`,
+        'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
+      }
+   })
+   return response;
+};
