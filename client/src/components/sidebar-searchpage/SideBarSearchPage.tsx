@@ -1,6 +1,6 @@
 //! this is search page sidebar
 import React, { ReactNode } from 'react';
-import { SideBar } from '../shared/SideBar';
+import { SideBar } from '../shared/sidebar/SideBar';
 
 export type CurrentGoals = {
    user_id: number;

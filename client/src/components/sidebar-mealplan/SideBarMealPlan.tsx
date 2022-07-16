@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SideBar } from '../shared/SideBar';
+import { SideBar } from '../shared/sidebar/SideBar';
 import axios from 'axios';
 import { CurrentGoals } from '../sidebar-searchpage/SideBarSearchPage';
 
@@ -22,7 +22,7 @@ export const SidebarMealplan = ({
 
    useEffect(() => {
       getGoals();
-   }, [nutritionSummary]);
+   }, []);
 
    const getGoals = async () => {
       try {
@@ -38,13 +38,14 @@ export const SidebarMealplan = ({
 
    return (
       <>
+       {goals !== undefined && Object.keys(goals).length &&
          <SideBar
             mobileOpen={mobileOpen}
             handleDrawerToggle={handleDrawerToggle}
             page={page}
             nutritionSummary={nutritionSummary}
             goals={goals}
-         />
+         />}
       </>
    );
 };

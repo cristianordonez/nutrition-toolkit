@@ -63,7 +63,6 @@ export const SearchPage = () => {
       offset: 0, //number of results to skip, useful for lazy loading
    });
    const [goals, setGoals] = useState({} as Goals);
-
    const [mobileOpen, setMobileOpen] = React.useState(false);
 
    const handleDrawerToggle = () => {

@@ -1,10 +1,10 @@
 //shared sidebar
 import React, { ReactNode } from 'react';
 import './Sidebar.scss';
-import { DailyGoals } from './daily-goals';
+import { DailyGoals } from '../daily-goals';
 import { IconButton, Toolbar, Drawer } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { CurrentGoals } from '../sidebar-searchpage/SideBarSearchPage';
+import { CurrentGoals } from '../../sidebar-searchpage/SideBarSearchPage';
 
 interface Props {
    mobileOpen: boolean | undefined;
@@ -13,7 +13,7 @@ interface Props {
    apiData?: never[];
    goals?: CurrentGoals | any;
    page: string;
-   nutritionSummary?: any[];
+   nutritionSummary?: any;
 }
 
 export const SideBar = ({
@@ -62,7 +62,7 @@ export const SideBar = ({
                   {apiData !== undefined && apiData.length ? (
                      SearchFormComponent
                   ) : (
-                     <DailyGoals goals={goals} />
+                     <DailyGoals goals={goals} page={'search'}/>
                   )}
                </Drawer>
 
@@ -82,12 +82,12 @@ export const SideBar = ({
                   {apiData !== undefined && apiData.length ? (
                      SearchFormComponent
                   ) : (
-                     <DailyGoals goals={goals} />
+                     <DailyGoals goals={goals} page={'search'}/>
                   )}
                </Drawer>
             </>
          )}
-         {page === 'mealplan' && (
+         {page === 'mealplan' && nutritionSummary !== undefined && (
             <>
                <Drawer
                   variant='temporary'
@@ -116,10 +116,11 @@ export const SideBar = ({
                         <ArrowBackIosIcon />
                      </IconButton>
                   </Toolbar>
-                  {goals !== undefined && (
+                  {goals !== undefined && nutritionSummary.length && (
                      <DailyGoals
                         goals={goals}
                         nutritionSummary={nutritionSummary}
+                        page={'mealplan'}
                      />
                   )}
                </Drawer>
@@ -137,12 +138,14 @@ export const SideBar = ({
                      },
                   }}
                >
-                  {goals !== undefined && (
+                  {goals !== undefined && nutritionSummary && (
                      <DailyGoals
                         goals={goals}
                         nutritionSummary={nutritionSummary}
+                        page={'mealplan'}
+
                      />
-                  )}
+                  )} 
                </Drawer>
             </>
          )}
