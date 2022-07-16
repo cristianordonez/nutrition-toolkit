@@ -12,13 +12,14 @@ import {
    Snackbar,
    AlertColor,
 } from '@mui/material';
-import { Sidebar } from '../../components/sidebar/Sidebar';
+import { SideBarSearchPage } from '../../components/sidebar-searchpage/SideBarSearchPage';
 import { useAuth } from '../../context/authContext';
 import axios from 'axios';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 //todo change 0
-type Goals = {
+export type Goals = {
+   user_id: number;
    total_carbohydrates: 0;
    min_carbs_per_meal: 0;
    max_carbs_per_meal: 0;
@@ -31,7 +32,7 @@ type Goals = {
    total_calories: 0;
    min_calories_per_meal: 0;
    max_calories_per_meal: 0;
-}
+};
 
 export const SearchPage = () => {
    const isLoading = useAuth(); //used to check if data is still being retrieved from database
@@ -148,7 +149,7 @@ export const SearchPage = () => {
    //# at first render grabs the users metrics from db, no need to send userId as
    //# it will be stored in the express session
    useEffect(() => {
-      let promise = axios.get('/api/metrics', {withCredentials: true});
+      let promise = axios.get('/api/metrics', { withCredentials: true });
       promise.then((results) => {
          setGoals(results.data);
       });
@@ -192,7 +193,7 @@ export const SearchPage = () => {
                      <ArrowForwardIosIcon />
                   </IconButton>
                </Toolbar>
-               <Sidebar
+               <SideBarSearchPage
                   goals={goals}
                   mobileOpen={mobileOpen}
                   handleDrawerToggle={handleDrawerToggle}
@@ -222,7 +223,12 @@ export const SearchPage = () => {
                   </>
                )}
                {/* ERROR SNACKBAR */}
-               <CustomAlert openAlert={openSnackbar} handleAlert={handleClose} alertSeverity={alertSeverity} alertMessage={alertMessage}/>
+               <CustomAlert
+                  openAlert={openSnackbar}
+                  handleAlert={handleClose}
+                  alertSeverity={alertSeverity}
+                  alertMessage={alertMessage}
+               />
             </Grid>
          )}
       </>

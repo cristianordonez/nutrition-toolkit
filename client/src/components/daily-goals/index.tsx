@@ -3,7 +3,7 @@ import './index.scss';
 import { Typography, CircularProgress } from '@mui/material';
 import { GoalCardItem } from './GoalCardItem';
 
-interface Props {
+export interface Props {
    goals: {
       user_id: number;
       total_carbohydrates: number;

@@ -6,21 +6,6 @@ import { QueryTextField } from './QueryTextField';
 import { TypeDropDown } from './TypeDropDown';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 
-// interface Goals {
-//    total_carbohydrates: number | string;
-//    min_carbs_per_meal: number | string;
-//    max_carbs_per_meal: number | string;
-//    total_protein: number | string;
-//    min_protein_per_meal: number | string;
-//    max_protein_per_meal: number | string;
-//    total_fat: number | string;
-//    min_fat_per_meal: number | string;
-//    max_fat_per_meal: number | string;
-//    total_calories: number | string;
-//    min_calories_per_meal: number | string;
-//    max_calories_per_meal: number | string;
-// }
-
 interface Props {
    route: any;
    values: any;

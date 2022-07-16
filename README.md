@@ -1,6 +1,7 @@
 # Skeleton Template App
 
 Repository template with custom Webpack, prettier, Jest, Cypress, and Babel configuration files.
+View Miro: https://miro.com/app/board/uXjVOtvKH2s=/?share_link_id=990354105433
 
 ## Features & Usage
 
@@ -77,12 +78,8 @@ npm run cypress
    https://spoonacular.com/food-api/docs
    https://www.rithmschool.com/courses/intermediate-node-express/api-tests-with-jest
 
-
 https://stackoverflow.com/questions/42749033/fatal-password-authentication-failed-for-user-root-postgresql
-
 
 https://stackoverflow.com/questions/3949876/how-to-switch-databases-in-psql
 
 https://stackoverflow.com/questions/65877048/pgadmin-on-ubuntu-20-04-fatal-password-authentication-failed-for-user
-
-

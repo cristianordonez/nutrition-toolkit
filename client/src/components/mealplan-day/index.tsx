@@ -39,24 +39,6 @@ export const MealplanDay = ({
    lunchItems,
    dinnerItems,
 }: Props) => {
-   console.log('mealplanItems', mealplanItems);
-
-   console.log('breakfastItems:', breakfastItems);
-   // useEffect(() => {
-   //     mealplanItems.forEach(item => {
-   //         if (item.slot === 1) {
-   //             let currentBreakfastItems = [...breakfastItems, item];
-   //             setBreakfastItems(currentBreakfastItems);
-   //         } else if (item.slot === 2) {
-   //             let currentLunchItems = [...lunchItems, item];
-   //             setLunchItems(currentLunchItems);
-   //         } else {
-   //             let currentDinnerItems = [...dinnerItems, item];
-   //             setDinnerItems(currentDinnerItems);
-   //         }
-   //     })
-   // }, [mealplanItems])
-
    if (mealplanItems.length) {
       return (
          <>

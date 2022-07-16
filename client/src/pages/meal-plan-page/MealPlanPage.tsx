@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { SidebarMealplan } from '../../components/sidebar-mealplan';
+import './MealPlanPage.scss';
+import { SidebarMealplan } from '../../components/sidebar-mealplan/SideBarMealPlan';
 import { DateSelectForm } from '../../components/date-select-form/DateSelectForm';
 import { MealplanDay, MealplanItemType } from '../../components/mealplan-day';
 import { CustomAlert } from '../../components/shared/CustomAlert';
@@ -35,30 +36,25 @@ export const MealPlanPage = () => {
    const [lunchItems, setLunchItems] = useState<MealplanItemType[]>([]);
    const [dinnerItems, setDinnerItems] = useState<MealplanItemType[]>([]);
    const [value, setValue] = React.useState<any>(new Date(Date.now()));
+   const [mobileOpen, setMobileOpen] = React.useState(false);
 
    const handleClose = (event: React.SyntheticEvent | Event) => {
       setOpenSnackbar(false);
    };
 
+   const handleDrawerToggle = () => {
+      setMobileOpen(!mobileOpen);
+   };
+
    //need to configure so that day is also changed when tab changes
    const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-      //create variable to store the previous date and previous tab index
-      const prevDate = currentDay;
+      const prevDate = currentDay; //create variable to store the previous date and previous tab index
       const prevDayIndex = dayIndex;
-      //find out how many days before or after current date is new selected date by finding difference between previous tab and current tab
-      let differenceInDays = newValue - dayIndex;
+      let differenceInDays = newValue - dayIndex; //find out how many days before or after current date is new selected date by finding difference between previous tab and current tab
       let newDate: Date | number | undefined;
-      //then update current date by adding or subtracting correct number of days
       let { year, month, day } = getFormattedDay(currentDay);
-
-      console.log('differenceinday:', differenceInDays);
-      console.log('currentDay:', currentDay);
-
       if (differenceInDays > 0) {
-         //todo need to cnvert currentday to correct format
-         console.log('year:', year);
-         console.log('month', month);
-         console.log(day);
+         //then update current date by adding or subtracting correct number of days
          newDate = addDays(
             new Date(`${year}, ${month}, ${day}`),
             differenceInDays
@@ -68,7 +64,6 @@ export const MealPlanPage = () => {
             new Date(`${year}, ${month}, ${day}`),
             Math.abs(differenceInDays)
          );
-         console.log('newdate:', newDate);
       }
 
       if (newDate !== undefined) {
@@ -122,10 +117,13 @@ export const MealPlanPage = () => {
       }
    };
 
-   //todo edit the new drop down calendar component and give it the current day props
    return (
-      <>
-         <SidebarMealplan />
+      <div className='mealplan-page'>
+         <SidebarMealplan
+            mobileOpen={mobileOpen}
+            page={'mealplan'}
+            handleDrawerToggle={handleDrawerToggle}
+         />
          <Stack direction={'row'}>
             <Typography variant='h1'>Meal Planner</Typography>
             <DateSelectForm
@@ -161,6 +159,6 @@ export const MealPlanPage = () => {
             alertSeverity={alertSeverity}
             alertMessage={alertMessage}
          />
-      </>
+      </div>
    );
 };
