@@ -1,7 +1,7 @@
 //shared sidebar
 import React, { ReactNode } from 'react';
 import './Sidebar.scss';
-import { DailyGoals } from '../daily-goals';
+import { DailyGoals } from './daily-goals';
 import { IconButton, Toolbar, Drawer } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { CurrentGoals } from '../sidebar-searchpage/SideBarSearchPage';
@@ -9,21 +9,24 @@ import { CurrentGoals } from '../sidebar-searchpage/SideBarSearchPage';
 interface Props {
    mobileOpen: boolean | undefined;
    handleDrawerToggle: any;
-   searchForm?: ReactNode;
+   SearchFormComponent?: ReactNode;
    apiData?: never[];
    goals?: CurrentGoals | any;
    page: string;
+   nutritionSummary?: any[];
 }
 
 export const SideBar = ({
    mobileOpen,
    handleDrawerToggle,
-   searchForm,
+   SearchFormComponent,
    apiData,
    goals,
    page,
+   nutritionSummary,
 }: Props) => {
    const drawerWidth = 350;
+   console.log('goals in sidebar shared:', goals);
 
    return (
       <>
@@ -57,7 +60,7 @@ export const SideBar = ({
                      </IconButton>
                   </Toolbar>
                   {apiData !== undefined && apiData.length ? (
-                     searchForm
+                     SearchFormComponent
                   ) : (
                      <DailyGoals goals={goals} />
                   )}
@@ -77,7 +80,7 @@ export const SideBar = ({
                   }}
                >
                   {apiData !== undefined && apiData.length ? (
-                     searchForm
+                     SearchFormComponent
                   ) : (
                      <DailyGoals goals={goals} />
                   )}
@@ -113,7 +116,12 @@ export const SideBar = ({
                         <ArrowBackIosIcon />
                      </IconButton>
                   </Toolbar>
-                  test
+                  {goals !== undefined && (
+                     <DailyGoals
+                        goals={goals}
+                        nutritionSummary={nutritionSummary}
+                     />
+                  )}
                </Drawer>
 
                <Drawer
@@ -129,7 +137,12 @@ export const SideBar = ({
                      },
                   }}
                >
-                  test
+                  {goals !== undefined && (
+                     <DailyGoals
+                        goals={goals}
+                        nutritionSummary={nutritionSummary}
+                     />
+                  )}
                </Drawer>
             </>
          )}

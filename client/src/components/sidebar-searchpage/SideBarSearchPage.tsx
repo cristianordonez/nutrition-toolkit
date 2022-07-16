@@ -21,7 +21,7 @@ export type CurrentGoals = {
 interface SearchPageSidebarProps {
    mobileOpen: boolean | undefined;
    handleDrawerToggle: any;
-   searchForm: ReactNode;
+   SearchFormComponent: ReactNode;
    apiData: never[];
    goals: CurrentGoals;
 }
@@ -29,7 +29,7 @@ interface SearchPageSidebarProps {
 export const SideBarSearchPage = ({
    mobileOpen,
    handleDrawerToggle,
-   searchForm,
+   SearchFormComponent,
    apiData,
    goals,
 }: SearchPageSidebarProps) => {
@@ -39,7 +39,7 @@ export const SideBarSearchPage = ({
          <SideBar
             mobileOpen={mobileOpen}
             handleDrawerToggle={handleDrawerToggle}
-            searchForm={searchForm}
+            SearchFormComponent={SearchFormComponent}
             apiData={apiData}
             goals={goals}
             page={'search'}

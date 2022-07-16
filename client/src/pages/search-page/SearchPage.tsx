@@ -158,8 +158,8 @@ export const SearchPage = () => {
       });
    }, []);
 
-   //# searchForm component is rendered in the sidebar as well as on main content of page
-   const searchForm: JSX.Element = (
+   //# SearchForm component is rendered in the sidebar as well as on main content of page
+   const SearchFormComponent: JSX.Element = (
       <SearchForm
          handleSubmit={handleSubmit}
          handleSuggestedSubmit={handleSuggestedSubmit}
@@ -198,7 +198,7 @@ export const SearchPage = () => {
                   mobileOpen={mobileOpen}
                   handleDrawerToggle={handleDrawerToggle}
                   // pass down component here
-                  searchForm={searchForm}
+                  SearchFormComponent={SearchFormComponent}
                   apiData={apiData}
                />
                {/* MAIN SECTION  */}
@@ -218,7 +218,7 @@ export const SearchPage = () => {
                ) : (
                   <>
                      <Grid item xs={12} sm={8}>
-                        {searchForm}
+                        {SearchFormComponent}
                      </Grid>
                   </>
                )}

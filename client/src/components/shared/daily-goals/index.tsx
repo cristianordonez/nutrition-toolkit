@@ -19,10 +19,13 @@ export interface Props {
       min_calories_per_meal: number;
       max_calories_per_meal: number;
    };
+   nutritionSummary?: any[];
 }
 
-export const DailyGoals = ({ goals }: Props) => {
+//todo fix this component so that it shows progress bar, and differs based on search page or mealplan page
+export const DailyGoals = ({ goals, nutritionSummary }: Props) => {
    let nutrients = ['Carbohydrates', 'Protein', 'Fat'];
+   console.log('goals in dailygoals:', goals);
    return (
       <div className='daily-goals'>
          <Typography variant='h6'>Daily Macronutrient Goals</Typography>

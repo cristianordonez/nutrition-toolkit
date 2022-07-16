@@ -37,7 +37,7 @@ export const MealPlanPage = () => {
    const [dinnerItems, setDinnerItems] = useState<MealplanItemType[]>([]);
    const [value, setValue] = React.useState<any>(new Date(Date.now()));
    const [mobileOpen, setMobileOpen] = React.useState(false);
-
+   const [nutritionSummary, setNutritionSummary] = useState<any[]>([]);
    const handleClose = (event: React.SyntheticEvent | Event) => {
       setOpenSnackbar(false);
    };
@@ -65,7 +65,6 @@ export const MealPlanPage = () => {
             Math.abs(differenceInDays)
          );
       }
-
       if (newDate !== undefined) {
          setValue(newDate); //updates the date textfield value
          setBreakfastItems([]);
@@ -94,6 +93,12 @@ export const MealPlanPage = () => {
             params: { date: currentDay },
             withCredentials: true,
          });
+         console.log(
+            'response.data:',
+            response.data.nutritionSummary.nutrients
+         );
+         setNutritionSummary(response.data.nutritionSummary.nutrients);
+         console.log('nutritionSummary:', nutritionSummary);
          setMealplanItems(response.data.items);
          response.data.items.forEach((item: MealplanItemType) => {
             if (item.slot === 1) {
@@ -116,13 +121,14 @@ export const MealPlanPage = () => {
          setOpenSnackbar(true);
       }
    };
-
+   console.log('mealplanItems:', mealplanItems);
    return (
       <div className='mealplan-page'>
          <SidebarMealplan
             mobileOpen={mobileOpen}
             page={'mealplan'}
             handleDrawerToggle={handleDrawerToggle}
+            nutritionSummary={nutritionSummary}
          />
          <Stack direction={'row'}>
             <Typography variant='h1'>Meal Planner</Typography>

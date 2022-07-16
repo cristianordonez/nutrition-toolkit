@@ -18,7 +18,7 @@ type Goals = {
    total_calories: 0;
    min_calories_per_meal: 0;
    max_calories_per_meal: 0;
-}
+};
 interface Props {
    handleSubmit: any;
    route: string;
