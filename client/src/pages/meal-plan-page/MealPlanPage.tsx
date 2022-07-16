@@ -7,6 +7,8 @@ import { Typography, Tabs, Tab, AlertColor, Stack } from '@mui/material';
 import axios from 'axios';
 import format from 'date-fns/format';
 import getDay from 'date-fns/getDay';
+import addDays from 'date-fns/addDays';
+import subDays from 'date-fns/subDays';
 
 const days = [
    'Sunday',
@@ -26,11 +28,9 @@ export const MealPlanPage = () => {
       'error'
    );
    const [alertMessage, setAlertMessage] = useState<string>('');
-
    const [currentDay, setCurrentDay] = useState(
       format(new Date(Date.now()), 'yyyy-MM-dd')
    ); //spoonacular api needs date in format '2022-07-13'
-
    const [breakfastItems, setBreakfastItems] = useState<MealplanItemType[]>([]);
    const [lunchItems, setLunchItems] = useState<MealplanItemType[]>([]);
    const [dinnerItems, setDinnerItems] = useState<MealplanItemType[]>([]);
@@ -39,8 +39,47 @@ export const MealPlanPage = () => {
       setOpenSnackbar(false);
    };
 
+   //need to configure so that day is also changed when tab changes
    const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+      //create variable to store the previous date and previous tab index
+      const prevDate = currentDay;
+      const prevDayIndex = dayIndex;
+      //find out how many days before or after current date is new selected date by finding difference between previous tab and current tab
+      let differenceInDays = newValue - dayIndex;
       setDayIndex(newValue);
+      let newDate: Date | number | undefined;
+      //then update current date by adding or subtracting correct number of days
+
+      if (differenceInDays > 0) {
+         console.log('differenceinday:', differenceInDays);
+         console.log('currentDay:', currentDay);
+         console.log('new date(curentday):', new Date(currentDay));
+         //todo need to cnvert currentday to correct format
+         let { year, month, day } = getFormattedDay(currentDay);
+         console.log('year:', year);
+         console.log('month', month);
+         console.log(day);
+         newDate = addDays(
+            new Date(`${year}, ${month}, ${day}`),
+            differenceInDays
+         );
+
+         console.log('new date in if block:', newDate);
+      } else if (differenceInDays < 0) {
+         newDate = subDays(new Date(currentDay), differenceInDays);
+      }
+      console.log('newDate:', newDate);
+      if (newDate !== undefined) {
+         setCurrentDay(format(newDate, 'yyyy-MM-dd'));
+      }
+   };
+
+   const getFormattedDay = (date: string) => {
+      let dates = date.split('-');
+      let year = dates[0];
+      let month = dates[1];
+      let day = dates[2];
+      return { year, month, day };
    };
 
    useEffect(() => {
