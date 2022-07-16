@@ -34,6 +34,7 @@ export const MealPlanPage = () => {
    const [breakfastItems, setBreakfastItems] = useState<MealplanItemType[]>([]);
    const [lunchItems, setLunchItems] = useState<MealplanItemType[]>([]);
    const [dinnerItems, setDinnerItems] = useState<MealplanItemType[]>([]);
+   const [value, setValue] = React.useState<any>(new Date(Date.now()));
 
    const handleClose = (event: React.SyntheticEvent | Event) => {
       setOpenSnackbar(false);
@@ -46,16 +47,15 @@ export const MealPlanPage = () => {
       const prevDayIndex = dayIndex;
       //find out how many days before or after current date is new selected date by finding difference between previous tab and current tab
       let differenceInDays = newValue - dayIndex;
-      setDayIndex(newValue);
       let newDate: Date | number | undefined;
       //then update current date by adding or subtracting correct number of days
+      let { year, month, day } = getFormattedDay(currentDay);
+
+      console.log('differenceinday:', differenceInDays);
+      console.log('currentDay:', currentDay);
 
       if (differenceInDays > 0) {
-         console.log('differenceinday:', differenceInDays);
-         console.log('currentDay:', currentDay);
-         console.log('new date(curentday):', new Date(currentDay));
          //todo need to cnvert currentday to correct format
-         let { year, month, day } = getFormattedDay(currentDay);
          console.log('year:', year);
          console.log('month', month);
          console.log(day);
@@ -63,13 +63,20 @@ export const MealPlanPage = () => {
             new Date(`${year}, ${month}, ${day}`),
             differenceInDays
          );
-
-         console.log('new date in if block:', newDate);
       } else if (differenceInDays < 0) {
-         newDate = subDays(new Date(currentDay), differenceInDays);
+         newDate = subDays(
+            new Date(`${year}, ${month}, ${day}`),
+            Math.abs(differenceInDays)
+         );
+         console.log('newdate:', newDate);
       }
-      console.log('newDate:', newDate);
+
       if (newDate !== undefined) {
+         setValue(newDate); //updates the date textfield value
+         setBreakfastItems([]);
+         setDayIndex(newValue);
+         setLunchItems([]);
+         setDinnerItems([]);
          setCurrentDay(format(newDate, 'yyyy-MM-dd'));
       }
    };
@@ -128,6 +135,8 @@ export const MealPlanPage = () => {
                currentDay={currentDay}
                setCurrentDay={setCurrentDay}
                setDayIndex={setDayIndex}
+               value={value}
+               setValue={setValue}
             />
          </Stack>
          <Tabs value={dayIndex} onChange={handleTabChange}>

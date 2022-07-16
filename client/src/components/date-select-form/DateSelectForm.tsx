@@ -18,6 +18,8 @@ interface Props {
    setLunchItems: Dispatch<SetStateAction<MealplanItemType[]>>;
    setDinnerItems: Dispatch<SetStateAction<MealplanItemType[]>>;
    setDayIndex: Dispatch<SetStateAction<number>>;
+   value: Date | string;
+   setValue: Dispatch<SetStateAction<Date | string>>;
 }
 
 //
@@ -32,10 +34,11 @@ export const DateSelectForm = ({
    setLunchItems,
    setDinnerItems,
    setDayIndex,
+   value,
+   setValue,
 }: Props) => {
    console.log('currentday:', currentDay);
    //must use seperate value for initital state to prevent date being off by 1 day due to different expected format
-   const [value, setValue] = React.useState<any>(new Date(Date.now()));
    //material ui returns a date in string format Jan 12 2022 for example, but spoonacular requires Unix time
 
    const handleChange = async (newValue: any) => {
