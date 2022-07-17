@@ -8,6 +8,8 @@ interface Props {
    handleDrawerToggle: any;
    page: string;
    nutritionSummary: any[];
+   mealplanItems: [];
+   mealplanItemsFound: boolean;
 }
 
 export const SidebarMealplan = ({
@@ -15,11 +17,12 @@ export const SidebarMealplan = ({
    handleDrawerToggle,
    page,
    nutritionSummary,
+   mealplanItems,
+   mealplanItemsFound,
 }: Props) => {
-   console.log(nutritionSummary);
-
    const [goals, setGoals] = useState<CurrentGoals>();
 
+   //get the users nutrient goals at initial render
    useEffect(() => {
       getGoals();
    }, []);
@@ -27,25 +30,25 @@ export const SidebarMealplan = ({
    const getGoals = async () => {
       try {
          let currentGoals = await axios.get('/api/metrics');
-         console.log('currentgoals:', currentGoals);
          setGoals(currentGoals.data);
-         console.log(goals);
       } catch (err) {
          console.log('err in sidebarmealplan:', err);
-         //  return;
       }
    };
 
+   console.log('goals in sidebarmealplan: ', goals);
    return (
       <>
-       {goals !== undefined && Object.keys(goals).length &&
-         <SideBar
-            mobileOpen={mobileOpen}
-            handleDrawerToggle={handleDrawerToggle}
-            page={page}
-            nutritionSummary={nutritionSummary}
-            goals={goals}
-         />}
+         {goals !== undefined && Object.keys(goals).length && (
+            <SideBar
+               mobileOpen={mobileOpen}
+               handleDrawerToggle={handleDrawerToggle}
+               page={page}
+               nutritionSummary={nutritionSummary}
+               goals={goals}
+               mealplanItemsFound={mealplanItemsFound}
+            />
+         )}
       </>
    );
 };

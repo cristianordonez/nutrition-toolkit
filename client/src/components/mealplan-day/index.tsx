@@ -22,9 +22,6 @@ interface Props {
    setAlertMessage: Dispatch<SetStateAction<string>>;
    setMealPlanItems: Dispatch<SetStateAction<[]>>;
    currentDay: string;
-   breakfastItems: MealplanItemType[];
-   lunchItems: MealplanItemType[];
-   dinnerItems: MealplanItemType[];
 }
 
 //gets list of meal plan items, then renders one mealplanitem component per item
@@ -35,16 +32,28 @@ export const MealplanDay = ({
    setAlertSeverity,
    setAlertMessage,
    currentDay,
-   breakfastItems,
-   lunchItems,
-   dinnerItems,
 }: Props) => {
    if (mealplanItems.length) {
+      console.log('mealplanItems: ', mealplanItems);
+
+      let breakfastItems: MealplanItemType[] = [];
+      let lunchItems: MealplanItemType[] = [];
+      let dinnerItems: MealplanItemType[] = [];
+
+      mealplanItems.forEach((item) => {
+         if (item.slot === 1) {
+            breakfastItems.push(item);
+         } else if (item.slot === 2) {
+            lunchItems.push(item);
+         } else {
+            dinnerItems.push(item);
+         }
+      });
       return (
          <>
-            {breakfastItems.map((item) => (
+            <Typography variant='h3'>Breakfast</Typography>
+            {breakfastItems.map((item: MealplanItemType) => (
                <React.Fragment key={item.id}>
-                  <Typography variant='h3'>Breakfast</Typography>
                   <MealplanItem
                      position={item.position}
                      slot={item.slot}
@@ -62,9 +71,9 @@ export const MealplanDay = ({
                   />
                </React.Fragment>
             ))}
+            <Typography variant='h3'>Lunch</Typography>
             {lunchItems.map((item) => (
                <React.Fragment key={item.id}>
-                  <Typography variant='h3'>Lunch</Typography>
                   <MealplanItem
                      position={item.position}
                      slot={item.slot}
@@ -82,9 +91,9 @@ export const MealplanDay = ({
                   />
                </React.Fragment>
             ))}
+            <Typography variant='h3'>Dinner</Typography>
             {dinnerItems.map((item) => (
                <React.Fragment key={item.id}>
-                  <Typography variant='h3'>Dinner</Typography>
                   <MealplanItem
                      position={item.position}
                      slot={item.slot}
@@ -106,6 +115,12 @@ export const MealplanDay = ({
       );
    } else {
       //todo render a sample mealplan here
-      return <></>;
+      return (
+         <>
+            <Typography variant='h3'>Breakfast</Typography>
+            <Typography variant='h3'>Lunch</Typography>
+            <Typography variant='h3'>Dinner</Typography>
+         </>
+      );
    }
 };

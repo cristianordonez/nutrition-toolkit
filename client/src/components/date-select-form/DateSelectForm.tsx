@@ -37,7 +37,6 @@ export const DateSelectForm = ({
    value,
    setValue,
 }: Props) => {
-   console.log('currentday:', currentDay);
    //must use seperate value for initital state to prevent date being off by 1 day due to different expected format
    //material ui returns a date in string format Jan 12 2022 for example, but spoonacular requires Unix time
 
@@ -47,7 +46,7 @@ export const DateSelectForm = ({
       setLunchItems([]);
       setDinnerItems([]);
       setValue(newValue); //update the state for date text field
-      console.log('newValue:', newValue);
+
       setCurrentDay(format(newValue, 'yyyy-MM-dd'));
       //   let currentDate = zonedTimeToUtc(newValue, 'UTC'); //need to convert local time to UTC time to prevent bugs
    };

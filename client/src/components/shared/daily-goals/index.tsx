@@ -30,20 +30,10 @@ export interface Props {
    page?: string;
 }
 
-//todo fix this component so that it shows progress bar, and differs based on search page or mealplan page
 export const DailyGoals = ({ goals, nutritionSummary, page }: Props) => {
    let nutrients = ['Carbohydrates', 'Protein', 'Fat'];
-   console.log('goals in dailygoals:', goals);
-   console.log('nutritionSummary: ', nutritionSummary);
 
    //! conditional renders return a '0' on page when falsy, need to declare null to be rendered
-
-   // console.log(nutritionSummary)
-   // useEffect(() => {
-   //    const currentCaloriePercentage = Math.floor(getNutrientPercentage(nutritionSummary[5].amount, goals.total_calories ))
-   //    console.log('nutrientPercentage: ', currentCaloriePercentage);
-   //    setCaloriesPercentage(currentCaloriePercentage);
-   // }, [nutritionSummary])
 
    const getNutrientPercentage = (
       nutrientEaten: number,
@@ -61,12 +51,19 @@ export const DailyGoals = ({ goals, nutritionSummary, page }: Props) => {
          goals.total_calories
       );
    }
-   console.log(calories);
 
    return (
       <>
          <div className='daily-goals'>
-            <Typography variant='h6'>Daily Macronutrient Goals</Typography>
+            {/* DIFFERENT TITLES FOR SEARCH AND MEALPLAN */}
+            {page === 'mealplan' ? (
+               <Typography variant='h6'>
+                  Today's Macronutrient Totals
+               </Typography>
+            ) : (
+               <Typography variant='h6'>Your Macronutrient Goals</Typography>
+            )}
+            {/* RENDER THE MEALPLAN SIDEBAR HERE */}
             {page === 'mealplan' &&
             nutritionSummary !== undefined &&
             nutritionSummary.length ? (
@@ -78,7 +75,7 @@ export const DailyGoals = ({ goals, nutritionSummary, page }: Props) => {
                      thickness={1}
                   />
                   <div className='daily-goals-heading'>
-                     <Typography variant='body1'>Today's Calories</Typography>
+                     <Typography variant='body1'>Calories</Typography>
 
                      <Typography variant='body1'>
                         <em>
@@ -87,9 +84,26 @@ export const DailyGoals = ({ goals, nutritionSummary, page }: Props) => {
                         </em>
                      </Typography>
                   </div>
+                  <div className='daily-goals-items'>
+                     <GoalCardItem
+                        type={'Carbohydrates'}
+                        nutrientsInMealPlan={nutritionSummary[7].amount}
+                        nutrientsTotal={goals.total_carbohydrates}
+                     />
+                     <GoalCardItem
+                        nutrientsTotal={goals.total_protein}
+                        type={'Protein'}
+                        nutrientsInMealPlan={nutritionSummary[28].amount}
+                     />
+                     <GoalCardItem
+                        nutrientsTotal={goals.total_fat}
+                        type={'Fat'}
+                        nutrientsInMealPlan={nutritionSummary[11].amount}
+                     />
+                  </div>
                </>
             ) : null}
-
+            {/* RENDER THE SEARCH SIDEBAR HERE */}
             {page === 'search' ? (
                <>
                   <CircularProgress
@@ -99,7 +113,7 @@ export const DailyGoals = ({ goals, nutritionSummary, page }: Props) => {
                      thickness={1}
                   />
                   <div className='daily-goals-heading'>
-                     <Typography variant='body1'>Today's Calories</Typography>
+                     <Typography variant='body1'>Total Calories</Typography>
 
                      <>
                         <Typography variant='body1'>
@@ -107,27 +121,21 @@ export const DailyGoals = ({ goals, nutritionSummary, page }: Props) => {
                         </Typography>
                      </>
                   </div>
+                  <div className='daily-goals-items'>
+                     <GoalCardItem
+                        type={'Carbohydrates'}
+                        nutrientsTotal={goals.total_carbohydrates}
+                     />
+                     <GoalCardItem
+                        nutrientsTotal={goals.total_protein}
+                        type={'Protein'}
+                     />
+                     <GoalCardItem
+                        nutrientsTotal={goals.total_fat}
+                        type={'Fat'}
+                     />
+                  </div>
                </>
-            ) : null}
-
-            {nutritionSummary !== undefined && nutritionSummary.length ? (
-               <div className='daily-goals-items'>
-                  <GoalCardItem
-                     type={'Carbohydrates'}
-                     nutrientsInMealPlan={nutritionSummary[7].amount}
-                     nutrientsTotal={goals.total_carbohydrates}
-                  />
-                  <GoalCardItem
-                     nutrientsTotal={goals.total_protein}
-                     type={'Protein'}
-                     nutrientsInMealPlan={nutritionSummary[28].amount}
-                  />
-                  <GoalCardItem
-                     nutrientsTotal={goals.total_fat}
-                     type={'Fat'}
-                     nutrientsInMealPlan={nutritionSummary[11].amount}
-                  />
-               </div>
             ) : null}
          </div>
       </>

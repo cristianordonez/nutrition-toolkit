@@ -4,12 +4,21 @@ import { SidebarMealplan } from '../../components/sidebar-mealplan/SideBarMealPl
 import { DateSelectForm } from '../../components/date-select-form/DateSelectForm';
 import { MealplanDay, MealplanItemType } from '../../components/mealplan-day';
 import { CustomAlert } from '../../components/shared/CustomAlert';
-import { Typography, Tabs, Tab, AlertColor, Stack } from '@mui/material';
+import {
+   Typography,
+   Tabs,
+   Tab,
+   AlertColor,
+   Stack,
+   Toolbar,
+   IconButton,
+} from '@mui/material';
 import axios from 'axios';
 import format from 'date-fns/format';
 import getDay from 'date-fns/getDay';
 import addDays from 'date-fns/addDays';
 import subDays from 'date-fns/subDays';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const days = [
    'Sunday',
@@ -24,6 +33,7 @@ const days = [
 export const MealPlanPage = () => {
    const [dayIndex, setDayIndex] = useState<number>(getDay(Date.now())); //used for tab highlighting
    const [mealplanItems, setMealplanItems] = useState<[]>([]);
+   const [mealplanItemsFound, setMealplanItemsFound] = useState(true); //use this to display different page if no items are found
    const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
    const [alertSeverity, setAlertSeverity] = useState<AlertColor | undefined>(
       'error'
@@ -48,6 +58,8 @@ export const MealPlanPage = () => {
 
    //need to configure so that day is also changed when tab changes
    const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+      setMealplanItems([]); //when tab changes, reset the nutrition summary and the mealplan items
+      setNutritionSummary([]);
       const prevDate = currentDay; //create variable to store the previous date and previous tab index
       const prevDayIndex = dayIndex;
       let differenceInDays = newValue - dayIndex; //find out how many days before or after current date is new selected date by finding difference between previous tab and current tab
@@ -67,10 +79,7 @@ export const MealPlanPage = () => {
       }
       if (newDate !== undefined) {
          setValue(newDate); //updates the date textfield value
-         setBreakfastItems([]);
          setDayIndex(newValue);
-         setLunchItems([]);
-         setDinnerItems([]);
          setCurrentDay(format(newDate, 'yyyy-MM-dd'));
       }
    };
@@ -87,18 +96,18 @@ export const MealPlanPage = () => {
       handleDateChange();
    }, [currentDay]);
 
+   //handles gettings updated mealplan when date is changed from date textfield using currentDate state
    const handleDateChange = async () => {
+      setMealplanItems([]); //when tab changes, reset the nutrition summary and the mealplan items
+      setNutritionSummary([]);
       try {
          let response = await axios.get('/api/mealplan/day', {
             params: { date: currentDay },
             withCredentials: true,
          });
-         console.log(
-            'response.data:',
-            response.data.nutritionSummary.nutrients
-         );
+
          setNutritionSummary(response.data.nutritionSummary.nutrients);
-         console.log('nutritionSummary:', nutritionSummary);
+
          setMealplanItems(response.data.items);
          response.data.items.forEach((item: MealplanItemType) => {
             if (item.slot === 1) {
@@ -119,18 +128,36 @@ export const MealPlanPage = () => {
             'You have no items saved on this day for your mealplan.'
          );
          setOpenSnackbar(true);
+         setMealplanItemsFound(false);
       }
    };
-   console.log('mealplanItems:', mealplanItems);
+   //todo if there is an error, or no meals are saved, display different component
    return (
       <div className='mealplan-page'>
-        
-        <SidebarMealplan
+         <Toolbar>
+            <IconButton
+               color='inherit'
+               aria-label='open drawer'
+               edge='start'
+               onClick={handleDrawerToggle}
+               sx={{ mr: 2, display: { sm: 'none' } }}
+            >
+               <ArrowForwardIosIcon />
+            </IconButton>
+         </Toolbar>
+
+         <SidebarMealplan
             mobileOpen={mobileOpen}
             page={'mealplan'}
             handleDrawerToggle={handleDrawerToggle}
             nutritionSummary={nutritionSummary}
+            mealplanItems={mealplanItems}
+            mealplanItemsFound={mealplanItemsFound}
          />
+         <Typography variant='subtitle2'>
+            Note: no snacks are included by default to help keep carbohydrate
+            levels stable. For low carb snack ideas, check out ...
+         </Typography>
          <Stack direction={'row'}>
             <Typography variant='h1'>Meal Planner</Typography>
             <DateSelectForm
@@ -149,10 +176,8 @@ export const MealPlanPage = () => {
                <Tab key={day} label={day} />
             ))}
          </Tabs>
+
          <MealplanDay
-            breakfastItems={breakfastItems}
-            lunchItems={lunchItems}
-            dinnerItems={dinnerItems}
             setMealPlanItems={setMealplanItems}
             currentDay={currentDay}
             mealplanItems={mealplanItems}
@@ -160,6 +185,7 @@ export const MealPlanPage = () => {
             setAlertSeverity={setAlertSeverity}
             setAlertMessage={setAlertMessage}
          />
+
          <CustomAlert
             openAlert={openSnackbar}
             handleAlert={handleClose}

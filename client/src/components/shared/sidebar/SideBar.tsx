@@ -14,7 +14,10 @@ interface Props {
    goals?: CurrentGoals | any;
    page: string;
    nutritionSummary?: any;
+   mealplanItemsFound?: boolean;
 }
+
+const drawerWidth = 350;
 
 export const SideBar = ({
    mobileOpen,
@@ -24,10 +27,8 @@ export const SideBar = ({
    goals,
    page,
    nutritionSummary,
+   mealplanItemsFound,
 }: Props) => {
-   const drawerWidth = 350;
-   console.log('goals in sidebar shared:', goals);
-
    return (
       <>
          {page === 'search' && (
@@ -62,7 +63,7 @@ export const SideBar = ({
                   {apiData !== undefined && apiData.length ? (
                      SearchFormComponent
                   ) : (
-                     <DailyGoals goals={goals} page={'search'}/>
+                     <DailyGoals goals={goals} page={'search'} />
                   )}
                </Drawer>
 
@@ -82,12 +83,12 @@ export const SideBar = ({
                   {apiData !== undefined && apiData.length ? (
                      SearchFormComponent
                   ) : (
-                     <DailyGoals goals={goals} page={'search'}/>
+                     <DailyGoals goals={goals} page={'search'} />
                   )}
                </Drawer>
             </>
          )}
-         {page === 'mealplan' && nutritionSummary !== undefined && (
+         {page === 'mealplan' && goals !== undefined && (
             <>
                <Drawer
                   variant='temporary'
@@ -116,13 +117,14 @@ export const SideBar = ({
                         <ArrowBackIosIcon />
                      </IconButton>
                   </Toolbar>
-                  {goals !== undefined && nutritionSummary.length && (
+                  {/* MOBILE */}
+                  {nutritionSummary ? (
                      <DailyGoals
                         goals={goals}
                         nutritionSummary={nutritionSummary}
                         page={'mealplan'}
                      />
-                  )}
+                  ) : null}
                </Drawer>
 
                <Drawer
@@ -138,14 +140,18 @@ export const SideBar = ({
                      },
                   }}
                >
-                  {goals !== undefined && nutritionSummary && (
+                  {/* DESKTOP - RENDER WHOLE VIEW AT ONCE */}
+                  {nutritionSummary.length ? (
                      <DailyGoals
                         goals={goals}
                         nutritionSummary={nutritionSummary}
                         page={'mealplan'}
-
                      />
-                  )} 
+                  ) : null}
+                  {/* SHOWN ON DAYS WITH NO MEALPLANS */}
+                  {!nutritionSummary.length && !mealplanItemsFound ? (
+                     <DailyGoals goals={goals} page={'search'} />
+                  ) : null}
                </Drawer>
             </>
          )}

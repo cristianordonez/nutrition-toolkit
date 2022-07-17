@@ -17,21 +17,20 @@ import { useAuth } from '../../context/authContext';
 import axios from 'axios';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-//todo change 0
 export type Goals = {
    user_id: number;
-   total_carbohydrates: 0;
-   min_carbs_per_meal: 0;
-   max_carbs_per_meal: 0;
-   total_protein: 0;
-   min_protein_per_meal: 0;
-   max_protein_per_meal: 0;
-   total_fat: 0;
-   min_fat_per_meal: 0;
-   max_fat_per_meal: 0;
-   total_calories: 0;
-   min_calories_per_meal: 0;
-   max_calories_per_meal: 0;
+   total_carbohydrates: number;
+   min_carbs_per_meal: number;
+   max_carbs_per_meal: number;
+   total_protein: number;
+   min_protein_per_meal: number;
+   max_protein_per_meal: number;
+   total_fat: number;
+   min_fat_per_meal: number;
+   max_fat_per_meal: number;
+   total_calories: number;
+   min_calories_per_meal: number;
+   max_calories_per_meal: number;
 };
 
 export const SearchPage = () => {
