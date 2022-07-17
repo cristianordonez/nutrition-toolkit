@@ -1,23 +1,54 @@
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
-import { Card, CardContent, Typography } from '@mui/material';
+import {
+   Card,
+   CardContent,
+   Typography,
+   LinearProgress,
+   Stack,
+} from '@mui/material';
 import React from 'react';
 
 interface Props {
-   count: number;
+   nutrientsTotal: number;
    type: string;
+   nutrientsInMealPlan?: number;
 }
 
-export const GoalCardItem = ({ count, type }: Props): ReactJSXElement => {
+export const GoalCardItem = ({
+   nutrientsTotal,
+   type,
+   nutrientsInMealPlan,
+}: Props): ReactJSXElement => {
+   let percentageTotal;
+   if (nutrientsInMealPlan !== undefined) {
+      percentageTotal = Math.floor(
+         (nutrientsInMealPlan / nutrientsTotal) * 100
+      );
+   }
+
    return (
       <>
          <Card>
             <CardContent>
-               <Typography align='center' variant='h6'>
-                  {count}
-               </Typography>
-               <Typography align='center' variant='body1'>
-                  {type}
-               </Typography>
+               <Stack direction={'row'}>
+                  <Typography align='center' variant='body1'>
+                     {type}
+                  </Typography>
+                  {nutrientsInMealPlan !== undefined ? (
+                     <Typography align='center' variant='subtitle1'>
+                        {nutrientsInMealPlan} / {nutrientsTotal}
+                     </Typography>
+                  ) : (
+                     <Typography align='center' variant='h6'>
+                        {nutrientsTotal}
+                     </Typography>
+                  )}
+               </Stack>
+
+               <LinearProgress
+                  variant='determinate'
+                  value={nutrientsInMealPlan || 100}
+               />
             </CardContent>
          </Card>
       </>
