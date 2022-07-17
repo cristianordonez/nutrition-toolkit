@@ -66,7 +66,7 @@ export const SearchForm = ({
          <Tabs
             value={currentTab}
             onChange={handleChange}
-            aria-label='switch between custom and suggested search'
+            aria-label='toggle suggested search'
          >
             <Tab value='custom-search' label='Custom Search' />
             <Tab value='suggested-goals' label='Suggested Goals' />

@@ -101,11 +101,12 @@ export const MealPlanPage = () => {
       setMealplanItems([]); //when tab changes, reset the nutrition summary and the mealplan items
       setNutritionSummary([]);
       try {
+         console.log('currentDay:', currentDay);
          let response = await axios.get('/api/mealplan/day', {
             params: { date: currentDay },
             withCredentials: true,
          });
-
+         console.log('response in get emal plan day: ', response);
          setNutritionSummary(response.data.nutritionSummary.nutrients);
 
          setMealplanItems(response.data.items);
@@ -131,7 +132,7 @@ export const MealPlanPage = () => {
          setMealplanItemsFound(false);
       }
    };
-   //todo if there is an error, or no meals are saved, display different component
+
    return (
       <div className='mealplan-page'>
          <Toolbar>
