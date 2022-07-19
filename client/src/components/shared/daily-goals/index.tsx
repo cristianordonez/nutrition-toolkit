@@ -84,7 +84,10 @@ export const DailyGoals = ({ goals, nutritionSummary, page }: Props) => {
                         </em>
                      </Typography>
                   </div>
-                  <div className='daily-goals-items'>
+                  <div
+                     className='daily-goals-items'
+                     data-testid='mealplan-goal-items'
+                  >
                      <GoalCardItem
                         type={'Carbohydrates'}
                         nutrientsInMealPlan={nutritionSummary[7].amount}

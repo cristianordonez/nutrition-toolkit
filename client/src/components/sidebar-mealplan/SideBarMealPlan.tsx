@@ -36,7 +36,6 @@ export const SidebarMealplan = ({
       }
    };
 
-   console.log('goals in sidebarmealplan: ', goals);
    return (
       <>
          {goals !== undefined && Object.keys(goals).length && (

@@ -7,9 +7,14 @@ import { TextField, Box } from '@mui/material';
 import { addToMealPlanType } from '../../../../server/API/api.types';
 import { getFormattedDate } from '../../helper-functions/getFormattedDateFunc';
 import getUnixTime from 'date-fns/getUnixTime';
-import { zonedTimeToUtc, formatInTimeZone, getTimezoneOffset } from 'date-fns-tz'
+import {
+   zonedTimeToUtc,
+   formatInTimeZone,
+   getTimezoneOffset,
+} from 'date-fns-tz';
 import { format, addMinutes } from 'date-fns';
-
+import startOfDay from 'date-fns/startOfDay';
+import startOfToday from 'date-fns/startOfToday';
 
 interface Props {
    setData: Dispatch<SetStateAction<addToMealPlanType>>;
@@ -20,18 +25,19 @@ interface Props {
 //fixed error with day being one day ahead
 //material ui returns a date in string format Jan 12 2022 for example, but spoonacular requires Unix time
 export const DatePickerTextField = ({ setData, data }: Props) => {
-   
-   const [value, setValue] = React.useState<any>(new Date(Date.now()));
+   const [value, setValue] = React.useState<any>(startOfToday());
 
    const handleChange = (newValue: any) => {
       setValue(newValue);
       let currentDate = zonedTimeToUtc(newValue, 'UTC'); //need to convert local time to UTC time to prevent bugs
       // let currentDate = formatInTimeZone(new Date(Date.now()), 'America/New_York', 'yyyy-MM-dd HH:mm:ssXXX')
       let { year, month, day, hour, min, sec } = getFormattedDate(currentDate);
-      const result = getUnixTime(new Date(year, month, day, hour, min, sec));
+      const startOfCurrentDay = startOfDay(
+         new Date(year, month, day, hour, min, sec)
+      );
+      const result = getUnixTime(startOfCurrentDay);
       setData({ ...data, date: result });
    };
-
 
    return (
       <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -42,7 +48,9 @@ export const DatePickerTextField = ({ setData, data }: Props) => {
                inputFormat='MM/dd/yyyy'
                value={value}
                onChange={handleChange}
-               renderInput={(params) => <TextField {...params} variant='standard'/>}
+               renderInput={(params) => (
+                  <TextField {...params} variant='standard' />
+               )}
             />
          </Box>
          {/* desktop */}
@@ -53,7 +61,9 @@ export const DatePickerTextField = ({ setData, data }: Props) => {
                data-testid='date-picker-textfield'
                value={value}
                onChange={handleChange}
-               renderInput={(params) => <TextField {...params} variant='standard'/>}
+               renderInput={(params) => (
+                  <TextField {...params} variant='standard' />
+               )}
             />
          </Box>
       </LocalizationProvider>

@@ -14,7 +14,7 @@ describe('The Search Page', () => {
       cy.task('db:teardown');
    });
 
-   it('Should allow user to search for recipes and add an item to their mealplan', () => {
+   it('Allows user to search for recipes and add an item to their mealplan', () => {
       cy.findByTestId('query-text-field').type('chicken');
       cy.findByTestId('select-type-dropdown').click();
       cy.contains('Main Course').click();
@@ -27,7 +27,8 @@ describe('The Search Page', () => {
       cy.findAllByTestId('textfield-min-nutrient').last().type('10');
       cy.findAllByTestId('textfield-max-nutrient').last().type('25');
       cy.contains('Submit').click();
-      expect(cy.contains('Results')).toBeDefined();
+      // expect(cy.contains('Results')).toBeDefined();
+      cy.contains('Results').should('exist');
       cy.contains('Add to Mealplan').first().click();
       cy.findByTestId('CalendarIcon').click();
       cy.contains('15').click();
@@ -35,7 +36,7 @@ describe('The Search Page', () => {
       cy.contains('Item has been added to your mealplan!').should('be.visible');
    });
 
-   it('Should allow user to search for grocery products ', () => {
+   it('Allows user to search for grocery products ', () => {
       cy.findByTestId('select-search-input').click();
       cy.contains('Grocery Products').click();
       cy.findByTestId('query-text-field').type('yogurt');
@@ -53,7 +54,7 @@ describe('The Search Page', () => {
       cy.contains('Results').should('exist');
    });
 
-   it('Should allow user to search for menu items', () => {
+   it('Allows user to search for menu items', () => {
       cy.findByTestId('select-search-input').click();
       cy.contains('Menu items').click();
       cy.findByTestId('query-text-field').type('hamburger');
@@ -71,15 +72,13 @@ describe('The Search Page', () => {
       cy.contains('Results').should('exist');
    });
 
-   it('Should allow user to use custom goals to search for items', () => {
+   it('Allows user to use custom goals to search for items', () => {
       cy.contains('Suggested Goals').click();
       cy.findByTestId('query-text-field').type('salad');
       cy.findByTestId('select-type-dropdown').click();
       cy.contains('Side Dish').click();
       cy.contains('Submit').click();
-      // expect(cy.contains('Results')).toBeDefined();
       cy.contains('Results').should('exist');
       cy.findAllByTestId('food-search-item').should('exist');
-      // expect(cy.findAllByTestId('food-search-item')).toBeDefined();
    });
 });

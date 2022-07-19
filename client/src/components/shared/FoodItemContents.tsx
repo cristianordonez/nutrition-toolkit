@@ -77,7 +77,10 @@ export const FoodItemContents = ({
       <Paper elevation={1} className='food-search-paper'>
          {/* opens the dialog to confirm delete */}
          {isMealPlanItem && (
-            <IconButton onClick={handleOpeningDialog}>
+            <IconButton
+               aria-label='delete from mealplan'
+               onClick={handleOpeningDialog}
+            >
                <ClearIcon />
             </IconButton>
          )}

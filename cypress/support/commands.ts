@@ -25,6 +25,8 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import 'cypress-jest-adapter';
 import '@testing-library/cypress/add-commands';
+import getUnixTime from 'date-fns/getUnixTime';
+import startOfToday from 'date-fns/startOfToday';
 
 declare global {
    namespace Cypress {
@@ -94,7 +96,7 @@ Cypress.Commands.add('addItemsToMealplan', () => {
       url: '/api/mealplan',
       method: 'POST',
       body: {
-         date: new Date(Date.now()),
+         date: getUnixTime(startOfToday()),
          slot: 1,
          position: 0,
          type: 'RECIPE',
@@ -110,8 +112,8 @@ Cypress.Commands.add('addItemsToMealplan', () => {
       url: '/api/mealplan',
       method: 'POST',
       body: {
-         date: new Date(Date.now()),
-         slot: 1,
+         date: getUnixTime(startOfToday()),
+         slot: 2,
          position: 0,
          type: 'PRODUCT',
          value: {
@@ -127,8 +129,8 @@ Cypress.Commands.add('addItemsToMealplan', () => {
       url: '/api/mealplan',
       method: 'POST',
       body: {
-         date: new Date(Date.now()),
-         slot: 1,
+         date: getUnixTime(startOfToday()),
+         slot: 3,
          position: 0,
          type: 'MENU_ITEM',
          value: {

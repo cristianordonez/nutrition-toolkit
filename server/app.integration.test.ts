@@ -29,14 +29,13 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-   await db.query( `DROP TABLE session`)
+   await db.query(`DROP TABLE session`);
    await db.query('DROP TABLE daily_goals');
    await db.query('DROP TABLE users');
    await request.post('/api/logout').set('Cookie', testCookie);
 });
 
 describe('Authentication routes', () => {
-
    test('GET /: should allow user to access base url with no errors', async () => {
       let currentResponse = await request.get('/api');
       expect(currentResponse.statusCode).toBe(200);
@@ -76,14 +75,14 @@ describe('Authentication routes', () => {
    });
 
    test('POST /login: should allow user to login', async () => {
-      let loginResponse = await request.post('/api/login')
-      .set('Cookie', testCookie)
-      .send({
-         username: 'test_user',
-         password: 'password',
-      })
+      let loginResponse = await request
+         .post('/api/login')
+         .set('Cookie', testCookie)
+         .send({
+            username: 'test_user',
+            password: 'password',
+         });
       expect(loginResponse.statusCode).toBe(200);
-
    });
 
    test('GET /metrics: should allow user to retrieve metrics from database', async () => {
@@ -94,6 +93,67 @@ describe('Authentication routes', () => {
       expect(metricsResponse.body.min_carbs_per_meal).toBe(45);
    });
 
+   test('Should allow user to get recipes from API', async () => {
+      const getRecipesResponse = await request.get('/api/recipes').query({
+         query: 'chicken',
+         type: 'Main Course',
+         intolerance: '',
+         minCalories: '100',
+         maxCalories: '600',
+         minCarbs: '10',
+         maxCarbs: '50',
+         minProtein: '10',
+         maxProtein: '100',
+         minFat: '10',
+         maxFat: '100',
+         number: '10', //number of items to return
+         offset: 0, //number of results to skip, useful for lazy loading
+      });
+      console.log('getRecipesResponse: ', getRecipesResponse);
+      expect(getRecipesResponse.statusCode).toBe(200);
+   });
+
+   test('Should allow user to get menu items from API', async () => {
+      const getMenuItemsResponse = await request.get('/api/menuitems').query({
+         query: 'spaghetti',
+         type: 'Main Course',
+         intolerance: '',
+         minCalories: '100',
+         maxCalories: '500',
+         minCarbs: '10',
+         maxCarbs: '40',
+         minProtein: '10',
+         maxProtein: '50',
+         minFat: '10',
+         maxFat: '50',
+         number: '10', //number of items to return
+         offset: 0, //number of results to skip, useful for lazy loading
+      });
+      expect(getMenuItemsResponse.statusCode).toBe(200);
+   });
+
+   test('Should allow user to get grocery products from the API', async () => {
+      const getRecipesResponse = await request
+         .get('/api/groceryProducts')
+         .query({
+            query: 'milk',
+            type: 'Main Course',
+            intolerance: '',
+            minCalories: '100',
+            maxCalories: '600',
+            minCarbs: '10',
+            maxCarbs: '50',
+            minProtein: '10',
+            maxProtein: '100',
+            minFat: '10',
+            maxFat: '100',
+            number: '10', //number of items to return
+            offset: 0, //number of results to skip, useful for lazy loading
+         });
+
+      expect(getRecipesResponse.statusCode).toBe(200);
+   });
+
    test('POST /logout: should allow user to logout', async () => {
       let logoutResponse = await request
          .post('/api/logout')
@@ -102,5 +162,3 @@ describe('Authentication routes', () => {
       expect(logoutResponse.text).toBe('You have been logged out');
    });
 });
-
-//todo test ONLY three routes to search for recipes 

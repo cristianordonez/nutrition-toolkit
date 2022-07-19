@@ -5,9 +5,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import {
-   FoodItemType
-} from './food-search-list.types';
+import { FoodItemType } from './food-search-list.types';
 
 export const FoodSearchList = ({
    apiData,
@@ -16,8 +14,8 @@ export const FoodSearchList = ({
    setAlertMessage,
    setOpenSnackbar,
    setAlertSeverity,
-}: any) => {   
-   console.log('apiData:', apiData)
+}: any) => {
+   console.log('apiData:', apiData);
    return (
       <>
          <Stack direction='row' spacing={1}>

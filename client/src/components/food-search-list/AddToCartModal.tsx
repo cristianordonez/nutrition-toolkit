@@ -21,6 +21,7 @@ import { DatePickerTextField } from './DatePickerTextField';
 import { addToMealPlanType } from '../../../../server/API/api.types'; //interface from api handler
 import axios from 'axios';
 import getUnixTime from 'date-fns/getUnixTime';
+import startOfToday from 'date-fns/startOfToday';
 
 interface Props {
    openDialog: boolean;
@@ -56,8 +57,9 @@ export const AddToCartModal = ({
       currentType = 'MENU_ITEM';
    }
 
+   //todo fix to start of day
    const [data, setData] = useState<addToMealPlanType | any>({
-      date: getUnixTime(Date.now()),
+      date: getUnixTime(startOfToday()),
       slot: 1,
       position: 0, // the order in the slot
       type: currentType,
@@ -76,7 +78,7 @@ export const AddToCartModal = ({
 
    //#handles updating state when changing the servings select field
    const handleSelectServings = (event: SelectChangeEvent) => {
-      setData((data:addToMealPlanType) => {
+      setData((data: addToMealPlanType) => {
          return {
             ...data,
             value: {
@@ -91,7 +93,7 @@ export const AddToCartModal = ({
    const handleSubmit = async (event: SyntheticEvent) => {
       event.preventDefault();
       try {
-         console.log('data in handle submit to add item ', data)
+         console.log('data in handle submit to add item ', data);
          let response = await axios.post('/api/mealplan', data);
          console.log('respons:', response);
          setAlertSeverity('success');
@@ -122,7 +124,13 @@ export const AddToCartModal = ({
             </DialogContent>
             <DialogActions>
                <Button onClick={handleOpeningDialog}>Cancel</Button>
-               <Button data-testid='add-mealplan-btn' aria-label='submit form to add to meal plan' type='submit'>Submit</Button>
+               <Button
+                  data-testid='add-mealplan-btn'
+                  aria-label='submit form to add to meal plan'
+                  type='submit'
+               >
+                  Submit
+               </Button>
             </DialogActions>
          </form>
       </Dialog>

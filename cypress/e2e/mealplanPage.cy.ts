@@ -1,5 +1,3 @@
-import getUnixTime from 'date-fns/getUnixTime';
-
 describe('The Mealplan Page', () => {
    //create user before all tests
    before(() => {
@@ -18,75 +16,48 @@ describe('The Mealplan Page', () => {
       cy.task('db:teardown');
    });
 
-   //  it('Should give user an info warning when there are no recipes saved', () => {
-   //     cy.contains('Meal Plan').click();
-   //     cy.contains(
-   //        'You have no items saved on this day for your mealplan.'
-   //     ).should('exist');
-   //  });
-   it.only('Should display meals on page', () => {
-      // cy.addItemsToMealplan();
-      // cy.contains('Meal Plan').click();
-      // cy.contains('Suggested Goals').click();
-      // cy.findByTestId('query-text-field').type('salad');
-      // cy.findByTestId('select-type-dropdown').click();
-      // cy.contains('Side Dish').click();
-      // cy.contains('Submit').click();
-      // cy.contains('Add to Mealplan').first().click();
-      // cy.findByTestId('CalendarIcon').click();
-      // cy.contains('15').click();
-      // cy.findByTestId('add-mealplan-btn').click();
-      // cy.contains('Meal Plan').click();
-      // cy.pause();
-      cy.request({
-         url: '/api/mealplan',
-         method: 'POST',
-         body: {
-            date: getUnixTime(new Date(Date.now())),
-            slot: 1,
-            position: 0,
-            type: 'RECIPE',
-            value: {
-               id: 296213,
-               servings: 2,
-               title: 'Spinach Salad with Roasted Vegetables and Spiced Chickpea',
-               imageType: 'jpg',
-            },
-         },
-      });
-      cy.request({
-         url: '/api/mealplan',
-         method: 'POST',
-         body: {
-            date: getUnixTime(new Date(Date.now())),
-            slot: 1,
-            position: 0,
-            type: 'PRODUCT',
-            value: {
-               id: 183433,
-               servings: 1,
-               title: 'Ahold Lasagna with Meat Sauce',
-               imageType: 'jpg',
-            },
-         },
-      });
-
-      cy.request({
-         url: '/api/mealplan',
-         method: 'POST',
-         body: {
-            date: getUnixTime(new Date(Date.now())),
-            slot: 1,
-            position: 0,
-            type: 'MENU_ITEM',
-            value: {
-               id: 378557,
-               servings: 1,
-               title: 'Pizza 73 BBQ Steak Pizza, 9',
-               imageType: 'png',
-            },
-         },
-      });
+   it('Gives user an info warning when there are no recipes saved', () => {
       cy.contains('Meal Plan').click();
+      cy.contains(
+         'You have no items saved on this day for your mealplan.'
+      ).should('exist');
+   });
+
+   it('Displays meals from mealplan on the page', () => {
+      cy.addItemsToMealplan();
+      cy.contains('Meal Plan').click();
+      cy.findAllByTestId('food-search-item').should('have.length.of', 3);
+   });
+   it('Shows user their nutrients in meal plan compared to total nutrients goal', () => {
+      cy.addItemsToMealplan();
+      cy.contains('Meal Plan').click();
+      cy.findByText("Today's Macronutrient Totals").should('exist');
+   });
+
+   it('Allows user to change the date via the tab', () => {
+      cy.contains('Meal Plan').click();
+      cy.findByText('Monday').click();
+      cy.findByText('Tuesday').click();
+      cy.findByText('Wednesday').click();
+      cy.contains(
+         'You have no items saved on this day for your mealplan.'
+      ).should('exist');
+   });
+
+   it('Allows user to change the date via the textfield component', () => {
+      cy.contains('Meal Plan').click();
+      cy.findByTestId('CalendarIcon').click();
+      cy.findByText('15').click();
+      cy.contains(
+         'You have no items saved on this day for your mealplan.'
+      ).should('exist');
+   });
+   it('Allows user to delete items from their mealplan, then show the updated nutrients', () => {
+      cy.contains('Meal Plan').click();
+      cy.findAllByTestId('food-search-item').should('have.length.of', 3);
+      cy.findAllByLabelText('delete from mealplan').should('exist');
+      cy.findAllByLabelText('delete from mealplan').click();
+      cy.findByText('Delete').click();
+      cy.findAllByTestId('food-search-item').should('have.length.of', 2);
    });
 });
