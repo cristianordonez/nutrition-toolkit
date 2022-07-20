@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './SignupForm.scss';
 import { Typography, Paper, Button } from '@mui/material';
-import { MacroCalculatorForm } from '../macro-calculator-form';
+import { MacroCalculatorForm } from '../shared/macro-calculator-form';
 import { ConfirmPasswordTextField } from '../text-fields/confirm-password-textfield/ConfirmPasswordTextField';
 import { EmailTextField } from '../text-fields/email-textfield/EmailTextField';
 import { PasswordTextField } from '../text-fields/password-textfield/PasswordTextField';

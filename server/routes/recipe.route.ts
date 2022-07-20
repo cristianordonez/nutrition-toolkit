@@ -8,7 +8,7 @@ router.get('/', (req: Request, res: Response) => {
 });
 
 router.get('/:id', (req: Request, res: Response) => {
-   recipeController.getRecipeById(req,res);
-})
+   recipeController.getRecipeById(req, res);
+});
 
 export { router };

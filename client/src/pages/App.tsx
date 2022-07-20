@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './home-page/Home';
 import { LoginPage } from './login-page/LoginPage';
 import { MacroCalculatorPage } from './macro-calculator-page/MacroCalculatorPage';
-import {MealPlanPage} from './meal-plan-page/MealPlanPage';
+import { MealPlanPage } from './meal-plan-page/MealPlanPage';
 import { SearchPage } from './search-page/SearchPage';
 import NavBar from '../components/navbar/NavBar';
 import { AuthProvider } from '../context/authContext';
@@ -13,11 +13,11 @@ export const App = () => {
 
    return (
       <>
-         <CssBaseline/>
+         <CssBaseline />
          <NavBar />
          <Routes>
             {/* PUBLIC PAGE */}
-            <Route path='/' element={<Home />} /> 
+            <Route path='/' element={<Home />} />
             <Route path='/login' element={<LoginPage />} />
             <Route
                path='/search'
@@ -27,15 +27,15 @@ export const App = () => {
                   </AuthProvider>
                }
             />
-                <Route
+            <Route
                path='/mealplan'
                element={
                   <AuthProvider>
-                     <MealPlanPage/>
+                     <MealPlanPage />
                   </AuthProvider>
                }
             />
-            {/* <Route path='/macro-calculator' element={<MacroCalculator />} /> */}
+            <Route path='/macrocalculator' element={<MacroCalculatorPage />} />
          </Routes>
       </>
    );

@@ -15,14 +15,13 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { db } from './database/db';
 // import pgSession from 'connect-pg-simple';
 
-
 import bcrypt from 'bcrypt';
 const pgSession = require('connect-pg-simple')(session);
 const app = express();
 
-console.log('here in app.ts')
+console.log('here in app.ts');
 //MIDDLEWARE
-app.use(cors())
+app.use(cors());
 
 app.use(compression());
 

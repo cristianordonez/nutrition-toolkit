@@ -7,11 +7,16 @@ import {
    ToggleButtonGroup,
    ToggleButton,
    AlertColor,
+   Dialog,
+   DialogTitle,
+   DialogContent,
+   DialogActions,
+   Box,
 } from '@mui/material';
 import { HeightInputField } from './HeightInputField';
 import { WeightInputField } from './WeightInputField';
 import { AgeInputField } from './AgeInputField';
-import { useMetrics } from '../../helper-functions/use-metrics/useMetrics';
+import { useMetrics } from '../../../helper-functions/use-metrics/useMetrics';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
@@ -20,6 +25,8 @@ interface Props {
    setShowNextPage: Dispatch<SetStateAction<boolean>>;
    setShowSignup: Dispatch<SetStateAction<boolean>>;
    setAlertSeverity: Dispatch<SetStateAction<AlertColor | undefined>>;
+   page?: string;
+   showNextPage?: boolean | any;
 }
 
 export const MacroCalculatorForm = ({
@@ -28,6 +35,8 @@ export const MacroCalculatorForm = ({
    setShowNextPage,
    setShowSignup,
    setAlertSeverity,
+   showNextPage,
+   page, //used to mark whether this is being shown as part of signup form or as its own page
 }: Props) => {
    let navigate = useNavigate();
    const [activityLevel, setActivityLevel] = React.useState<number>(1);
@@ -63,9 +72,15 @@ export const MacroCalculatorForm = ({
       });
       try {
          let response = await axios.post(`/api/metrics`, metrics);
-         setErrorMessage(
-            'You have successfully created an account. Please login.'
-         );
+         if (page === 'macrocalculator') {
+            setErrorMessage(
+               'You have updated your macronutrient needs. Go to search page to begin searching for recipes, menu items, or grocery products within this range.'
+            );
+         } else {
+            setErrorMessage(
+               'You have successfully created an account. Please login.'
+            );
+         }
          setAlertSeverity('success');
          setOpenErrorAlert(true);
          setShowNextPage(false);
@@ -83,13 +98,29 @@ export const MacroCalculatorForm = ({
             className='signup-form'
             data-testid='macro-calculator-signup-form'
          >
-            <Typography variant='h6'>
-               Complete setting up your account
-            </Typography>
-            <Typography variant='subtitle1'>
-               Fill out the form below so we can calculate your recommended
-               nutrient needs.
-            </Typography>
+            {page !== undefined && page === 'macrocalculator' ? (
+               <>
+                  <Typography variant='h6'>
+                     Recalculate your Macronutrient Recommendations
+                  </Typography>
+                  <Typography variant='subtitle1'>
+                     Fill out the form below to recalculate your recommended
+                     nutrient needs (note that all recommendations are made for
+                     individuals with Type 2 Diabetes).
+                  </Typography>
+               </>
+            ) : (
+               <>
+                  <Typography variant='h6'>
+                     Complete setting up your account
+                  </Typography>
+                  <Typography variant='subtitle1'>
+                     Fill out the form below so we can calculate your
+                     recommended nutrient needs (note that all recommendations
+                     are made for individuals with Type 2 Diabetes).
+                  </Typography>
+               </>
+            )}
             {/* GENDER */}
             <ToggleButtonGroup
                color='primary'
@@ -119,9 +150,43 @@ export const MacroCalculatorForm = ({
             <HeightInputField height={height} setHeight={setHeight} />
             <WeightInputField weight={weight} setWeight={setWeight} />
 
-            <Button fullWidth type='submit'>
-               Complete creating account
-            </Button>
+            {page !== undefined && page === 'macrocalculator' ? (
+               <Button fullWidth onClick={() => setShowNextPage(true)}>
+                  Recalculate Macronutrients
+               </Button>
+            ) : (
+               <Button fullWidth type='submit'>
+                  Complete creating account
+               </Button>
+            )}
+            {page !== undefined && page === 'macrocalculator' ? (
+               <Dialog open={showNextPage}>
+                  <DialogTitle>
+                     Are you sure you want to recalculate your macronutrient
+                     needs? This will overwrite your current settings.
+                  </DialogTitle>
+                  <form>
+                     <DialogContent>
+                        <Box
+                           display='flex'
+                           flexDirection='column'
+                           gap='10px'
+                        ></Box>
+                     </DialogContent>
+                     <DialogActions>
+                        <Button
+                           aria-label='submit form to recalculate macronutrients'
+                           type='submit'
+                        >
+                           Confirm
+                        </Button>
+                        <Button onClick={() => setShowNextPage(false)}>
+                           Cancel
+                        </Button>
+                     </DialogActions>
+                  </form>
+               </Dialog>
+            ) : null}
          </Paper>
       </>
    );
