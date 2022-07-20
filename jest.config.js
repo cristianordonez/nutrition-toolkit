@@ -3,6 +3,7 @@ module.exports = async () => {
       verbose: true,
       testEnvironment: 'jsdom',
       collectCoverage: true,
+      coverageDirectory: 'jest-coverage',
       verbose: true,
       moduleNameMapper: {
          '.(css|less|sass|scss)$': '<rootDir>/__mocks__/styleMock.js',
@@ -21,4 +22,3 @@ module.exports = async () => {
       },
    };
 };
-

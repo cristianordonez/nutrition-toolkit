@@ -11,9 +11,7 @@ module.exports = defineConfig({
    e2e: {
       baseUrl: 'http://localhost:3000/',
       setupNodeEvents(on, config) {
-         // implement node event listeners here
-         //  config.env.NODE_ENV = process.env.NODE_ENV;
-
+         require('@cypress/code-coverage/task')(on, config);
          on('task', {
             'db:teardown': async () => {
                await db.query(
@@ -21,11 +19,12 @@ module.exports = defineConfig({
                );
 
                const response = db.query(`
-               DELETE FROM users WHERE username = 'TEST_USER';
-               `);
+                  DELETE FROM users WHERE username = 'TEST_USER';
+                  `);
                return response;
             },
          });
+         return config;
       },
    },
 });

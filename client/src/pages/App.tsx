@@ -35,7 +35,14 @@ export const App = () => {
                   </AuthProvider>
                }
             />
-            <Route path='/macrocalculator' element={<MacroCalculatorPage />} />
+            <Route
+               path='/macrocalculator'
+               element={
+                  <AuthProvider>
+                     <MacroCalculatorPage />
+                  </AuthProvider>
+               }
+            />
          </Routes>
       </>
    );

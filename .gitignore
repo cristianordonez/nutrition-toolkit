@@ -4,3 +4,7 @@
 .env
 ./client/dist
 client/dist
+/jest-coverage
+/cypress-coverage
+.nyc_output
+cypress-coverage 
