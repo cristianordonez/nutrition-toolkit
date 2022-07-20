@@ -15,48 +15,20 @@ describe('The MacroCalculator Page', () => {
       cy.task('db:teardown');
    });
 
-   it('Gives user an info warning when there are no recipes saved', () => {
-      cy.contains('Meal Plan').click();
+   it('Allows user to update their metrics', () => {
+      cy.contains('Macro Calculator').click();
+      cy.contains('Female').click();
+      cy.contains('Other').click();
+      cy.findByTestId('age-input').type('{backspace}{backspace}27');
+      cy.findByTestId('height-input').type('{backspace}{backspace}67');
+      cy.findByTestId('weight-input').type(
+         '{backspace}{backspace}{backspace}150'
+      );
+      cy.contains('Recalculate Macronutrients').click();
+      cy.contains('Confirm').click();
+      cy.pause();
       cy.contains(
-         'You have no items saved on this day for your mealplan.'
-      ).should('exist');
-   });
-
-   it('Displays meals from mealplan on the page', () => {
-      cy.addItemsToMealplan();
-      cy.contains('Meal Plan').click();
-      cy.findAllByTestId('food-search-item').should('have.length.of', 3);
-   });
-   it('Shows user their nutrients in meal plan compared to total nutrients goal', () => {
-      cy.addItemsToMealplan();
-      cy.contains('Meal Plan').click();
-      cy.findByText("Today's Macronutrient Totals").should('exist');
-   });
-
-   it('Allows user to change the date via the tab', () => {
-      cy.contains('Meal Plan').click();
-      cy.findByText('Monday').click();
-      cy.findByText('Tuesday').click();
-      cy.findByText('Wednesday').click();
-      cy.contains(
-         'You have no items saved on this day for your mealplan.'
-      ).should('exist');
-   });
-
-   it('Allows user to change the date via the textfield component', () => {
-      cy.contains('Meal Plan').click();
-      cy.findByTestId('CalendarIcon').click();
-      cy.findByText('15').click();
-      cy.contains(
-         'You have no items saved on this day for your mealplan.'
-      ).should('exist');
-   });
-   it('Allows user to delete items from their mealplan, then show the updated nutrients', () => {
-      cy.contains('Meal Plan').click();
-      cy.findAllByTestId('food-search-item').should('have.length.of', 3);
-      cy.findAllByLabelText('delete from mealplan').should('exist');
-      cy.findAllByLabelText('delete from mealplan').click();
-      cy.findByText('Delete').click();
-      cy.findAllByTestId('food-search-item').should('have.length.of', 2);
+         'You have updated your macronutrient needs. Go to search page to begin searching for recipes, menu items, or grocery products within this range.'
+      ).should('be.visible');
    });
 });

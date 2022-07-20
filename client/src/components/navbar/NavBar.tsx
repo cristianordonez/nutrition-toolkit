@@ -180,7 +180,13 @@ const NavBar = () => {
                      onClose={handleMenuClick}
                   >
                      <MenuItem onClick={handleMenuClick}>
-                        <Typography textAlign='center'>User Profile</Typography>
+                        <Typography
+                           textAlign='center'
+                           component='a'
+                           href='/settings'
+                        >
+                           User Profile
+                        </Typography>
                      </MenuItem>
                      <MenuItem onClick={handleLogout} data-testid='logout-btn'>
                         <Typography textAlign='center'>Logout</Typography>
