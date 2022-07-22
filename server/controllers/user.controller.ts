@@ -10,7 +10,7 @@ type Body = {
    username: string;
    email: string;
    password: string;
-}
+};
 
 //# create initial account if not already exists
 export const createAccount = async (req: Request, res: Response) => {
@@ -21,7 +21,7 @@ export const createAccount = async (req: Request, res: Response) => {
       let checkForExistingUsername: any = await userModel.getByUsername(
          req.body.username
       );
- 
+
       if (
          checkForExistingEmail.length || // if either email or username already exists in db, cancel the request
          checkForExistingUsername.length
@@ -78,12 +78,25 @@ export const checkAuthentication = async (req: any, res: Response) => {
 //# gets metrics from user from database
 export const getMetrics = async (req: any, res: Response) => {
    try {
-      console.log('6. req.session in getmetrics user controller: ', req.session)
       let user_id = req.session.user_id;
       let userGoals: any = await dailyGoalsModel.getGoals(user_id);
       res.json(userGoals[0]);
    } catch (err) {
       console.log('err:', err);
       res.status(500).send('Unable to retrieve daily goals.');
+   }
+};
+
+export const updateMetrics = async (req: any, res: Response) => {
+   try {
+      let session: any = req.session;
+      let user_id: number = session.user_id;
+      let body = { ...req.body, user_id };
+      let initialResponse = await dailyGoalsModel.updateGoals(body);
+      console.log('initialResponse: ', initialResponse);
+      res.status(201).send(initialResponse);
+   } catch (err) {
+      console.log('err: ', err);
+      res.status(400).send('Unable to update daily goals.');
    }
 };

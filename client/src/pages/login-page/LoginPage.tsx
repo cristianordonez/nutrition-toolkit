@@ -15,7 +15,7 @@ export const LoginPage = () => {
    const [errorMessage, setErrorMessage] = useState(''); //message displayed on snackbar
 
    //handles showing snackbar if request to server to login is not successful
-   const handleErrorAlert = () => {
+   const handleAlert = () => {
       setOpenErrorAlert(!openErrorAlert);
    };
 
@@ -46,7 +46,7 @@ export const LoginPage = () => {
                setShowTextFieldError={setShowTextFieldError}
                errorMessage={errorMessage}
                setErrorMessage={setErrorMessage}
-               handleErrorAlert={handleErrorAlert}
+               handleErrorAlert={handleAlert}
             />
          )}
          {/* <Snackbar
@@ -63,8 +63,12 @@ export const LoginPage = () => {
                {errorMessage}
             </Alert>
          </Snackbar> */}
-         <CustomAlert openAlert={openErrorAlert} handleAlert={handleErrorAlert} alertSeverity={alertSeverity} alertMessage={errorMessage}/>
-
+         <CustomAlert
+            openAlert={openErrorAlert}
+            handleAlert={handleAlert}
+            alertSeverity={alertSeverity}
+            alertMessage={errorMessage}
+         />
       </div>
    );
 };

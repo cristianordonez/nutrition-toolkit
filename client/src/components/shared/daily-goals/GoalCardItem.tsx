@@ -11,7 +11,7 @@ import React from 'react';
 interface Props {
    nutrientsTotal: number;
    type: string;
-   nutrientsInMealPlan?: number;
+   nutrientsInMealPlan: number;
 }
 
 export const GoalCardItem = ({
@@ -34,21 +34,13 @@ export const GoalCardItem = ({
                   <Typography align='center' variant='body1'>
                      {type}
                   </Typography>
-                  {nutrientsInMealPlan !== undefined ? (
-                     <Typography align='center' variant='subtitle1'>
-                        {Math.floor(nutrientsInMealPlan)} / {nutrientsTotal}
-                     </Typography>
-                  ) : (
-                     <Typography align='center' variant='h6'>
-                        {nutrientsTotal}
-                     </Typography>
-                  )}
+
+                  <Typography align='center' variant='subtitle1'>
+                     {Math.floor(nutrientsInMealPlan)} / {nutrientsTotal}
+                  </Typography>
                </Stack>
 
-               <LinearProgress
-                  variant='determinate'
-                  value={percentageTotal || 100}
-               />
+               <LinearProgress variant='determinate' value={percentageTotal} />
             </CardContent>
          </Card>
       </>

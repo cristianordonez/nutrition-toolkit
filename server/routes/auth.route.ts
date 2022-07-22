@@ -33,12 +33,15 @@ router.get('/metrics', (req: Request, res: Response) => {
    userController.getMetrics(req, res);
 });
 
+router.put('/metrics', (req: Request, res: Response) => {
+   userController.updateMetrics(req, res);
+});
 
 declare module 'express-session' {
    interface SessionData {
-     user_id: number;
+      user_id: number;
    }
- }
+}
 
 //# handles logging the user in
 router.post(
@@ -49,13 +52,13 @@ router.post(
    }),
    (req: Request, res: Response) => {
       console.log('2. req.user:', req.user);
-   
+
       let user: any = req.user;
-  
+
       // req.session = req.session as any;
       req.session.user_id = user.id;
       req.session.save();
-      console.log('3. req.session: ', req.session)
+      console.log('3. req.session: ', req.session);
       res.status(200).send('Successfully logged in.');
    }
 );

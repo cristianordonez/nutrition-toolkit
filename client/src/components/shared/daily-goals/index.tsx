@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import './index.scss';
-import { Typography, CircularProgress } from '@mui/material';
+import { Typography, CircularProgress, Button } from '@mui/material';
 import { GoalCardItem } from './GoalCardItem';
+import { GoalCardItemCounter } from './GoalCardItemCounter';
+import { GoalsType } from '../../../../types/types';
 
 type nutrientType = {
    name: string;
@@ -11,26 +13,20 @@ type nutrientType = {
 };
 
 export interface Props {
-   goals: {
-      user_id: number;
-      total_carbohydrates: number;
-      min_carbs_per_meal: number;
-      max_carbs_per_meal: number;
-      total_protein: number;
-      min_protein_per_meal: number;
-      max_protein_per_meal: number;
-      total_fat: number;
-      min_fat_per_meal: number;
-      max_fat_per_meal: number;
-      total_calories: number;
-      min_calories_per_meal: number;
-      max_calories_per_meal: number;
-   };
+   goals: GoalsType;
    nutritionSummary?: nutrientType[];
    page?: string;
+   setGoals?: Dispatch<SetStateAction<GoalsType>>;
+   handleSubmitUpdatedGoals?: (event: React.FormEvent) => Promise<void>;
 }
 
-export const DailyGoals = ({ goals, nutritionSummary, page }: Props) => {
+export const DailyGoals = ({
+   goals,
+   nutritionSummary,
+   page,
+   setGoals,
+   handleSubmitUpdatedGoals,
+}: Props) => {
    let nutrients = ['Carbohydrates', 'Protein', 'Fat'];
 
    //! conditional renders return a '0' on page when falsy, need to declare null to be rendered
@@ -61,7 +57,9 @@ export const DailyGoals = ({ goals, nutritionSummary, page }: Props) => {
                   Today's Macronutrient Totals
                </Typography>
             ) : (
-               <Typography variant='h6'>Your Macronutrient Goals</Typography>
+               <Typography variant='h6'>
+                  Your Daily Macronutrient Goals
+               </Typography>
             )}
             {/* RENDER THE MEALPLAN SIDEBAR HERE */}
             {page === 'mealplan' &&
@@ -106,38 +104,48 @@ export const DailyGoals = ({ goals, nutritionSummary, page }: Props) => {
                   </div>
                </>
             ) : null}
-            {/* RENDER THE SEARCH SIDEBAR HERE */}
-            {page === 'search' ? (
+            {/* RENDER THE SEARCH SIDEBAR OR USER PROFILE PAGE HERE */}
+            {page === 'search' || page === 'user-profile' ? (
                <>
-                  <CircularProgress
-                     variant='determinate'
-                     size={200}
-                     value={100}
-                     thickness={1}
-                  />
-                  <div className='daily-goals-heading'>
-                     <Typography variant='body1'>Total Calories</Typography>
+                  <Typography variant='body1'>Total Calories</Typography>
 
-                     <>
-                        <Typography variant='body1'>
-                           <em>{goals.total_calories}</em>
-                        </Typography>
-                     </>
-                  </div>
-                  <div className='daily-goals-items'>
-                     <GoalCardItem
+                  <>
+                     <Typography variant='body1'>
+                        <em>{goals.total_calories}</em>
+                     </Typography>
+                  </>
+
+                  <form
+                     onSubmit={handleSubmitUpdatedGoals}
+                     className='daily-goals-items'
+                  >
+                     <GoalCardItemCounter
                         type={'Carbohydrates'}
                         nutrientsTotal={goals.total_carbohydrates}
+                        page={page}
+                        setGoals={setGoals}
+                        goals={goals}
                      />
-                     <GoalCardItem
+                     <GoalCardItemCounter
                         nutrientsTotal={goals.total_protein}
                         type={'Protein'}
+                        page={page}
+                        setGoals={setGoals}
+                        goals={goals}
                      />
-                     <GoalCardItem
+                     <GoalCardItemCounter
                         nutrientsTotal={goals.total_fat}
                         type={'Fat'}
+                        page={page}
+                        setGoals={setGoals}
+                        goals={goals}
                      />
-                  </div>
+                     {page === 'user-profile' ? (
+                        <Button variant='contained' fullWidth type='submit'>
+                           Update Goals
+                        </Button>
+                     ) : null}
+                  </form>
                </>
             ) : null}
          </div>
