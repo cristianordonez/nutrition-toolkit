@@ -15,7 +15,6 @@ export const App = () => {
    return (
       <>
          <CssBaseline />
-         <NavBar />
          <Routes>
             {/* PUBLIC PAGE */}
             <Route path='/' element={<Home />} />

@@ -15,10 +15,12 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import format from 'date-fns/format';
+import NavBar from '../../components/navbar/NavBar';
 import getDay from 'date-fns/getDay';
 import addDays from 'date-fns/addDays';
 import subDays from 'date-fns/subDays';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { useAuth } from '../../context/authContext';
 
 const days = [
    'Sunday',
@@ -31,6 +33,7 @@ const days = [
 ];
 
 export const MealPlanPage = () => {
+   const isLoading = useAuth();
    const [dayIndex, setDayIndex] = useState<number>(getDay(Date.now())); //used for tab highlighting
    const [mealplanItems, setMealplanItems] = useState<[]>([]);
    const [mealplanItemsFound, setMealplanItemsFound] = useState(true); //use this to display different page if no items are found
@@ -133,66 +136,69 @@ export const MealPlanPage = () => {
       }
    };
 
-   return (
-      <div className='mealplan-page'>
-         <Toolbar>
-            <IconButton
-               color='inherit'
-               aria-label='open drawer'
-               edge='start'
-               onClick={handleDrawerToggle}
-               sx={{ mr: 2, display: { sm: 'none' } }}
-            >
-               <ArrowForwardIosIcon />
-            </IconButton>
-         </Toolbar>
+   return isLoading ? null : (
+      <>
+         <NavBar isLoggedIn={true} />
+         <div className='mealplan-page'>
+            <Toolbar>
+               <IconButton
+                  color='inherit'
+                  aria-label='open drawer'
+                  edge='start'
+                  onClick={handleDrawerToggle}
+                  sx={{ mr: 2, display: { sm: 'none' } }}
+               >
+                  <ArrowForwardIosIcon />
+               </IconButton>
+            </Toolbar>
 
-         <SidebarMealplan
-            mobileOpen={mobileOpen}
-            page={'mealplan'}
-            handleDrawerToggle={handleDrawerToggle}
-            nutritionSummary={nutritionSummary}
-            mealplanItems={mealplanItems}
-            mealplanItemsFound={mealplanItemsFound}
-         />
-         <Typography variant='subtitle2'>
-            Note: no snacks are included by default to help keep carbohydrate
-            levels stable. For low carb snack ideas, check out ...
-         </Typography>
-         <Stack direction={'row'}>
-            <Typography variant='h1'>Meal Planner</Typography>
-            <DateSelectForm
-               setBreakfastItems={setBreakfastItems}
-               setLunchItems={setLunchItems}
-               setDinnerItems={setDinnerItems}
-               currentDay={currentDay}
-               setCurrentDay={setCurrentDay}
-               setDayIndex={setDayIndex}
-               value={value}
-               setValue={setValue}
+            <SidebarMealplan
+               mobileOpen={mobileOpen}
+               page={'mealplan'}
+               handleDrawerToggle={handleDrawerToggle}
+               nutritionSummary={nutritionSummary}
+               mealplanItems={mealplanItems}
+               mealplanItemsFound={mealplanItemsFound}
             />
-         </Stack>
-         <Tabs value={dayIndex} onChange={handleTabChange}>
-            {days.map((day) => (
-               <Tab key={day} label={day} />
-            ))}
-         </Tabs>
+            <Typography variant='subtitle2'>
+               Note: no snacks are included by default to help keep carbohydrate
+               levels stable. For low carb snack ideas, check out ...
+            </Typography>
+            <Stack direction={'row'}>
+               <Typography variant='h1'>Meal Planner</Typography>
+               <DateSelectForm
+                  setBreakfastItems={setBreakfastItems}
+                  setLunchItems={setLunchItems}
+                  setDinnerItems={setDinnerItems}
+                  currentDay={currentDay}
+                  setCurrentDay={setCurrentDay}
+                  setDayIndex={setDayIndex}
+                  value={value}
+                  setValue={setValue}
+               />
+            </Stack>
+            <Tabs value={dayIndex} onChange={handleTabChange}>
+               {days.map((day) => (
+                  <Tab key={day} label={day} />
+               ))}
+            </Tabs>
 
-         <MealplanDay
-            setMealPlanItems={setMealplanItems}
-            currentDay={currentDay}
-            mealplanItems={mealplanItems}
-            setOpenSnackbar={setOpenSnackbar}
-            setAlertSeverity={setAlertSeverity}
-            setAlertMessage={setAlertMessage}
-         />
+            <MealplanDay
+               setMealPlanItems={setMealplanItems}
+               currentDay={currentDay}
+               mealplanItems={mealplanItems}
+               setOpenSnackbar={setOpenSnackbar}
+               setAlertSeverity={setAlertSeverity}
+               setAlertMessage={setAlertMessage}
+            />
 
-         <CustomAlert
-            openAlert={openSnackbar}
-            handleAlert={handleClose}
-            alertSeverity={alertSeverity}
-            alertMessage={alertMessage}
-         />
-      </div>
+            <CustomAlert
+               openAlert={openSnackbar}
+               handleAlert={handleClose}
+               alertSeverity={alertSeverity}
+               alertMessage={alertMessage}
+            />
+         </div>
+      </>
    );
 };

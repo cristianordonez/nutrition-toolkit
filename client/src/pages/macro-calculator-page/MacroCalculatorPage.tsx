@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { CustomAlert } from '../../components/shared/CustomAlert';
 import { AlertColor } from '@mui/material';
 import { MacroCalculatorForm } from '../../components/shared/macro-calculator-form';
+import NavBar from '../../components/navbar/NavBar';
+import { useAuth } from '../../context/authContext';
 
 export const MacroCalculatorPage = () => {
+   const isLoading = useAuth();
    const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
    //todo change these state items so that they do something when form is submitted
    const [showNextPage, setShowNextPage] = useState(false);
@@ -18,9 +21,10 @@ export const MacroCalculatorPage = () => {
    const handleAlert = (event: React.SyntheticEvent | Event) => {
       setOpenSnackbar(false);
    };
-   //todo move macrocalc form to shared component form
-   return (
+
+   return isLoading ? null : (
       <>
+         <NavBar isLoggedIn={true} />
          <MacroCalculatorForm
             setOpenErrorAlert={setOpenSnackbar}
             setErrorMessage={setAlertMessage}

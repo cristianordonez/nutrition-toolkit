@@ -15,6 +15,7 @@ import {
 import { SideBarSearchPage } from '../../components/sidebar-searchpage/SideBarSearchPage';
 import { useAuth } from '../../context/authContext';
 import axios from 'axios';
+import NavBar from '../../components/navbar/NavBar';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 export type Goals = {
@@ -174,60 +175,61 @@ export const SearchPage = () => {
 
    return (
       <>
-         {isLoading ? (
-            <div>Loading...</div>
-         ) : (
-            <Grid className='search-page' container spacing={1}>
-               {/* PROGRESS BAR */}
-               {loading && <CircularProgress size={68} />}
-               <Toolbar>
-                  <IconButton
-                     color='inherit'
-                     aria-label='open drawer'
-                     edge='start'
-                     onClick={handleDrawerToggle}
-                     sx={{ mr: 2, display: { sm: 'none' } }}
-                  >
-                     <ArrowForwardIosIcon />
-                  </IconButton>
-               </Toolbar>
-               <SideBarSearchPage
-                  goals={goals}
-                  mobileOpen={mobileOpen}
-                  handleDrawerToggle={handleDrawerToggle}
-                  // pass down component here
-                  SearchFormComponent={SearchFormComponent}
-                  apiData={apiData}
-               />
-               {/* MAIN SECTION  */}
-               {apiData.length ? (
-                  <>
-                     <Grid item xs={12} sm={8}>
-                        <FoodSearchList
-                           apiData={apiData}
-                           route={route}
-                           handleLoadMore={handleLoadMore}
-                           setAlertMessage={setAlertMessage}
-                           setOpenSnackbar={setOpenSnackbar}
-                           setAlertSeverity={setAlertSeverity}
-                        />
-                     </Grid>
-                  </>
-               ) : (
-                  <>
-                     <Grid item xs={12} sm={8}>
-                        {SearchFormComponent}
-                     </Grid>
-                  </>
-               )}
-               {/* ERROR SNACKBAR */}
-               <CustomAlert
-                  openAlert={openSnackbar}
-                  handleAlert={handleClose}
-                  alertSeverity={alertSeverity}
-                  alertMessage={alertMessage}
-               />
-            </Grid>
+         {isLoading ? null : (
+            <>
+               <NavBar isLoggedIn={true} />
+               <Grid className='search-page' container spacing={1}>
+                  {/* PROGRESS BAR */}
+                  {loading && <CircularProgress size={68} />}
+                  <Toolbar>
+                     <IconButton
+                        color='inherit'
+                        aria-label='open drawer'
+                        edge='start'
+                        onClick={handleDrawerToggle}
+                        sx={{ mr: 2, display: { sm: 'none' } }}
+                     >
+                        <ArrowForwardIosIcon />
+                     </IconButton>
+                  </Toolbar>
+                  <SideBarSearchPage
+                     goals={goals}
+                     mobileOpen={mobileOpen}
+                     handleDrawerToggle={handleDrawerToggle}
+                     // pass down component here
+                     SearchFormComponent={SearchFormComponent}
+                     apiData={apiData}
+                  />
+                  {/* MAIN SECTION  */}
+                  {apiData.length ? (
+                     <>
+                        <Grid item xs={12} sm={8}>
+                           <FoodSearchList
+                              apiData={apiData}
+                              route={route}
+                              handleLoadMore={handleLoadMore}
+                              setAlertMessage={setAlertMessage}
+                              setOpenSnackbar={setOpenSnackbar}
+                              setAlertSeverity={setAlertSeverity}
+                           />
+                        </Grid>
+                     </>
+                  ) : (
+                     <>
+                        <Grid item xs={12} sm={8}>
+                           {SearchFormComponent}
+                        </Grid>
+                     </>
+                  )}
+                  {/* ERROR SNACKBAR */}
+                  <CustomAlert
+                     openAlert={openSnackbar}
+                     handleAlert={handleClose}
+                     alertSeverity={alertSeverity}
+                     alertMessage={alertMessage}
+                  />
+               </Grid>
+            </>
          )}
       </>
    );

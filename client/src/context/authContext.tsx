@@ -1,19 +1,11 @@
-import React, {
-   createContext,
-   Dispatch,
-   SetStateAction,
-   useState,
-   useContext,
-   useEffect,
-} from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
+
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Snackbar, Alert } from '@mui/material';
-import { useParams } from 'react-router-dom';
 
 interface Props {
    children: React.ReactNode;
-};
+}
 
 type Context = {
    isLoading: boolean;
@@ -24,29 +16,33 @@ const AuthContext = createContext<Context | null | boolean>({
 });
 
 //# sends request to server to see if user is still logged in or not, redirects if they are not
-//if they are, send another request to get data for current user
 export const AuthProvider = ({ children }: Props) => {
    const navigate = useNavigate();
-
+   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
    const [isLoading, setIsLoading] = useState<Context | boolean>(true);
 
    useEffect(() => {
       let promise = axios.get('/api/authentication');
       promise.then((response) => {
-         console.log('response in authcontext :', response)
          setIsLoading(false);
+         setIsLoggedIn(true);
       });
       promise.catch((err) => {
          setIsLoading(false);
+         setIsLoggedIn(false);
          navigate('/', {
-            state: { showError: true },
+            state: { showError: false },
             replace: true,
          });
       });
    }, []);
 
    return (
-      <AuthContext.Provider value={isLoading}>{children}</AuthContext.Provider>
+      <>
+         <AuthContext.Provider value={isLoading}>
+            {children}
+         </AuthContext.Provider>
+      </>
    );
 };
 

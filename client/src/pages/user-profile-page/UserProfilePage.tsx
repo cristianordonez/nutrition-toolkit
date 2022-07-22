@@ -4,8 +4,11 @@ import { CustomAlert } from '../../components/shared/CustomAlert';
 import { AlertColor } from '@mui/material';
 import axios from 'axios';
 import { GoalsType } from '../../../types/types';
+import NavBar from '../../components/navbar/NavBar';
+import { useAuth } from '../../context/authContext';
 
 export const UserSettingsPage = () => {
+   const isLoading = useAuth();
    const [openAlert, setOpenAlert] = useState<boolean>(false);
    const [alertSeverity, setAlertSeverity] = useState<AlertColor>('error');
    const [alertMessage, setAlertMessage] = useState<string>('');
@@ -63,8 +66,9 @@ export const UserSettingsPage = () => {
       }
    };
 
-   return (
+   return isLoading ? null : (
       <>
+         <NavBar isLoggedIn={true} />
          <DailyGoals
             goals={goals}
             page={'user-profile'}

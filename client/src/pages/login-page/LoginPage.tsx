@@ -4,6 +4,7 @@ import { LoginForm } from '../../components/login-form/LoginForm';
 import { SignupForm } from '../../components/sign-up/SignupForm';
 import { CustomAlert } from '../../components/shared/CustomAlert';
 import { Snackbar, Alert, AlertColor } from '@mui/material';
+import NavBar from '../../components/navbar/NavBar';
 
 export const LoginPage = () => {
    const [showSignup, setShowSignup] = useState(false);
@@ -25,50 +26,39 @@ export const LoginPage = () => {
    };
 
    return (
-      <div>
-         {showSignup ? (
-            <SignupForm
-               showSignup={showSignup}
-               setShowSignup={setShowSignup}
-               setAlertSeverity={setAlertSeverity}
-               handleRedirectToSignup={handleRedirectToSignup}
-               showTextFieldError={showTextFieldError}
-               setShowTextFieldError={setShowTextFieldError}
-               errorMessage={errorMessage}
-               setErrorMessage={setErrorMessage}
-               setOpenErrorAlert={setOpenErrorAlert}
+      <>
+         <NavBar isLoggedIn={false} />
+         <div>
+            {showSignup ? (
+               <SignupForm
+                  showSignup={showSignup}
+                  setShowSignup={setShowSignup}
+                  setAlertSeverity={setAlertSeverity}
+                  handleRedirectToSignup={handleRedirectToSignup}
+                  showTextFieldError={showTextFieldError}
+                  setShowTextFieldError={setShowTextFieldError}
+                  errorMessage={errorMessage}
+                  setErrorMessage={setErrorMessage}
+                  setOpenErrorAlert={setOpenErrorAlert}
+               />
+            ) : (
+               <LoginForm
+                  showSignup={showSignup}
+                  handleRedirectToSignup={handleRedirectToSignup}
+                  showTextFieldError={showTextFieldError}
+                  setShowTextFieldError={setShowTextFieldError}
+                  errorMessage={errorMessage}
+                  setErrorMessage={setErrorMessage}
+                  handleErrorAlert={handleAlert}
+               />
+            )}
+            <CustomAlert
+               openAlert={openErrorAlert}
+               handleAlert={handleAlert}
+               alertSeverity={alertSeverity}
+               alertMessage={errorMessage}
             />
-         ) : (
-            <LoginForm
-               showSignup={showSignup}
-               handleRedirectToSignup={handleRedirectToSignup}
-               showTextFieldError={showTextFieldError}
-               setShowTextFieldError={setShowTextFieldError}
-               errorMessage={errorMessage}
-               setErrorMessage={setErrorMessage}
-               handleErrorAlert={handleAlert}
-            />
-         )}
-         {/* <Snackbar
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            open={openErrorAlert}
-            autoHideDuration={8000}
-            onClose={handleErrorAlert}
-         >
-            <Alert
-               onClose={handleErrorAlert}
-               severity={alertSeverity}
-               sx={{ width: '100%' }}
-            >
-               {errorMessage}
-            </Alert>
-         </Snackbar> */}
-         <CustomAlert
-            openAlert={openErrorAlert}
-            handleAlert={handleAlert}
-            alertSeverity={alertSeverity}
-            alertMessage={errorMessage}
-         />
-      </div>
+         </div>
+      </>
    );
 };

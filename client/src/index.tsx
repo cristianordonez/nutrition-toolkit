@@ -9,7 +9,7 @@ import { ThemeProvider } from '@emotion/react';
 let theme = createTheme({
    palette: {
       mode: 'dark',
-   }
+   },
 });
 theme = responsiveFontSizes(theme);
 
