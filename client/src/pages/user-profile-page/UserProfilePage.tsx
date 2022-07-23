@@ -35,8 +35,6 @@ export const UserSettingsPage = () => {
    const handleSubmitUpdatedGoals = async (event: React.FormEvent) => {
       event.preventDefault();
       try {
-         //todo calculate calories before submitting
-         console.log('goals: ', goals);
          let totalCalories = Math.floor(
             goals.total_carbohydrates * 4 +
                goals.total_protein * 4 +

@@ -7,11 +7,9 @@ import axios from 'axios';
 
 interface Props {
    position: number;
-   slot: number;
    type: string;
    id: number;
    shoppingListId: number;
-   imageType: string;
    servings: number;
    title: string;
    setOpenSnackbar: Dispatch<SetStateAction<boolean>>;
@@ -22,14 +20,12 @@ interface Props {
 }
 
 export const MealplanItem = ({
-   position,
-   slot,
+   position, //position in the slot
    type,
    id,
    shoppingListId,
    setMealPlanItems,
    currentDay,
-   imageType,
    servings,
    title,
    setOpenSnackbar,
@@ -43,6 +39,7 @@ export const MealplanItem = ({
       setOpenDialog(!openDialog);
    };
 
+   console.log('title: ', title);
    useEffect(() => {
       let url: string = `/api/recipes/${id}`; //set initial value for url to avoid typescript error
       if (type === 'RECIPE') {
@@ -68,9 +65,10 @@ export const MealplanItem = ({
       return (
          <>
             <FoodItemContents
+               servings={servings}
                route={type}
                image={itemData?.image}
-               title={itemData?.title}
+               title={title}
                restaurantChain={itemData?.restaurantChain || undefined}
                nutrition={itemData?.nutrition}
                url={itemData?.sourceUrl || undefined}

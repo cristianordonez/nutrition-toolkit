@@ -41,22 +41,29 @@ export const ConfirmDeleteDialog = ({
    const handleDelete = async (event: SyntheticEvent) => {
       event.preventDefault();
       console.log('id:', shoppingListId);
-      setOpenSnackbar(true);
+      // setOpenSnackbar(true);
       try {
          let response = await axios.delete(
             `/api/mealplan/delete/${shoppingListId}`
          );
+         setOpenDialog(false);
          setAlertSeverity('success');
          setAlertMessage('Mealplan item has been deleted.');
          setOpenSnackbar(true);
-         setOpenDialog(false);
-         let updatedItems = await axios.get('/api/mealplan/day', {
-            params: { date: currentDay },
-            withCredentials: true,
-         });
-         console.log('response in meal plan:', response);
-         setMealPlanItems(updatedItems.data.items);
+         try {
+            //inner try to catch error when there are no meal plan items for current day
+            let updatedItems = await axios.get('/api/mealplan/day', {
+               params: { date: currentDay },
+               withCredentials: true,
+            });
+            console.log('response in meal plan:', response);
+            setMealPlanItems(updatedItems.data.items);
+         } catch (err) {
+            console.log('err in inner try: ', err);
+            setMealPlanItems([]);
+         }
       } catch (err) {
+         console.log('here in second catch block confirm delete ');
          setAlertSeverity('error');
          setAlertMessage('Unable to delete mealplan item.');
          setOpenSnackbar(true);

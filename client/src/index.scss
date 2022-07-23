@@ -1,12 +1,14 @@
-$primary-color: #076324;
-$secondary-color: #ee3a43;
+$primary-color: #212121;
+$secondary-color: #323232;
+$third-color: #0d7377;
+$fourth-color: #14ffec;
 
 body,
 html {
    margin: 0;
    overscroll-behavior: contain;
    #root {
-      padding-top: 150px;
+      padding-top: 64px;
    }
 }
 
@@ -30,7 +32,6 @@ html {
    width: $width;
    box-sizing: $box-sizing;
 }
-
 @mixin set-spacing($padding: 0, $margin: 0) {
    padding: $padding;
    margin: $margin;

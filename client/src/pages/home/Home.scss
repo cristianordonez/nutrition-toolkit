@@ -1,0 +1,7 @@
+@use '../../index.scss' as *;
+
+.home-title-image {
+   img {
+      @include set-size(50vh, auto);
+   }
+}

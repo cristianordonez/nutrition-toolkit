@@ -6,6 +6,8 @@ import { Typography } from '@mui/material';
 import { PasswordTextField } from '../text-fields/password-textfield/PasswordTextField';
 import { UsernameTextField } from '../text-fields/username-textfield/UsernameTextField';
 import { useNavigate } from 'react-router-dom';
+import LoginSvg from '../../../img/secure_login.svg';
+
 import axios from 'axios';
 
 export const LoginForm = ({
@@ -34,8 +36,10 @@ export const LoginForm = ({
    const handleLogin = async (event: React.SyntheticEvent) => {
       event.preventDefault();
       try {
-         let response = await axios.post(`/api/login`, loginValues, {withCredentials: true}); //! when using http://localhost:8080/api/login route sessions were not saved
-         console.log('1. response: ', response)
+         let response = await axios.post(`/api/login`, loginValues, {
+            withCredentials: true,
+         }); //! when using http://localhost:8080/api/login route sessions were not saved
+         console.log('1. response: ', response);
          if (response.status === 200) {
             setShowTextFieldError(false);
             navigate(`/search`, { replace: true });
@@ -52,7 +56,7 @@ export const LoginForm = ({
       <>
          <Grid container>
             <Grid item xs={0} md={6}>
-               <img src={LoginImage} />
+               <img src={LoginSvg} />
             </Grid>
             <Grid item xs={12} md={6}>
                <Paper

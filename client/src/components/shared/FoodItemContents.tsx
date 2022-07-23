@@ -8,6 +8,7 @@ import {
    CardActions,
    Button,
    IconButton,
+   Stack,
 } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
@@ -32,6 +33,7 @@ interface Props {
    url?: string | undefined;
    handleOpeningDialog: MouseEventHandler<HTMLButtonElement>;
    isMealPlanItem?: boolean;
+   servings?: number;
 }
 
 type NutrientType = {
@@ -51,17 +53,18 @@ export const FoodItemContents = ({
    url,
    handleOpeningDialog,
    isMealPlanItem,
+   servings,
 }: Props) => {
    let calories, carbs, fat, protein;
-
-   if (route === 'recipes' || 'RECIPE') {
+   console.log('route in food item contents: ', route);
+   if (route === 'recipes' || route === 'RECIPE') {
       nutrition.nutrients.forEach((nutrient: NutrientType) => {
          if (nutrient.name === 'Calories') {
             calories = Math.floor(nutrition.nutrients[0].amount);
          } else if (nutrient.name === 'Protein') {
             protein = Math.floor(nutrition.nutrients[1].amount) + 'g';
          } else if (nutrient.name === 'Fat') {
-            fat = Math.floor(nutrition.nutrients[1].amount) + 'g';
+            fat = Math.floor(nutrition.nutrients[1].amount);
          } else if (nutrient.name === 'Carbohydrates') {
             carbs = Math.floor(nutrition.nutrients[3].amount) + 'g';
          }
@@ -73,16 +76,22 @@ export const FoodItemContents = ({
       carbs = nutrition.carbs;
    }
 
+   console.log('fat: ', fat);
+   console.log('nutrition: ', nutrition.fat);
    return (
       <Paper elevation={1} className='food-search-paper'>
          {/* opens the dialog to confirm delete */}
          {isMealPlanItem && (
-            <IconButton
-               aria-label='delete from mealplan'
-               onClick={handleOpeningDialog}
-            >
-               <ClearIcon />
-            </IconButton>
+            <Stack direction='row'>
+               <IconButton
+                  sx={{ flexGrow: 1 }}
+                  aria-label='delete from mealplan'
+                  onClick={handleOpeningDialog}
+               >
+                  <ClearIcon />
+               </IconButton>
+               <Typography variant='body1'>Servings: {servings}</Typography>
+            </Stack>
          )}
          <Card className='search-item' data-testid='food-search-item'>
             <CardMedia

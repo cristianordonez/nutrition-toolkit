@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Home from './home-page/Home';
+import { Home } from './home/Home';
 import { LoginPage } from './login-page/LoginPage';
 import { MacroCalculatorPage } from './macro-calculator-page/MacroCalculatorPage';
 import { MealPlanPage } from './meal-plan-page/MealPlanPage';

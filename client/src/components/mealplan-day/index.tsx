@@ -56,11 +56,9 @@ export const MealplanDay = ({
                <React.Fragment key={item.id}>
                   <MealplanItem
                      position={item.position}
-                     slot={item.slot}
                      type={item.type}
                      id={item.value.id}
                      shoppingListId={item.id}
-                     imageType={item.value.imageType}
                      servings={item.value.servings}
                      title={item.value.title}
                      setOpenSnackbar={setOpenSnackbar}
@@ -76,11 +74,9 @@ export const MealplanDay = ({
                <React.Fragment key={item.id}>
                   <MealplanItem
                      position={item.position}
-                     slot={item.slot}
                      type={item.type}
                      id={item.value.id}
                      shoppingListId={item.id}
-                     imageType={item.value.imageType}
                      servings={item.value.servings}
                      title={item.value.title}
                      setOpenSnackbar={setOpenSnackbar}
@@ -96,11 +92,9 @@ export const MealplanDay = ({
                <React.Fragment key={item.id}>
                   <MealplanItem
                      position={item.position}
-                     slot={item.slot}
                      type={item.type}
                      id={item.value.id}
                      shoppingListId={item.id}
-                     imageType={item.value.imageType}
                      servings={item.value.servings}
                      title={item.value.title}
                      setOpenSnackbar={setOpenSnackbar}

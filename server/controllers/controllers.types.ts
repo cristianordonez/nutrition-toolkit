@@ -12,4 +12,4 @@ export type Query = {
    maxFat: number;
    number: number; //number of items to return
    offset: number; //number of results to skip, useful for lazy loading
-}
+};

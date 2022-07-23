@@ -14,7 +14,6 @@ export const addMealPlanItem = async function (req: Request, res: Response) {
    const user = req.user as User;
    let hash = await getHashByUsername(user.spoonacular_username);
    try {
-      console.log('req.user in add mealplan item: ', req.user);
       const response = await apiHelpers.addToSpoonacularMealplan(
          req.body,
          user.spoonacular_username,
@@ -41,20 +40,20 @@ type Hash = [{ spoonacular_hash: string }];
 export const getMealPlanDay = async function (req: Request, res: Response) {
    const mealplanDay = req.query as selectedDay;
    const user = req.user as User;
-   console.log('req.user in get meal plan day: ', req.user);
-   console.log('mealplanDay in getmealplanday: ', mealplanDay);
    try {
       let hash = await getHashByUsername(user.spoonacular_username); //returns Hash type
-      console.log('hash in getmealplanday: ', hash);
       let mealplanDayItems = await apiHelpers.getFromSpoonacularMealplanDay(
          user.spoonacular_username,
          mealplanDay.date,
          hash[0].spoonacular_hash
       );
       res.status(200).send(mealplanDayItems.data);
-   } catch (err) {
-      console.log('err:', err);
-      res.status(400).send('Bad Request.');
+   } catch (err: any) {
+      if (err.response.data.message === 'No meals planned for that day') {
+         res.status(400).send(err.response.data.message);
+      } else {
+         res.status(400).send('Bad Request.');
+      }
    }
 };
 

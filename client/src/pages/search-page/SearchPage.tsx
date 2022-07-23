@@ -37,6 +37,8 @@ export type Goals = {
 export const SearchPage = () => {
    const isLoading = useAuth(); //used to check if data is still being retrieved from database
    const [apiData, setAPIData] = useState([]);
+   //todo add boolean for showing load more button
+   const [showLoadMoreBtn, setShowLoadMoreBtn] = useState<boolean>(false);
    const [loading, setLoading] = useState<boolean>(false);
    const [route, setRoute] = useState<string>('recipes');
    const [currentTab, setCurrentTab] = useState<string>('custom-search');
@@ -59,7 +61,7 @@ export const SearchPage = () => {
       maxProtein: '',
       minFat: '',
       maxFat: '',
-      number: 6, //number of items to return
+      number: 6,
       offset: 0, //number of results to skip, useful for lazy loading
    });
    const [goals, setGoals] = useState({} as Goals);
@@ -79,6 +81,7 @@ export const SearchPage = () => {
       setCurrentTab(currentValue);
    };
 
+   //todo check if there are more items present, if not then toggle load more buton off
    //# handles submission to search for food items
    const handleSubmit = async (event: React.SyntheticEvent) => {
       let newValues = { ...values, offset: 0 }; //declare new values so that there are no async bugs, and reset offset to 0 in case user changed it
@@ -90,7 +93,28 @@ export const SearchPage = () => {
             params: newValues,
             withCredentials: true,
          });
-         foodItems.data.length ? setOpenSnackbar(false) : setOpenSnackbar(true);
+         if (foodItems.data.length === 0) {
+            setAlertMessage(
+               'No options matched your search. Try again with a broader search'
+            );
+            setAlertSeverity('warning');
+            setOpenSnackbar(true);
+            setShowLoadMoreBtn(false);
+         } else {
+            setAlertSeverity('success');
+            setAlertMessage('Success! Here are your matching items.');
+            setOpenSnackbar(true);
+            if (foodItems.data.length < 6) {
+               setShowLoadMoreBtn(false);
+            } else {
+               setShowLoadMoreBtn(true);
+            }
+         }
+         // setAlertMessage(
+         //    'No options matched your search. Try again with a broader search'
+         // );
+         // setAlertSeverity('warning');
+         // foodItems.data.length ? setOpenSnackbar(false) : setOpenSnackbar(true);
          setAPIData(foodItems.data);
          setLoading(false); //used to trigger the loading circle
       } catch (err) {
@@ -99,9 +123,10 @@ export const SearchPage = () => {
       }
    };
 
-   //# handles submission when it comes from suggested goals form
-   //# must be different because values are coming from goals state object
+   //todo check if there are more items present, if not then toggle load more buton off
+   //# handles submission when it comes from suggested goals form, must be different because values are coming from goals state object
    const handleSuggestedSubmit = async (event: React.SyntheticEvent) => {
+      console.log('values in searchpage.tsx: ', values);
       let newValues = { ...values, offset: 0 }; //declare new values so that there are no async bugs, and reset offset to 0 in case user changed it
       setValues(newValues);
       try {
@@ -119,7 +144,25 @@ export const SearchPage = () => {
          let foodItems = await axios.get(`/api/${route}`, {
             params: suggestedValues,
          });
-         foodItems.data.length ? setOpenSnackbar(false) : setOpenSnackbar(true);
+         //if there are no items returned
+         if (foodItems.data.length === 0) {
+            setAlertMessage(
+               'No options matched your search. Try again with a broader search'
+            );
+            setAlertSeverity('warning');
+            setOpenSnackbar(true);
+            setShowLoadMoreBtn(false);
+         } else {
+            setAlertSeverity('success');
+            setAlertMessage('Success! Here are your matching items.');
+            setOpenSnackbar(true);
+            if (foodItems.data.length < 6) {
+               setShowLoadMoreBtn(false);
+            } else {
+               setShowLoadMoreBtn(true);
+            }
+         }
+         setValues(suggestedValues);
          setAPIData(foodItems.data);
          setLoading(false);
       } catch (err) {
@@ -128,15 +171,23 @@ export const SearchPage = () => {
       }
    };
 
+   //todo check if there are more items present, if not then toggle load more buton off
    //# handles showing more items from api
    const handleLoadMore = async (event: React.SyntheticEvent) => {
       try {
-         setLoading(true); //update new offset so that we only receive the correct items from API
-         let newValues = { ...values, offset: values.offset + 6 };
+         setLoading(true);
+         let newValues = { ...values, offset: values.offset + 6 }; //update new offset so that we only receive the correct items from API
          setValues(newValues);
          let newItems: any = await axios.get(`/api/${route}`, {
             params: newValues,
          });
+         console.log('newItems.data in handle load more: ', newItems.data);
+         console.log('newItems: ', newItems);
+         if (newItems.data.length < 6) {
+            setShowLoadMoreBtn(false);
+         } else {
+            setShowLoadMoreBtn(true);
+         }
          setAPIData(apiData.concat(newItems.data));
          setLoading(false);
       } catch (err) {
@@ -196,7 +247,6 @@ export const SearchPage = () => {
                      goals={goals}
                      mobileOpen={mobileOpen}
                      handleDrawerToggle={handleDrawerToggle}
-                     // pass down component here
                      SearchFormComponent={SearchFormComponent}
                      apiData={apiData}
                   />
@@ -211,6 +261,7 @@ export const SearchPage = () => {
                               setAlertMessage={setAlertMessage}
                               setOpenSnackbar={setOpenSnackbar}
                               setAlertSeverity={setAlertSeverity}
+                              showLoadMoreBtn={showLoadMoreBtn}
                            />
                         </Grid>
                      </>

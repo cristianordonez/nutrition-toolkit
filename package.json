@@ -4,7 +4,7 @@
    "description": "Meal planning app",
    "main": "server.js",
    "scripts": {
-      "test": "concurrently -n 'jest,Cypress' -c 'bgGreen.bold, bgBlue.bold' \"npm:jest\" \"npm:cypress-CLI\" ",
+      "test": "concurrently -n 'jest,Cypress' -c 'bgGreen.bold,bgBlue.bold' \"npm:jest\" \"npm:cypress-CLI\" ",
       "cypress-CLI": "npx cypress run --record --key 8fe96491-f3d2-4a36-93eb-6cd5688f93e0 ",
       "jest": "jest",
       "cypress": "cypress open",

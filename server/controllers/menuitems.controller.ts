@@ -5,8 +5,10 @@ import { Query } from './controllers.types';
 
 export const getMenuItems = async function (req: Request, res: Response) {
    const query = req.query as unknown as Query;
+   console.log('query in get menu items controller: ', query);
    try {
       let menuItems = await apiHelpers.getSpoonacularMenuItems(query);
+      console.log('menuItems in controller: ', menuItems);
       res.send(menuItems);
    } catch (err) {
       console.log('err:', err);
@@ -14,18 +16,17 @@ export const getMenuItems = async function (req: Request, res: Response) {
    }
 };
 
-
 type Params = {
    id: number;
-}
+};
 
 export const getMenuItemById = async function (req: Request, res: Response) {
    let params = req.params as unknown as Params;
    try {
-      let menuItemInfo = await apiHelpers.getSpoonacularMenuItemById(params.id)
+      let menuItemInfo = await apiHelpers.getSpoonacularMenuItemById(params.id);
       res.status(200).send(menuItemInfo);
-   } catch(err) {
-      console.log('err in get menu item by id', err)
+   } catch (err) {
+      console.log('err in get menu item by id', err);
       res.status(400).send('Could not get menu item information');
    }
-}
+};
