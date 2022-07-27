@@ -17,22 +17,22 @@ interface Props {
 
 export const HomePageCard = ({ body, title, image }: Props) => {
    return (
-      <Grid item xs={12} md={4}>
-         <Paper>
-            <Card>
-               <CardMedia
-                  component='img'
-                  className='home-page-card'
-                  // height='140'
-                  image={image}
-                  alt='How to use app'
-               />
-               <CardContent>
-                  <Typography variant='h6'>{title}</Typography>
-                  <Typography variant='body2'>{body}</Typography>
-               </CardContent>
-            </Card>
-         </Paper>
+      <Grid item xs={12} sm={4}>
+         <Card elevation={2} className='home-page-card'>
+            <CardMedia
+               component='img'
+               className='home-page-card-image'
+               image={image}
+               alt='How to use app'
+               height='140'
+            />
+            <CardContent>
+               <Typography textAlign='center' variant='h6'>
+                  {title}
+               </Typography>
+               <Typography variant='body2'>{body}</Typography>
+            </CardContent>
+         </Card>
       </Grid>
    );
 };

@@ -7,6 +7,7 @@ import {
    Grid,
    Typography,
    Stack,
+   Box,
 } from '@mui/material';
 import { HomePageCard } from '../../components/home-page-card/HomePageCard';
 import NavBar from '../../components/navbar/NavBar';
@@ -19,41 +20,54 @@ import MaleChefSvg from '../../../img/male-chef.svg';
 import FormSvg from '../../../img/form.svg';
 import ScheduleSvg from '../../../img/schedule.svg';
 import CalculateSvg from '../../../img/calculate.svg';
+import { useNavigate } from 'react-router-dom';
 
 export const Home = (props: any) => {
    const cardMessages = [
-      'Use our macronutrient Calculator to find your estimated daily carbohydrate needs',
-      'Search for recipes, grocery products or menu items from over 800 American restaurant chains that match your nutrient needs',
-      'Create your own custom mealplan from your favorite items',
+      'Use our Macronutrient Calculator to find your estimated daily carbohydrate needs',
+      'Search for recipes, grocery products or menu items that match your nutrient needs',
+      'Save your favorite items to your meal plan and view how many carbs you have left',
    ];
    const cardTitles = [
       'Calculate Macronutrient Needs',
       'Search For Matching Food Items',
       'Create Your Own Mealplan',
    ];
-
+   const navigate = useNavigate();
    const cardImages = [CalculateSvg, MaleChefSvg, ScheduleSvg];
 
    return (
       <>
          <NavBar isLoggedIn={false} />
          <Stack
-            direction='row'
+            direction={{ xs: 'column', sm: 'row' }}
             className='home-title-image'
             alignItems='center'
-            justifyContent='center'
+            gap={4}
+            // justifyContent='center'
          >
-            <div>
-               <Typography variant='h1'>Diabetes Meal Plan</Typography>
-               <Button variant='contained'>
-                  <Link to='/login' data-testid='home-page'>
+            <Stack direction='column'>
+               <Typography
+                  textAlign={{ xs: 'center', sm: 'left' }}
+                  variant='h2'
+               >
+                  Diabetes Meal Plan
+               </Typography>
+               <div className='home-btn'>
+                  <Button
+                     variant='contained'
+                     onClick={() => navigate('/login')}
+                     data-testid='home-page'
+                  >
+                     {/* <Link to='/login' data-testid='home-page'> */}
                      Log in
-                  </Link>
-               </Button>
-            </div>
+                     {/* </Link> */}
+                  </Button>
+               </div>
+            </Stack>
             <img src={DietitianSvg} />
          </Stack>
-         <Grid container spacing={2}>
+         <Grid container spacing={2} alignItems='stretch'>
             {cardMessages.map((message, index) => (
                <HomePageCard
                   key={message}

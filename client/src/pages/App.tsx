@@ -5,7 +5,7 @@ import { LoginPage } from './login-page/LoginPage';
 import { MacroCalculatorPage } from './macro-calculator-page/MacroCalculatorPage';
 import { MealPlanPage } from './meal-plan-page/MealPlanPage';
 import { SearchPage } from './search-page/SearchPage';
-import NavBar from '../components/navbar/NavBar';
+import { NoPageFound } from './404-page/404';
 import { AuthProvider } from '../context/authContext';
 import { UserSettingsPage } from './user-profile-page/UserProfilePage';
 import { CssBaseline } from '@mui/material'; //used to provide mui color theme to all components
@@ -51,6 +51,7 @@ export const App = () => {
                   </AuthProvider>
                }
             />
+            <Route path='*' element={<NoPageFound />} />
          </Routes>
       </>
    );

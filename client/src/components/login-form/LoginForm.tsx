@@ -54,59 +54,63 @@ export const LoginForm = ({
 
    return (
       <>
-         <Grid container>
-            <Grid item xs={0} md={6}>
-               <img src={LoginSvg} />
-            </Grid>
-            <Grid item xs={12} md={6}>
-               <Paper
-                  component={'form'}
-                  onSubmit={handleLogin}
-                  className='login-form'
+         <div
+            // direction={{ xs: 'column-reverse', sm: 'row' }}
+            className='login-form'
+            // alignItems='center'
+         >
+            {/* <div> */}
+            <img src={LoginSvg} />
+            {/* </div> */}
+            {/* <Grid item xs={12} md={6}> */}
+            <Paper
+               component={'form'}
+               onSubmit={handleLogin}
+               className='login-form-input'
+            >
+               <Typography variant='h6'>Welcome Back...</Typography>
+               <Typography variant='subtitle1'>
+                  Please enter your details
+               </Typography>
+               <UsernameTextField
+                  showSignup={showSignup}
+                  handleLoginChange={handleLoginChange}
+               />
+               <PasswordTextField
+                  showTextFieldError={showTextFieldError}
+                  showSignup={showSignup}
+                  errorMessage={errorMessage}
+                  handleLoginChange={handleLoginChange}
+               />
+               <Button
+                  data-testid='login-btn'
+                  type='submit'
+                  fullWidth
+                  variant='contained'
                >
-                  <Typography variant='h6'>Welcome Back...</Typography>
-                  <Typography variant='subtitle1'>
-                     Please enter your details
-                  </Typography>
-                  <UsernameTextField
-                     showSignup={showSignup}
-                     handleLoginChange={handleLoginChange}
-                  />
-                  <PasswordTextField
-                     showTextFieldError={showTextFieldError}
-                     showSignup={showSignup}
-                     errorMessage={errorMessage}
-                     handleLoginChange={handleLoginChange}
-                  />
-                  <Button
-                     data-testid='login-btn'
-                     type='submit'
-                     fullWidth
-                     variant='contained'
+                  Log In
+               </Button>
+               <Stack direction='row'>
+                  <Typography
+                     className='login-form-account-text'
+                     variant='caption'
                   >
-                     Log In
-                  </Button>
-                  <Stack direction='row'>
+                     Don't have an account yet?{' '}
+                  </Typography>
+                  <Button variant='text' onClick={handleRedirectToSignup}>
                      <Typography
-                        className='login-form-account-text'
+                        align='center'
+                        data-testid='create-account-btn'
+                        className='login-form-text'
                         variant='caption'
                      >
-                        Don't have an account yet?{' '}
+                        Create Account
                      </Typography>
-                     <Button variant='text' onClick={handleRedirectToSignup}>
-                        <Typography
-                           align='center'
-                           data-testid='create-account-btn'
-                           className='login-form-text'
-                           variant='caption'
-                        >
-                           Create Account
-                        </Typography>
-                     </Button>
-                  </Stack>
-               </Paper>
-            </Grid>
-         </Grid>
+                  </Button>
+               </Stack>
+            </Paper>
+            {/* </Grid> */}
+         </div>
       </>
    );
 };

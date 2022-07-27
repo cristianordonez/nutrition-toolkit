@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './LoginPage.scss';
 import { LoginForm } from '../../components/login-form/LoginForm';
 import { SignupForm } from '../../components/sign-up/SignupForm';
 import { CustomAlert } from '../../components/shared/CustomAlert';
@@ -28,37 +27,37 @@ export const LoginPage = () => {
    return (
       <>
          <NavBar isLoggedIn={false} />
-         <div>
-            {showSignup ? (
-               <SignupForm
-                  showSignup={showSignup}
-                  setShowSignup={setShowSignup}
-                  setAlertSeverity={setAlertSeverity}
-                  handleRedirectToSignup={handleRedirectToSignup}
-                  showTextFieldError={showTextFieldError}
-                  setShowTextFieldError={setShowTextFieldError}
-                  errorMessage={errorMessage}
-                  setErrorMessage={setErrorMessage}
-                  setOpenErrorAlert={setOpenErrorAlert}
-               />
-            ) : (
-               <LoginForm
-                  showSignup={showSignup}
-                  handleRedirectToSignup={handleRedirectToSignup}
-                  showTextFieldError={showTextFieldError}
-                  setShowTextFieldError={setShowTextFieldError}
-                  errorMessage={errorMessage}
-                  setErrorMessage={setErrorMessage}
-                  handleErrorAlert={handleAlert}
-               />
-            )}
-            <CustomAlert
-               openAlert={openErrorAlert}
-               handleAlert={handleAlert}
-               alertSeverity={alertSeverity}
-               alertMessage={errorMessage}
+         {/* <div> */}
+         {showSignup ? (
+            <SignupForm
+               showSignup={showSignup}
+               setShowSignup={setShowSignup}
+               setAlertSeverity={setAlertSeverity}
+               handleRedirectToSignup={handleRedirectToSignup}
+               showTextFieldError={showTextFieldError}
+               setShowTextFieldError={setShowTextFieldError}
+               errorMessage={errorMessage}
+               setErrorMessage={setErrorMessage}
+               setOpenErrorAlert={setOpenErrorAlert}
             />
-         </div>
+         ) : (
+            <LoginForm
+               showSignup={showSignup}
+               handleRedirectToSignup={handleRedirectToSignup}
+               showTextFieldError={showTextFieldError}
+               setShowTextFieldError={setShowTextFieldError}
+               errorMessage={errorMessage}
+               setErrorMessage={setErrorMessage}
+               handleErrorAlert={handleAlert}
+            />
+         )}
+         <CustomAlert
+            openAlert={openErrorAlert}
+            handleAlert={handleAlert}
+            alertSeverity={alertSeverity}
+            alertMessage={errorMessage}
+         />
+         {/* </div> */}
       </>
    );
 };

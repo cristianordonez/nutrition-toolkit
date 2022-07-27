@@ -3,14 +3,9 @@ $secondary-color: #323232;
 $third-color: #0d7377;
 $fourth-color: #14ffec;
 
-body,
-html {
-   margin: 0;
-   overscroll-behavior: contain;
-   #root {
-      padding-top: 64px;
-   }
-}
+//REM for fonts
+//VH and VW for margins and padding
+//% for everything else
 
 @mixin devices($breakpoint) {
    //CSS here only applies when device is below this width
@@ -24,6 +19,19 @@ html {
       @media only screen and (max-width: 600px) {
          @content;
       }
+   }
+}
+
+body,
+html {
+   margin: 0;
+   overscroll-behavior: contain;
+   #root {
+      padding-top: 64px;
+      @include devices(mobile) {
+         margin: 1vw;
+      }
+      margin: 0 5vw 0 5vw;
    }
 }
 

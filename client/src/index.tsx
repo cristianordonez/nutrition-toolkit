@@ -10,6 +10,14 @@ let theme = createTheme({
    palette: {
       mode: 'dark',
    },
+   typography: {
+      h2: {
+         fontFamily: 'Open-sans',
+      },
+      allVariants: {
+         fontFamily: 'Roboto',
+      },
+   },
 });
 theme = responsiveFontSizes(theme);
 

@@ -1,6 +1,6 @@
 @use '../../index.scss' as *;
 
-.home-page-card {
+.home-page-card-image {
    @include cover-background();
-   height: auto;
+   @include set-size(100%);
 }

@@ -1,7 +1,18 @@
 @use '../../index.scss' as *;
 
 .home-title-image {
+   position: relative;
+
    img {
-      @include set-size(50vh, auto);
+      @include devices(mobile) {
+         @include set-size(100%);
+      }
+      @include set-size(50vh, 50vw);
+   }
+   .home-btn {
+      @include devices(mobile) {
+         align-self: center;
+      }
+      align-self: left;
    }
 }

@@ -28,12 +28,12 @@
      inkscape:pagecheckerboard="0"
      showgrid="false"
      inkscape:zoom="0.62181203"
-     inkscape:cx="629.6115"
-     inkscape:cy="1017.9925"
-     inkscape:window-width="1620"
-     inkscape:window-height="1331"
-     inkscape:window-x="932"
-     inkscape:window-y="313"
+     inkscape:cx="716.45446"
+     inkscape:cy="503.36755"
+     inkscape:window-width="2004"
+     inkscape:window-height="1355"
+     inkscape:window-x="548"
+     inkscape:window-y="289"
      inkscape:window-maximized="0"
      inkscape:current-layer="Layer_1" />
   <path
@@ -101,57 +101,57 @@
      style="baseline-shift: 0px; fill: rgb(0, 0, 0); opacity: 0.1; paint-order: normal; text-decoration: none solid rgb(232, 230, 227);"
      id="path30833" />
   <path
-     d="M1004.4 369.801H648.102V882.801H1004.4V369.801Z"
+     d="M 1004.4,369.801 H 648.102 v 513 H 1004.4 Z"
      fill="white"
-     style="baseline-shift: 0px; fill: rgb(255, 255, 255); paint-order: normal; text-decoration: none solid rgb(232, 230, 227);"
+     style="text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;baseline-shift:0px;fill:#ffffff;paint-order:normal"
      id="path30835" />
   <path
      d="M833.8 371.5C814.3 371.5 798.5 355.7 798.5 336.3C798.5 316.9 814.3 301 833.7 301C853.1 301 869 316.8 869 336.2C869 355.7 853.2 371.5 833.8 371.5ZM833.8 319.1C824.3 319.1 816.7 326.8 816.7 336.2C816.7 345.6 824.4 353.3 833.8 353.3C843.2 353.3 850.9 345.6 850.9 336.2C850.9 326.8 843.2 319.1 833.8 319.1Z"
      class="change-color-in-svg-3"
      fill="#00BC7D"
-     style="fill: rgb(20, 255, 236); baseline-shift: 0px; paint-order: normal; text-decoration: none solid rgb(232, 230, 227);"
+     style="fill:#8a9daf;baseline-shift:0px;paint-order:normal;text-decoration:none solid rgb(232, 230, 227);fill-opacity:1"
      id="path30837" />
   <path
      opacity="0.2"
      d="M833.8 371.5C814.3 371.5 798.5 355.7 798.5 336.3C798.5 316.9 814.3 301 833.7 301C853.1 301 869 316.8 869 336.2C869 355.7 853.2 371.5 833.8 371.5ZM833.8 319.1C824.3 319.1 816.7 326.8 816.7 336.2C816.7 345.6 824.4 353.3 833.8 353.3C843.2 353.3 850.9 345.6 850.9 336.2C850.9 326.8 843.2 319.1 833.8 319.1Z"
      fill="black"
-     style="baseline-shift: 0px; fill: rgb(0, 0, 0); opacity: 0.2; paint-order: normal; text-decoration: none solid rgb(232, 230, 227);"
+     style="baseline-shift:0px;fill:#8a9daf;opacity:0.2;paint-order:normal;text-decoration:none solid rgb(232, 230, 227);fill-opacity:1"
      id="path30839" />
   <path
      d="M706.801 343.9V385.3C706.801 388.6 709.501 391.3 712.801 391.3H954.201C957.501 391.3 960.201 388.6 960.201 385.3V344C960.201 340.7 957.501 338 954.201 338H712.801C709.501 338 706.901 340.7 706.801 343.9Z"
      class="change-color-in-svg-3"
      fill="#00BC7D"
-     style="fill: rgb(20, 255, 236); baseline-shift: 0px; paint-order: normal; text-decoration: none solid rgb(232, 230, 227);"
+     style="fill:#8a9daf;baseline-shift:0px;paint-order:normal;text-decoration:none solid rgb(232, 230, 227);fill-opacity:1"
      id="path30841" />
   <path
      opacity="0.2"
      d="M706.801 343.9V385.3C706.801 388.6 709.501 391.3 712.801 391.3H954.201C957.501 391.3 960.201 388.6 960.201 385.3V344C960.201 340.7 957.501 338 954.201 338H712.801C709.501 338 706.901 340.7 706.801 343.9Z"
      fill="black"
-     style="baseline-shift: 0px; fill: rgb(0, 0, 0); opacity: 0.2; paint-order: normal; text-decoration: none solid rgb(232, 230, 227);"
+     style="baseline-shift:0px;fill:#8a9daf;opacity:0.2;paint-order:normal;text-decoration:none solid rgb(232, 230, 227);fill-opacity:1"
      id="path30843" />
   <path
      d="M702 343.9V385.3C702 388.6 704.7 391.3 708 391.3H949.4C952.7 391.3 955.4 388.7 955.4 385.4C955.4 385.4 955.4 385.4 955.4 385.3V344C955.4 340.7 952.7 338 949.4 338H708.1C704.7 338 702 340.6 702 343.9Z"
      class="change-color-in-svg-3"
      fill="#00BC7D"
-     style="fill: rgb(20, 255, 236); baseline-shift: 0px; paint-order: normal; text-decoration: none solid rgb(232, 230, 227);"
+     style="fill:#8a9daf;baseline-shift:0px;paint-order:normal;text-decoration:none solid rgb(232, 230, 227);fill-opacity:1"
      id="path30845" />
   <path
      opacity="0.2"
      d="M702 343.9V385.3C702 388.6 704.7 391.3 708 391.3H949.4C952.7 391.3 955.4 388.7 955.4 385.4C955.4 385.4 955.4 385.4 955.4 385.3V344C955.4 340.7 952.7 338 949.4 338H708.1C704.7 338 702 340.6 702 343.9Z"
      fill="white"
-     style="baseline-shift: 0px; fill: rgb(255, 255, 255); opacity: 0.2; paint-order: normal; text-decoration: none solid rgb(232, 230, 227);"
+     style="baseline-shift:0px;fill:#8a9daf;opacity:0.2;paint-order:normal;text-decoration:none solid rgb(232, 230, 227);fill-opacity:1"
      id="path30847" />
   <path
      d="M828.902 371.5C809.402 371.5 793.602 355.7 793.602 336.2C793.602 316.7 809.402 300.9 828.902 300.9C848.402 300.9 864.202 316.7 864.202 336.2C864.202 355.7 848.402 371.5 828.902 371.5ZM828.902 319.1C819.402 319.1 811.802 326.8 811.802 336.2C811.802 345.6 819.502 353.3 828.902 353.3C838.302 353.3 846.002 345.6 846.002 336.2C846.102 326.8 838.402 319.1 828.902 319.1Z"
      class="change-color-in-svg-3"
      fill="#00BC7D"
-     style="fill: rgb(20, 255, 236); baseline-shift: 0px; paint-order: normal; text-decoration: none solid rgb(232, 230, 227);"
+     style="fill:#8a9daf;baseline-shift:0px;paint-order:normal;text-decoration:none solid rgb(232, 230, 227);fill-opacity:1"
      id="path30849" />
   <path
      opacity="0.2"
      d="M828.902 371.5C809.402 371.5 793.602 355.7 793.602 336.2C793.602 316.7 809.402 300.9 828.902 300.9C848.402 300.9 864.202 316.7 864.202 336.2C864.202 355.7 848.402 371.5 828.902 371.5ZM828.902 319.1C819.402 319.1 811.802 326.8 811.802 336.2C811.802 345.6 819.502 353.3 828.902 353.3C838.302 353.3 846.002 345.6 846.002 336.2C846.102 326.8 838.402 319.1 828.902 319.1Z"
      fill="white"
-     style="baseline-shift: 0px; fill: rgb(255, 255, 255); opacity: 0.2; paint-order: normal; text-decoration: none solid rgb(232, 230, 227);"
+     style="baseline-shift:0px;fill:#8a9daf;opacity:0.2;paint-order:normal;text-decoration:none solid rgb(232, 230, 227);fill-opacity:1"
      id="path30851" />
   <path
      d="M707.202 425.9H674.102V479.7H707.202V425.9Z"
