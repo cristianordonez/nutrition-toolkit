@@ -2,17 +2,27 @@
 
 .home-title-image {
    position: relative;
-
+   padding-bottom: 5vh;
    img {
       @include devices(mobile) {
          @include set-size(100%);
       }
-      @include set-size(50vh, 50vw);
+      @include set-size(40vh, 50vw);
    }
+
    .home-btn {
       @include devices(mobile) {
          align-self: center;
       }
       align-self: left;
+   }
+}
+
+.home-page {
+   padding-right: 10vw;
+   padding-left: 10vw;
+   @include devices(tablet) {
+      padding-right: 5vw;
+      padding-left: 5vw;
    }
 }

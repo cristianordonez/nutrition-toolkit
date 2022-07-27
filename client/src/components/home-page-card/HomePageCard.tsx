@@ -17,7 +17,7 @@ interface Props {
 
 export const HomePageCard = ({ body, title, image }: Props) => {
    return (
-      <Grid item xs={12} sm={4}>
+      <Grid item xs={12} sm={4} className='home-page-grid'>
          <Card elevation={2} className='home-page-card'>
             <CardMedia
                component='img'

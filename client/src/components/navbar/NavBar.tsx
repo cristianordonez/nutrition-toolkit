@@ -21,7 +21,6 @@ import { useAuth } from '../../context/authContext';
 import { Link } from 'react-router-dom';
 
 const pages = ['Search', 'Macro Calculator', 'Meal Plan'];
-const settings = ['Profile', 'Logout'];
 
 interface Props {
    isLoggedIn: boolean;
@@ -73,7 +72,7 @@ const NavBar = ({ isLoggedIn }: Props) => {
          <Container maxWidth='xl'>
             <Toolbar disableGutters>
                {/* MOBILE DESKTOP*/}
-               <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+               <AdbIcon sx={{ display: { md: 'flex' }, mr: 1 }} />
                <Typography
                   variant='h6'
                   noWrap
@@ -81,7 +80,7 @@ const NavBar = ({ isLoggedIn }: Props) => {
                   href='/'
                   sx={{
                      mr: 2,
-                     display: { xs: 'none', md: 'flex' },
+                     display: { md: 'flex' },
                      fontFamily: 'monospace',
                      fontWeight: 700,
                      letterSpacing: '.3rem',
@@ -89,7 +88,7 @@ const NavBar = ({ isLoggedIn }: Props) => {
                      textDecoration: 'none',
                   }}
                >
-                  LOGO
+                  DiabetesCoach
                </Typography>
                {isLoggedIn === true ? (
                   <>

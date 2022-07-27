@@ -54,61 +54,57 @@ export const LoginForm = ({
 
    return (
       <>
-         <div
-            // direction={{ xs: 'column-reverse', sm: 'row' }}
-            className='login-form'
-            // alignItems='center'
-         >
-            {/* <div> */}
+         <div className='login-form'>
             <img src={LoginSvg} />
-            {/* </div> */}
-            {/* <Grid item xs={12} md={6}> */}
-            <Paper
-               component={'form'}
-               onSubmit={handleLogin}
-               className='login-form-input'
-            >
-               <Typography variant='h6'>Welcome Back...</Typography>
-               <Typography variant='subtitle1'>
-                  Please enter your details
-               </Typography>
-               <UsernameTextField
-                  showSignup={showSignup}
-                  handleLoginChange={handleLoginChange}
-               />
-               <PasswordTextField
-                  showTextFieldError={showTextFieldError}
-                  showSignup={showSignup}
-                  errorMessage={errorMessage}
-                  handleLoginChange={handleLoginChange}
-               />
-               <Button
-                  data-testid='login-btn'
-                  type='submit'
-                  fullWidth
-                  variant='contained'
+            <div className='login-form-card'>
+               <Paper
+                  component={'form'}
+                  elevation={2}
+                  onSubmit={handleLogin}
+                  className='login-form-input'
                >
-                  Log In
-               </Button>
-               <Stack direction='row'>
-                  <Typography
-                     className='login-form-account-text'
-                     variant='caption'
-                  >
-                     Don't have an account yet?{' '}
+                  <Typography variant='h6'>Welcome Back...</Typography>
+                  <Typography variant='subtitle1'>
+                     Please enter your details
                   </Typography>
-                  <Button variant='text' onClick={handleRedirectToSignup}>
+                  <UsernameTextField
+                     showSignup={showSignup}
+                     handleLoginChange={handleLoginChange}
+                  />
+                  <PasswordTextField
+                     showTextFieldError={showTextFieldError}
+                     showSignup={showSignup}
+                     errorMessage={errorMessage}
+                     handleLoginChange={handleLoginChange}
+                  />
+                  <Button
+                     data-testid='login-btn'
+                     type='submit'
+                     fullWidth
+                     variant='contained'
+                  >
+                     Log In
+                  </Button>
+                  <Stack direction='row'>
                      <Typography
-                        align='center'
-                        data-testid='create-account-btn'
-                        className='login-form-text'
+                        className='login-form-account-text'
                         variant='caption'
                      >
-                        Create Account
+                        Don't have an account yet?{' '}
                      </Typography>
-                  </Button>
-               </Stack>
-            </Paper>
+                     <Button variant='text' onClick={handleRedirectToSignup}>
+                        <Typography
+                           align='center'
+                           data-testid='create-account-btn'
+                           className='login-form-text'
+                           variant='caption'
+                        >
+                           Create Account
+                        </Typography>
+                     </Button>
+                  </Stack>
+               </Paper>
+            </div>
             {/* </Grid> */}
          </div>
       </>

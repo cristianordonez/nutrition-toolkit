@@ -10,23 +10,34 @@
    gap: 1vw;
    img {
       @include set-size(auto, 40vw);
-      @include devices(tablet) {
+      @include devices(mobile) {
          display: none;
       }
    }
 }
 
-.login-form-input {
+.login-form-card {
    @include set-size(100%, 50vw);
-   @include flex-center();
-   padding: 1vw;
-   flex-direction: column;
-   gap: 1em;
-   .login-form-account-text {
-      align-self: center;
+   @include devices(mobile) {
+      padding-left: 3vw;
+      padding-right: 3vw;
+      @include set-size(100%);
    }
-}
-.login-form-text {
-   text-transform: none;
-   align-self: flex-start;
+   padding-left: 5vw;
+   padding-right: 5vw;
+
+   .login-form-input {
+      @include set-size(100%);
+      @include flex-center();
+      padding: 1vw;
+      flex-direction: column;
+      gap: 1em;
+      .login-form-account-text {
+         align-self: center;
+      }
+   }
+   .login-form-text {
+      text-transform: none;
+      align-self: flex-start;
+   }
 }

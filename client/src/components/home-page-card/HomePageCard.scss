@@ -1,5 +1,16 @@
 @use '../../index.scss' as *;
 
+.home-page-grid {
+   @include set-size(100%);
+   .home-page-card {
+      @include set-size(100%);
+      @include devices(mobile) {
+         max-height: none;
+      }
+      // max-height: 365px;
+      // max-width: 300px;
+   }
+}
 .home-page-card-image {
    @include cover-background();
    @include set-size(100%);
