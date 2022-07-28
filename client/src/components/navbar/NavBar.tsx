@@ -13,13 +13,14 @@ import {
    Button,
    Tooltip,
    MenuItem,
+   Icon,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/authContext';
 import { Link } from 'react-router-dom';
-
+import Logo from '../../../img/logo.svg';
 const pages = ['Search', 'Macro Calculator', 'Meal Plan'];
 
 interface Props {
@@ -72,7 +73,10 @@ const NavBar = ({ isLoggedIn }: Props) => {
          <Container maxWidth='xl'>
             <Toolbar disableGutters>
                {/* MOBILE DESKTOP*/}
-               <AdbIcon sx={{ display: { md: 'flex' }, mr: 1 }} />
+               {/* <AdbIcon sx={{ display: { md: 'flex' }, mr: 1 }} /> */}
+               <IconButton sx={{ display: { md: 'flex' }, mr: 1 }}>
+                  <img src={Logo} />
+               </IconButton>
                <Typography
                   variant='h6'
                   noWrap
