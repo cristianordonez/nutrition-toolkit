@@ -1,4 +1,5 @@
-import React, { MouseEventHandler, useState } from 'react';
+import React, { MouseEventHandler, useState, useContext } from 'react';
+import './NavBar.scss';
 import AdbIcon from '@mui/icons-material/Adb';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
@@ -14,24 +15,65 @@ import {
    Tooltip,
    MenuItem,
    Icon,
+   Link,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/authContext';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import Logo from '../../../img/logo.svg';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import { ColorModeContext } from '../../pages/App';
+import { useTheme } from '@mui/material/styles';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 const pages = ['Search', 'Macro Calculator', 'Meal Plan'];
 
+// function MyApp() {
+//    const theme = useTheme();
+//    const colorMode = React.useContext(ColorModeContext);
+//    return (
+//       <Box
+//          sx={{
+//             display: 'flex',
+//             width: '100%',
+//             alignItems: 'center',
+//             justifyContent: 'center',
+//             bgcolor: 'background.default',
+//             color: 'text.primary',
+//             borderRadius: 1,
+//             p: 3,
+//          }}
+//       >
+//          {theme.palette.mode} mode
+// <IconButton
+//    sx={{ ml: 1 }}
+//    onClick={colorMode.toggleColorMode}
+//    color='inherit'
+// >
+//    {theme.palette.mode === 'dark' ? (
+//       <Brightness7Icon />
+//    ) : (
+//       <Brightness4Icon />
+//    )}
+// </IconButton>
+//       </Box>
+//    );
 interface Props {
    isLoggedIn: boolean;
 }
 
 const NavBar = ({ isLoggedIn }: Props) => {
+   //! setting the theme here
+   const theme = useTheme();
+   const colorMode = React.useContext(ColorModeContext);
+
+   ///////////////////////////////////
+
    const navigate = useNavigate();
    const isLoading = useAuth(); //used to check if data is still being retrieved from database
 
-   console.log('isLoading: ', isLoading);
    const [isOpen, setIsOpen] = useState(false);
 
    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -68,15 +110,17 @@ const NavBar = ({ isLoggedIn }: Props) => {
    return (
       <AppBar
          position='fixed'
-         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+         sx={{
+            zIndex: (theme) => theme.zIndex.drawer + 1,
+            boxShadow: 'none',
+         }}
+         color='transparent'
+         enableColorOnDark={true}
       >
          <Container maxWidth='xl'>
             <Toolbar disableGutters>
                {/* MOBILE DESKTOP*/}
-               {/* <AdbIcon sx={{ display: { md: 'flex' }, mr: 1 }} /> */}
-               <IconButton sx={{ display: { md: 'flex' }, mr: 1 }}>
-                  <img src={Logo} />
-               </IconButton>
+               <MenuBookIcon sx={{ display: { md: 'flex' }, mr: 1 }} />
                <Typography
                   variant='h6'
                   noWrap
@@ -85,11 +129,12 @@ const NavBar = ({ isLoggedIn }: Props) => {
                   sx={{
                      mr: 2,
                      display: { md: 'flex' },
-                     fontFamily: 'monospace',
+                     // fontFamily: 'monospace',
                      fontWeight: 700,
                      letterSpacing: '.3rem',
                      color: 'inherit',
                      textDecoration: 'none',
+                     flexGrow: 1,
                   }}
                >
                   DiabetesCoach
@@ -226,10 +271,28 @@ const NavBar = ({ isLoggedIn }: Props) => {
                      </Box>
                   </>
                ) : (
-                  <Link to='/login' data-testid='home-page'>
+                  <Link
+                     href='/login'
+                     underline='hover'
+                     data-testid='home-page'
+                     className='navbar-login'
+                     variant='overline'
+                     sx={{ fontWeight: 'bold' }}
+                  >
                      Log in
                   </Link>
                )}
+               <IconButton
+                  sx={{ ml: 1 }}
+                  onClick={colorMode.toggleColorMode}
+                  color='inherit'
+               >
+                  {theme.palette.mode === 'dark' ? (
+                     <Brightness7Icon />
+                  ) : (
+                     <Brightness4Icon />
+                  )}
+               </IconButton>
             </Toolbar>
          </Container>
       </AppBar>
