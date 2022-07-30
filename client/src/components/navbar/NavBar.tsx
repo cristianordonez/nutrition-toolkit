@@ -67,7 +67,7 @@ interface Props {
 const NavBar = ({ isLoggedIn }: Props) => {
    //! setting the theme here
    const theme = useTheme();
-   const colorMode = React.useContext(ColorModeContext);
+   const colorMode = useContext(ColorModeContext);
 
    ///////////////////////////////////
 

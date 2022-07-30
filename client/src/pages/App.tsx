@@ -86,12 +86,13 @@ export const ColorModeContext = React.createContext({
 // }
 
 export const App = () => {
-   const [mode, setMode] = useState<PaletteMode>('light');
+   const [mode, setMode] = useState<any>('light');
 
    const colorMode = React.useMemo(
       () => ({
          // The dark mode switch would invoke this method
          toggleColorMode: () => {
+            localStorage.setItem('mode', mode === 'light' ? 'dark' : 'light');
             setMode((prevMode: PaletteMode) =>
                prevMode === 'light' ? 'dark' : 'light'
             );
@@ -100,6 +101,11 @@ export const App = () => {
       []
    );
 
+   React.useEffect(() => {
+      if (localStorage.getItem('mode')) {
+         setMode(localStorage.getItem('mode'));
+      }
+   });
    let theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
    theme = responsiveFontSizes(theme);
    // const darkModeTheme = createTheme(getDesignTokens('dark'));
