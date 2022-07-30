@@ -3,16 +3,16 @@ import * as userController from '../controllers/user.controller';
 import passport from 'passport';
 const router = Router();
 
-router.get('/', (req: Request, res: Response) => {
-   console.log('req.session:', req.session);
-   res.status(200).json({
-      status: 'success',
-      data: {
-         name: 'Diabetes Meal Plan',
-         version: '1.0.0',
-      },
-   });
-});
+// router.get('/', (req: Request, res: Response) => {
+//    console.log('req.session:', req.session);
+//    res.status(200).send({
+//       status: 'success',
+//       data: {
+//          name: 'Diabetes Meal Plan',
+//          version: '1.0.0',
+//       },
+//    });
+// });
 
 //# handles checking if user is logged in for protected routes
 router.get('/authentication', (req: Request, res: Response) => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Home } from './home/Home';
 import { LoginPage } from './login-page/LoginPage';
@@ -17,6 +17,7 @@ import {
 import { ThemeProvider } from '@emotion/react';
 import { PaletteMode, Box, IconButton } from '@mui/material';
 import { teal, grey, blueGrey } from '@mui/material/colors';
+import { useLocalStorageState } from '../hooks/useLocalStorage';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 
@@ -86,12 +87,13 @@ export const ColorModeContext = React.createContext({
 // }
 
 export const App = () => {
-   const [mode, setMode] = useState<any>('light');
+   const [mode, setMode] = useLocalStorageState('mode', 'dark');
 
    const colorMode = React.useMemo(
       () => ({
          // The dark mode switch would invoke this method
          toggleColorMode: () => {
+            let currentMode = mode === 'light' ? 'dark' : 'light';
             localStorage.setItem('mode', mode === 'light' ? 'dark' : 'light');
             setMode((prevMode: PaletteMode) =>
                prevMode === 'light' ? 'dark' : 'light'
@@ -101,14 +103,15 @@ export const App = () => {
       []
    );
 
-   React.useEffect(() => {
-      if (localStorage.getItem('mode')) {
-         setMode(localStorage.getItem('mode'));
-      }
-   });
+   // useEffect(() => {
+   //    if (localStorage.getItem('mode')) {
+   //       setMode(localStorage.getItem('mode'));
+   //    }
+   // }, []);
+
    let theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
+
    theme = responsiveFontSizes(theme);
-   // const darkModeTheme = createTheme(getDesignTokens('dark'));
 
    return (
       <>

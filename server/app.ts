@@ -19,7 +19,6 @@ import bcrypt from 'bcrypt';
 const pgSession = require('connect-pg-simple')(session);
 const app = express();
 
-console.log('here in app.ts');
 //MIDDLEWARE
 app.use(cors());
 

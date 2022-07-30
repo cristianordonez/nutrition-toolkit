@@ -22,7 +22,7 @@ import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/authContext';
 // import { Link } from 'react-router-dom';
-import Logo from '../../../img/logo.svg';
+import LOGO from '../../../img/LOGO.svg';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { ColorModeContext } from '../../pages/App';
 import { useTheme } from '@mui/material/styles';
@@ -120,7 +120,17 @@ const NavBar = ({ isLoggedIn }: Props) => {
          <Container maxWidth='xl'>
             <Toolbar disableGutters>
                {/* MOBILE DESKTOP*/}
-               <MenuBookIcon sx={{ display: { md: 'flex' }, mr: 1 }} />
+               {/* <MenuBookIcon sx={{ display: { md: 'flex' }, mr: 1 }} /> */}
+               <Box
+                  component='img'
+                  src={LOGO}
+                  sx={{
+                     display: { md: 'flex' },
+                     mr: 1,
+                     objectFit: 'contain',
+                     height: '2.5rem',
+                  }}
+               ></Box>
                <Typography
                   variant='h6'
                   noWrap
