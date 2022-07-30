@@ -1,5 +1,4 @@
 import React, { MouseEventHandler, useState, useContext } from 'react';
-import './NavBar.scss';
 import AdbIcon from '@mui/icons-material/Adb';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
@@ -113,198 +112,197 @@ const NavBar = ({ isLoggedIn }: Props) => {
          sx={{
             zIndex: (theme) => theme.zIndex.drawer + 1,
             boxShadow: 'none',
+            padding: '0 1vw',
          }}
          color='transparent'
          enableColorOnDark={true}
       >
-         <Container maxWidth='xl'>
-            <Toolbar disableGutters>
-               {/* MOBILE DESKTOP*/}
-               {/* <MenuBookIcon sx={{ display: { md: 'flex' }, mr: 1 }} /> */}
-               <Box
-                  component='img'
-                  src={LOGO}
-                  sx={{
-                     display: { md: 'flex' },
-                     mr: 1,
-                     objectFit: 'contain',
-                     height: '2.5rem',
-                  }}
-               ></Box>
-               <Typography
-                  variant='h6'
-                  noWrap
-                  component='a'
-                  href='/'
-                  sx={{
-                     mr: 2,
-                     display: { md: 'flex' },
-                     // fontFamily: 'monospace',
-                     fontWeight: 700,
-                     letterSpacing: '.3rem',
-                     color: 'inherit',
-                     textDecoration: 'none',
-                     flexGrow: 1,
-                  }}
-               >
-                  DiabetesCoach
-               </Typography>
-               {isLoggedIn === true ? (
-                  <>
-                     <Box
-                        sx={{
-                           flexGrow: 1,
-                           display: { xs: 'flex', md: 'none' },
-                        }}
+         {/* <Container maxWidth='xl'> */}
+         <Toolbar disableGutters>
+            {/* MOBILE DESKTOP*/}
+            {/* <MenuBookIcon sx={{ display: { md: 'flex' }, mr: 1 }} /> */}
+            <Box
+               component='img'
+               src={LOGO}
+               sx={{
+                  display: { md: 'flex' },
+                  mr: 1,
+                  objectFit: 'contain',
+                  height: '2.5rem',
+               }}
+            ></Box>
+            <Typography
+               variant='h6'
+               noWrap
+               component='a'
+               href='/'
+               sx={{
+                  mr: 2,
+                  display: { md: 'flex' },
+                  // fontFamily: 'monospace',
+                  fontWeight: 700,
+                  letterSpacing: '.3rem',
+                  color: 'inherit',
+                  textDecoration: 'none',
+                  flexGrow: 1,
+               }}
+            >
+               DiabetesCoach
+            </Typography>
+            {isLoggedIn === true ? (
+               <>
+                  <Box
+                     sx={{
+                        flexGrow: 1,
+                        display: { xs: 'flex', md: 'none' },
+                     }}
+                  >
+                     <IconButton
+                        size='large'
+                        aria-label='account of current user'
+                        aria-controls='menu-appbar'
+                        aria-haspopup='true'
+                        onClick={handleOpenNavMenu}
+                        color='inherit'
                      >
-                        <IconButton
-                           size='large'
-                           aria-label='account of current user'
-                           aria-controls='menu-appbar'
-                           aria-haspopup='true'
-                           onClick={handleOpenNavMenu}
-                           color='inherit'
-                        >
-                           <MenuIcon />
-                        </IconButton>
-                        <Menu
-                           id='menu-appbar'
-                           anchorEl={anchorElNav}
-                           anchorOrigin={{
-                              vertical: 'bottom',
-                              horizontal: 'left',
-                           }}
-                           keepMounted
-                           transformOrigin={{
-                              vertical: 'top',
-                              horizontal: 'left',
-                           }}
-                           open={Boolean(anchorElNav)}
-                           onClose={handleCloseNavMenu}
-                           sx={{
-                              display: { xs: 'block', md: 'none' },
-                           }}
-                        >
-                           {pages.map((page) => (
-                              <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                 <Typography textAlign='center'>
-                                    {page}
-                                 </Typography>
-                              </MenuItem>
-                           ))}
-                        </Menu>
-                     </Box>
-
-                     <AdbIcon
-                        sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}
-                     />
-                     <Typography
-                        variant='h5'
-                        noWrap
-                        component='a'
-                        data-testid='navlink'
-                        href=''
-                        sx={{
-                           mr: 2,
-                           display: { xs: 'flex', md: 'none' },
-                           flexGrow: 1,
-                           fontFamily: 'monospace',
-                           fontWeight: 700,
-                           letterSpacing: '.3rem',
-                           color: 'inherit',
-                           textDecoration: 'none',
+                        <MenuIcon />
+                     </IconButton>
+                     <Menu
+                        id='menu-appbar'
+                        anchorEl={anchorElNav}
+                        anchorOrigin={{
+                           vertical: 'bottom',
+                           horizontal: 'left',
                         }}
-                     >
-                        LOGO
-                     </Typography>
-                     <Box
+                        keepMounted
+                        transformOrigin={{
+                           vertical: 'top',
+                           horizontal: 'left',
+                        }}
+                        open={Boolean(anchorElNav)}
+                        onClose={handleCloseNavMenu}
                         sx={{
-                           flexGrow: 1,
-                           display: { xs: 'none', md: 'flex' },
+                           display: { xs: 'block', md: 'none' },
                         }}
                      >
                         {pages.map((page) => (
-                           <NavLink
-                              key={page}
-                              to={`/${page.toLowerCase().replace(/ /g, '')}`}
-                           >
-                              {page}
-                           </NavLink>
+                           <MenuItem key={page} onClick={handleCloseNavMenu}>
+                              <Typography textAlign='center'>{page}</Typography>
+                           </MenuItem>
                         ))}
-                     </Box>
+                     </Menu>
+                  </Box>
 
-                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title='Open settings'>
-                           <IconButton
-                              onClick={handleOpenUserMenu}
-                              sx={{ p: 0 }}
-                              data-testid='avatar'
-                           >
-                              <Avatar
-                                 alt='Remy Sharp'
-                                 // src='/static/images/avatar/2.jpg'
-                              />
-                           </IconButton>
-                        </Tooltip>
-                        <Menu
-                           sx={{ mt: '45px' }}
-                           id='menu-appbar'
-                           anchorEl={anchorElUser}
-                           anchorOrigin={{
-                              vertical: 'top',
-                              horizontal: 'right',
-                           }}
-                           keepMounted
-                           transformOrigin={{
-                              vertical: 'top',
-                              horizontal: 'right',
-                           }}
-                           open={Boolean(anchorElUser)}
-                           onClose={handleMenuClick}
-                        >
-                           <MenuItem onClick={handleMenuClick}>
-                              <Typography
-                                 textAlign='center'
-                                 component='a'
-                                 href='/settings'
-                              >
-                                 User Profile
-                              </Typography>
-                           </MenuItem>
-                           <MenuItem
-                              onClick={handleLogout}
-                              data-testid='logout-btn'
-                           >
-                              <Typography textAlign='center'>Logout</Typography>
-                           </MenuItem>
-                        </Menu>
-                     </Box>
-                  </>
-               ) : (
-                  <Link
-                     href='/login'
-                     underline='hover'
-                     data-testid='home-page'
-                     className='navbar-login'
-                     variant='overline'
-                     sx={{ fontWeight: 'bold' }}
+                  <AdbIcon
+                     sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}
+                  />
+                  <Typography
+                     variant='h5'
+                     noWrap
+                     component='a'
+                     data-testid='navlink'
+                     href=''
+                     sx={{
+                        mr: 2,
+                        display: { xs: 'flex', md: 'none' },
+                        flexGrow: 1,
+                        fontFamily: 'monospace',
+                        fontWeight: 700,
+                        letterSpacing: '.3rem',
+                        color: 'inherit',
+                        textDecoration: 'none',
+                     }}
                   >
-                     Log in
-                  </Link>
-               )}
-               <IconButton
-                  sx={{ ml: 1 }}
-                  onClick={colorMode.toggleColorMode}
-                  color='inherit'
+                     LOGO
+                  </Typography>
+                  <Box
+                     sx={{
+                        flexGrow: 1,
+                        display: { xs: 'none', md: 'flex' },
+                     }}
+                  >
+                     {pages.map((page) => (
+                        <NavLink
+                           key={page}
+                           to={`/${page.toLowerCase().replace(/ /g, '')}`}
+                        >
+                           {page}
+                        </NavLink>
+                     ))}
+                  </Box>
+
+                  <Box sx={{ flexGrow: 0 }}>
+                     <Tooltip title='Open settings'>
+                        <IconButton
+                           onClick={handleOpenUserMenu}
+                           sx={{ p: 0 }}
+                           data-testid='avatar'
+                        >
+                           <Avatar
+                              alt='Remy Sharp'
+                              // src='/static/images/avatar/2.jpg'
+                           />
+                        </IconButton>
+                     </Tooltip>
+                     <Menu
+                        sx={{ mt: '45px' }}
+                        id='menu-appbar'
+                        anchorEl={anchorElUser}
+                        anchorOrigin={{
+                           vertical: 'top',
+                           horizontal: 'right',
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                           vertical: 'top',
+                           horizontal: 'right',
+                        }}
+                        open={Boolean(anchorElUser)}
+                        onClose={handleMenuClick}
+                     >
+                        <MenuItem onClick={handleMenuClick}>
+                           <Typography
+                              textAlign='center'
+                              component='a'
+                              href='/settings'
+                           >
+                              User Profile
+                           </Typography>
+                        </MenuItem>
+                        <MenuItem
+                           onClick={handleLogout}
+                           data-testid='logout-btn'
+                        >
+                           <Typography textAlign='center'>Logout</Typography>
+                        </MenuItem>
+                     </Menu>
+                  </Box>
+               </>
+            ) : (
+               <Link
+                  href='/login'
+                  underline='hover'
+                  data-testid='home-page'
+                  className='navbar-login'
+                  variant='overline'
+                  sx={{ fontWeight: 'bold' }}
                >
-                  {theme.palette.mode === 'dark' ? (
-                     <Brightness7Icon />
-                  ) : (
-                     <Brightness4Icon />
-                  )}
-               </IconButton>
-            </Toolbar>
-         </Container>
+                  Log in
+               </Link>
+            )}
+            <IconButton
+               sx={{ ml: 1 }}
+               onClick={colorMode.toggleColorMode}
+               color='inherit'
+            >
+               {theme.palette.mode === 'dark' ? (
+                  <Brightness7Icon />
+               ) : (
+                  <Brightness4Icon />
+               )}
+            </IconButton>
+         </Toolbar>
+         {/* </Container> */}
       </AppBar>
    );
 };

@@ -1,0 +1,18 @@
+@use '../../index.scss' as *;
+
+.signup {
+   // @include flex-center-horiz();
+   @include flex-center();
+   padding-top: 10vh;
+   // @include set-size(100%);
+   .signup-form {
+      @include flex-center();
+      @include set-size(100%);
+      flex-direction: column;
+      gap: 1em;
+      padding: 1rem;
+      max-width: 730px;
+      // align-self: center;
+      // border-radius: 5%;
+   }
+}

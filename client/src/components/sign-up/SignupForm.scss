@@ -1,7 +1,0 @@
-@use '../../index.scss' as *;
-
-.signup-form {
-   @include flex-center();
-   flex-direction: column;
-   gap: 1em;
-}

@@ -65,7 +65,7 @@ export const SignupForm = ({
 
    //after user is created, navigate to the next page with successful response
    return (
-      <>
+      <div className='signup'>
          {showNextPage ? (
             <MacroCalculatorForm
                setOpenErrorAlert={setOpenErrorAlert}
@@ -123,6 +123,6 @@ export const SignupForm = ({
                </Button>
             </Paper>
          )}
-      </>
+      </div>
    );
 };

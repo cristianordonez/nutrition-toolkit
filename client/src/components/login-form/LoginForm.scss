@@ -3,13 +3,13 @@
 .login-form {
    display: flex;
    @include set-size(100%, 100%);
-   padding-top: 15vh;
-   // flex-wrap: wrap;
+   padding-top: 10vh;
    align-items: center;
    justify-content: center;
    gap: 1vw;
    img {
       @include set-size(auto, 40vw);
+      max-width: 600px;
       @include devices(mobile) {
          display: none;
       }
@@ -17,6 +17,7 @@
 }
 
 .login-form-card {
+   max-width: 730px;
    @include set-size(100%, 50vw);
    @include devices(mobile) {
       padding-left: 3vw;
