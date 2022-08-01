@@ -1,0 +1,23 @@
+@use '../../../index.scss' as *;
+
+.macro-calculator-container {
+   @include flex-center();
+   @include set-size(100%);
+   justify-content: center;
+   padding-top: 10vh;
+   .macro-calculator-form {
+      @include set-size(100%);
+      @include flex-center();
+      flex-direction: column;
+      max-width: 720px;
+      padding: 1rem;
+      gap: 1em;
+      //   align-self: center;
+      //   display: flex;
+      //   flex-direction: column;
+      //   justify-content: space-between;
+   }
+   .macro-calculator-icon {
+      align-self: center;
+   }
+}

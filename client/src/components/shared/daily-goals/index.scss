@@ -7,8 +7,15 @@
       bottom: 20%;
       @include flex-center-column();
    }
+   .daily-goals-kcal {
+      @include flex-center-column;
+      padding: 2rem;
+      .daily-goals-kcal-title {
+         position: absolute;
+      }
+   }
    .daily-goals-items {
       @include flex-center-column();
+      gap: 1rem;
    }
 }
-

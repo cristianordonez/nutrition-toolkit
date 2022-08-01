@@ -1,7 +1,9 @@
 import React, { Dispatch, SetStateAction } from 'react';
+import './index.scss';
 import axios from 'axios';
 import {
    Paper,
+   Stack,
    Typography,
    Button,
    ToggleButtonGroup,
@@ -18,7 +20,7 @@ import { WeightInputField } from './WeightInputField';
 import { AgeInputField } from './AgeInputField';
 import { useMetrics } from '../../../helper-functions/use-metrics/useMetrics';
 import { useNavigate } from 'react-router-dom';
-
+import { BsCalculatorFill } from 'react-icons/bs';
 interface Props {
    setOpenErrorAlert: Dispatch<SetStateAction<boolean>>;
    setErrorMessage: Dispatch<SetStateAction<string>>;
@@ -91,18 +93,22 @@ export const MacroCalculatorForm = ({
    };
 
    return (
-      <>
+      <div className='macro-calculator-container'>
          <Paper
             onSubmit={handleSubmit}
             component={'form'}
-            className='signup-form'
+            className='macro-calculator-form'
             data-testid='macro-calculator-signup-form'
+            elevation={2}
          >
             {page !== undefined && page === 'macrocalculator' ? (
                <>
-                  <Typography variant='h6'>
-                     Recalculate your Macronutrient Recommendations
-                  </Typography>
+                  <Stack direction='row' sx={{ gap: '1em' }}>
+                     <BsCalculatorFill className='macro-calculator-icon' />
+                     <Typography align='center' variant='h6'>
+                        Recalculate your Macronutrient Recommendations
+                     </Typography>
+                  </Stack>
                   <Typography variant='subtitle1'>
                      Fill out the form below to recalculate your recommended
                      nutrient needs (note that all recommendations are made for
@@ -124,6 +130,7 @@ export const MacroCalculatorForm = ({
             {/* GENDER */}
             <ToggleButtonGroup
                color='primary'
+               fullWidth={true}
                value={gender}
                exclusive
                onChange={handleGenderChange}
@@ -135,6 +142,7 @@ export const MacroCalculatorForm = ({
             {/* ACTIVITY LEVEL */}
             <ToggleButtonGroup
                color='primary'
+               fullWidth={true}
                value={activityLevel}
                exclusive
                onChange={handleActivityLevelChange}
@@ -151,11 +159,15 @@ export const MacroCalculatorForm = ({
             <WeightInputField weight={weight} setWeight={setWeight} />
 
             {page !== undefined && page === 'macrocalculator' ? (
-               <Button fullWidth onClick={() => setShowNextPage(true)}>
-                  Recalculate Macronutrients
+               <Button
+                  fullWidth
+                  onClick={() => setShowNextPage(true)}
+                  variant='contained'
+               >
+                  Recalculate
                </Button>
             ) : (
-               <Button fullWidth type='submit'>
+               <Button fullWidth type='submit' variant='contained'>
                   Complete creating account
                </Button>
             )}
@@ -188,6 +200,6 @@ export const MacroCalculatorForm = ({
                </Dialog>
             ) : null}
          </Paper>
-      </>
+      </div>
    );
 };

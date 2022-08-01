@@ -1,9 +1,12 @@
 import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import './index.scss';
 import { Typography, CircularProgress, Button } from '@mui/material';
-import { GoalCardItem } from './GoalCardItem';
-import { GoalCardItemCounter } from './GoalCardItemCounter';
+import { GoalCardItemLinearProgress } from './GoalCardItemLinearProgress';
+import { GoalCardItemCard } from './GoalCardItemCard';
 import { GoalsType } from '../../../../types/types';
+import { BsEggFried } from 'react-icons/bs';
+import { GiAvocado } from 'react-icons/gi';
+import { FaBreadSlice } from 'react-icons/fa';
 
 type nutrientType = {
    name: string;
@@ -86,17 +89,17 @@ export const DailyGoals = ({
                      className='daily-goals-items'
                      data-testid='mealplan-goal-items'
                   >
-                     <GoalCardItem
+                     <GoalCardItemLinearProgress
                         type={'Carbohydrates'}
                         nutrientsInMealPlan={nutritionSummary[7].amount}
                         nutrientsTotal={goals.total_carbohydrates}
                      />
-                     <GoalCardItem
+                     <GoalCardItemLinearProgress
                         nutrientsTotal={goals.total_protein}
                         type={'Protein'}
                         nutrientsInMealPlan={nutritionSummary[28].amount}
                      />
-                     <GoalCardItem
+                     <GoalCardItemLinearProgress
                         nutrientsTotal={goals.total_fat}
                         type={'Fat'}
                         nutrientsInMealPlan={nutritionSummary[11].amount}
@@ -107,34 +110,45 @@ export const DailyGoals = ({
             {/* RENDER THE SEARCH SIDEBAR OR USER PROFILE PAGE HERE */}
             {page === 'search' || page === 'user-profile' ? (
                <>
-                  <Typography variant='body1'>Total Calories</Typography>
-
-                  <>
-                     <Typography variant='body1'>
-                        <em>{goals.total_calories}</em>
-                     </Typography>
-                  </>
-
+                  <div className='daily-goals-kcal'>
+                     <CircularProgress
+                        variant='determinate'
+                        size={200}
+                        value={100}
+                        thickness={1}
+                     />
+                     <div className='daily-goals-kcal-title'>
+                        <Typography align='center' variant='body1'>
+                           Total Calories
+                        </Typography>
+                        <Typography align='center' variant='h6'>
+                           {goals.total_calories}
+                        </Typography>
+                     </div>
+                  </div>
                   <form
                      onSubmit={handleSubmitUpdatedGoals}
                      className='daily-goals-items'
                   >
-                     <GoalCardItemCounter
+                     <GoalCardItemCard
                         type={'Carbohydrates'}
+                        IconSvg={FaBreadSlice}
                         nutrientsTotal={goals.total_carbohydrates}
                         page={page}
                         setGoals={setGoals}
                         goals={goals}
                      />
-                     <GoalCardItemCounter
+                     <GoalCardItemCard
                         nutrientsTotal={goals.total_protein}
+                        IconSvg={BsEggFried}
                         type={'Protein'}
                         page={page}
                         setGoals={setGoals}
                         goals={goals}
                      />
-                     <GoalCardItemCounter
+                     <GoalCardItemCard
                         nutrientsTotal={goals.total_fat}
+                        IconSvg={GiAvocado}
                         type={'Fat'}
                         page={page}
                         setGoals={setGoals}

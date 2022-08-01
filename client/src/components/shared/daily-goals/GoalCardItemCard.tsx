@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
+import './GoalCardItemCard.scss';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 import { GoalsType } from '../../../../types/types';
 import {
@@ -12,17 +13,20 @@ import {
 } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { IconType } from 'react-icons';
 
 interface Props {
-   nutrientsTotal: number;
    type: 'Carbohydrates' | 'Protein' | 'Fat';
+   IconSvg: IconType;
+   nutrientsTotal: number;
    page: 'search' | 'user-profile';
    setGoals?: Dispatch<SetStateAction<GoalsType>>;
    goals: GoalsType;
 }
 
-export const GoalCardItemCounter = ({
+export const GoalCardItemCard = ({
    nutrientsTotal,
+   IconSvg,
    type,
    page,
    setGoals,
@@ -36,6 +40,8 @@ export const GoalCardItemCounter = ({
          </Stack>
       </>
    );
+
+   console.log('iconSvg: ', IconSvg);
    //takes in total macronutrient amount entered and also changes associated min and max amounts
    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       if (setGoals !== undefined) {
@@ -75,8 +81,18 @@ export const GoalCardItemCounter = ({
    };
    return (
       <>
-         <Card>
-            <CardContent>
+         <Card sx={{ borderRadius: '15%' }}>
+            <CardContent
+               sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: '8rem',
+                  width: '8rem',
+                  aligItems: 'center',
+                  justifyContent: 'center',
+               }}
+            >
+               <IconSvg size='1.5em' className='goal-card-icon' />
                {page === 'user-profile' ? (
                   <Input
                      value={`${nutrientsTotal}`}
@@ -87,9 +103,13 @@ export const GoalCardItemCounter = ({
                      required
                   />
                ) : (
-                  <Typography variant='subtitle1'>{nutrientsTotal}</Typography>
+                  <Typography align='center' variant='h6'>
+                     {nutrientsTotal} g
+                  </Typography>
                )}
-               <Typography variant='body2'>grams of {type}</Typography>
+               <Typography align='center' variant='body2'>
+                  {type}
+               </Typography>
             </CardContent>
          </Card>
       </>

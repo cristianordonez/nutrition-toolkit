@@ -14,7 +14,7 @@ interface Props {
    nutrientsInMealPlan: number;
 }
 
-export const GoalCardItem = ({
+export const GoalCardItemLinearProgress = ({
    nutrientsTotal,
    type,
    nutrientsInMealPlan,

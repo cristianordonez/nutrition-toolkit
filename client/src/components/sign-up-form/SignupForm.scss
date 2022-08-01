@@ -1,13 +1,13 @@
 @use '../../index.scss' as *;
 
 .signup {
-   // @include flex-center-horiz();
    @include flex-center();
+   @include set-size(100%);
+   justify-content: center;
    padding-top: 10vh;
-   // @include set-size(100%);
    .signup-form {
-      @include flex-center();
       @include set-size(100%);
+      @include flex-center();
       flex-direction: column;
       gap: 1em;
       padding: 1rem;
