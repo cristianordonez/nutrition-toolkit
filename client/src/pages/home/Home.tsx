@@ -55,6 +55,11 @@ export const Home = (props: any) => {
                   >
                      DiabetesCoach
                   </Typography>
+                  <Typography variant='body1'>
+                     We help you calculate your daily carbohydrate needs and
+                     give you the power to create and customize your own custom
+                     meal plan.
+                  </Typography>
                   <div className='home-btn'>
                      <Button
                         variant='contained'

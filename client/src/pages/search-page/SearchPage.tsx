@@ -5,6 +5,7 @@ import { CustomAlert } from '../../components/shared/CustomAlert';
 import { FoodSearchList } from '../../components/food-search-list';
 import {
    Grid,
+   Box,
    Toolbar,
    IconButton,
    Alert,
@@ -171,7 +172,6 @@ export const SearchPage = () => {
       }
    };
 
-   //todo check if there are more items present, if not then toggle load more buton off
    //# handles showing more items from api
    const handleLoadMore = async (event: React.SyntheticEvent) => {
       try {
@@ -229,7 +229,12 @@ export const SearchPage = () => {
          {isLoading ? null : (
             <>
                <NavBar isLoggedIn={true} />
-               <Grid className='search-page' container spacing={1}>
+               <Box
+                  className='search-page'
+                  // container
+                  // spacing={0}
+                  sx={{ width: '100vw' }}
+               >
                   {/* PROGRESS BAR */}
                   {loading && <CircularProgress size={68} />}
                   <Toolbar>
@@ -253,23 +258,23 @@ export const SearchPage = () => {
                   {/* MAIN SECTION  */}
                   {apiData.length ? (
                      <>
-                        <Grid item xs={12} sm={8}>
-                           <FoodSearchList
-                              apiData={apiData}
-                              route={route}
-                              handleLoadMore={handleLoadMore}
-                              setAlertMessage={setAlertMessage}
-                              setOpenSnackbar={setOpenSnackbar}
-                              setAlertSeverity={setAlertSeverity}
-                              showLoadMoreBtn={showLoadMoreBtn}
-                           />
-                        </Grid>
+                        {/* <Grid item xs={12} sm={8}> */}
+                        <FoodSearchList
+                           apiData={apiData}
+                           route={route}
+                           handleLoadMore={handleLoadMore}
+                           setAlertMessage={setAlertMessage}
+                           setOpenSnackbar={setOpenSnackbar}
+                           setAlertSeverity={setAlertSeverity}
+                           showLoadMoreBtn={showLoadMoreBtn}
+                        />
+                        {/* </Grid> */}
                      </>
                   ) : (
                      <>
-                        <Grid item xs={12} sm={8}>
-                           {SearchFormComponent}
-                        </Grid>
+                        {/* <Grid item xs={12} sm={8}> */}
+                        {SearchFormComponent}
+                        {/* </Grid> */}
                      </>
                   )}
                   {/* ERROR SNACKBAR */}
@@ -279,7 +284,7 @@ export const SearchPage = () => {
                      alertSeverity={alertSeverity}
                      alertMessage={alertMessage}
                   />
-               </Grid>
+               </Box>
             </>
          )}
       </>

@@ -15,6 +15,10 @@ import {
    MenuItem,
    Icon,
    Link,
+   List,
+   ListItem,
+   ListItemText,
+   Stack,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -27,43 +31,16 @@ import { ColorModeContext } from '../../pages/App';
 import { useTheme } from '@mui/material/styles';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { useLocation } from 'react-router-dom';
 const pages = ['Search', 'Macro Calculator', 'Meal Plan'];
 
-// function MyApp() {
-//    const theme = useTheme();
-//    const colorMode = React.useContext(ColorModeContext);
-//    return (
-//       <Box
-//          sx={{
-//             display: 'flex',
-//             width: '100%',
-//             alignItems: 'center',
-//             justifyContent: 'center',
-//             bgcolor: 'background.default',
-//             color: 'text.primary',
-//             borderRadius: 1,
-//             p: 3,
-//          }}
-//       >
-//          {theme.palette.mode} mode
-// <IconButton
-//    sx={{ ml: 1 }}
-//    onClick={colorMode.toggleColorMode}
-//    color='inherit'
-// >
-//    {theme.palette.mode === 'dark' ? (
-//       <Brightness7Icon />
-//    ) : (
-//       <Brightness4Icon />
-//    )}
-// </IconButton>
-//       </Box>
-//    );
 interface Props {
    isLoggedIn: boolean;
 }
 
 const NavBar = ({ isLoggedIn }: Props) => {
+   const location = useLocation();
+
    //! setting the theme here
    const theme = useTheme();
    const colorMode = useContext(ColorModeContext);
@@ -106,6 +83,12 @@ const NavBar = ({ isLoggedIn }: Props) => {
       }
    };
 
+   const handleNavigateToHome = () => {
+      navigate('/');
+   };
+
+   // if (location.pathname)
+   console.log('colorMode: ', colorMode);
    return (
       <AppBar
          position='fixed'
@@ -114,7 +97,7 @@ const NavBar = ({ isLoggedIn }: Props) => {
             boxShadow: 'none',
             padding: '0 1vw',
          }}
-         color='transparent'
+         color='default'
          enableColorOnDark={true}
       >
          {/* <Container maxWidth='xl'> */}
@@ -126,19 +109,22 @@ const NavBar = ({ isLoggedIn }: Props) => {
                src={LOGO}
                sx={{
                   display: { md: 'flex' },
+                  // flexGrow: { xs: '1', md: '0' },
                   mr: 1,
                   objectFit: 'contain',
                   height: '2.5rem',
                }}
+               onClick={handleNavigateToHome}
             ></Box>
             <Typography
                variant='h6'
                noWrap
+               data-testid='navlink'
                component='a'
                href='/'
                sx={{
                   mr: 2,
-                  display: { md: 'flex' },
+                  display: { xs: 'none', md: 'flex' },
                   // fontFamily: 'monospace',
                   fontWeight: 700,
                   letterSpacing: '.3rem',
@@ -185,50 +171,72 @@ const NavBar = ({ isLoggedIn }: Props) => {
                            display: { xs: 'block', md: 'none' },
                         }}
                      >
-                        {pages.map((page) => (
-                           <MenuItem key={page} onClick={handleCloseNavMenu}>
-                              <Typography textAlign='center'>{page}</Typography>
-                           </MenuItem>
-                        ))}
+                        <Stack direction='column'>
+                           {pages.map((page) =>
+                              // <Link key={page} onClick={handleCloseNavMenu}>
+                              //    <Typography textAlign='center'>{page}</Typography>
+                              // </Link>
+                              page.toLowerCase().replace(' ', '') ===
+                              location.pathname.slice(1) ? (
+                                 <Link
+                                    onClick={handleCloseNavMenu}
+                                    key={page}
+                                    underline='hover'
+                                    variant='overline'
+                                    href={`/${page
+                                       .toLowerCase()
+                                       .replace(/ /g, '')}`}
+                                 >
+                                    {page}
+                                 </Link>
+                              ) : (
+                                 <Link
+                                    onClick={handleCloseNavMenu}
+                                    key={page}
+                                    underline='hover'
+                                    variant='overline'
+                                    color='secondary'
+                                    href={`/${page
+                                       .toLowerCase()
+                                       .replace(/ /g, '')}`}
+                                 >
+                                    {page}
+                                 </Link>
+                              )
+                           )}
+                        </Stack>
                      </Menu>
                   </Box>
-
-                  <AdbIcon
-                     sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}
-                  />
-                  <Typography
-                     variant='h5'
-                     noWrap
-                     component='a'
-                     data-testid='navlink'
-                     href=''
-                     sx={{
-                        mr: 2,
-                        display: { xs: 'flex', md: 'none' },
-                        flexGrow: 1,
-                        fontFamily: 'monospace',
-                        fontWeight: 700,
-                        letterSpacing: '.3rem',
-                        color: 'inherit',
-                        textDecoration: 'none',
-                     }}
-                  >
-                     LOGO
-                  </Typography>
                   <Box
                      sx={{
                         flexGrow: 1,
                         display: { xs: 'none', md: 'flex' },
+                        gap: 2,
                      }}
                   >
-                     {pages.map((page) => (
-                        <NavLink
-                           key={page}
-                           to={`/${page.toLowerCase().replace(/ /g, '')}`}
-                        >
-                           {page}
-                        </NavLink>
-                     ))}
+                     {pages.map((page) =>
+                        page.toLowerCase().replace(' ', '') ===
+                        location.pathname.slice(1) ? (
+                           <Link
+                              key={page}
+                              underline='hover'
+                              variant='overline'
+                              href={`/${page.toLowerCase().replace(/ /g, '')}`}
+                           >
+                              {page}
+                           </Link>
+                        ) : (
+                           <Link
+                              key={page}
+                              underline='hover'
+                              variant='overline'
+                              color='secondary'
+                              href={`/${page.toLowerCase().replace(/ /g, '')}`}
+                           >
+                              {page}
+                           </Link>
+                        )
+                     )}
                   </Box>
 
                   <Box sx={{ flexGrow: 0 }}>
@@ -285,9 +293,9 @@ const NavBar = ({ isLoggedIn }: Props) => {
                   data-testid='home-page'
                   className='navbar-login'
                   variant='overline'
-                  sx={{ fontWeight: 'bold' }}
+                  sx={{ fontWeight: 'bold', marginLeft: 'auto' }}
                >
-                  Log in
+                  <Typography variant='overline'>Log in</Typography>
                </Link>
             )}
             <IconButton

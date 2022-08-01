@@ -28,10 +28,10 @@ export const SearchFormCustom = ({
       <>
          <form onSubmit={handleSubmit}>
             <Stack spacing={3}>
-               <Typography variant='body1'>
+               {/* <Typography variant='body1'>
                   Search for either recipe, a grocery product, or a menu item
                   from large list of restaurants
-               </Typography>
+               </Typography> */}
                {/* ROUTES */}
 
                <SearchInput

@@ -1,8 +1,10 @@
 @use '../../index.scss' as *;
 
 .search-page {
+   @include set-size(auto, 100vw);
    @include devices(mobile) {
       padding-left: 0;
    }
    padding-left: 350px;
+   @include flex-center-horiz();
 }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './index.scss';
 import ScreenSearchDesktopIcon from '@mui/icons-material/ScreenSearchDesktop';
 import { Stack, Tabs, Tab, Typography } from '@mui/material';
 import { SearchFormSuggested } from './SearchFormSuggested';
@@ -56,17 +57,22 @@ export const SearchForm = ({
       setValues({ ...values, type: event.target.value });
    };
    return (
-      <>
+      <div className='search-form'>
          <Stack direction='row' spacing={1}>
             <ScreenSearchDesktopIcon />
-            <Typography variant='h4' component='h1'>
+            {/* <Typography variant='h4' component='h1'>
                Search
+            </Typography> */}
+            <Typography variant='body1'>
+               Find recipes, grocery products, or menu items from over 800+
+               restaurants that match your nutrient goals
             </Typography>
          </Stack>
          <Tabs
             value={currentTab}
             onChange={handleChange}
             aria-label='toggle suggested search'
+            className='search-form-tabs'
          >
             <Tab value='custom-search' label='Custom Search' />
             <Tab value='suggested-goals' label='Suggested Goals' />
@@ -92,6 +98,6 @@ export const SearchForm = ({
                handleSuggestedSubmit={handleSuggestedSubmit}
             />
          )}
-      </>
+      </div>
    );
 };

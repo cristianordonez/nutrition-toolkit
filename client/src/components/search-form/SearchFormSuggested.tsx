@@ -29,11 +29,16 @@ export const SearchFormSuggested = ({
       <>
          <form onSubmit={handleSuggestedSubmit}>
             <Stack spacing={3}>
-               <Typography variant='body1'>
+               {/* <Typography variant='body1'>
                   Search for either recipe, a grocery product, or a menu item
                   from large list of restaurants
-               </Typography>
+               </Typography> */}
                {/* ROUTES */}
+               <Typography variant='subtitle2'>
+                  {' '}
+                  Suggested goals are calculated based on recommend amounts per
+                  meal, considering 3 meals are had per day.
+               </Typography>
 
                <SearchInput
                   route={route}
@@ -51,11 +56,6 @@ export const SearchFormSuggested = ({
                   type={values.type}
                   handleTypeSelect={handleTypeSelect}
                />
-               <Typography variant='subtitle2'>
-                  {' '}
-                  Suggested goals are calculated based on recommend amounts per
-                  meal, considering 3 meals are had per day.
-               </Typography>
                {/* CALORIES */}
                <Typography variant='h6'>Choose Calorie Range</Typography>
                <NutrientInputForm
