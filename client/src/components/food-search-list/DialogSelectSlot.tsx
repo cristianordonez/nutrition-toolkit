@@ -10,9 +10,9 @@ import {
 } from '@mui/material';
 
 const menuItemsArray = [
-   { value: 1, name: 'Breakfast' },
-   { value: 2, name: 'Lunch' },
-   { value: 3, name: 'Dinner' },
+   { value: 1, name: 'Morning' },
+   { value: 2, name: 'Afternoon' },
+   { value: 3, name: 'Evening' },
 ];
 
 interface Props {
@@ -37,7 +37,7 @@ export const DialogSelectSlot = ({ slot, handleSelectSlot }: Props) => {
                </MenuItem>
             ))}
          </Select>
-         <FormHelperText>Choose correct slot for chose day</FormHelperText>
+         <FormHelperText>Choose correct slot for chosen day</FormHelperText>
       </FormControl>
    );
 };

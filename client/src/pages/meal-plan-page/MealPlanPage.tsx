@@ -4,8 +4,10 @@ import { SidebarMealplan } from '../../components/sidebar-mealplan/SideBarMealPl
 import { DateSelectForm } from '../../components/date-select-form/DateSelectForm';
 import { MealplanDay, MealplanItemType } from '../../components/mealplan-day';
 import { CustomAlert } from '../../components/shared/CustomAlert';
+import { MealPlanWeekText } from '../../components/mealplan-week-text/MealPlanWeekText';
 import {
    Typography,
+   Box,
    Tabs,
    Tab,
    AlertColor,
@@ -21,6 +23,8 @@ import addDays from 'date-fns/addDays';
 import subDays from 'date-fns/subDays';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useAuth } from '../../context/authContext';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import startOfWeek from 'date-fns/startOfWeek';
 
 const days = [
    'Sunday',
@@ -36,7 +40,7 @@ export const MealPlanPage = () => {
    const isLoading = useAuth();
    const [dayIndex, setDayIndex] = useState<number>(getDay(Date.now())); //used for tab highlighting
    const [mealplanItems, setMealplanItems] = useState<[]>([]);
-   const [mealplanItemsFound, setMealplanItemsFound] = useState(true); //use this to display different page if no items are found
+   const [mealplanItemsFound, setMealplanItemsFound] = useState<boolean>(true); //use this to display different page if no items are found
    const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
    const [alertSeverity, setAlertSeverity] = useState<AlertColor | undefined>(
       'error'
@@ -51,6 +55,7 @@ export const MealPlanPage = () => {
    const [value, setValue] = React.useState<any>(new Date(Date.now()));
    const [mobileOpen, setMobileOpen] = React.useState(false);
    const [nutritionSummary, setNutritionSummary] = useState<any[]>([]);
+
    const handleClose = (event: React.SyntheticEvent | Event) => {
       setOpenSnackbar(false);
    };
@@ -104,14 +109,11 @@ export const MealPlanPage = () => {
       setMealplanItems([]); //when tab changes, reset the nutrition summary and the mealplan items
       setNutritionSummary([]);
       try {
-         console.log('currentDay:', currentDay);
          let response = await axios.get('/api/mealplan/day', {
             params: { date: currentDay },
             withCredentials: true,
          });
-         console.log('response in get emal plan day: ', response);
          setNutritionSummary(response.data.nutritionSummary.nutrients);
-
          setMealplanItems(response.data.items);
          response.data.items.forEach((item: MealplanItemType) => {
             if (item.slot === 1) {
@@ -136,11 +138,13 @@ export const MealPlanPage = () => {
       }
    };
 
+   console.log('currentDay: ', currentDay);
+
    return isLoading ? null : (
       <>
          <NavBar isLoggedIn={true} />
          <div className='mealplan-page'>
-            <Toolbar>
+            <Toolbar sx={{ display: { sm: 'none' } }}>
                <IconButton
                   color='inherit'
                   aria-label='open drawer'
@@ -160,12 +164,22 @@ export const MealPlanPage = () => {
                mealplanItems={mealplanItems}
                mealplanItemsFound={mealplanItemsFound}
             />
-            <Typography variant='subtitle2'>
-               Note: no snacks are included by default to help keep carbohydrate
-               levels stable. For low carb snack ideas, check out ...
-            </Typography>
-            <Stack direction={'row'}>
-               <Typography variant='h1'>Meal Planner</Typography>
+            <Box
+               sx={{
+                  p: '1rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1rem',
+               }}
+            >
+               <Stack direction='row' spacing={1}>
+                  <CalendarMonthIcon />
+                  <Typography variant='body1'>
+                     View your daily meal plan items or begin to add items to
+                     your meal plan
+                  </Typography>
+               </Stack>
+               {/* <Stack direction={'row'}> */}
                <DateSelectForm
                   setBreakfastItems={setBreakfastItems}
                   setLunchItems={setLunchItems}
@@ -176,28 +190,30 @@ export const MealPlanPage = () => {
                   value={value}
                   setValue={setValue}
                />
-            </Stack>
-            <Tabs value={dayIndex} onChange={handleTabChange}>
-               {days.map((day) => (
-                  <Tab key={day} label={day} />
-               ))}
-            </Tabs>
+               <MealPlanWeekText currentDay={currentDay} />
+               {/* </Stack> */}
+               <Tabs value={dayIndex} onChange={handleTabChange}>
+                  {days.map((day) => (
+                     <Tab key={day} label={day} />
+                  ))}
+               </Tabs>
 
-            <MealplanDay
-               setMealPlanItems={setMealplanItems}
-               currentDay={currentDay}
-               mealplanItems={mealplanItems}
-               setOpenSnackbar={setOpenSnackbar}
-               setAlertSeverity={setAlertSeverity}
-               setAlertMessage={setAlertMessage}
-            />
+               <MealplanDay
+                  setMealPlanItems={setMealplanItems}
+                  currentDay={currentDay}
+                  mealplanItems={mealplanItems}
+                  setOpenSnackbar={setOpenSnackbar}
+                  setAlertSeverity={setAlertSeverity}
+                  setAlertMessage={setAlertMessage}
+               />
 
-            <CustomAlert
-               openAlert={openSnackbar}
-               handleAlert={handleClose}
-               alertSeverity={alertSeverity}
-               alertMessage={alertMessage}
-            />
+               <CustomAlert
+                  openAlert={openSnackbar}
+                  handleAlert={handleClose}
+                  alertSeverity={alertSeverity}
+                  alertMessage={alertMessage}
+               />
+            </Box>
          </div>
       </>
    );

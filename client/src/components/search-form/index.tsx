@@ -74,8 +74,8 @@ export const SearchForm = ({
             aria-label='toggle suggested search'
             className='search-form-tabs'
          >
-            <Tab value='custom-search' label='Custom Search' />
-            <Tab value='suggested-goals' label='Suggested Goals' />
+            <Tab value='custom-search' label='Custom' />
+            <Tab value='suggested-goals' label='Suggested' />
          </Tabs>
 
          {currentTab === 'custom-search' ? (

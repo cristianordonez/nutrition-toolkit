@@ -87,7 +87,9 @@ export const SearchFormCustom = ({
                   minValue={values.minFat}
                   maxValue={values.maxFat}
                />
-               <Button type='submit'>Submit</Button>
+               <Button type='submit' variant='contained'>
+                  Submit
+               </Button>
             </Stack>
          </form>
       </>

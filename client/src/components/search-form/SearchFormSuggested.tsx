@@ -93,7 +93,9 @@ export const SearchFormSuggested = ({
                   minValue={goals.min_fat_per_meal}
                   maxValue={goals.max_fat_per_meal}
                />
-               <Button type='submit'>Submit</Button>
+               <Button type='submit' variant='contained'>
+                  Submit
+               </Button>
             </Stack>
          </form>
       </>

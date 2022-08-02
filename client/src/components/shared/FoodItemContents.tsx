@@ -1,4 +1,5 @@
 import React, { MouseEventHandler } from 'react';
+import './FoodSearchItemContents.scss';
 import {
    Paper,
    Card,
@@ -76,8 +77,6 @@ export const FoodItemContents = ({
       carbs = nutrition.carbs;
    }
 
-   console.log('fat: ', fat);
-   console.log('nutrition: ', nutrition.fat);
    return (
       <Paper elevation={1} className='food-search-paper'>
          {/* opens the dialog to confirm delete */}

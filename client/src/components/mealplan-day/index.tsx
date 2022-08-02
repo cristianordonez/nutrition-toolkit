@@ -51,7 +51,7 @@ export const MealplanDay = ({
       });
       return (
          <>
-            <Typography variant='h3'>Breakfast</Typography>
+            <Typography variant='h3'>Morning</Typography>
             {breakfastItems.map((item: MealplanItemType) => (
                <React.Fragment key={item.id}>
                   <MealplanItem
@@ -69,7 +69,7 @@ export const MealplanDay = ({
                   />
                </React.Fragment>
             ))}
-            <Typography variant='h3'>Lunch</Typography>
+            <Typography variant='h3'>Afternoon</Typography>
             {lunchItems.map((item) => (
                <React.Fragment key={item.id}>
                   <MealplanItem
@@ -87,7 +87,7 @@ export const MealplanDay = ({
                   />
                </React.Fragment>
             ))}
-            <Typography variant='h3'>Dinner</Typography>
+            <Typography variant='h3'>Evening</Typography>
             {dinnerItems.map((item) => (
                <React.Fragment key={item.id}>
                   <MealplanItem
@@ -111,9 +111,9 @@ export const MealplanDay = ({
       //todo render a sample mealplan here
       return (
          <>
-            <Typography variant='h3'>Breakfast</Typography>
-            <Typography variant='h3'>Lunch</Typography>
-            <Typography variant='h3'>Dinner</Typography>
+            <Typography variant='h3'>Morning</Typography>
+            <Typography variant='h3'>Afternoon</Typography>
+            <Typography variant='h3'>Evening</Typography>
          </>
       );
    }

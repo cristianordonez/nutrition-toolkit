@@ -237,7 +237,7 @@ export const SearchPage = () => {
                >
                   {/* PROGRESS BAR */}
                   {loading && <CircularProgress size={68} />}
-                  <Toolbar>
+                  <Toolbar sx={{ display: { sm: 'none' } }}>
                      <IconButton
                         color='inherit'
                         aria-label='open drawer'

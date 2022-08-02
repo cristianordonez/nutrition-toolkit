@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './UserProfilePage.scss';
 import { DailyGoals } from '../../components/shared/daily-goals';
 import { CustomAlert } from '../../components/shared/CustomAlert';
 import { AlertColor } from '@mui/material';
@@ -67,18 +68,20 @@ export const UserSettingsPage = () => {
    return isLoading ? null : (
       <>
          <NavBar isLoggedIn={true} />
-         <DailyGoals
-            goals={goals}
-            page={'user-profile'}
-            setGoals={setGoals}
-            handleSubmitUpdatedGoals={handleSubmitUpdatedGoals}
-         />
-         <CustomAlert
-            openAlert={openAlert}
-            handleAlert={handleAlert}
-            alertSeverity={alertSeverity}
-            alertMessage={alertMessage}
-         />
+         <div className='user-profile-page'>
+            <DailyGoals
+               goals={goals}
+               page={'user-profile'}
+               setGoals={setGoals}
+               handleSubmitUpdatedGoals={handleSubmitUpdatedGoals}
+            />
+            <CustomAlert
+               openAlert={openAlert}
+               handleAlert={handleAlert}
+               alertSeverity={alertSeverity}
+               alertMessage={alertMessage}
+            />
+         </div>
       </>
    );
 };

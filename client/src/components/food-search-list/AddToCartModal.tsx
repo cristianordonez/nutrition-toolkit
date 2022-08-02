@@ -128,6 +128,7 @@ export const AddToCartModal = ({
                   data-testid='add-mealplan-btn'
                   aria-label='submit form to add to meal plan'
                   type='submit'
+                  variant='contained'
                >
                   Submit
                </Button>

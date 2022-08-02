@@ -1,4 +1,5 @@
 import React from 'react';
+import './index.scss';
 import { FoodSearchItem } from './food-search-item/FoodSearchItem';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
@@ -16,13 +17,13 @@ export const FoodSearchList = ({
    setAlertSeverity,
    showLoadMoreBtn,
 }: any) => {
-   console.log('apiData:', apiData);
    return (
-      <>
+      <div className='food-search-list'>
          <Stack direction='row' spacing={1}>
             <MenuBookIcon />
-            <Typography variant='h4' component='h1'>
-               Results
+            <Typography variant='body1'>
+               Click on the Add to Mealplan button then choose intended date and
+               slot (morning, afternoon, or evening) to save any item
             </Typography>
          </Stack>
          <Grid container spacing={2}>
@@ -44,10 +45,10 @@ export const FoodSearchList = ({
             ))}
          </Grid>
          {showLoadMoreBtn ? (
-            <Button fullWidth onClick={handleLoadMore}>
+            <Button fullWidth onClick={handleLoadMore} variant='contained'>
                Load More
             </Button>
          ) : null}
-      </>
+      </div>
    );
 };

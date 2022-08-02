@@ -1,0 +1,7 @@
+@use '../../index.scss' as *;
+
+.user-profile-page {
+   @include set-size(auto, 100vw);
+   @include flex-center-horiz();
+   padding-top: 10vw;
+}

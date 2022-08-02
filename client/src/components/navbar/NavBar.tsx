@@ -74,6 +74,11 @@ const NavBar = ({ isLoggedIn }: Props) => {
       setAnchorElUser(null);
    };
 
+   const handleUserProfileClick = () => {
+      setAnchorElUser(null);
+      navigate('/settings');
+   };
+
    const handleLogout = async () => {
       try {
          let response = await axios.post('/api/logout');
@@ -268,12 +273,8 @@ const NavBar = ({ isLoggedIn }: Props) => {
                         open={Boolean(anchorElUser)}
                         onClose={handleMenuClick}
                      >
-                        <MenuItem onClick={handleMenuClick}>
-                           <Typography
-                              textAlign='center'
-                              component='a'
-                              href='/settings'
-                           >
+                        <MenuItem onClick={handleUserProfileClick}>
+                           <Typography textAlign='center'>
                               User Profile
                            </Typography>
                         </MenuItem>

@@ -26,7 +26,6 @@ interface Props {
 //
 //
 //
-//
 export const DateSelectForm = ({
    currentDay,
    setCurrentDay,
@@ -52,32 +51,40 @@ export const DateSelectForm = ({
    };
 
    return (
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-         {/* mobile */}
-         <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
-            <MobileDatePicker
-               label='Current Date'
-               inputFormat='MM/dd/yyyy'
-               value={currentDay}
-               onChange={handleChange}
-               renderInput={(params) => (
-                  <TextField {...params} variant='standard' />
-               )}
-            />
-         </Box>
-         {/* desktop */}
-         <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            <DesktopDatePicker
-               label='Current Date'
-               inputFormat='MM/dd/yyyy'
-               data-testid='date-picker-textfield'
-               value={value}
-               onChange={handleChange}
-               renderInput={(params) => (
-                  <TextField {...params} variant='standard' />
-               )}
-            />
-         </Box>
-      </LocalizationProvider>
+      <Box
+         sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+         }}
+      >
+         <LocalizationProvider dateAdapter={AdapterDateFns}>
+            {/* mobile */}
+            <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+               <MobileDatePicker
+                  label='Current Date'
+                  inputFormat='MM/dd/yyyy'
+                  value={currentDay}
+                  onChange={handleChange}
+                  renderInput={(params) => (
+                     <TextField {...params} variant='standard' />
+                  )}
+               />
+            </Box>
+            {/* desktop */}
+            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+               <DesktopDatePicker
+                  label='Current Date'
+                  inputFormat='MM/dd/yyyy'
+                  data-testid='date-picker-textfield'
+                  value={value}
+                  onChange={handleChange}
+                  renderInput={(params) => (
+                     <TextField {...params} variant='standard' />
+                  )}
+               />
+            </Box>
+         </LocalizationProvider>
+      </Box>
    );
 };

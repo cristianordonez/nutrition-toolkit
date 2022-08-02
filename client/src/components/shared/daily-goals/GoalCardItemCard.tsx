@@ -41,7 +41,6 @@ export const GoalCardItemCard = ({
       </>
    );
 
-   console.log('iconSvg: ', IconSvg);
    //takes in total macronutrient amount entered and also changes associated min and max amounts
    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       if (setGoals !== undefined) {
@@ -86,8 +85,8 @@ export const GoalCardItemCard = ({
                sx={{
                   display: 'flex',
                   flexDirection: 'column',
-                  height: '8rem',
-                  width: '8rem',
+                  height: '10rem',
+                  width: '10rem',
                   aligItems: 'center',
                   justifyContent: 'center',
                }}
