@@ -138,8 +138,6 @@ export const MealPlanPage = () => {
       }
    };
 
-   console.log('currentDay: ', currentDay);
-
    return isLoading ? null : (
       <>
          <NavBar isLoggedIn={true} />

@@ -57,7 +57,6 @@ export const UserSettingsPage = () => {
             setOpenAlert(true);
          }
       } catch (err) {
-         console.log('err in handle submit goals: ', err);
          setAlertMessage('Could not update goals. Please try again.');
          setAlertSeverity('error');
          setOpenAlert(true);
@@ -75,7 +74,6 @@ export const UserSettingsPage = () => {
                   will be calculated based on your input)
                </Typography>
             </Stack>
-
             <DailyGoals
                goals={goals}
                page={'user-profile'}

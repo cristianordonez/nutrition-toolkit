@@ -1,29 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import {
    Button,
-   Snackbar,
-   Alert,
    Grid,
    Typography,
    Stack,
-   Box,
    Slide,
+   AlertColor,
 } from '@mui/material';
 import { HomePageCard } from '../../components/home-page-card/HomePageCard';
+import { CustomAlert } from '../../components/shared/CustomAlert';
 import NavBar from '../../components/navbar/NavBar';
 import './Home.scss';
-import DietMealPlan from '../../../img/diet_meal_plan.svg';
-import Chef_Isometric from '../../../img/Chef_Isometric.svg';
-import Chef_Monochromatic from '../../../img/Chef_Monochromatic.svg';
 import DietitianSvg from '../../../img/dietitian.svg';
 import MaleChefSvg from '../../../img/male-chef.svg';
-import FormSvg from '../../../img/form.svg';
 import ScheduleSvg from '../../../img/schedule.svg';
 import CalculateSvg from '../../../img/calculate.svg';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 
-export const Home = (props: any) => {
+type LocationType = {
+   pathname: string;
+   key: string;
+   search: string;
+   state: { loggedOut: boolean };
+};
+
+export const Home = () => {
+   const [alertSeverity, setAlertSeverity] = useState<AlertColor | undefined>(
+      'success'
+   );
+   const [openAlert, setOpenAlert] = useState(false);
+   const [alertMessage, setAlertMessage] = useState(''); //message displayed on snackbar
+
+   //handles showing snackbar if request to server to login is not successful
+   const handleAlert = () => {
+      setOpenAlert(!openAlert);
+   };
+
    const cardMessages = [
       'Use our Macronutrient Calculator to find your estimated daily carbohydrate needs',
       'Search for recipes, grocery products or menu items that match your nutrient needs',
@@ -36,7 +49,17 @@ export const Home = (props: any) => {
    ];
    const navigate = useNavigate();
    const cardImages = [CalculateSvg, MaleChefSvg, ScheduleSvg];
+   const location = useLocation() as LocationType;
 
+   console.log('location: ', location);
+   //when logged out, react router sends state saying log out was successful to show alert
+   useEffect(() => {
+      if (location.state && location.state.loggedOut) {
+         setAlertSeverity('success');
+         setAlertMessage('You have been logged out.');
+         setOpenAlert(true);
+      }
+   }, [location]);
    return (
       <>
          <NavBar isLoggedIn={false} />
@@ -88,6 +111,12 @@ export const Home = (props: any) => {
                </Grid>
             </Slide>
          </div>
+         <CustomAlert
+            openAlert={openAlert}
+            handleAlert={handleAlert}
+            alertSeverity={alertSeverity}
+            alertMessage={alertMessage}
+         />
       </>
    );
 };

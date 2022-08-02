@@ -83,7 +83,7 @@ const NavBar = ({ isLoggedIn, isSettingsPage }: Props) => {
    const handleLogout = async () => {
       try {
          let response = await axios.post('/api/logout');
-         navigate('/');
+         navigate('/', { state: { loggedOut: true }, replace: true });
       } catch (err) {
          console.log('err:', err);
       }
