@@ -107,10 +107,17 @@ export const AddToCartModal = ({
 
    return (
       <Dialog open={openDialog}>
-         <DialogTitle>Enter custom calorie and carbohydrate</DialogTitle>
+         <DialogTitle align='left'>
+            Select preferred day, slot and number of servings to add to Meaplan
+         </DialogTitle>
          <form onSubmit={handleSubmit}>
             <DialogContent>
-               <Box display='flex' flexDirection='column' gap='10px'>
+               <Box
+                  display='flex'
+                  flexDirection='column'
+                  gap='1rem'
+                  // alignItems='flex-start'
+               >
                   <DatePickerTextField setData={setData} data={data} />
                   <DialogSelectSlot
                      handleSelectSlot={handleSelectSlot}
@@ -123,7 +130,14 @@ export const AddToCartModal = ({
                </Box>
             </DialogContent>
             <DialogActions>
-               <Button onClick={handleOpeningDialog}>Cancel</Button>
+               <Button
+                  variant='contained'
+                  aria-label='cancel'
+                  onClick={handleOpeningDialog}
+                  color='error'
+               >
+                  Cancel
+               </Button>
                <Button
                   data-testid='add-mealplan-btn'
                   aria-label='submit form to add to meal plan'

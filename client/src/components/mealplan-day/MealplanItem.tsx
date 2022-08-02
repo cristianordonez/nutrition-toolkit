@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { ConfirmDeleteDialog } from './ConfirmDeleteDialog';
 import { FoodItemContents } from '../shared/FoodItemContents';
-import { AlertColor } from '@mui/material';
+import { AlertColor, Grid } from '@mui/material';
 import { FoodItemType } from '../food-search-list/food-search-list.types';
 import axios from 'axios';
 
@@ -63,7 +63,7 @@ export const MealplanItem = ({
 
    if (itemData) {
       return (
-         <>
+         <Grid item xs={12} sm={6} md={4} xl={3}>
             <FoodItemContents
                servings={servings}
                route={type}
@@ -86,7 +86,7 @@ export const MealplanItem = ({
                setOpenDialog={setOpenDialog}
                handleOpeningDialog={handleOpeningDialog}
             />
-         </>
+         </Grid>
       );
    } else {
       return <div>Loading...</div>;

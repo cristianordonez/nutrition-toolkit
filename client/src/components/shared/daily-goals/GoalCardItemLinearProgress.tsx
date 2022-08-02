@@ -29,17 +29,27 @@ export const GoalCardItemLinearProgress = ({
    return (
       <>
          <Card>
-            <CardContent>
-               <Stack direction={'row'}>
+            <CardContent
+               sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  minWidth: '240px',
+                  flexGrow: '0',
+                  gap: '1rem',
+               }}
+            >
+               <Stack direction={'row'} gap='1rem' alignItems='space-between'>
                   <Typography align='center' variant='body1'>
                      {type}
                   </Typography>
-
-                  <Typography align='center' variant='subtitle1'>
-                     {Math.floor(nutrientsInMealPlan)} / {nutrientsTotal}
+                  <Typography
+                     align='center'
+                     variant='body1'
+                     sx={{ marginLeft: 'auto' }}
+                  >
+                     {Math.floor(nutrientsInMealPlan)} / {nutrientsTotal} g
                   </Typography>
                </Stack>
-
                <LinearProgress variant='determinate' value={percentageTotal} />
             </CardContent>
          </Card>

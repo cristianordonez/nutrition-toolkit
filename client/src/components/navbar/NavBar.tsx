@@ -36,9 +36,10 @@ const pages = ['Search', 'Macro Calculator', 'Meal Plan'];
 
 interface Props {
    isLoggedIn: boolean;
+   isSettingsPage?: boolean;
 }
 
-const NavBar = ({ isLoggedIn }: Props) => {
+const NavBar = ({ isLoggedIn, isSettingsPage }: Props) => {
    const location = useLocation();
 
    //! setting the theme here
@@ -178,9 +179,6 @@ const NavBar = ({ isLoggedIn }: Props) => {
                      >
                         <Stack direction='column'>
                            {pages.map((page) =>
-                              // <Link key={page} onClick={handleCloseNavMenu}>
-                              //    <Typography textAlign='center'>{page}</Typography>
-                              // </Link>
                               page.toLowerCase().replace(' ', '') ===
                               location.pathname.slice(1) ? (
                                  <Link
@@ -219,27 +217,38 @@ const NavBar = ({ isLoggedIn }: Props) => {
                         gap: 2,
                      }}
                   >
-                     {pages.map((page) =>
-                        page.toLowerCase().replace(' ', '') ===
-                        location.pathname.slice(1) ? (
-                           <Link
-                              key={page}
-                              underline='hover'
-                              variant='overline'
-                              href={`/${page.toLowerCase().replace(/ /g, '')}`}
-                           >
-                              {page}
-                           </Link>
-                        ) : (
-                           <Link
-                              key={page}
-                              underline='hover'
-                              variant='overline'
-                              color='secondary'
-                              href={`/${page.toLowerCase().replace(/ /g, '')}`}
-                           >
-                              {page}
-                           </Link>
+                     {isSettingsPage !== undefined &&
+                     isSettingsPage === true ? (
+                        <Button variant='text' onClick={() => history.back()}>
+                           Go Back
+                        </Button>
+                     ) : (
+                        pages.map((page) =>
+                           page.toLowerCase().replace(' ', '') ===
+                           location.pathname.slice(1) ? (
+                              <Link
+                                 key={page}
+                                 underline='hover'
+                                 variant='overline'
+                                 href={`/${page
+                                    .toLowerCase()
+                                    .replace(/ /g, '')}`}
+                              >
+                                 {page}
+                              </Link>
+                           ) : (
+                              <Link
+                                 key={page}
+                                 underline='hover'
+                                 variant='overline'
+                                 color='secondary'
+                                 href={`/${page
+                                    .toLowerCase()
+                                    .replace(/ /g, '')}`}
+                              >
+                                 {page}
+                              </Link>
+                           )
                         )
                      )}
                   </Box>

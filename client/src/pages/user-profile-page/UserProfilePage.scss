@@ -2,6 +2,7 @@
 
 .user-profile-page {
    @include set-size(auto, 100vw);
-   @include flex-center-horiz();
-   padding-top: 10vw;
+   @include flex-center();
+   flex-direction: column;
+   padding-top: 5vh;
 }

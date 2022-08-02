@@ -1,6 +1,5 @@
 //shared sidebar
 import React, { ReactNode } from 'react';
-import './Sidebar.scss';
 import { DailyGoals } from '../daily-goals';
 import { IconButton, Toolbar, Drawer } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';

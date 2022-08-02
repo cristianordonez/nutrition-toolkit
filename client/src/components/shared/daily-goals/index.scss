@@ -2,6 +2,7 @@
 
 .daily-goals {
    @include flex-center-column();
+   gap: 1rem;
    .daily-goals-heading {
       position: relative;
       bottom: 20%;
@@ -15,7 +16,8 @@
       }
    }
    .daily-goals-items {
-      @include flex-center-column();
-      gap: 1rem;
+      @include flex-center();
+      flex-wrap: wrap;
+      gap: 3rem;
    }
 }

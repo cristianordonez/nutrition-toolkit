@@ -2,7 +2,7 @@ import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import './index.scss';
 import { Typography, CircularProgress, Button } from '@mui/material';
 import { GoalCardItemLinearProgress } from './GoalCardItemLinearProgress';
-import { GoalCardItemCard } from './GoalCardItemCard';
+import { GoalCardItemCard } from './goal-card-item-card/GoalCardItemCard';
 import { GoalsType } from '../../../../types/types';
 import { BsEggFried } from 'react-icons/bs';
 import { GiAvocado } from 'react-icons/gi';
@@ -69,21 +69,22 @@ export const DailyGoals = ({
             nutritionSummary !== undefined &&
             nutritionSummary.length ? (
                <>
-                  <CircularProgress
-                     variant='determinate'
-                     size={200}
-                     value={calories}
-                     thickness={1}
-                  />
-                  <div className='daily-goals-heading'>
-                     <Typography variant='body1'>Calories</Typography>
-
-                     <Typography variant='body1'>
-                        <em>
+                  <div className='daily-goals-kcal'>
+                     <CircularProgress
+                        variant='determinate'
+                        size={200}
+                        value={calories}
+                        thickness={1}
+                     />
+                     <div className='daily-goals-kcal-title'>
+                        <Typography variant='body1' align='center'>
+                           Calories
+                        </Typography>
+                        <Typography variant='h6'>
                            {Math.floor(nutritionSummary[5].amount)} /{' '}
                            {goals.total_calories}
-                        </em>
-                     </Typography>
+                        </Typography>
+                     </div>
                   </div>
                   <div
                      className='daily-goals-items'

@@ -1,16 +1,8 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import './GoalCardItemCard.scss';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
-import { GoalsType } from '../../../../types/types';
-import {
-   Card,
-   CardContent,
-   Typography,
-   TextField,
-   LinearProgress,
-   Stack,
-   Input,
-} from '@mui/material';
+import { GoalsType } from '../../../../../types/types';
+import { Card, CardContent, Typography, Stack, Input } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { IconType } from 'react-icons';
@@ -32,14 +24,14 @@ export const GoalCardItemCard = ({
    setGoals,
    goals,
 }: Props): ReactJSXElement => {
-   const Arrow: JSX.Element = (
-      <>
-         <Stack direction={'column'}>
-            <KeyboardArrowUpIcon />
-            <KeyboardArrowDownIcon />
-         </Stack>
-      </>
-   );
+   // const Arrow: JSX.Element = (
+   //    <>
+   //       <Stack direction={'column'}>
+   //          <KeyboardArrowUpIcon />
+   //          <KeyboardArrowDownIcon />
+   //       </Stack>
+   //    </>
+   // );
 
    //takes in total macronutrient amount entered and also changes associated min and max amounts
    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,10 +88,12 @@ export const GoalCardItemCard = ({
                   <Input
                      value={`${nutrientsTotal}`}
                      type='number'
-                     endAdornment={Arrow}
+                     endAdornment={'g'}
+                     fullWidth
                      onInput={handleChange}
                      id={type}
                      required
+                     inputProps={{ style: { textAlign: 'center' } }}
                   />
                ) : (
                   <Typography align='center' variant='h6'>

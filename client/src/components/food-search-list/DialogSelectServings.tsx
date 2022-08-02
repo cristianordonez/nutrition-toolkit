@@ -33,6 +33,8 @@ export const DialogSelectServings = ({
             label='Servings'
             required
             id='servings'
+            fullWidth
+            sx={{ width: '100%' }}
          >
             {menuItemsArray.map((item) => (
                <MenuItem key={item.value} value={item.value}>

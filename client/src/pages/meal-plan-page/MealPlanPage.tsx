@@ -169,7 +169,8 @@ export const MealPlanPage = () => {
                   p: '1rem',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '1rem',
+                  gap: '2rem',
+                  justifyContent: 'space-evenly',
                }}
             >
                <Stack direction='row' spacing={1}>

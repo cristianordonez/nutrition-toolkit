@@ -29,6 +29,7 @@ export const DialogSelectSlot = ({ slot, handleSelectSlot }: Props) => {
             onChange={handleSelectSlot}
             label='Slot'
             required
+            fullWidth
             id='slot'
          >
             {menuItemsArray.map((item) => (

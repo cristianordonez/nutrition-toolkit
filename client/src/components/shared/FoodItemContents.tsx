@@ -4,6 +4,7 @@ import {
    Paper,
    Card,
    CardMedia,
+   Tooltip,
    CardContent,
    Typography,
    CardActions,
@@ -57,7 +58,6 @@ export const FoodItemContents = ({
    servings,
 }: Props) => {
    let calories, carbs, fat, protein;
-   console.log('route in food item contents: ', route);
    if (route === 'recipes' || route === 'RECIPE') {
       nutrition.nutrients.forEach((nutrient: NutrientType) => {
          if (nutrient.name === 'Calories') {
@@ -76,23 +76,30 @@ export const FoodItemContents = ({
       fat = nutrition.fat;
       carbs = nutrition.carbs;
    }
+   console.log('route in food item contents: ', route);
+   console.log('url: ', url);
 
    return (
       <Paper elevation={1} className='food-search-paper'>
          {/* opens the dialog to confirm delete */}
-         {isMealPlanItem && (
-            <Stack direction='row'>
+
+         <Card className='search-item' data-testid='food-search-item'>
+            <Tooltip title='Delete from Mealplan'>
                <IconButton
-                  sx={{ flexGrow: 1 }}
+                  sx={{
+                     position: 'absolute',
+                     // backgroundColor: '#1E1E1E',
+                     alignSelf: 'flex-end',
+                  }}
+                  // color='primary'
+                  size='small'
+                  color='error'
                   aria-label='delete from mealplan'
                   onClick={handleOpeningDialog}
                >
                   <ClearIcon />
                </IconButton>
-               <Typography variant='body1'>Servings: {servings}</Typography>
-            </Stack>
-         )}
-         <Card className='search-item' data-testid='food-search-item'>
+            </Tooltip>
             <CardMedia
                component='img'
                alt='food item image'
@@ -100,7 +107,23 @@ export const FoodItemContents = ({
                image={image}
             />
             <CardContent>
-               <Typography variant='overline'>{title}</Typography>
+               <Typography align='center' variant='subtitle1'>
+                  {title}
+               </Typography>
+               {isMealPlanItem ? (
+                  <Stack direction='row'>
+                     {/* <IconButton
+                        sx={{ flexGrow: 1 }}
+                        aria-label='delete from mealplan'
+                        onClick={handleOpeningDialog}
+                     >
+                        <ClearIcon />
+                     </IconButton> */}
+                     <Typography variant='subtitle2'>
+                        Servings: {servings}
+                     </Typography>
+                  </Stack>
+               ) : null}
 
                {route === 'menuItems' ||
                   (route === 'MENU_ITEM' && (
@@ -137,8 +160,8 @@ export const FoodItemContents = ({
                   </div>
                </div>
             </CardContent>
-            <CardActions>
-               {route === 'recipes' ||
+            <CardActions sx={{ display: 'flex' }}>
+               {/* {route === 'recipes' ||
                   (route === 'RECIPE' && (
                      <a href={url} target='_blank'>
                         <Button fullWidth variant='outlined'>
@@ -146,18 +169,37 @@ export const FoodItemContents = ({
                            View Recipe
                         </Button>
                      </a>
-                  ))}
-               {/* Configure the bottom button depending on if it is mealplan item or search item */}
-               {!isMealPlanItem && (
+                  ))} */}
+               {url !== undefined ? (
+                  // <a href={url} target='_blank'>
                   <Button
-                     onClick={handleOpeningDialog}
                      fullWidth
+                     component='a'
+                     href={url}
+                     target='_blank'
+                     className='card-button'
                      variant='outlined'
+                     color='secondary'
+                     size='small'
                   >
-                     <AddShoppingCartIcon />
+                     {/* <MenuBookIcon /> */}
+                     View Recipe
+                  </Button>
+               ) : // </a>
+               null}
+               {/* Configure the bottom button depending on if it is mealplan item or search item */}
+               {!isMealPlanItem ? (
+                  <Button
+                     fullWidth
+                     className='card-button'
+                     onClick={handleOpeningDialog}
+                     variant='outlined'
+                     size='small'
+                  >
+                     {/* <AddShoppingCartIcon /> */}
                      Add to Mealplan
                   </Button>
-               )}
+               ) : null}
             </CardActions>
          </Card>
       </Paper>

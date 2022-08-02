@@ -44,7 +44,7 @@ export const DatePickerTextField = ({ setData, data }: Props) => {
          {/* mobile */}
          <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
             <MobileDatePicker
-               label='Date mobile'
+               label='Select day'
                inputFormat='MM/dd/yyyy'
                value={value}
                onChange={handleChange}
@@ -56,7 +56,7 @@ export const DatePickerTextField = ({ setData, data }: Props) => {
          {/* desktop */}
          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             <DesktopDatePicker
-               label='Date desktop'
+               label='Select day'
                inputFormat='MM/dd/yyyy'
                data-testid='date-picker-textfield'
                value={value}

@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import './UserProfilePage.scss';
 import { DailyGoals } from '../../components/shared/daily-goals';
 import { CustomAlert } from '../../components/shared/CustomAlert';
-import { AlertColor } from '@mui/material';
+import { AlertColor, Button, Typography, Stack } from '@mui/material';
 import axios from 'axios';
 import { GoalsType } from '../../../types/types';
 import NavBar from '../../components/navbar/NavBar';
 import { useAuth } from '../../context/authContext';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 export const UserSettingsPage = () => {
    const isLoading = useAuth();
@@ -41,7 +42,6 @@ export const UserSettingsPage = () => {
                goals.total_protein * 4 +
                goals.total_fat * 9
          );
-         console.log('totalCalories: ', totalCalories);
          let minCalPerMeal = totalCalories <= 450 ? 0 : totalCalories / 3 - 150;
          let currentGoals = {
             ...goals,
@@ -49,7 +49,6 @@ export const UserSettingsPage = () => {
             min_calories_per_meal: Math.floor(minCalPerMeal),
             max_calories_per_meal: Math.floor(totalCalories / 3 + 150),
          };
-         console.log('currentGoals: ', currentGoals);
          setGoals(currentGoals);
          let updatedGoals = await axios.put('/api/metrics', currentGoals);
          if (updatedGoals.status === 201) {
@@ -67,8 +66,16 @@ export const UserSettingsPage = () => {
 
    return isLoading ? null : (
       <>
-         <NavBar isLoggedIn={true} />
+         <NavBar isLoggedIn={true} isSettingsPage={true} />
          <div className='user-profile-page'>
+            <Stack direction='row' spacing={1}>
+               <SettingsIcon />
+               <Typography variant='body1'>
+                  Edit your macronutrient goals to a custom amount (calories
+                  will be calculated based on your input)
+               </Typography>
+            </Stack>
+
             <DailyGoals
                goals={goals}
                page={'user-profile'}
