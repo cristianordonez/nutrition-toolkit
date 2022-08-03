@@ -93,9 +93,7 @@ export const AddToCartModal = ({
    const handleSubmit = async (event: SyntheticEvent) => {
       event.preventDefault();
       try {
-         console.log('data in handle submit to add item ', data);
          let response = await axios.post('/api/mealplan', data);
-         console.log('respons:', response);
          setAlertSeverity('success');
          setAlertMessage('Item has been added to your mealplan!');
          setOpenSnackbar(true);
@@ -131,20 +129,20 @@ export const AddToCartModal = ({
             </DialogContent>
             <DialogActions>
                <Button
-                  variant='contained'
-                  aria-label='cancel'
-                  onClick={handleOpeningDialog}
-                  color='error'
-               >
-                  Cancel
-               </Button>
-               <Button
                   data-testid='add-mealplan-btn'
                   aria-label='submit form to add to meal plan'
                   type='submit'
                   variant='contained'
                >
                   Submit
+               </Button>
+               <Button
+                  variant='contained'
+                  aria-label='cancel'
+                  onClick={handleOpeningDialog}
+                  color='error'
+               >
+                  Cancel
                </Button>
             </DialogActions>
          </form>

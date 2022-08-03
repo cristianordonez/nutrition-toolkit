@@ -12,10 +12,7 @@ import {
    IconButton,
    Stack,
 } from '@mui/material';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
 import ClearIcon from '@mui/icons-material/Clear';
-import RestaurantIcon from '@mui/icons-material/Restaurant';
 import {
    GroceryItemNutrition,
    RecipeItemNutrition,
@@ -161,17 +158,7 @@ export const FoodItemContents = ({
                </div>
             </CardContent>
             <CardActions sx={{ display: 'flex' }}>
-               {/* {route === 'recipes' ||
-                  (route === 'RECIPE' && (
-                     <a href={url} target='_blank'>
-                        <Button fullWidth variant='outlined'>
-                           <MenuBookIcon />
-                           View Recipe
-                        </Button>
-                     </a>
-                  ))} */}
                {url !== undefined ? (
-                  // <a href={url} target='_blank'>
                   <Button
                      fullWidth
                      component='a'
@@ -182,7 +169,6 @@ export const FoodItemContents = ({
                      color='secondary'
                      size='small'
                   >
-                     {/* <MenuBookIcon /> */}
                      View Recipe
                   </Button>
                ) : // </a>
@@ -195,8 +181,8 @@ export const FoodItemContents = ({
                      onClick={handleOpeningDialog}
                      variant='outlined'
                      size='small'
+                     data-testid='open-addtomealplan-dialog'
                   >
-                     {/* <AddShoppingCartIcon /> */}
                      Add to Mealplan
                   </Button>
                ) : null}

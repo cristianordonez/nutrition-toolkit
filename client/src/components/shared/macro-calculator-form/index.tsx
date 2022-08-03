@@ -161,6 +161,7 @@ export const MacroCalculatorForm = ({
             {page !== undefined && page === 'macrocalculator' ? (
                <Button
                   fullWidth
+                  data-testid='recalculate-btn'
                   onClick={() => setShowNextPage(true)}
                   variant='contained'
                >
@@ -187,12 +188,17 @@ export const MacroCalculatorForm = ({
                      </DialogContent>
                      <DialogActions>
                         <Button
+                           variant='contained'
                            aria-label='submit form to recalculate macronutrients'
                            type='submit'
                         >
                            Confirm
                         </Button>
-                        <Button onClick={() => setShowNextPage(false)}>
+                        <Button
+                           color='error'
+                           variant='contained'
+                           onClick={() => setShowNextPage(false)}
+                        >
                            Cancel
                         </Button>
                      </DialogActions>

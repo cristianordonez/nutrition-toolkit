@@ -16,7 +16,6 @@ import MaleChefSvg from '../../../img/male-chef.svg';
 import ScheduleSvg from '../../../img/schedule.svg';
 import CalculateSvg from '../../../img/calculate.svg';
 import { useNavigate, useLocation } from 'react-router-dom';
-// import { useLocation } from 'react-router-dom';
 
 type LocationType = {
    pathname: string;
@@ -51,7 +50,6 @@ export const Home = () => {
    const cardImages = [CalculateSvg, MaleChefSvg, ScheduleSvg];
    const location = useLocation() as LocationType;
 
-   console.log('location: ', location);
    //when logged out, react router sends state saying log out was successful to show alert
    useEffect(() => {
       if (location.state && location.state.loggedOut) {
@@ -76,7 +74,7 @@ export const Home = () => {
                      textAlign={{ xs: 'center', sm: 'left' }}
                      variant='h2'
                   >
-                     DiabetesCoach
+                     The Diabetes Calculator
                   </Typography>
                   <Typography variant='body1'>
                      We help you calculate your daily carbohydrate needs and

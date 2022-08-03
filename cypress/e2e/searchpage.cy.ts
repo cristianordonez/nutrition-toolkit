@@ -27,11 +27,8 @@ describe('The Search Page', () => {
       cy.findAllByTestId('textfield-min-nutrient').last().type('10');
       cy.findAllByTestId('textfield-max-nutrient').last().type('25');
       cy.contains('Submit').click();
-      // expect(cy.contains('Results')).toBeDefined();
-      cy.contains('Results').should('exist');
-      cy.contains('Add to Mealplan').first().click();
-      cy.findByTestId('CalendarIcon').click();
-      cy.contains('15').click();
+      cy.findAllByTestId('food-search-item').should('exist');
+      cy.findAllByTestId('open-addtomealplan-dialog').first().click();
       cy.findByTestId('add-mealplan-btn').click();
       cy.contains('Item has been added to your mealplan!').should('be.visible');
    });
@@ -51,7 +48,7 @@ describe('The Search Page', () => {
       cy.findAllByTestId('textfield-min-nutrient').last().type('10');
       cy.findAllByTestId('textfield-max-nutrient').last().type('25');
       cy.contains('Submit').click();
-      cy.contains('Results').should('exist');
+      cy.findAllByTestId('food-search-item').should('exist');
    });
 
    it('Allows user to search for menu items', () => {
@@ -69,16 +66,15 @@ describe('The Search Page', () => {
       cy.findAllByTestId('textfield-min-nutrient').last().type('10');
       cy.findAllByTestId('textfield-max-nutrient').last().type('25');
       cy.contains('Submit').click();
-      cy.contains('Results').should('exist');
+      cy.findAllByTestId('food-search-item').should('exist');
    });
 
    it('Allows user to use custom goals to search for items', () => {
-      cy.contains('Suggested Goals').click();
+      cy.contains('Suggested').click();
       cy.findByTestId('query-text-field').type('salad');
       cy.findByTestId('select-type-dropdown').click();
       cy.contains('Side Dish').click();
       cy.contains('Submit').click();
-      cy.contains('Results').should('exist');
       cy.findAllByTestId('food-search-item').should('exist');
    });
 });

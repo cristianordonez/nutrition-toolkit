@@ -139,7 +139,7 @@ const NavBar = ({ isLoggedIn, isSettingsPage }: Props) => {
                   flexGrow: 1,
                }}
             >
-               DiabetesCoach
+               DiabetesCalculator
             </Typography>
             {isLoggedIn === true ? (
                <>

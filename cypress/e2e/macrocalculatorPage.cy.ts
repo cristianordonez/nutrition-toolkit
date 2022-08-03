@@ -24,9 +24,9 @@ describe('The MacroCalculator Page', () => {
       cy.findByTestId('weight-input').type(
          '{backspace}{backspace}{backspace}150'
       );
-      cy.contains('Recalculate Macronutrients').click();
+
+      cy.findByTestId('recalculate-btn').click();
       cy.contains('Confirm').click();
-      cy.pause();
       cy.contains(
          'You have updated your macronutrient needs. Go to search page to begin searching for recipes, menu items, or grocery products within this range.'
       ).should('be.visible');
