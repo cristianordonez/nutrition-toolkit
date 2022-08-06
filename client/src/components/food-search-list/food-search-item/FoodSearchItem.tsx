@@ -40,17 +40,15 @@ export const FoodSearchItem = ({
    setOpenSnackbar,
    setAlertSeverity,
 }: Props) => {
-   //item that appears in every item is image, title, nutrition,
    const [openDialog, setOpenDialog] = useState<boolean>(false);
 
-   //open the dialog window when add to cart button is clicked
    const handleOpeningDialog = () => {
       setOpenDialog(!openDialog);
    };
 
    return (
       <>
-         <Grid item xs={12} sm={6} md={4} xl={3} data-testid='food-search-item'>
+         <Grid item xs={12} sm={6} md={4} data-testid='food-search-item'>
             <FoodItemContents
                route={route}
                image={image}

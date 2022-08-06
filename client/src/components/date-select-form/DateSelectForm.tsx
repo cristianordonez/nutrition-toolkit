@@ -4,9 +4,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { TextField, Box } from '@mui/material';
-import { getFormattedDate } from '../../helper-functions/getFormattedDateFunc';
-import { addToMealPlanType } from '../../../../server/API/api.types';
-import getUnixTime from 'date-fns/getUnixTime';
 import { MealplanItemType } from '../mealplan-day';
 import getDay from 'date-fns/getDay';
 import format from 'date-fns/format';
@@ -22,10 +19,6 @@ interface Props {
    setValue: Dispatch<SetStateAction<Date | string>>;
 }
 
-//
-//
-//
-//
 export const DateSelectForm = ({
    currentDay,
    setCurrentDay,
@@ -45,9 +38,7 @@ export const DateSelectForm = ({
       setLunchItems([]);
       setDinnerItems([]);
       setValue(newValue); //update the state for date text field
-
       setCurrentDay(format(newValue, 'yyyy-MM-dd'));
-      //   let currentDate = zonedTimeToUtc(newValue, 'UTC'); //need to convert local time to UTC time to prevent bugs
    };
 
    return (

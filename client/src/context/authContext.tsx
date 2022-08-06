@@ -23,9 +23,20 @@ export const AuthProvider = ({ children }: Props) => {
 
    useEffect(() => {
       let promise = axios.get('/api/authentication');
+      //redirect user to macro calculator page if no daily goals are found
       promise.then((response) => {
          setIsLoading(false);
          setIsLoggedIn(true);
+         axios
+            .get('api/metrics')
+            .then((response) => {
+               if (response.data.length === 0) {
+                  navigate('/macrocalculator');
+               }
+            })
+            .catch((err) => {
+               console.log('err in context daily goals: ', err);
+            });
       });
       promise.catch((err) => {
          setIsLoading(false);

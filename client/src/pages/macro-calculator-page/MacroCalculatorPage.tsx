@@ -8,7 +8,6 @@ import { useAuth } from '../../context/authContext';
 export const MacroCalculatorPage = () => {
    const isLoading = useAuth();
    const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
-   //todo change these state items so that they do something when form is submitted
    const [showNextPage, setShowNextPage] = useState(false);
    const [showSignup, setShowSignup] = useState(false);
    const [alertSeverity, setAlertSeverity] = useState<AlertColor | undefined>(

@@ -1,13 +1,6 @@
 import React from 'react';
 import './HomePageCard.scss';
-import {
-   Typography,
-   Card,
-   CardContent,
-   CardMedia,
-   Paper,
-   Grid,
-} from '@mui/material';
+import { Typography, Card, CardContent, CardMedia, Grid } from '@mui/material';
 
 interface Props {
    body: string;

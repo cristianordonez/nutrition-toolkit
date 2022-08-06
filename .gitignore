@@ -8,3 +8,4 @@ client/dist
 /cypress-coverage
 .nyc_output
 cypress-coverage 
+personal-aws-key-pair.pem

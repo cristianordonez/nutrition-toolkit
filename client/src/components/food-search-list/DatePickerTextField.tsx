@@ -7,12 +7,7 @@ import { TextField, Box } from '@mui/material';
 import { addToMealPlanType } from '../../../../server/API/api.types';
 import { getFormattedDate } from '../../helper-functions/getFormattedDateFunc';
 import getUnixTime from 'date-fns/getUnixTime';
-import {
-   zonedTimeToUtc,
-   formatInTimeZone,
-   getTimezoneOffset,
-} from 'date-fns-tz';
-import { format, addMinutes } from 'date-fns';
+import { zonedTimeToUtc } from 'date-fns-tz';
 import startOfDay from 'date-fns/startOfDay';
 import startOfToday from 'date-fns/startOfToday';
 
@@ -21,8 +16,6 @@ interface Props {
    data: addToMealPlanType;
 }
 
-//! if error persists, consider using startOfDay function from date-fns
-//fixed error with day being one day ahead
 //material ui returns a date in string format Jan 12 2022 for example, but spoonacular requires Unix time
 export const DatePickerTextField = ({ setData, data }: Props) => {
    const [value, setValue] = React.useState<any>(startOfToday());
@@ -41,7 +34,6 @@ export const DatePickerTextField = ({ setData, data }: Props) => {
 
    return (
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-         {/* mobile */}
          <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
             <MobileDatePicker
                label='Select day'
@@ -53,7 +45,6 @@ export const DatePickerTextField = ({ setData, data }: Props) => {
                )}
             />
          </Box>
-         {/* desktop */}
          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             <DesktopDatePicker
                label='Select day'

@@ -73,8 +73,6 @@ export const FoodItemContents = ({
       fat = nutrition.fat;
       carbs = nutrition.carbs;
    }
-   console.log('route in food item contents: ', route);
-   console.log('url: ', url);
 
    return (
       <Paper elevation={1} className='food-search-paper'>

@@ -24,7 +24,6 @@ import subDays from 'date-fns/subDays';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useAuth } from '../../context/authContext';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import startOfWeek from 'date-fns/startOfWeek';
 
 const days = [
    'Sunday',
@@ -156,7 +155,7 @@ export const MealPlanPage = () => {
 
             <SidebarMealplan
                mobileOpen={mobileOpen}
-               page={'mealplan'}
+               page='mealplan'
                handleDrawerToggle={handleDrawerToggle}
                nutritionSummary={nutritionSummary}
                mealplanItems={mealplanItems}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Home } from './home/Home';
 import { LoginPage } from './login-page/LoginPage';
@@ -9,17 +9,11 @@ import { NoPageFound } from './404-page/404';
 import { AuthProvider } from '../context/authContext';
 import { UserSettingsPage } from './user-profile-page/UserProfilePage';
 import { CssBaseline } from '@mui/material'; //used to provide mui color theme to all components
-import {
-   createTheme,
-   responsiveFontSizes,
-   useTheme,
-} from '@mui/material/styles';
+import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { ThemeProvider } from '@emotion/react';
-import { PaletteMode, Box, IconButton } from '@mui/material';
-import { teal, grey, blueGrey } from '@mui/material/colors';
+import { PaletteMode } from '@mui/material';
+import { teal, grey } from '@mui/material/colors';
 import { useLocalStorageState } from '../hooks/useLocalStorage';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 const getDesignTokens = (mode: PaletteMode) => ({
    palette: {
@@ -54,38 +48,6 @@ export const ColorModeContext = React.createContext({
    toggleColorMode: () => {},
 });
 
-// function MyApp() {
-//    const theme = useTheme();
-//    const colorMode = React.useContext(ColorModeContext);
-//    return
-//       <Box
-//          sx={{
-//             display: 'flex',
-//             width: '100%',
-//             alignItems: 'center',
-//             justifyContent: 'center',
-//             bgcolor: 'background.default',
-//             color: 'text.primary',
-//             borderRadius: 1,
-//             p: 3,
-//          }}
-//       >
-//          {theme.palette.mode} mode
-//          <IconButton
-//             sx={{ ml: 1 }}
-//             onClick={colorMode.toggleColorMode}
-//             color='inherit'
-//          >
-//             {theme.palette.mode === 'dark' ? (
-//                <Brightness7Icon />
-//             ) : (
-//                <Brightness4Icon />
-//             )}
-//          </IconButton>
-//       </Box>
-//    );
-// }
-
 export const App = () => {
    const [mode, setMode] = useLocalStorageState('mode', 'dark');
 
@@ -102,12 +64,6 @@ export const App = () => {
       }),
       []
    );
-
-   // useEffect(() => {
-   //    if (localStorage.getItem('mode')) {
-   //       setMode(localStorage.getItem('mode'));
-   //    }
-   // }, []);
 
    let theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
 

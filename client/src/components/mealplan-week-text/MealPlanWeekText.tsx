@@ -12,15 +12,8 @@ interface Props {
 }
 
 export const MealPlanWeekText = ({ currentDay }: Props) => {
-   // useEffect(() => {
-
-   // }, [currentDay])
    const startDate = format(startOfWeek(new Date(currentDay)), 'MMMM dd, yyyy');
    const endDate = format(endOfWeek(new Date(currentDay)), 'MMMM dd, yyyy');
-   //    const endDate = endOfWeek(new Date(currentDay));
-
-   console.log('startDate: ', startDate);
-   console.log('endDate: ', endDate);
 
    return (
       <>

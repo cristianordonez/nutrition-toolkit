@@ -4,6 +4,9 @@
    @include flex-center();
    @include set-size(100%);
    justify-content: center;
+   @include devices(mobile) {
+      padding-top: 0;
+   }
    padding-top: 10vh;
    .macro-calculator-form {
       @include set-size(100%);
@@ -12,10 +15,6 @@
       max-width: 720px;
       padding: 1rem;
       gap: 1em;
-      //   align-self: center;
-      //   display: flex;
-      //   flex-direction: column;
-      //   justify-content: space-between;
    }
    .macro-calculator-icon {
       align-self: center;

@@ -6,6 +6,7 @@ import { ConfirmPasswordTextField } from '../text-fields/confirm-password-textfi
 import { EmailTextField } from '../text-fields/email-textfield/EmailTextField';
 import { PasswordTextField } from '../text-fields/password-textfield/PasswordTextField';
 import { UsernameTextField } from '../text-fields/username-textfield/UsernameTextField';
+import GoogleIcon from '@mui/icons-material/Google';
 import axios from 'axios';
 
 export const SignupForm = ({
@@ -55,6 +56,7 @@ export const SignupForm = ({
             setShowNextPage(true);
          } catch (err: any) {
             console.log('err:', err);
+            setAlertSeverity('error');
             setErrorMessage(
                'An account with that username or email already exists. Try logging in instead.'
             );
@@ -82,6 +84,23 @@ export const SignupForm = ({
                data-testid='signup-form'
             >
                <Typography variant='h6'>Create an account</Typography>
+               <Button
+                  variant='contained'
+                  fullWidth
+                  component='a'
+                  color='error'
+                  href='/api/login/federated/google'
+               >
+                  <GoogleIcon />
+                  <Typography
+                     variant='button'
+                     align='right'
+                     sx={{ marginLeft: '10px' }}
+                  >
+                     Sign in with Google
+                  </Typography>
+               </Button>
+               <Typography variant='h6'>or</Typography>
                <Typography variant='subtitle1'>
                   Please enter your details
                </Typography>

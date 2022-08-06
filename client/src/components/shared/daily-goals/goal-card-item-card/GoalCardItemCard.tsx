@@ -11,7 +11,7 @@ interface Props {
    type: 'Carbohydrates' | 'Protein' | 'Fat';
    IconSvg: IconType;
    nutrientsTotal: number;
-   page: 'search' | 'user-profile';
+   page: 'search' | 'user-profile' | 'mealplan';
    setGoals?: Dispatch<SetStateAction<GoalsType>>;
    goals: GoalsType;
 }

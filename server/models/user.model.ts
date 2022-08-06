@@ -1,4 +1,5 @@
 import { db } from '../database/db';
+const generator = require('generate-password');
 
 type User = {
    username: string;
@@ -16,15 +17,28 @@ type Intolerances = {
 
 //# creates a new user and stores in database;
 export const create = async function (user: User) {
-   console.log('here in user model create')
-   let createQuery = `INSERT INTO users (username, email,
+   let currentId = generator.generate({ length: 8, numbers: true });
+   let createQuery = `INSERT INTO users (id, username, email,
       spoonacular_username, spoonacular_password, spoonacular_hash, hash)
-      VALUES ('${user.username}', '${user.email}',
+      VALUES ('${currentId}', '${user.username}', '${user.email}',
        '${user.spoonacular_username}', '${user.spoonacular_password}', '${user.spoonacular_hash}',
         '${user.hash}') RETURNING id`;
-        console.log(createQuery)
+   console.log(createQuery);
    let dbResponse = await db.query(createQuery);
-   console.log('dbresponse in create user model', dbResponse)
+   console.log('dbresponse in create user model', dbResponse);
+   return dbResponse;
+};
+
+//same as creating user except id is already provided by google
+export const createGoogleUser = async function (user: any) {
+   let createQuery = `INSERT INTO users (id, username, email,
+      spoonacular_username, spoonacular_password, spoonacular_hash, hash)
+      VALUES ('${user.id}', '${user.username}', '${user.email}',
+       '${user.spoonacular_username}', '${user.spoonacular_password}', '${user.spoonacular_hash}',
+        '${user.hash}') `;
+   console.log(createQuery);
+   let dbResponse = await db.query(createQuery);
+   console.log('dbresponse in create google user model', dbResponse);
    return dbResponse;
 };
 
@@ -41,6 +55,12 @@ export const createUserIntolerances = function (intolerances: Intolerances) {
 //# check if user already exists by their email address
 export const getByEmail = async function (email: string) {
    let getQuery = `SELECT * FROM users WHERE email='${email}'`;
+   let user = await db.query(getQuery);
+   return user;
+};
+
+export const getById = async function (id: string) {
+   let getQuery = `SELECT * FROM users WHERE id='${id}'`;
    let user = await db.query(getQuery);
    return user;
 };

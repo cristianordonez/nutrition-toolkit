@@ -109,7 +109,6 @@ describe('Authentication routes', () => {
          number: '10', //number of items to return
          offset: 0, //number of results to skip, useful for lazy loading
       });
-      console.log('getRecipesResponse: ', getRecipesResponse);
       expect(getRecipesResponse.statusCode).toBe(200);
    });
 

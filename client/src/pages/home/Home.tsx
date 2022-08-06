@@ -67,7 +67,6 @@ export const Home = () => {
                className='home-title-image'
                alignItems='center'
                gap={4}
-               // justifyContent='center'
             >
                <Stack direction='column'>
                   <Typography
@@ -87,9 +86,7 @@ export const Home = () => {
                         onClick={() => navigate('/login')}
                         data-testid='home-page'
                      >
-                        {/* <Link to='/login' data-testid='home-page'> */}
                         Log in
-                        {/* </Link> */}
                      </Button>
                   </div>
                </Stack>

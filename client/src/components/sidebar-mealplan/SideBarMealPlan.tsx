@@ -42,7 +42,7 @@ export const SidebarMealplan = ({
             <SideBar
                mobileOpen={mobileOpen}
                handleDrawerToggle={handleDrawerToggle}
-               page={page}
+               page='mealplan'
                nutritionSummary={nutritionSummary}
                goals={goals}
                mealplanItemsFound={mealplanItemsFound}

@@ -29,7 +29,6 @@ module.exports = {
             use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
          },
          {
-            //enables webpack to handle images
             test: /\.(png|svg|jpg|jpeg|gif)$/i,
             type: 'asset/resource',
          },
@@ -37,7 +36,7 @@ module.exports = {
    },
    plugins: [
       new HtmlWebpackPlugin({
-         title: 'Meal Planner',
+         title: 'The Diabetes Calculator',
          template: 'template.html',
       }),
       new MiniCssExtractPlugin(),

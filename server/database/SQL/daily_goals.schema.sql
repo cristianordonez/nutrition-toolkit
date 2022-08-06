@@ -12,7 +12,7 @@ CREATE TABLE daily_goals (
 	total_calories int4 NULL,
 	min_calories_per_meal int4 NULL,
 	max_calories_per_meal int4 NULL,
-	user_id int4 NOT NULL,
+	user_id varchar(100) NOT NULL,
 	id serial4 NOT NULL,
 	CONSTRAINT daily_goals_pk PRIMARY KEY (id),
 	CONSTRAINT daily_goals_unique UNIQUE (user_id)

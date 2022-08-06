@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { LoginForm } from '../../components/login-form/LoginForm';
 import { SignupForm } from '../../components/sign-up-form/SignupForm';
 import { CustomAlert } from '../../components/shared/CustomAlert';
-import { Snackbar, Alert, AlertColor } from '@mui/material';
+import { AlertColor } from '@mui/material';
 import NavBar from '../../components/navbar/NavBar';
 
 export const LoginPage = () => {

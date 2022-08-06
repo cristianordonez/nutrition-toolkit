@@ -4,13 +4,10 @@ import { SearchForm } from '../../components/search-form';
 import { CustomAlert } from '../../components/shared/CustomAlert';
 import { FoodSearchList } from '../../components/food-search-list';
 import {
-   Grid,
    Box,
    Toolbar,
    IconButton,
-   Alert,
    CircularProgress,
-   Snackbar,
    AlertColor,
 } from '@mui/material';
 import { SideBarSearchPage } from '../../components/sidebar-searchpage/SideBarSearchPage';
@@ -111,23 +108,15 @@ export const SearchPage = () => {
                setShowLoadMoreBtn(true);
             }
          }
-         // setAlertMessage(
-         //    'No options matched your search. Try again with a broader search'
-         // );
-         // setAlertSeverity('warning');
-         // foodItems.data.length ? setOpenSnackbar(false) : setOpenSnackbar(true);
          setAPIData(foodItems.data);
          setLoading(false); //used to trigger the loading circle
       } catch (err) {
          setLoading(false); //used to trigger the loading circle
-         console.log('err', err);
       }
    };
 
-   //todo check if there are more items present, if not then toggle load more buton off
    //# handles submission when it comes from suggested goals form, must be different because values are coming from goals state object
    const handleSuggestedSubmit = async (event: React.SyntheticEvent) => {
-      console.log('values in searchpage.tsx: ', values);
       let newValues = { ...values, offset: 0 }; //declare new values so that there are no async bugs, and reset offset to 0 in case user changed it
       setValues(newValues);
       try {
@@ -181,8 +170,6 @@ export const SearchPage = () => {
          let newItems: any = await axios.get(`/api/${route}`, {
             params: newValues,
          });
-         console.log('newItems.data in handle load more: ', newItems.data);
-         console.log('newItems: ', newItems);
          if (newItems.data.length < 6) {
             setShowLoadMoreBtn(false);
          } else {
@@ -197,7 +184,6 @@ export const SearchPage = () => {
    };
 
    //# at first render grabs the users metrics from db, no need to send userId as
-   //# it will be stored in the express session
    useEffect(() => {
       let promise = axios.get('/api/metrics', { withCredentials: true });
       promise.then((results) => {
@@ -229,12 +215,7 @@ export const SearchPage = () => {
          {isLoading ? null : (
             <>
                <NavBar isLoggedIn={true} />
-               <Box
-                  className='search-page'
-                  // container
-                  // spacing={0}
-                  sx={{ width: '100vw' }}
-               >
+               <Box className='search-page' sx={{ width: '100vw' }}>
                   {/* PROGRESS BAR */}
                   {loading && <CircularProgress size={68} />}
                   <Toolbar sx={{ display: { sm: 'none' } }}>
@@ -258,7 +239,6 @@ export const SearchPage = () => {
                   {/* MAIN SECTION  */}
                   {apiData.length ? (
                      <>
-                        {/* <Grid item xs={12} sm={8}> */}
                         <FoodSearchList
                            apiData={apiData}
                            route={route}
@@ -268,14 +248,9 @@ export const SearchPage = () => {
                            setAlertSeverity={setAlertSeverity}
                            showLoadMoreBtn={showLoadMoreBtn}
                         />
-                        {/* </Grid> */}
                      </>
                   ) : (
-                     <>
-                        {/* <Grid item xs={12} sm={8}> */}
-                        {SearchFormComponent}
-                        {/* </Grid> */}
-                     </>
+                     <>{SearchFormComponent}</>
                   )}
                   {/* ERROR SNACKBAR */}
                   <CustomAlert

@@ -13,8 +13,7 @@ type Goals = {
    total_calories: number;
    min_calories_per_meal: number;
    max_calories_per_meal: number;
-}
-
+};
 
 //calculations are primarily for diabetes
 export const useMetrics = ({

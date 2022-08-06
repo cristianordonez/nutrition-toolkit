@@ -14,8 +14,31 @@ router.get('/', (req: Request, res: Response) => {
    });
 });
 
+//GOOGLE AUTHENTICATION////////////////////////////
+//handles initial redirect of user to google
+router.get('/login/federated/google', passport.authenticate('google'));
+
+//gets code from google, then exchaanges code for profile info
+router.get(
+   '/oauth2/redirect/google',
+   passport.authenticate('google', {
+      failureRedirect: 'http://localhost:3000/login',
+      failureMessage: true,
+   }), //fires second part of passport strategy
+   (req: Request, res: Response) => {
+      let session = req.session as any;
+      req.session.user_id = session.passport.user;
+
+      //redirect user to the search page where session will be checked
+      res.redirect('http://localhost:3000/search');
+   }
+);
+
+////////////////////////////////////////////////////////
+
 //# handles checking if user is logged in for protected routes
 router.get('/authentication', (req: Request, res: Response) => {
+   console.log('1. in authentication route');
    userController.checkAuthentication(req, res);
 });
 
@@ -26,6 +49,7 @@ router.post('/signup', (req: Request, res: Response) => {
 
 //# handles updating the users metrics at signup
 router.post('/metrics', (req: Request, res: Response) => {
+   console.log('here in post metrics');
    userController.createMetrics(req, res);
 });
 
@@ -51,14 +75,11 @@ router.post(
       failureMessage: true,
    }),
    (req: Request, res: Response) => {
-      console.log('2. req.user:', req.user);
-
       let user: any = req.user;
 
       // req.session = req.session as any;
       req.session.user_id = user.id;
       req.session.save();
-      console.log('3. req.session: ', req.session);
       res.status(200).send('Successfully logged in.');
    }
 );
@@ -78,7 +99,6 @@ router.post('/logout', (req: any, res: Response, next: NextFunction) => {
 //# used so that client can be sent error message from server
 router.get('/error', (req: Request, res: Response) => {
    let session: any = req.session;
-   console.log('session in error route:', session);
    res.status(500).send('Incorrect username or password.');
 });
 

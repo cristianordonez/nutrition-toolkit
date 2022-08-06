@@ -50,7 +50,7 @@ export const DailyGoals = ({
          goals.total_calories
       );
    }
-
+   console.log('test: ', page);
    return (
       <>
          <div className='daily-goals'>
@@ -109,7 +109,9 @@ export const DailyGoals = ({
                </>
             ) : null}
             {/* RENDER THE SEARCH SIDEBAR OR USER PROFILE PAGE HERE */}
-            {page === 'search' || page === 'user-profile' ? (
+            {page === 'search' ||
+            page === 'user-profile' ||
+            (page === 'mealplan' && goals !== undefined) ? (
                <>
                   <div className='daily-goals-kcal'>
                      <CircularProgress

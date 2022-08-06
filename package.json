@@ -9,7 +9,8 @@
       "jest": "jest",
       "cypress": "cypress open",
       "dev": "concurrently -n 'webpack,server' -c 'bgBlue.bold,bgGreen.bold' \"npx webpack serve --config webpack.dev.js\" \"nodemon server/server.js\"",
-      "start": "webpack --config webpack.prod.js && nodemon server/server.js"
+      "build": "webpack --config webpack.prod.js",
+      "start": "nodemon server/server.js"
    },
    "repository": {
       "type": "git",
@@ -42,10 +43,12 @@
       "dotenv": "^16.0.1",
       "express": "^4.18.1",
       "express-session": "^1.17.3",
+      "generate-password": "^1.7.0",
       "mini-css-extract-plugin": "^2.6.0",
       "mysql2": "^2.3.3",
       "nodemon": "^2.0.19",
       "passport": "^0.6.0",
+      "passport-google-oidc": "^0.1.0",
       "passport-local": "^1.0.0",
       "pg": "^8.7.3",
       "pg-promise": "^10.11.1",

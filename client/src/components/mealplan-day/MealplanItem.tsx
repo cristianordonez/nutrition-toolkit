@@ -39,7 +39,6 @@ export const MealplanItem = ({
       setOpenDialog(!openDialog);
    };
 
-   console.log('title: ', title);
    useEffect(() => {
       let url: string = `/api/recipes/${id}`; //set initial value for url to avoid typescript error
       if (type === 'RECIPE') {

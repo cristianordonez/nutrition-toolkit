@@ -34,8 +34,6 @@ export const MealplanDay = ({
    currentDay,
 }: Props) => {
    if (mealplanItems.length) {
-      console.log('mealplanItems: ', mealplanItems);
-
       let breakfastItems: MealplanItemType[] = [];
       let lunchItems: MealplanItemType[] = [];
       let dinnerItems: MealplanItemType[] = [];

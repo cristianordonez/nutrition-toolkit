@@ -1,5 +1,4 @@
-import React, { MouseEventHandler, useState, useContext } from 'react';
-import AdbIcon from '@mui/icons-material/Adb';
+import React, { useState, useContext } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
    AppBar,
@@ -8,16 +7,11 @@ import {
    IconButton,
    Typography,
    Menu,
-   Container,
    Avatar,
    Button,
    Tooltip,
    MenuItem,
-   Icon,
    Link,
-   List,
-   ListItem,
-   ListItemText,
    Stack,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -26,7 +20,6 @@ import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/authContext';
 // import { Link } from 'react-router-dom';
 import LOGO from '../../../img/LOGO.svg';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { ColorModeContext } from '../../pages/App';
 import { useTheme } from '@mui/material/styles';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
@@ -93,8 +86,6 @@ const NavBar = ({ isLoggedIn, isSettingsPage }: Props) => {
       navigate('/');
    };
 
-   // if (location.pathname)
-   console.log('colorMode: ', colorMode);
    return (
       <AppBar
          position='fixed'
@@ -106,37 +97,38 @@ const NavBar = ({ isLoggedIn, isSettingsPage }: Props) => {
          color='default'
          enableColorOnDark={true}
       >
-         {/* <Container maxWidth='xl'> */}
          <Toolbar disableGutters>
             {/* MOBILE DESKTOP*/}
-            {/* <MenuBookIcon sx={{ display: { md: 'flex' }, mr: 1 }} /> */}
             <Box
                component='img'
                src={LOGO}
                sx={{
                   display: { md: 'flex' },
-                  // flexGrow: { xs: '1', md: '0' },
                   mr: 1,
                   objectFit: 'contain',
                   height: '2.5rem',
+                  '&:hover': {
+                     cursor: 'pointer',
+                  },
                }}
-               onClick={handleNavigateToHome}
+               onClick={handleLogout}
             ></Box>
             <Typography
                variant='h6'
                noWrap
                data-testid='navlink'
-               component='a'
-               href='/'
+               onClick={handleLogout}
                sx={{
                   mr: 2,
                   display: { xs: 'none', md: 'flex' },
-                  // fontFamily: 'monospace',
                   fontWeight: 700,
                   letterSpacing: '.3rem',
                   color: 'inherit',
                   textDecoration: 'none',
                   flexGrow: 1,
+                  '&:hover': {
+                     cursor: 'pointer',
+                  },
                }}
             >
                DiabetesCalculator
@@ -181,17 +173,17 @@ const NavBar = ({ isLoggedIn, isSettingsPage }: Props) => {
                            {pages.map((page) =>
                               page.toLowerCase().replace(' ', '') ===
                               location.pathname.slice(1) ? (
-                                 <Link
+                                 <NavLink
                                     onClick={handleCloseNavMenu}
                                     key={page}
-                                    underline='hover'
-                                    variant='overline'
-                                    href={`/${page
+                                    // underline='hover'
+                                    // variant='overline'
+                                    to={`/${page
                                        .toLowerCase()
                                        .replace(/ /g, '')}`}
                                  >
                                     {page}
-                                 </Link>
+                                 </NavLink>
                               ) : (
                                  <Link
                                     onClick={handleCloseNavMenu}
