@@ -1,11 +1,7 @@
 /node_modules
 /coverage
-./client/dist/
 .env
-./client/dist
-client/dist
 /jest-coverage
 /cypress-coverage
 .nyc_output
-cypress-coverage 
 personal-aws-key-pair.pem
