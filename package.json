@@ -1,5 +1,5 @@
 {
-   "name": "meal-planner-app",
+   "name": "the-diabetes-calculator",
    "version": "1.0.0",
    "description": "Meal planning app",
    "main": "server.js",
