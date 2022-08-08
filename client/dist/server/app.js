@@ -127,9 +127,6 @@ passport_1.default.serializeUser(function (user, done) {
     done(null, user.id);
 });
 passport_1.default.deserializeUser(function (id, cb) {
-    console.log('here in deserializeUser');
-    console.log('id: ', id);
-    console.log('typeof id: ', typeof id);
     db_1.db.query("SELECT id, username, email, spoonacular_username FROM users WHERE id='".concat(id, "'"))
         .then(function (results) {
         console.log('results in deserialize user: ', results);
@@ -150,7 +147,7 @@ app.get('/*', function (req, res) {
         res.sendFile(path_1.default.join(__dirname, '../index.html'));
     }
     else {
-        res.sendFile(path_1.default.join(__dirname, '../client/dist/index.html'));
+        res.sendFile(path_1.default.join(__dirname, '../index.html'));
     }
 });
 exports.default = app;

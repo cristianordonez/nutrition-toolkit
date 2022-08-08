@@ -7,6 +7,11 @@ View Miro: https://miro.com/app/board/uXjVOtvKH2s=/?share_link_id=990354105433
 
 ## Demo
 
+!! do not delete, quick notes to highlight
+run npm run build to build files with webpack and compile typescript files, do not use include section in ts config because it then gives errors with finding svgs
+
+!!
+
 ## Tech Stack
 
 This project was built with the following technologies:

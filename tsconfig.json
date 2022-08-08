@@ -104,6 +104,22 @@
       // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
       "skipLibCheck": true /* Skip type checking all .d.ts files. */
    },
-   "include": ["server"],
-   "exclude": ["node_modules"]
+   // "include": ["server", "client/src", "client/img"],
+   "exclude": [
+      "node_modules",
+      "client/dist",
+      "coverage",
+      "cypress-coverage",
+      "diagrams",
+      "jest-coverage",
+      "cypress.config.js",
+      "jest.config.js",
+      "webpack.common.js",
+      "webpack.dev.js",
+      "webpack.prod.js",
+      "__mocks__",
+      "prettier.config.js",
+      "cypress",
+      "jestGlobals.ts"
+   ]
 }
