@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }: Props) => {
                }
             })
             .catch((err) => {
-               console.log('err in context daily goals: ', err);
+               console.log(err);
             });
       });
       promise.catch((err) => {

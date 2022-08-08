@@ -1,12 +1,5 @@
 @use '../../index.scss' as *;
 
-// .mealplan-page {
-//    @include devices(mobile) {
-//       padding-left: 0;
-//    }
-//    padding-left: 350px;
-// }
-
 .mealplan-page {
    @include set-size(auto, 100vw);
    @include devices(mobile) {

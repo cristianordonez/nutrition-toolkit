@@ -45,7 +45,7 @@ export const createAccount = async (req: Request, res: Response) => {
          res.status(201).send('You have successfully created an account!');
       }
    } catch (err) {
-      console.log('err in createaccount controller:', err);
+      console.log(err);
       res.status(500).send('Unable to create an account.');
    }
 };
@@ -56,20 +56,16 @@ export const createMetrics = async (req: Request, res: Response) => {
       let session: any = req.session;
       let user_id: number = session.user_id;
       let body = { ...req.body, user_id };
-      console.log('here in create metrics');
-      console.log('body in create metrics: ', body);
-      console.log('session in create metrics: ', session);
       let initialResponse = await dailyGoalsModel.createGoals(body);
       res.status(201).json(session.user_id);
    } catch (err) {
-      console.log('err:', err);
+      console.log(err);
       res.status(400).send(err);
    }
 };
 
 //# checks if user is logged in
 export const checkAuthentication = async (req: any, res: Response) => {
-   console.log('2. in check authentication controller');
    let session: any = req.session;
    if (session.passport || session.user_id) {
       res.status(201).send('User is logged in.');
@@ -85,7 +81,7 @@ export const getMetrics = async (req: any, res: Response) => {
       let userGoals: any = await dailyGoalsModel.getGoals(user_id);
       res.json(userGoals[0]);
    } catch (err) {
-      console.log('err:', err);
+      console.log(err);
       res.status(500).send('Unable to retrieve daily goals.');
    }
 };
@@ -96,10 +92,9 @@ export const updateMetrics = async (req: any, res: Response) => {
       let user_id: number = session.user_id;
       let body = { ...req.body, user_id };
       let initialResponse = await dailyGoalsModel.updateGoals(body);
-      console.log('initialResponse: ', initialResponse);
       res.status(201).send(initialResponse);
    } catch (err) {
-      console.log('err: ', err);
+      console.log(err);
       res.status(400).send('Unable to update daily goals.');
    }
 };

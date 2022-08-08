@@ -57,7 +57,7 @@ export const ConfirmDeleteDialog = ({
             });
             setMealPlanItems(updatedItems.data.items);
          } catch (err) {
-            console.log('err in inner try: ', err);
+            console.log(err);
             setMealPlanItems([]);
          }
       } catch (err) {

@@ -32,7 +32,7 @@ export const SidebarMealplan = ({
          let currentGoals = await axios.get('/api/metrics');
          setGoals(currentGoals.data);
       } catch (err) {
-         console.log('err in sidebarmealplan:', err);
+         console.log(err);
       }
    };
 

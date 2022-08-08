@@ -16,7 +16,7 @@ export const LoginPage = () => {
 
    //handles showing snackbar if request to server to login is not successful
    const handleAlert = () => {
-      setOpenErrorAlert(!openErrorAlert);
+      setOpenErrorAlert(true);
    };
 
    //toggles showSignup state so user can either login or see the signup component
@@ -27,7 +27,6 @@ export const LoginPage = () => {
    return (
       <>
          <NavBar isLoggedIn={false} />
-         {/* <div> */}
          {showSignup ? (
             <SignupForm
                showSignup={showSignup}
@@ -43,6 +42,7 @@ export const LoginPage = () => {
          ) : (
             <LoginForm
                showSignup={showSignup}
+               setAlertSeverity={setAlertSeverity}
                handleRedirectToSignup={handleRedirectToSignup}
                showTextFieldError={showTextFieldError}
                setShowTextFieldError={setShowTextFieldError}
@@ -57,7 +57,6 @@ export const LoginPage = () => {
             alertSeverity={alertSeverity}
             alertMessage={errorMessage}
          />
-         {/* </div> */}
       </>
    );
 };

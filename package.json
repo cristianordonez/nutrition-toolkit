@@ -9,8 +9,7 @@
       "jest": "jest",
       "cypress": "cypress open",
       "dev": "concurrently -n 'webpack,server' -c 'bgBlue.bold,bgGreen.bold' \"npx webpack serve --config webpack.dev.js\" \"nodemon server/server.js\"",
-      "build": "webpack --config webpack.prod.js && tsc -p .",
-      "pm2": "NODE_ENV=production pm2 start ./client/dist/server/server.js",
+      "build": "webpack --config webpack.prod.js",
       "start": "nodemon server/server.js"
    },
    "repository": {

@@ -30,14 +30,11 @@ export const createGoals = (goals: Goals) => {
          max_carbs_per_meal=${goals.max_carbs_per_meal}, total_protein=${goals.total_protein}, min_protein_per_meal=${goals.min_protein_per_meal}, max_protein_per_meal=${goals.max_protein_per_meal},
           total_fat=${goals.total_fat}, min_fat_per_meal=${goals.min_fat_per_meal}, max_fat_per_meal=${goals.max_fat_per_meal},
            total_calories=${goals.total_calories}, min_calories_per_meal=${goals.min_calories_per_meal}, max_calories_per_meal=${goals.max_calories_per_meal} `;
-   console.log('dbQuery in creategoals model ', dbQuery);
    let response = db.query(dbQuery);
    return response;
 };
 
 export const getGoals = (user_id: string) => {
-   console.log('user_id:', user_id);
-   console.log('here in get goals');
    let dbQuery = `SELECT total_carbohydrates, min_carbs_per_meal,
     max_carbs_per_meal, total_protein,
       min_protein_per_meal, max_protein_per_meal,
@@ -65,7 +62,6 @@ export const updateGoals = (goals: Goals) => {
    max_calories_per_meal = ${goals.max_calories_per_meal}
    WHERE user_id = ${goals.user_id}
    `;
-   console.log('dbQuery: ', dbQuery);
    let response = db.query(dbQuery);
    return response;
 };

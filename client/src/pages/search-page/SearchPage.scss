@@ -7,4 +7,5 @@
    }
    padding-left: 350px;
    @include flex-center-horiz();
+   flex-direction: column;
 }

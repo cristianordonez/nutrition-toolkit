@@ -1,8 +1,6 @@
 require('dotenv').config();
 let database = process.env.NODE_ENV === 'test' ? 'mealplans_test' : 'mealplans';
 
-console.log('proccess.env.node_env in db.ts', process.env.NODE_ENV);
-
 const pgp = require('pg-promise')();
 
 const cn = {

@@ -156,7 +156,7 @@ export const SearchPage = () => {
          setAPIData(foodItems.data);
          setLoading(false);
       } catch (err) {
-         console.log('err:', err);
+         console.log(err);
          setLoading(false); //used to trigger the loading circle
       }
    };
@@ -179,7 +179,7 @@ export const SearchPage = () => {
          setLoading(false);
       } catch (err) {
          setLoading(false);
-         console.log('err: ', err);
+         console.log(err);
       }
    };
 
@@ -190,7 +190,7 @@ export const SearchPage = () => {
          setGoals(results.data);
       });
       promise.catch((err) => {
-         console.log('er:', err);
+         console.log(err);
       });
    }, []);
 
@@ -223,6 +223,7 @@ export const SearchPage = () => {
                         color='inherit'
                         aria-label='open drawer'
                         edge='start'
+                        size='small'
                         onClick={handleDrawerToggle}
                         sx={{ mr: 2, display: { sm: 'none' } }}
                      >

@@ -19,13 +19,9 @@ export const addMealPlanItem = async function (req: Request, res: Response) {
          user.spoonacular_username,
          hash[0].spoonacular_hash
       );
-      console.log(
-         'response.data.status in add meal plan items: ',
-         response.data.status
-      );
       res.status(201).send(response.data.status);
    } catch (err) {
-      console.log('err:', err);
+      console.log(err);
       res.status(400).send('Error adding item to mealplan');
    }
 };
@@ -75,7 +71,7 @@ export const getMealPlanWeek = async function (req: Request, res: Response) {
 
       res.status(200).send('Successfully deleted mealplan item.');
    } catch (err) {
-      console.log('err:', err);
+      console.log(err);
       res.status(400).send('No meal plan items found.');
    }
 };
@@ -90,10 +86,9 @@ export const deleteMealPlanItem = async function (req: Request, res: Response) {
          id,
          hash[0].spoonacular_hash
       );
-      console.log(successResponse.data);
       res.status(200).send('Item has been deleted.');
    } catch (err) {
       res.status(400).send('Unable to delete item.');
-      console.log('err deleting item from mealplan:', err);
+      console.log(err);
    }
 };

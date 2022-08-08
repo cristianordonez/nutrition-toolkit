@@ -10,6 +10,7 @@ import axios from 'axios';
 
 export const LoginForm = ({
    showSignup,
+   setAlertSeverity,
    handleRedirectToSignup,
    showTextFieldError,
    setShowTextFieldError,
@@ -25,9 +26,16 @@ export const LoginForm = ({
    });
 
    const handleLoginChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      let currentValue;
+      if (event.target.name === 'username') {
+         currentValue = event.target.value.toLowerCase();
+      } else {
+         currentValue = event.target.value;
+      }
+
       setLoginValues({
          ...loginValues,
-         [event.target.name]: event.target.value,
+         [event.target.name]: currentValue,
       });
    };
 
@@ -42,6 +50,7 @@ export const LoginForm = ({
             navigate(`/search`, { replace: true });
          }
       } catch (err: any) {
+         setAlertSeverity('error');
          setErrorMessage('No matching username and password found.'); //showTextFieldError message used in the snackbar
          setShowTextFieldError(true); //used to show showTextFieldError helper text in text field
          handleErrorAlert();

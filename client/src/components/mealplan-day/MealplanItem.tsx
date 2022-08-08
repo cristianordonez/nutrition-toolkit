@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { ConfirmDeleteDialog } from './ConfirmDeleteDialog';
-import { FoodItemContents } from '../shared/FoodItemContents';
+import { FoodItemContents } from '../shared/food-item-contents/FoodItemContents';
 import { AlertColor, Grid } from '@mui/material';
 import { FoodItemType } from '../food-search-list/food-search-list.types';
 import axios from 'axios';
@@ -56,7 +56,7 @@ export const MealplanItem = ({
             setItemData(itemInfo.data);
          })
          .catch((err) => {
-            console.log('err in meal plan itemData', err);
+            console.log(err);
          });
    }, [id]);
 

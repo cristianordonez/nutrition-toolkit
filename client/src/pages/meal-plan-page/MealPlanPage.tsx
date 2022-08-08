@@ -127,7 +127,7 @@ export const MealPlanPage = () => {
             }
          });
       } catch (err) {
-         console.log('err in useeffect meal plan page:', err);
+         console.log(err);
          setAlertSeverity('info');
          setAlertMessage(
             'You have no items saved on this day for your mealplan.'

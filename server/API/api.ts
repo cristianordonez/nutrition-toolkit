@@ -21,7 +21,6 @@ export const connectUser = async (user: UserType) => {
          },
       }
    );
-   console.log(spoonacularUser);
    return spoonacularUser;
 };
 
@@ -97,12 +96,10 @@ export const getSpoonacularMenuItems = async (menuQuery: QueryType) => {
          'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
       },
    });
-   console.log('menuItems:', menuItems);
    return menuItems.data.menuItems;
 };
 
 export const getSpoonacularMenuItemById = async (id: number) => {
-   console.log(id);
    const currentUrl = `${url}food/menuItems/${id}`;
    let menuItemInfo = await axios.get(currentUrl, {
       headers: {
@@ -145,7 +142,6 @@ export const getSpoonacularGroceryProducts = async (
 
 export const getSpoonacularProductById = async (id: number) => {
    const currentUrl = `${url}food/products/${id}`;
-   console.log('currentUrl:', currentUrl);
    let productInfo = await axios.get(currentUrl, {
       headers: {
          'X-RapidAPI-Key': `${X_RAPIDAPI_KEY}`,
@@ -161,7 +157,6 @@ export const addToSpoonacularMealplan = async (
    spoonacularUsername: string,
    hash: string
 ) => {
-   console.log('data in add to meal plan:', data);
    const response = await axios.post(
       `${url}mealplanner/${spoonacularUsername}/items`,
       data,
@@ -193,8 +188,6 @@ export const getFromSpoonacularMealplanDay = async (
          'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
       },
    };
-   console.log('options in meal plan day get: ', options);
-   console.log('here in get from spoon meal plan day: ');
    let response = await axios.request(options);
    return response;
 };

@@ -32,9 +32,16 @@ export const SignupForm = ({
    const handleCreateAccountChange = (
       event: React.ChangeEvent<HTMLInputElement>
    ) => {
+      console.log('event.target.name: ', event.target.name);
+      let currentValue;
+      if (event.target.name === 'username' || event.target.name === 'email') {
+         currentValue = event.target.value.toLowerCase();
+      } else {
+         currentValue = event.target.value;
+      }
       setSignupValues({
          ...signupValues,
-         [event.target.name]: event.target.value,
+         [event.target.name]: currentValue,
       });
    };
 

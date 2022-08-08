@@ -1,6 +1,6 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
 import './FoodSearchItem.scss';
-import { FoodItemContents } from '../../shared/FoodItemContents';
+import { FoodItemContents } from '../../shared/food-item-contents/FoodItemContents';
 import { Grid, AlertColor } from '@mui/material';
 import { AddToCartModal } from '../AddToCartModal';
 import {
