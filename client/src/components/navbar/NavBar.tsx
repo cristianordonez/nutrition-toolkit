@@ -18,7 +18,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/authContext';
-// import { Link } from 'react-router-dom';
 import LOGO from '../../../img/LOGO.svg';
 import { ColorModeContext } from '../../pages/App';
 import { useTheme } from '@mui/material/styles';
@@ -166,24 +165,28 @@ const NavBar = ({ isLoggedIn, isSettingsPage }: Props) => {
                         open={Boolean(anchorElNav)}
                         onClose={handleCloseNavMenu}
                         sx={{
-                           display: { xs: 'block', md: 'none' },
+                           display: {
+                              xs: 'block',
+                              md: 'none',
+                           },
                         }}
                      >
-                        <Stack direction='column'>
+                        <Stack direction='column' sx={{ padding: '0.5rem' }}>
+                           {/* different links to show active page */}
                            {pages.map((page) =>
                               page.toLowerCase().replace(' ', '') ===
                               location.pathname.slice(1) ? (
-                                 <NavLink
+                                 <Link
                                     onClick={handleCloseNavMenu}
                                     key={page}
-                                    // underline='hover'
-                                    // variant='overline'
-                                    to={`/${page
+                                    underline='hover'
+                                    variant='overline'
+                                    href={`/${page
                                        .toLowerCase()
                                        .replace(/ /g, '')}`}
                                  >
                                     {page}
-                                 </NavLink>
+                                 </Link>
                               ) : (
                                  <Link
                                     onClick={handleCloseNavMenu}

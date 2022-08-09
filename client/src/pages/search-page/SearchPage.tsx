@@ -223,7 +223,6 @@ export const SearchPage = () => {
                         color='inherit'
                         aria-label='open drawer'
                         edge='start'
-                        size='small'
                         onClick={handleDrawerToggle}
                         sx={{ mr: 2, display: { sm: 'none' } }}
                      >
