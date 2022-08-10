@@ -40,8 +40,8 @@ const NavBar = ({ isSettingsPage }: Props) => {
    ///////////////////////////////////
 
    const navigate = useNavigate();
-   const { isLoading, isLoggedIn } = useAuth(); //used to check if data is still being retrieved from database
-   console.log('isLoggedIn: ', isLoggedIn);
+   const { isLoading, isLoggedIn, username } = useAuth(); //used to check if data is still being retrieved from database
+   console.log('username: ', username);
    const [isOpen, setIsOpen] = useState(false);
 
    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -248,6 +248,12 @@ const NavBar = ({ isSettingsPage }: Props) => {
                   </Box>
 
                   <Box sx={{ flexGrow: 0 }}>
+                     {/* <Typography
+                        variant='body2'
+                        sx={{ display: { lg: 'none', xl: 'block' } }}
+                     >
+                        Welcome, username
+                     </Typography> */}
                      <Tooltip title='Open settings'>
                         <IconButton
                            onClick={handleOpenUserMenu}

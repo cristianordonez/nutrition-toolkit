@@ -67,10 +67,10 @@ export const createMetrics = async (req: Request, res: Response) => {
 //# checks if user is logged in
 export const checkAuthentication = async (req: any, res: Response) => {
    let session: any = req.session;
-   if (session.passport || session.user_id) {
-      res.status(201).send('User is logged in.');
+   if (session.passport || session.username) {
+      res.status(201).send(session.username);
    } else {
-      res.status(500).send('User is not logged in. ');
+      res.status(500).send('User is not logged in.');
    }
 };
 

@@ -10,7 +10,7 @@ import { useAuth } from '../../context/authContext';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 export const UserSettingsPage = () => {
-   const isLoading = useAuth();
+   const { isLoading, isLoggedIn, username } = useAuth();
    const [openAlert, setOpenAlert] = useState<boolean>(false);
    const [alertSeverity, setAlertSeverity] = useState<AlertColor>('error');
    const [alertMessage, setAlertMessage] = useState<string>('');
@@ -67,11 +67,12 @@ export const UserSettingsPage = () => {
       <>
          <NavBar isLoggedIn={true} isSettingsPage={true} />
          <div className='user-profile-page'>
-            <Stack direction='row' spacing={1}>
+            <Stack direction='row' spacing={1} sx={{ paddingBottom: '1rem' }}>
                <SettingsIcon />
-               <Typography variant='body1'>
-                  Edit your macronutrient goals to a custom amount (calories
-                  will be calculated based on your input)
+               <Typography variant='body1' align='center'>
+                  Welcome to your account, {username}! Edit your macronutrient
+                  goals to a custom amount (calories will be calculated based on
+                  your input).
                </Typography>
             </Stack>
             <DailyGoals

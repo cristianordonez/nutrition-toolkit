@@ -26,8 +26,9 @@ router.get(
    }), //fires second part of passport strategy
    (req: Request, res: Response) => {
       let session = req.session as any;
-      req.session.user_id = session.passport.user;
-
+      let user = req.user as any;
+      session.user_id = session.passport.user;
+      session.username = user.emails[0].value;
       //redirect user to the search page where session will be checked
       res.redirect('/search');
    }
@@ -73,10 +74,12 @@ router.post(
    }),
    (req: Request, res: Response) => {
       let user: any = req.user;
-
-      // req.session = req.session as any;
-      req.session.user_id = user.id;
-      req.session.save();
+      console.log('user in request.session: ', user);
+      let session = req.session as any;
+      session.user_id = user.id;
+      session.username = user.username;
+      session.save();
+      console.log('req.session: ', req.session);
       res.status(200).send('Successfully logged in.');
    }
 );

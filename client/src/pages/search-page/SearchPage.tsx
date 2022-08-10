@@ -33,9 +33,8 @@ export type Goals = {
 };
 
 export const SearchPage = () => {
-   const { isLoading, isLoggedIn } = useAuth(); //used to check if data is still being retrieved from database
+   const { isLoading, isLoggedIn, username } = useAuth(); //used to check if data is still being retrieved from database
    const [apiData, setAPIData] = useState([]);
-   //todo add boolean for showing load more button
    const [showLoadMoreBtn, setShowLoadMoreBtn] = useState<boolean>(false);
    const [loading, setLoading] = useState<boolean>(false);
    const [route, setRoute] = useState<string>('recipes');

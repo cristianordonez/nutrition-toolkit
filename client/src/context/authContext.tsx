@@ -10,11 +10,13 @@ interface Props {
 type Context = {
    isLoading: boolean;
    isLoggedIn: boolean;
+   username: string;
 };
 
 const AuthContext = createContext<any>({
    isLoggedIn: false,
    isLoading: true,
+   username: '',
 });
 //// const AuthContext = createContext<Context | null | boolean>({
 ////    isLoading: true,
@@ -25,11 +27,13 @@ export const AuthProvider = ({ children }: Props) => {
    const navigate = useNavigate();
    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
    const [isLoading, setIsLoading] = useState<Context | boolean>(true);
-   const [isUsername, setIsUsername] = useState<string>('');
+   const [username, setUsername] = useState<string>('');
+
    useEffect(() => {
       let promise = axios.get('/api/authentication');
       //redirect user to macro calculator page if no daily goals are found
       promise.then((response) => {
+         setUsername(response.data);
          setIsLoading(false);
          setIsLoggedIn(true);
          axios
@@ -56,7 +60,7 @@ export const AuthProvider = ({ children }: Props) => {
    //pass down the booleans for isLoading and isLoggedIn
    return (
       <>
-         <AuthContext.Provider value={{ isLoading, isLoggedIn }}>
+         <AuthContext.Provider value={{ isLoading, isLoggedIn, username }}>
             {children}
          </AuthContext.Provider>
       </>
