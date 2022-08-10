@@ -35,7 +35,7 @@ const days = [
    'Saturday',
 ];
 
-export const MealPlanPage = () => {
+const MealPlanPage = () => {
    const { isLoading, isLoggedin } = useAuth();
    const [dayIndex, setDayIndex] = useState<number>(getDay(Date.now())); //used for tab highlighting
    const [mealplanItems, setMealplanItems] = useState<[]>([]);
@@ -216,3 +216,5 @@ export const MealPlanPage = () => {
       </>
    );
 };
+
+export default MealPlanPage;

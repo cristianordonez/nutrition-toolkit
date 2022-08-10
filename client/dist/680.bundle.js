@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkthe_diabetes_calculator=self.webpackChunkthe_diabetes_calculator||[]).push([[680],{8072:(e,t,a)=>{a.r(t),a.d(t,{default:()=>l});var c=a(7294);const n=a.p+"15477eb1562caa9bc328.svg";var r=a(2658);const l=function(){return c.createElement(c.Fragment,null,c.createElement(r.Z,{variant:"h1"},"No Page Found"),c.createElement("img",{src:n}))}}}]);

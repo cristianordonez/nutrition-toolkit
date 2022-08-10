@@ -5,7 +5,7 @@ import { CustomAlert } from '../../components/shared/CustomAlert';
 import { AlertColor } from '@mui/material';
 import NavBar from '../../components/navbar/NavBar';
 
-export const LoginPage = () => {
+const LoginPage = () => {
    const [showSignup, setShowSignup] = useState(false);
    const [alertSeverity, setAlertSeverity] = useState<AlertColor | undefined>(
       'success'
@@ -60,3 +60,5 @@ export const LoginPage = () => {
       </>
    );
 };
+
+export default LoginPage;

@@ -32,7 +32,7 @@ export type Goals = {
    max_calories_per_meal: number;
 };
 
-export const SearchPage = () => {
+const SearchPage = () => {
    const { isLoading, isLoggedIn, username } = useAuth(); //used to check if data is still being retrieved from database
    const [apiData, setAPIData] = useState([]);
    const [showLoadMoreBtn, setShowLoadMoreBtn] = useState<boolean>(false);
@@ -264,3 +264,5 @@ export const SearchPage = () => {
       </>
    );
 };
+
+export default SearchPage;

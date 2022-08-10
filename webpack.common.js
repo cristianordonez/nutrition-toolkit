@@ -4,6 +4,7 @@ const DIST_DIR = path.join(__dirname, '/client/dist');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const BundleAnalyzerPlugin =
    require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
@@ -40,6 +41,7 @@ module.exports = {
          template: 'template.html',
       }),
       new MiniCssExtractPlugin(),
+      new ForkTsCheckerWebpackPlugin(),
       //! uncomment this line to visualize webpack bundles in browser
       // new BundleAnalyzerPlugin(),
    ],

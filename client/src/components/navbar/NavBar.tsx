@@ -100,6 +100,7 @@ const NavBar = ({ isSettingsPage }: Props) => {
             <Box
                component='img'
                src={LOGO}
+               alt='Logo'
                sx={{
                   display: { md: 'flex' },
                   mr: 1,
@@ -248,12 +249,6 @@ const NavBar = ({ isSettingsPage }: Props) => {
                   </Box>
 
                   <Box sx={{ flexGrow: 0 }}>
-                     {/* <Typography
-                        variant='body2'
-                        sx={{ display: { lg: 'none', xl: 'block' } }}
-                     >
-                        Welcome, username
-                     </Typography> */}
                      <Tooltip title='Open settings'>
                         <IconButton
                            onClick={handleOpenUserMenu}
@@ -312,6 +307,7 @@ const NavBar = ({ isSettingsPage }: Props) => {
                sx={{ ml: 1 }}
                onClick={colorMode.toggleColorMode}
                color='inherit'
+               aria-label='Toggle color theme'
             >
                {theme.palette.mode === 'dark' ? (
                   <Brightness7Icon />

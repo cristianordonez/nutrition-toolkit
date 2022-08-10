@@ -1,19 +1,52 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Home } from './home/Home';
-import { LoginPage } from './login-page/LoginPage';
-import { MacroCalculatorPage } from './macro-calculator-page/MacroCalculatorPage';
-import { MealPlanPage } from './meal-plan-page/MealPlanPage';
-import { SearchPage } from './search-page/SearchPage';
-import { NoPageFound } from './404-page/404';
-import { AuthProvider } from '../context/authContext';
-import { UserSettingsPage } from './user-profile-page/UserProfilePage';
 import { CssBaseline } from '@mui/material'; //used to provide mui color theme to all components
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { ThemeProvider } from '@emotion/react';
 import { PaletteMode } from '@mui/material';
 import { teal, grey } from '@mui/material/colors';
 import { useLocalStorageState } from '../hooks/useLocalStorage';
+
+const Home = lazy(
+   () => import(/* webpackChunkName: "HomePage" */ './home/Home')
+);
+
+const LoginPage = lazy(
+   () => import(/* webpackChunkName: "LoginPage" */ './login-page/LoginPage')
+);
+
+const MacroCalculatorPage = lazy(
+   () =>
+      import(
+         /* webpackChunkName: "MacroCalculatorPage" */ './macro-calculator-page/MacroCalculatorPage'
+      )
+);
+
+const AuthProvider = lazy(
+   () => import(/* webpackChunkName: "AuthProvider" */ '../context/authContext')
+);
+
+const MealPlanPage = lazy(
+   () =>
+      import(
+         /* webpackChunkName: "MealPlanPage" */ './meal-plan-page/MealPlanPage'
+      )
+);
+
+const SearchPage = lazy(
+   () => import(/* webpackChunkName: "SearchPage" */ './search-page/SearchPage')
+);
+
+const NoPageFound = lazy(
+   () => import(/* webpackChunkName: "NoPageFound" */ './404-page/404')
+);
+
+const UserSettingsPage = lazy(
+   () =>
+      import(
+         /* webpackChunkName: "UserSettingsPage" */ './user-profile-page/UserProfilePage'
+      )
+);
 
 const getDesignTokens = (mode: PaletteMode) => ({
    palette: {
@@ -50,7 +83,6 @@ export const ColorModeContext = React.createContext({
 
 export const App = () => {
    const [mode, setMode] = useLocalStorageState('mode', 'dark');
-
    const colorMode = React.useMemo(
       () => ({
          // The dark mode switch would invoke this method
@@ -66,7 +98,6 @@ export const App = () => {
    );
 
    let theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
-
    theme = responsiveFontSizes(theme);
 
    return (
@@ -74,44 +105,46 @@ export const App = () => {
          <ColorModeContext.Provider value={colorMode}>
             <ThemeProvider theme={theme}>
                <CssBaseline />
-               <Routes>
-                  {/* PUBLIC PAGE */}
-                  <Route path='/' element={<Home />} />
-                  <Route path='/login' element={<LoginPage />} />
-                  <Route
-                     path='/search'
-                     element={
-                        <AuthProvider>
-                           <SearchPage />
-                        </AuthProvider>
-                     }
-                  />
-                  <Route
-                     path='/mealplan'
-                     element={
-                        <AuthProvider>
-                           <MealPlanPage />
-                        </AuthProvider>
-                     }
-                  />
-                  <Route
-                     path='/macrocalculator'
-                     element={
-                        <AuthProvider>
-                           <MacroCalculatorPage />
-                        </AuthProvider>
-                     }
-                  />
-                  <Route
-                     path='/settings'
-                     element={
-                        <AuthProvider>
-                           <UserSettingsPage />
-                        </AuthProvider>
-                     }
-                  />
-                  <Route path='*' element={<NoPageFound />} />
-               </Routes>
+               <Suspense fallback={<></>}>
+                  <Routes>
+                     {/* PUBLIC PAGE */}
+                     <Route path='/' element={<Home />} />
+                     <Route path='/login' element={<LoginPage />} />
+                     <Route
+                        path='/search'
+                        element={
+                           <AuthProvider>
+                              <SearchPage />
+                           </AuthProvider>
+                        }
+                     />
+                     <Route
+                        path='/mealplan'
+                        element={
+                           <AuthProvider>
+                              <MealPlanPage />
+                           </AuthProvider>
+                        }
+                     />
+                     <Route
+                        path='/macrocalculator'
+                        element={
+                           <AuthProvider>
+                              <MacroCalculatorPage />
+                           </AuthProvider>
+                        }
+                     />
+                     <Route
+                        path='/settings'
+                        element={
+                           <AuthProvider>
+                              <UserSettingsPage />
+                           </AuthProvider>
+                        }
+                     />
+                     <Route path='*' element={<NoPageFound />} />
+                  </Routes>
+               </Suspense>
             </ThemeProvider>
          </ColorModeContext.Provider>
       </>

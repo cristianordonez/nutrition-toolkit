@@ -24,7 +24,7 @@ type LocationType = {
    state: { loggedOut: boolean };
 };
 
-export const Home = () => {
+const Home = () => {
    const [alertSeverity, setAlertSeverity] = useState<AlertColor | undefined>(
       'success'
    );
@@ -75,7 +75,7 @@ export const Home = () => {
                   >
                      The Diabetes Calculator
                   </Typography>
-                  <Typography variant='body1'>
+                  <Typography variant='body1' component='h5'>
                      We help you calculate your daily carbohydrate needs and
                      give you the power to create and customize your own custom
                      meal plan.
@@ -90,7 +90,7 @@ export const Home = () => {
                      </Button>
                   </div>
                </Stack>
-               <img src={DietitianSvg} />
+               <img src={DietitianSvg} alt='Home page image' />
             </Stack>
             <Typography variant='h4'>How It Works</Typography>
             <Slide in={true} direction='right'>
@@ -115,3 +115,5 @@ export const Home = () => {
       </>
    );
 };
+
+export default Home;

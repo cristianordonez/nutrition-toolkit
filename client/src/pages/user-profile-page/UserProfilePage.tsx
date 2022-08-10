@@ -9,7 +9,7 @@ import NavBar from '../../components/navbar/NavBar';
 import { useAuth } from '../../context/authContext';
 import SettingsIcon from '@mui/icons-material/Settings';
 
-export const UserSettingsPage = () => {
+const UserSettingsPage = () => {
    const { isLoading, isLoggedIn, username } = useAuth();
    const [openAlert, setOpenAlert] = useState<boolean>(false);
    const [alertSeverity, setAlertSeverity] = useState<AlertColor>('error');
@@ -91,3 +91,5 @@ export const UserSettingsPage = () => {
       </>
    );
 };
+
+export default UserSettingsPage;

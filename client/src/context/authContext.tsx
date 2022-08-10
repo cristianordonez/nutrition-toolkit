@@ -23,7 +23,7 @@ const AuthContext = createContext<any>({
 //// });
 
 //# sends request to server to see if user is still logged in or not, redirects if they are not
-export const AuthProvider = ({ children }: Props) => {
+const AuthProvider = ({ children }: Props) => {
    const navigate = useNavigate();
    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
    const [isLoading, setIsLoading] = useState<Context | boolean>(true);
@@ -68,3 +68,4 @@ export const AuthProvider = ({ children }: Props) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
+export default AuthProvider;

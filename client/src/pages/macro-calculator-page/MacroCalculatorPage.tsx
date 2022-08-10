@@ -5,7 +5,7 @@ import { MacroCalculatorForm } from '../../components/shared/macro-calculator-fo
 import NavBar from '../../components/navbar/NavBar';
 import { useAuth } from '../../context/authContext';
 
-export const MacroCalculatorPage = () => {
+const MacroCalculatorPage = () => {
    const { isLoading, isLoggedIn, username } = useAuth();
    const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
    const [showNextPage, setShowNextPage] = useState(false);
@@ -42,3 +42,5 @@ export const MacroCalculatorPage = () => {
       </>
    );
 };
+
+export default MacroCalculatorPage;
