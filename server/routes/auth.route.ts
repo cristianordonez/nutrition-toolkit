@@ -74,12 +74,12 @@ router.post(
    }),
    (req: Request, res: Response) => {
       let user: any = req.user;
-      console.log('user in request.session: ', user);
+
       let session = req.session as any;
       session.user_id = user.id;
       session.username = user.username;
       session.save();
-      console.log('req.session: ', req.session);
+
       res.status(200).send('Successfully logged in.');
    }
 );
