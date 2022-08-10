@@ -6,7 +6,7 @@ import NavBar from '../../components/navbar/NavBar';
 import { useAuth } from '../../context/authContext';
 
 export const MacroCalculatorPage = () => {
-   const isLoading = useAuth();
+   const { isLoading, isLoggedIn } = useAuth();
    const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
    const [showNextPage, setShowNextPage] = useState(false);
    const [showSignup, setShowSignup] = useState(false);

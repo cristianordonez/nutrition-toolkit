@@ -16,7 +16,6 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/authContext';
 import LOGO from '../../../img/LOGO.svg';
 import { ColorModeContext } from '../../pages/App';
@@ -31,7 +30,7 @@ interface Props {
    isSettingsPage?: boolean;
 }
 
-const NavBar = ({ isLoggedIn, isSettingsPage }: Props) => {
+const NavBar = ({ isSettingsPage }: Props) => {
    const location = useLocation();
 
    //! setting the theme here
@@ -41,8 +40,8 @@ const NavBar = ({ isLoggedIn, isSettingsPage }: Props) => {
    ///////////////////////////////////
 
    const navigate = useNavigate();
-   const isLoading = useAuth(); //used to check if data is still being retrieved from database
-
+   const { isLoading, isLoggedIn } = useAuth(); //used to check if data is still being retrieved from database
+   console.log('isLoggedIn: ', isLoggedIn);
    const [isOpen, setIsOpen] = useState(false);
 
    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(

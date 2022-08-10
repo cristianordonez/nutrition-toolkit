@@ -36,7 +36,7 @@ const days = [
 ];
 
 export const MealPlanPage = () => {
-   const isLoading = useAuth();
+   const { isLoading, isLoggedin } = useAuth();
    const [dayIndex, setDayIndex] = useState<number>(getDay(Date.now())); //used for tab highlighting
    const [mealplanItems, setMealplanItems] = useState<[]>([]);
    const [mealplanItemsFound, setMealplanItemsFound] = useState<boolean>(true); //use this to display different page if no items are found
