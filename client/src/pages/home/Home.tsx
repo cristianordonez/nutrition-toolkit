@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Footer } from '../../components/footer/Footer';
 import {
    Button,
    Grid,
@@ -68,7 +69,7 @@ const Home = () => {
                alignItems='center'
                gap={4}
             >
-               <Stack direction='column'>
+               <Stack direction='column' spacing={1}>
                   <Typography
                      textAlign={{ xs: 'center', sm: 'left' }}
                      variant='h2'
@@ -112,6 +113,7 @@ const Home = () => {
             alertSeverity={alertSeverity}
             alertMessage={alertMessage}
          />
+         <Footer />
       </>
    );
 };

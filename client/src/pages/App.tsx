@@ -107,7 +107,6 @@ export const App = () => {
                <CssBaseline />
                <Suspense fallback={<></>}>
                   <Routes>
-                     {/* PUBLIC PAGE */}
                      <Route path='/' element={<Home />} />
                      <Route path='/login' element={<LoginPage />} />
                      <Route

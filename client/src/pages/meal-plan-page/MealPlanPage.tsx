@@ -177,7 +177,6 @@ const MealPlanPage = () => {
                      your meal plan
                   </Typography>
                </Stack>
-               {/* <Stack direction={'row'}> */}
                <DateSelectForm
                   setBreakfastItems={setBreakfastItems}
                   setLunchItems={setLunchItems}
@@ -189,7 +188,6 @@ const MealPlanPage = () => {
                   setValue={setValue}
                />
                <MealPlanWeekText currentDay={currentDay} />
-               {/* </Stack> */}
                <Tabs value={dayIndex} onChange={handleTabChange}>
                   {days.map((day) => (
                      <Tab key={day} label={day} />

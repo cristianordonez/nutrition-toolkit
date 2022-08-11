@@ -1,0 +1,17 @@
+@use '../../index.scss' as *;
+
+.page-not-found-container {
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+   padding-top: 5rem;
+   @include set-size(auto);
+   img {
+      object-fit: cover;
+      @include set-size(75%);
+      max-width: 1200px;
+   }
+   button {
+      margin-top: 1rem;
+   }
+}

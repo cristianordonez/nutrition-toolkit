@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Footer } from '../../components/footer/Footer';
 import { LoginForm } from '../../components/login-form/LoginForm';
 import { SignupForm } from '../../components/sign-up-form/SignupForm';
 import { CustomAlert } from '../../components/shared/CustomAlert';
@@ -57,6 +58,7 @@ const LoginPage = () => {
             alertSeverity={alertSeverity}
             alertMessage={errorMessage}
          />
+         <Footer />
       </>
    );
 };

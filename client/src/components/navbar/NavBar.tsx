@@ -26,7 +26,7 @@ import { useLocation } from 'react-router-dom';
 const pages = ['Search', 'Macro Calculator', 'Meal Plan'];
 
 interface Props {
-   isLoggedIn: boolean;
+   isLoggedIn?: boolean | undefined;
    isSettingsPage?: boolean;
 }
 
@@ -73,15 +73,15 @@ const NavBar = ({ isSettingsPage }: Props) => {
 
    const handleLogout = async () => {
       try {
-         let response = await axios.post('/api/logout');
-         navigate('/', { state: { loggedOut: true }, replace: true });
+         if (isLoggedIn === true) {
+            await axios.post('/api/logout');
+            navigate('/', { state: { loggedOut: true }, replace: true });
+         } else {
+            navigate('/');
+         }
       } catch (err) {
          console.log('err:', err);
       }
-   };
-
-   const handleNavigateToHome = () => {
-      navigate('/');
    };
 
    return (

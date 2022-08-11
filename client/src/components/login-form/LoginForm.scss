@@ -2,9 +2,8 @@
 
 .login-form {
    display: flex;
-   @include set-size(100%, 100%);
+   @include set-size(100%);
    @include devices(mobile) {
-      // align-self: center;
       padding-top: 0;
    }
    padding-top: 10vh;

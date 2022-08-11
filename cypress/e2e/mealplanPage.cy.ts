@@ -2,7 +2,6 @@ describe('The Mealplan Page', () => {
    //create user before all tests
    before(() => {
       cy.signup();
-      // cy.addItemsToMealplan();
    });
 
    beforeEach(() => {

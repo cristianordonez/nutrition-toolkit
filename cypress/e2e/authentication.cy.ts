@@ -7,8 +7,8 @@ describe('The Login Page', () => {
       cy.visit('/');
       cy.contains('Log in').click();
       cy.contains('Create Account').click();
-      cy.findByPlaceholderText('Username').type('TEST_USER');
-      cy.findByPlaceholderText('Email').type('testemail@testemail.com');
+      cy.findByPlaceholderText('Username').type('test_username01');
+      cy.findByPlaceholderText('Email').type('currenttestemail@email.com');
       cy.findByPlaceholderText('Password').type('password');
       cy.findByPlaceholderText('Confirm Password').type('password');
       cy.contains('Create Account').click();
@@ -27,7 +27,7 @@ describe('The Login Page', () => {
    it('Allows user to login after creating an account', () => {
       cy.visit('/');
       cy.contains('Log in').click();
-      cy.findByPlaceholderText('Username').type('TEST_USER');
+      cy.findByPlaceholderText('Username').type('TEST_USERNAME01');
       cy.findByPlaceholderText('Password').type('password');
       cy.findByTestId('login-btn').click();
       cy.get('.daily-goals').contains('1614').should('be.visible');

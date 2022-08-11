@@ -15,11 +15,17 @@ module.exports = defineConfig({
          on('task', {
             'db:teardown': async () => {
                await db.query(
-                  `DELETE FROM daily_goals WHERE user_id IN (SELECT id FROM users WHERE username='TEST_USER')`
+                  `DELETE FROM daily_goals WHERE user_id IN (SELECT id FROM users WHERE username='test_username01')`
+               );
+               await db.query(
+                  `DELETE FROM daily_goals WHERE user_id IN (SELECT id FROM users WHERE username='thisisatestuser')`
                );
 
                const response = db.query(`
-                  DELETE FROM users WHERE username = 'TEST_USER';
+                  DELETE FROM users WHERE username = 'test_username01';
+                  `);
+               const finalResponse = db.query(`
+                  DELETE FROM users WHERE username = 'thisisatestuser';
                   `);
                return response;
             },
