@@ -27,7 +27,15 @@ export const create = async function (user: User) {
    return dbResponse;
 };
 
-//same as creating user except id is already provided by google
+//# updates the hashed password in db for user given the userId
+export const updatePassword = async (userId: string, password: string) => {
+   const passwordQuery = `UPDATE users SET hash='${password}' WHERE id='${userId}'`;
+   console.log('passwordQuery: ', passwordQuery);
+   let dbResponse = await db.query(passwordQuery);
+   return dbResponse;
+};
+
+//# same as creating user except id is already provided by google
 export const createGoogleUser = async function (user: any) {
    let createQuery = `INSERT INTO users (id, username, email,
       spoonacular_username, spoonacular_password, spoonacular_hash, hash)

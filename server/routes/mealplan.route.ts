@@ -7,7 +7,6 @@ router.post('/', (req: Request, res: Response) => {
    mealplanController.addMealPlanItem(req, res);
 });
 
-
 //handles getting the mealplan day
 router.get('/day', (req: Request, res: Response) => {
    mealplanController.getMealPlanDay(req, res);
@@ -22,6 +21,5 @@ router.get('/week', (req: Request, res: Response) => {
 router.delete('/delete/:id', (req: Request, res: Response) => {
    mealplanController.deleteMealPlanItem(req, res);
 });
-
 
 export { router };

@@ -1,5 +1,6 @@
-import { NextFunction, Request, Response, Router, Express } from 'express';
+import { NextFunction, Request, Response, Router } from 'express';
 import * as userController from '../controllers/user.controller';
+import { Session } from '../types/types';
 import passport from 'passport';
 const router = Router();
 
@@ -11,6 +12,16 @@ router.get('/', (req: Request, res: Response) => {
          version: '1.0.0',
       },
    });
+});
+
+//sends link to users email to change password
+router.post('/forgotPassword', (req: Request, res: Response) => {
+   userController.forgotPassword(req, res);
+});
+
+//handles checking token and resetting password for user
+router.post('/resetPassword', (req: Request, res: Response) => {
+   userController.resetPassword(req, res);
 });
 
 //GOOGLE AUTHENTICATION////////////////////////////
@@ -25,7 +36,7 @@ router.get(
       failureMessage: true,
    }), //fires second part of passport strategy
    (req: Request, res: Response) => {
-      let session = req.session as any;
+      let session = req.session as unknown as Session;
       let user = req.user as any;
       session.user_id = session.passport.user;
       session.username = user.emails[0].value;
@@ -46,26 +57,6 @@ router.post('/signup', (req: Request, res: Response) => {
    userController.createAccount(req, res);
 });
 
-//# handles updating the users metrics at signup
-router.post('/metrics', (req: Request, res: Response) => {
-   userController.createMetrics(req, res);
-});
-
-router.get('/metrics', (req: Request, res: Response) => {
-   userController.getMetrics(req, res);
-});
-
-router.put('/metrics', (req: Request, res: Response) => {
-   userController.updateMetrics(req, res);
-});
-
-declare module 'express-session' {
-   interface SessionData {
-      user_id: number;
-   }
-}
-
-//# handles logging the user in
 router.post(
    '/login',
    passport.authenticate('local', {
@@ -84,7 +75,6 @@ router.post(
    }
 );
 
-//# handles logging the user out
 router.post('/logout', (req: any, res: Response, next: NextFunction) => {
    req.logout(function (err: any) {
       if (err) {
@@ -96,9 +86,9 @@ router.post('/logout', (req: any, res: Response, next: NextFunction) => {
 });
 
 //#endpoint that gets redirect to when there is error logging in,
-//# used so that client can be sent error message from server
+// used so that client can be sent error message from server
 router.get('/error', (req: Request, res: Response) => {
-   let session: any = req.session;
+   let session = req.session as unknown as Session;
    res.status(500).send('Incorrect username or password.');
 });
 

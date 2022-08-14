@@ -48,6 +48,20 @@ const UserSettingsPage = lazy(
       )
 );
 
+const ForgotPasswordPage = lazy(
+   () =>
+      import(
+         /* webpackChunkName: "ForgotPasswordPage" */ './forgot-password-page/ForgotPasswordPage'
+      )
+);
+
+const ResetPasswordPage = lazy(
+   () =>
+      import(
+         /* webpackChunkName: "ResetPasswordPage" */ './reset-password-page/ResetPasswordPage'
+      )
+);
+
 const getDesignTokens = (mode: PaletteMode) => ({
    palette: {
       mode,
@@ -141,6 +155,16 @@ export const App = () => {
                            </AuthProvider>
                         }
                      />
+                     <Route
+                        path='/account-recovery'
+                        element={<ForgotPasswordPage />}
+                     />
+
+                     <Route
+                        path='/passwordReset'
+                        element={<ResetPasswordPage />}
+                     />
+
                      <Route path='*' element={<NoPageFound />} />
                   </Routes>
                </Suspense>

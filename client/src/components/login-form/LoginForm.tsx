@@ -57,6 +57,10 @@ export const LoginForm = ({
       }
    };
 
+   const handleRedirectToForgotPassword = () => {
+      navigate('/account-recovery');
+   };
+
    return (
       <>
          <div className='login-form'>
@@ -96,6 +100,15 @@ export const LoginForm = ({
                      errorMessage={errorMessage}
                      handleLoginChange={handleLoginChange}
                   />
+                  <Typography
+                     align='right'
+                     className='login-form-text'
+                     sx={{ '&:hover': { cursor: 'pointer' }, width: '100%' }}
+                     onClick={handleRedirectToForgotPassword}
+                     variant='caption'
+                  >
+                     Forgot password?
+                  </Typography>
                   <Button
                      data-testid='login-btn'
                      type='submit'

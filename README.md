@@ -71,11 +71,31 @@ npm run dev
 
 This opens a development server in your local browser at port 3000.
 
+-  To allow code-splitting to work when building files, must first change tsconfig.json 'module' variable to 'esnext'. Feel free to change back to 'commonjs' after building files to avoid errors with using import statements instead of require statements for modules.
+
+```bash
+npm run build
+```
+
 -  When application is ready for production, have webpack build your bundle and minimize your files and then start the Express server:
 
 ```bash
 npm run build
 npm start
+```
+
+-  If application is hosted on an AWS EC2 instance, push changes to build to Github, connect to instance, then pull the updated changes (note free tier EC2 instance has issues with lower CPU power and cannot handle building full TypeScript project locally)
+
+```bash
+git push origin main
+bash ec2-login.sh
+git pull
+```
+
+-  Then restart PM2 process
+
+```bash
+sudo pm2 restart thediabetescalculator
 ```
 
 Then navigate to port 8080 in your browser to view your application.

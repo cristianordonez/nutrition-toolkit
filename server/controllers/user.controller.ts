@@ -1,9 +1,12 @@
 import { Request, Response } from 'express';
 import * as userModel from '../models/user.model';
 import * as dailyGoalsModel from '../models/dailyGoals.model';
+import * as tokensModel from '../models/tokens.model';
 import { connectUser } from '../API/api';
 import bcrypt from 'bcrypt';
-
+import * as crypto from 'crypto';
+import { sendEmail } from '../utils/sendEmail';
+import format from 'date-fns/format';
 const saltRounds = 10;
 
 type Body = {
@@ -65,7 +68,7 @@ export const createMetrics = async (req: Request, res: Response) => {
 };
 
 //# checks if user is logged in
-export const checkAuthentication = async (req: any, res: Response) => {
+export const checkAuthentication = async (req: Request, res: Response) => {
    let session: any = req.session;
    if (session.passport || session.username) {
       res.status(201).send(session.username);
@@ -86,7 +89,7 @@ export const getMetrics = async (req: any, res: Response) => {
    }
 };
 
-export const updateMetrics = async (req: any, res: Response) => {
+export const updateMetrics = async (req: Request, res: Response) => {
    try {
       let session: any = req.session;
       let user_id: number = session.user_id;
@@ -96,5 +99,82 @@ export const updateMetrics = async (req: any, res: Response) => {
    } catch (err) {
       console.log(err);
       res.status(400).send('Unable to update daily goals.');
+   }
+};
+
+//sends email to user to reset their email address
+export const forgotPassword = async (req: Request, res: Response) => {
+   //first check if user email exists
+   try {
+      let user = await userModel.getByEmail(req.body.email);
+      //if email does not exist in db, then return error
+      if (user.length === 0) {
+         res.status(403).send(
+            'No account registered to that email exists. Would you like to create an account instead?'
+         );
+      } else {
+         //otherwise, check if token exists
+
+         let currentToken = await tokensModel.findOne(user[0].id);
+         //if token exists delete it first
+
+         if (currentToken.length > 0) {
+            await tokensModel.deleteOne(currentToken[0].token);
+         }
+
+         //add new token to database linked to current user
+         let resetToken = crypto.randomBytes(32).toString('hex');
+         console.log('resetToken in forgot password: ', resetToken);
+         const hash = await bcrypt.hash(resetToken, Number(saltRounds));
+         await tokensModel.addToken({
+            userId: user[0].id,
+            token: hash,
+            createdAt: format(new Date(Date.now()), 'MM/dd/yyyy'),
+         });
+         //send email to user using sendEmail file that uses token to verify user, and sends to user w
+         const link = `${process.env.CLIENT_URL}/passwordReset?token=${resetToken}&id=${user[0].id}`;
+         let response = await sendEmail(user.email, link);
+         console.log('response in controller after sending email: ', response);
+         res.status(200).send('Link has been sent to your email.');
+      }
+   } catch (err) {
+      console.log('err in forgotPassword: ', err);
+      res.status(400).send('Unable to send an email. Please try again later.');
+   }
+};
+
+type ResetPasswordBody = {
+   userId: string;
+   token: string;
+   password: string;
+};
+
+export const resetPassword = async (req: Request, res: Response) => {
+   let body: ResetPasswordBody = req.body;
+   try {
+      //grab reset token from database
+      let resetToken = await tokensModel.findOne(body.userId);
+      console.log('resetToken: ', resetToken);
+      if (!resetToken) {
+         res.status(403).send('Invalid or expired password reset token');
+      }
+      //compare the token sent from client to token found in database
+      const isValidToken = await bcrypt.compare(
+         body.token,
+         resetToken[0].token
+      );
+      //if the token provided from client is not the same as the one stored in db, return error
+      if (!isValidToken) {
+         res.status(403).send('Invalid or expired password reset token');
+      } else {
+         //otherwise, hash the new password and update in database
+         const hash = await bcrypt.hash(body.password, Number(saltRounds));
+         console.log('hash in reset password: ', hash);
+         await userModel.updatePassword(body.userId, hash);
+         res.status(200).send('Your password has been updated!');
+      }
+   } catch (err) {
+      console.log('err: ', err);
+      res.status(403).send('Unable to change password');
    }
 };

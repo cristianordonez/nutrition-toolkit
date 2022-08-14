@@ -12,6 +12,7 @@ import { router as authRoute } from './routes/auth.route';
 import { router as recipesRoute } from './routes/recipe.route';
 import { router as menuItemsRoute } from './routes/menuitems.route';
 import { router as groceryProductsRoute } from './routes/groceryproducts.route';
+import { router as metricsRoute } from './routes/metrics.route';
 import { router as mealplanRoute } from './routes/mealplan.route';
 import { Strategy as LocalStrategy } from 'passport-local';
 const GoogleStrategy = require('passport-google-oidc');
@@ -172,6 +173,7 @@ app.use('/api/recipes', recipesRoute);
 app.use('/api/menuItems', menuItemsRoute);
 app.use('/api/groceryProducts', groceryProductsRoute);
 app.use('/api/mealplan', mealplanRoute);
+app.use('/api/metrics', metricsRoute);
 
 app.get('/*', (req, res) => {
    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
