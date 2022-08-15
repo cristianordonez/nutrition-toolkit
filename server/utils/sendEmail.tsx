@@ -40,10 +40,11 @@ const createTransporter = async () => {
 };
 
 export const sendEmail = async (email: string, link: string) => {
+   console.log('email in sendemail: ', email);
    let mailOptions = {
       from: process.env.EMAIL_USERNAME,
-      ////to: email, //receiving address
-      to: 'cristianordonezrd@gmail.com',
+      to: email, //receiving address
+      // to: 'cristianordonezrd@gmail.com',
       subject: 'Account Recovery',
       text: `Hi, \n You requested to reset your password. \n Please click this link to reset your password: \n${link}`,
    };
@@ -52,7 +53,6 @@ export const sendEmail = async (email: string, link: string) => {
       let emailTransporter = await createTransporter();
       let response = await emailTransporter.sendMail(mailOptions);
       return response;
-      // res.status(201).send('Success');
    } catch (err) {
       return err;
    }

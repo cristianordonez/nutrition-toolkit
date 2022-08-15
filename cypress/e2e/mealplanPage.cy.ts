@@ -43,14 +43,14 @@ describe('The Mealplan Page', () => {
       ).should('exist');
    });
 
-   // it('Allows user to change the date via the textfield component', () => {
-   //    cy.contains('Meal Plan').click();
-   //    cy.findByTestId('CalendarIcon').click();
-   //    cy.findByText('15').click();
-   //    cy.contains(
-   //       'You have no items saved on this day for your mealplan.'
-   //    ).should('exist');
-   // });
+   it('Allows user to change the date via the textfield component', () => {
+      cy.contains('Meal Plan').click();
+      cy.findByTestId('CalendarIcon').click();
+      cy.findByText('15').click();
+      cy.contains(
+         'You have no items saved on this day for your mealplan.'
+      ).should('exist');
+   });
 
    it('Allows user to delete items from their mealplan, then show the updated nutrients', () => {
       cy.contains('Meal Plan').click();
