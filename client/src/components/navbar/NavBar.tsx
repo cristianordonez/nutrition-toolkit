@@ -41,7 +41,6 @@ const NavBar = ({ isSettingsPage }: Props) => {
 
    const navigate = useNavigate();
    const { isLoading, isLoggedIn, username } = useAuth(); //used to check if data is still being retrieved from database
-   console.log('username: ', username);
    const [isOpen, setIsOpen] = useState(false);
 
    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(

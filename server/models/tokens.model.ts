@@ -24,8 +24,6 @@ export const addToken = async function ({
    token,
    createdAt,
 }: TokensType) {
-   console.log('user_id: ', userId);
-   console.log('createdAt: ', createdAt);
    let currentQuery = `INSERT INTO tokens (user_id, token, createdAt) VALUES('${userId}', '${token}', '${createdAt}')`;
    let dbResponse = await db.query(currentQuery);
    return dbResponse;

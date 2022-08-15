@@ -26,11 +26,11 @@ const ForgotPasswordPage = () => {
 
       try {
          let axiosResponse = await axios.post('/api/forgotPassword', { email });
+         setEmail('');
          setAlertSeverity('success');
          setAlertMessage(axiosResponse.data);
          setOpenAlert(true);
       } catch (err: any) {
-         console.log('err in handlesubmnit: ', err.response);
          setAlertSeverity('error');
          setAlertMessage(err.response.data);
          setOpenAlert(true);

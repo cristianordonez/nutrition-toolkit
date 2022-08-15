@@ -59,6 +59,7 @@ const Home = () => {
          setOpenAlert(true);
       }
    }, [location]);
+
    return (
       <>
          <NavBar isLoggedIn={false} />

@@ -27,7 +27,7 @@ describe('The Login Page', () => {
    it('Allows user to login after creating an account', () => {
       cy.visit('/');
       cy.contains('Log in').click();
-      cy.findByPlaceholderText('Username').type('TEST_USERNAME01');
+      cy.findByPlaceholderText('Username or Email').type('TEST_USERNAME01');
       cy.findByPlaceholderText('Password').type('password');
       cy.findByTestId('login-btn').click();
       cy.get('.daily-goals').contains('1614').should('be.visible');

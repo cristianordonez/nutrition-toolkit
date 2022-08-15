@@ -54,8 +54,6 @@ export const sendEmail = async (email: string, link: string) => {
       return response;
       // res.status(201).send('Success');
    } catch (err) {
-      // res.status(400).send(err);
-      console.log('err in send email: ', err);
       return err;
    }
 };

@@ -17,14 +17,16 @@ export const UsernameTextField = ({
          inputProps={{ 'data-testid': 'username-textfield' }}
          required
          onChange={showSignup ? handleCreateAccountChange : handleLoginChange}
-         label='Username'
+         label={showSignup ? 'Username' : 'Username or Email'}
          type='text'
          variant='filled'
          name='username'
-         placeholder='Username'
+         placeholder={showSignup ? 'Username' : 'Username or Email'}
          fullWidth
          id='username'
-         helperText={'Enter your username'}
+         helperText={
+            showSignup ? 'Enter your username' : 'Enter your username or email'
+         }
       />
    );
 };

@@ -86,7 +86,6 @@ export const FoodItemContents = ({
                         position: 'absolute',
                         alignSelf: 'flex-end',
                      }}
-                     // color='primary'
                      size='small'
                      color='error'
                      aria-label='delete from mealplan'

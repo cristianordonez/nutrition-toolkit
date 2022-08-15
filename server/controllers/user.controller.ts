@@ -124,7 +124,6 @@ export const forgotPassword = async (req: Request, res: Response) => {
 
          //add new token to database linked to current user
          let resetToken = crypto.randomBytes(32).toString('hex');
-         console.log('resetToken in forgot password: ', resetToken);
          const hash = await bcrypt.hash(resetToken, Number(saltRounds));
          await tokensModel.addToken({
             userId: user[0].id,
@@ -134,11 +133,11 @@ export const forgotPassword = async (req: Request, res: Response) => {
          //send email to user using sendEmail file that uses token to verify user, and sends to user w
          const link = `${process.env.CLIENT_URL}/passwordReset?token=${resetToken}&id=${user[0].id}`;
          let response = await sendEmail(user.email, link);
-         console.log('response in controller after sending email: ', response);
-         res.status(200).send('Link has been sent to your email.');
+         res.status(200).send(
+            'Your account recovery link has been sent to your email.'
+         );
       }
    } catch (err) {
-      console.log('err in forgotPassword: ', err);
       res.status(400).send('Unable to send an email. Please try again later.');
    }
 };
@@ -154,7 +153,7 @@ export const resetPassword = async (req: Request, res: Response) => {
    try {
       //grab reset token from database
       let resetToken = await tokensModel.findOne(body.userId);
-      console.log('resetToken: ', resetToken);
+
       if (!resetToken) {
          res.status(403).send('Invalid or expired password reset token');
       }
@@ -169,12 +168,10 @@ export const resetPassword = async (req: Request, res: Response) => {
       } else {
          //otherwise, hash the new password and update in database
          const hash = await bcrypt.hash(body.password, Number(saltRounds));
-         console.log('hash in reset password: ', hash);
          await userModel.updatePassword(body.userId, hash);
          res.status(200).send('Your password has been updated!');
       }
    } catch (err) {
-      console.log('err: ', err);
       res.status(403).send('Unable to change password');
    }
 };

@@ -66,9 +66,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(
-   new LocalStrategy((username, password, cb) => {
+   new LocalStrategy((usernameOrEmail, password, cb) => {
       db.query(
-         `SELECT id, username, hash, email FROM users WHERE username='${username}'`
+         `SELECT id, username, hash, email FROM users WHERE username='${usernameOrEmail}' OR email='${usernameOrEmail}'`
       )
          .then(function (result: any) {
             if (result.length) {

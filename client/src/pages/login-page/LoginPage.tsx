@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Footer } from '../../components/footer/Footer';
 import { LoginForm } from '../../components/login-form/LoginForm';
 import { SignupForm } from '../../components/sign-up-form/SignupForm';
 import { CustomAlert } from '../../components/shared/CustomAlert';
 import { AlertColor } from '@mui/material';
 import NavBar from '../../components/navbar/NavBar';
+import { useLocation } from 'react-router-dom';
+
+type LocationType = {
+   pathname: string;
+   key: string;
+   search: string;
+   state: { resetPassword: boolean };
+};
 
 const LoginPage = () => {
    const [showSignup, setShowSignup] = useState(false);
@@ -24,6 +32,17 @@ const LoginPage = () => {
    const handleRedirectToSignup = () => {
       setShowSignup(!showSignup);
    };
+
+   // const location = useLocation() as LocationType;
+   const location = useLocation() as unknown as LocationType;
+   // //when logged out, react router sends state saying log out was successful to show alert
+   useEffect(() => {
+      if (location.state && location.state.resetPassword) {
+         setAlertSeverity('success');
+         setErrorMessage('Your password has been reset!');
+         setOpenErrorAlert(true);
+      }
+   }, [location]);
 
    return (
       <>

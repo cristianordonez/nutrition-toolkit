@@ -20,7 +20,7 @@ describe('PasswordTextField Component ', () => {
          />
       );
       await user.type(
-         screen.getByPlaceholderText('Username'),
+         screen.getByPlaceholderText('Username or Email'),
          'this is a username component'
       );
       expect(mockedFn).toHaveBeenCalledTimes(0);
@@ -31,7 +31,7 @@ describe('PasswordTextField Component ', () => {
          <UsernameTextField showSignup={true} handleLoginChange={mockedFn} />
       );
       await user.type(
-         screen.getByPlaceholderText('Username'),
+         screen.getByPlaceholderText('Username or Email'),
          'this is a username component'
       );
 
