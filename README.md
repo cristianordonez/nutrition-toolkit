@@ -73,10 +73,6 @@ This opens a development server in your local browser at port 3000.
 
 -  To allow code-splitting to work when building files, must first change tsconfig.json 'module' variable to 'esnext'. Feel free to change back to 'commonjs' after building files to avoid errors with using import statements instead of require statements for modules.
 
-```bash
-npm run build
-```
-
 -  When application is ready for production, have webpack build your bundle and minimize your files and then start the Express server:
 
 ```bash

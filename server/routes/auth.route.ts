@@ -46,7 +46,6 @@ router.get(
 );
 
 ////////////////////////////////////////////////////////
-
 //# handles checking if user is logged in for protected routes
 router.get('/authentication', (req: Request, res: Response) => {
    userController.checkAuthentication(req, res);
