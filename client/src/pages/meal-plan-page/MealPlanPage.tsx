@@ -139,7 +139,7 @@ const MealPlanPage = () => {
 
    return isLoading ? null : (
       <>
-         <NavBar isLoggedIn={true} />
+         <NavBar />
          <div className='mealplan-page'>
             <Toolbar sx={{ display: { sm: 'none' } }}>
                <IconButton

@@ -56,7 +56,7 @@ describe('The Mealplan Page', () => {
       cy.contains('Meal Plan').click();
       cy.findAllByTestId('food-search-item').should('have.length.of', 3);
       cy.findAllByLabelText('delete from mealplan').should('exist');
-      cy.findAllByLabelText('delete from mealplan').click();
+      cy.findAllByLabelText('delete from mealplan').first().click();
       cy.findByText('Delete').click();
       cy.findAllByTestId('food-search-item').should('have.length.of', 2);
    });

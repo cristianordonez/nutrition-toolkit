@@ -40,7 +40,6 @@ const createTransporter = async () => {
 };
 
 export const sendEmail = async (email: string, link: string) => {
-   console.log('email in sendemail: ', email);
    let mailOptions = {
       from: process.env.EMAIL_USERNAME,
       to: email, //receiving address

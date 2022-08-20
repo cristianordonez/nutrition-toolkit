@@ -23,7 +23,7 @@ const MacroCalculatorPage = () => {
 
    return isLoading ? null : (
       <>
-         <NavBar isLoggedIn={true} />
+         <NavBar />
          <MacroCalculatorForm
             setOpenErrorAlert={setOpenSnackbar}
             setErrorMessage={setAlertMessage}

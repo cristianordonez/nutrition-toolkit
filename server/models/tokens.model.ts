@@ -8,7 +8,6 @@ export const findOne = async function (userId: string) {
 
 export const deleteOne = async function (token: string) {
    let currentQuery = `DELETE FROM tokens WHERE token='${token}'`;
-   console.log('currentQuery for deleteone token: ', currentQuery);
    let dbResponse = await db.query(currentQuery);
    return dbResponse;
 };

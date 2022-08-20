@@ -65,7 +65,7 @@ const UserSettingsPage = () => {
 
    return isLoading ? null : (
       <>
-         <NavBar isLoggedIn={true} isSettingsPage={true} />
+         <NavBar isSettingsPage={true} />
          <div className='user-profile-page'>
             <Stack direction='row' spacing={1} sx={{ paddingBottom: '1rem' }}>
                <SettingsIcon />

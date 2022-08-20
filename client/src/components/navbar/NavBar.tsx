@@ -26,7 +26,6 @@ import { useLocation } from 'react-router-dom';
 const pages = ['Search', 'Macro Calculator', 'Meal Plan'];
 
 interface Props {
-   isLoggedIn?: boolean | undefined;
    isSettingsPage?: boolean;
 }
 
@@ -255,7 +254,7 @@ const NavBar = ({ isSettingsPage }: Props) => {
                            data-testid='avatar'
                         >
                            <Avatar
-                              alt='Remy Sharp'
+                              alt='user avatar'
                               // src='/static/images/avatar/2.jpg'
                            />
                         </IconButton>
@@ -315,7 +314,6 @@ const NavBar = ({ isSettingsPage }: Props) => {
                )}
             </IconButton>
          </Toolbar>
-         {/* </Container> */}
       </AppBar>
    );
 };

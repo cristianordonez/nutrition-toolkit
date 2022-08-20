@@ -62,7 +62,7 @@ const Home = () => {
 
    return (
       <>
-         <NavBar isLoggedIn={false} />
+         <NavBar />
          <div className='home-page'>
             <Stack
                direction={{ xs: 'column', sm: 'row' }}

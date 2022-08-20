@@ -10,7 +10,7 @@ import userEvent from '@testing-library/user-event';
 
 const mockedFn = jest.fn();
 
-describe('PasswordTextField Component ', () => {
+describe('UsernameTextField Component ', () => {
    test('When showsignup is set to false, the handleCreateAccountChange function does not get called', async () => {
       const user = userEvent.setup();
       render(
@@ -31,7 +31,7 @@ describe('PasswordTextField Component ', () => {
          <UsernameTextField showSignup={true} handleLoginChange={mockedFn} />
       );
       await user.type(
-         screen.getByPlaceholderText('Username or Email'),
+         screen.getByPlaceholderText('Username'),
          'this is a username component'
       );
 

@@ -30,7 +30,6 @@ export const create = async function (user: User) {
 //# updates the hashed password in db for user given the userId
 export const updatePassword = async (userId: string, password: string) => {
    const passwordQuery = `UPDATE users SET hash='${password}' WHERE id='${userId}'`;
-   console.log('passwordQuery: ', passwordQuery);
    let dbResponse = await db.query(passwordQuery);
    return dbResponse;
 };

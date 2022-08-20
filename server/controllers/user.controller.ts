@@ -132,7 +132,6 @@ export const forgotPassword = async (req: Request, res: Response) => {
          });
          //send email to user using sendEmail file that uses token to verify user, and sends to user w
          const link = `${process.env.CLIENT_URL}/passwordReset?token=${resetToken}&id=${user[0].id}`;
-         console.log('user: ', user);
          let response = await sendEmail(user[0].email, link);
          res.status(200).send(
             'Your account recovery link has been sent to your email.'

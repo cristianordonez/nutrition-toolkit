@@ -78,7 +78,6 @@ const SearchPage = () => {
       setCurrentTab(currentValue);
    };
 
-   //todo check if there are more items present, if not then toggle load more buton off
    //# handles submission to search for food items
    const handleSubmit = async (event: React.SyntheticEvent) => {
       let newValues = { ...values, offset: 0 }; //declare new values so that there are no async bugs, and reset offset to 0 in case user changed it
@@ -213,7 +212,7 @@ const SearchPage = () => {
       <>
          {isLoading ? null : (
             <>
-               <NavBar isLoggedIn={true} />
+               <NavBar />
                <Box className='search-page' sx={{ width: '100vw' }}>
                   {/* PROGRESS BAR */}
                   {loading && <CircularProgress size={68} />}

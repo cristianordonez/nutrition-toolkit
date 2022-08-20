@@ -23,6 +23,7 @@ const pgSession = require('connect-pg-simple')(session);
 const app = express();
 
 //MIDDLEWARE
+require('@cypress/code-coverage/middleware/express')(app);
 app.use(cors());
 
 app.use(compression());

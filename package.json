@@ -10,6 +10,7 @@
       "cypress": "cypress open",
       "dev": "concurrently -n 'webpack,server' -c 'bgBlue.bold,bgGreen.bold' \"npx webpack serve --config webpack.dev.js\" \"nodemon server/server.js\"",
       "build": "webpack --config webpack.prod.js",
+      "prestart": "npm run build",
       "start": "nodemon server/server.js"
    },
    "repository": {
@@ -67,8 +68,9 @@
       "@babel/preset-env": "^7.18.2",
       "@babel/preset-react": "^7.17.12",
       "@cypress/code-coverage": "^3.10.0",
+      "@istanbuljs/nyc-config-typescript": "^1.0.2",
       "@testing-library/cypress": "^8.0.3",
-      "@testing-library/jest-dom": "^5.16.4",
+      "@testing-library/jest-dom": "^5.16.5",
       "@testing-library/react": "^13.3.0",
       "@testing-library/user-event": "^14.2.1",
       "@types/bcrypt": "^5.0.0",
@@ -91,7 +93,6 @@
       "@types/uuid": "^8.3.4",
       "babel-jest": "^28.1.1",
       "babel-loader": "^8.2.5",
-      "babel-plugin-istanbul": "^6.1.1",
       "css-loader": "^6.7.1",
       "cypress": "^10.3.1",
       "cypress-jest-adapter": "^0.1.1",
@@ -105,17 +106,15 @@
       "regenerator-runtime": "^0.13.9",
       "sass": "^1.52.3",
       "sass-loader": "^13.0.0",
+      "source-map-support": "^0.5.21",
       "style-loader": "^3.3.1",
       "supertest": "^6.2.3",
       "ts-jest": "^28.0.5",
       "ts-loader": "^9.3.0",
-      "ts-node": "^10.8.1",
+      "ts-node": "^10.9.1",
       "typescript": "^4.7.3",
       "webpack": "^5.74.0",
       "webpack-cli": "^4.9.2",
       "webpack-dev-server": "^4.9.2"
-   },
-   "nyc": {
-      "report-dir": "cypress-coverage"
    }
 }

@@ -46,7 +46,7 @@ const LoginPage = () => {
 
    return (
       <>
-         <NavBar isLoggedIn={false} />
+         <NavBar />
          {showSignup ? (
             <SignupForm
                showSignup={showSignup}
