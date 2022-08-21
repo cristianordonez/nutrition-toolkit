@@ -43,9 +43,7 @@ const SearchPage = () => {
    const [alertMessage, setAlertMessage] = useState<string>(
       'No options matched your search. Try again with a broader search.'
    );
-   const [alertSeverity, setAlertSeverity] = useState<AlertColor | undefined>(
-      'error'
-   );
+   const [alertSeverity, setAlertSeverity] = useState<AlertColor>('error');
    const [values, setValues] = useState({
       query: '',
       type: '',

@@ -33,7 +33,7 @@ interface Props {
    setOpenDialog: Dispatch<SetStateAction<boolean>>;
    setAlertMessage: Dispatch<SetStateAction<string>>;
    setOpenSnackbar: Dispatch<SetStateAction<boolean>>;
-   setAlertSeverity: Dispatch<SetStateAction<AlertColor | undefined>>;
+   setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
 }
 
 export const AddToCartModal = ({
@@ -57,7 +57,6 @@ export const AddToCartModal = ({
       currentType = 'MENU_ITEM';
    }
 
-   //todo fix to start of day
    const [data, setData] = useState<addToMealPlanType | any>({
       date: getUnixTime(startOfToday()),
       slot: 1,

@@ -21,7 +21,7 @@ interface Props {
    setOpenDialog: Dispatch<SetStateAction<boolean>>;
    handleOpeningDialog: MouseEventHandler<HTMLButtonElement>;
    setOpenSnackbar: Dispatch<SetStateAction<boolean>>;
-   setAlertSeverity: Dispatch<SetStateAction<AlertColor | undefined>>;
+   setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    setAlertMessage: Dispatch<SetStateAction<string>>;
    setMealPlanItems: Dispatch<SetStateAction<[]>>;
    currentDay: string;

@@ -26,11 +26,10 @@ type LocationType = {
 };
 
 const Home = () => {
-   const [alertSeverity, setAlertSeverity] = useState<AlertColor | undefined>(
-      'success'
-   );
+   const [alertSeverity, setAlertSeverity] = useState<AlertColor>('success');
    const [openAlert, setOpenAlert] = useState(false);
    const [alertMessage, setAlertMessage] = useState(''); //message displayed on snackbar
+   let navigate = useNavigate();
 
    //handles showing snackbar if request to server to login is not successful
    const handleAlert = () => {
@@ -47,8 +46,11 @@ const Home = () => {
       'Search For Matching Food Items',
       'Create Your Own Custom Mealplan',
    ];
-   const navigate = useNavigate();
    const cardImages = [CalculateSvg, MaleChefSvg, ScheduleSvg];
+
+   //pass down the feature view to cards so that they can be used to call the handleNavigatingToFeatures function
+   const featureView = ['calculator', 'search', 'mealplan'];
+
    const location = useLocation() as LocationType;
 
    //when logged out, react router sends state saying log out was successful to show alert
@@ -60,6 +62,11 @@ const Home = () => {
       }
    }, [location]);
 
+   //used to navigate to the SampleAppFeaturesPage with the correction variable passed down in location state
+   const handleNavigatingToFeatures = (featureView: string) => {
+      navigate('/diabetes-calculator-features', { state: { featureView } });
+   };
+
    return (
       <>
          <NavBar />
@@ -70,7 +77,7 @@ const Home = () => {
                alignItems='center'
                gap={4}
             >
-               <Stack direction='column' spacing={1}>
+               <Stack direction='column' spacing={{ xs: 1, sm: 2, md: 4 }}>
                   <Typography
                      textAlign={{ xs: 'center', sm: 'left' }}
                      variant='h2'
@@ -87,8 +94,17 @@ const Home = () => {
                         variant='contained'
                         onClick={() => navigate('/login')}
                         data-testid='home-page'
+                        size='small'
                      >
                         Log in
+                     </Button>
+                     <Button
+                        onClick={() => handleNavigatingToFeatures('recipes')}
+                        variant='contained'
+                        size='small'
+                        color='secondary'
+                     >
+                        Browse Recipes
                      </Button>
                   </div>
                </Stack>
@@ -103,6 +119,8 @@ const Home = () => {
                         body={message}
                         title={cardTitles[index]}
                         image={cardImages[index]}
+                        feature={featureView[index]}
+                        handleNavigatingToFeatures={handleNavigatingToFeatures}
                      />
                   ))}
                </Grid>

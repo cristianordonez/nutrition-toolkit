@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import './SignupForm.scss';
 import { Typography, Paper, Button } from '@mui/material';
 import { MacroCalculatorForm } from '../shared/macro-calculator-form';
-import { ConfirmPasswordTextField } from '../text-fields/confirm-password-textfield/ConfirmPasswordTextField';
-import { EmailTextField } from '../text-fields/email-textfield/EmailTextField';
-import { PasswordTextField } from '../text-fields/password-textfield/PasswordTextField';
-import { UsernameTextField } from '../text-fields/username-textfield/UsernameTextField';
+import { ConfirmPasswordTextField } from '../shared/text-fields/confirm-password-textfield/ConfirmPasswordTextField';
+import { EmailTextField } from '../shared/text-fields/email-textfield/EmailTextField';
+import { PasswordTextField } from '../shared/text-fields/password-textfield/PasswordTextField';
+import { UsernameTextField } from '../shared/text-fields/username-textfield/UsernameTextField';
 import GoogleIcon from '@mui/icons-material/Google';
 import axios from 'axios';
 

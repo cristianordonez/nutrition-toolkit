@@ -6,9 +6,17 @@ import { ThemeProvider } from '@emotion/react';
 import { PaletteMode } from '@mui/material';
 import { teal, grey } from '@mui/material/colors';
 import { useLocalStorageState } from '../hooks/useLocalStorage';
+import SampleAppFeaturesPage from './sample-app-features-page/SampleAppFeaturesPage';
 
 const Home = lazy(
    () => import(/* webpackChunkName: "HomePage" */ './home/Home')
+);
+
+const BrowseRecipes = lazy(
+   () =>
+      import(
+         /* webpackChunkName: "BrowseRecipesPage" */ './sample-app-features-page/SampleAppFeaturesPage'
+      )
 );
 
 const LoginPage = lazy(
@@ -58,7 +66,7 @@ const ForgotPasswordPage = lazy(
 const ResetPasswordPage = lazy(
    () =>
       import(
-         /* webpackChunkName: "ResetPasswordPage" */ './reset-password-page/ResetPasswordPage'
+         /* webpackChunkName: "SampleAppFeaturesPage" */ './sample-app-features-page/SampleAppFeaturesPage'
       )
 );
 
@@ -71,6 +79,13 @@ const getDesignTokens = (mode: PaletteMode) => ({
             main: '#14ffec',
          }),
       },
+      secondary: {
+         ...teal,
+         ...(mode === 'dark' && {
+            main: '#912F00',
+         }),
+      },
+
       ...(mode === 'dark' && {
          background: {
             default: '#121212',
@@ -122,6 +137,10 @@ export const App = () => {
                <Suspense fallback={<></>}>
                   <Routes>
                      <Route path='/' element={<Home />} />
+                     <Route
+                        path='/diabetes-calculator-features'
+                        element={<SampleAppFeaturesPage />}
+                     />
                      <Route path='/login' element={<LoginPage />} />
                      <Route
                         path='/search'

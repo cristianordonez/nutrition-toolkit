@@ -26,7 +26,7 @@ interface Props {
    setErrorMessage: Dispatch<SetStateAction<string>>;
    setShowNextPage: Dispatch<SetStateAction<boolean>>;
    setShowSignup: Dispatch<SetStateAction<boolean>>;
-   setAlertSeverity: Dispatch<SetStateAction<AlertColor | undefined>>;
+   setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    page?: string;
    showNextPage?: boolean | any;
 }

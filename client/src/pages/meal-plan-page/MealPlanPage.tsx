@@ -41,9 +41,7 @@ const MealPlanPage = () => {
    const [mealplanItems, setMealplanItems] = useState<[]>([]);
    const [mealplanItemsFound, setMealplanItemsFound] = useState<boolean>(true); //use this to display different page if no items are found
    const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
-   const [alertSeverity, setAlertSeverity] = useState<AlertColor | undefined>(
-      'error'
-   );
+   const [alertSeverity, setAlertSeverity] = useState<AlertColor>('error');
    const [alertMessage, setAlertMessage] = useState<string>('');
    const [currentDay, setCurrentDay] = useState(
       format(new Date(Date.now()), 'yyyy-MM-dd')

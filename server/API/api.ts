@@ -30,7 +30,6 @@ export const getSpoonacularRecipes = async (
    let intoleranceQuery = recipeQuery.intolerance.length
       ? recipeQuery.intolerance
       : false;
-
    let recipes = await axios.get(`${url}recipes/complexSearch`, {
       params: {
          query: `${recipeQuery.query}`,
@@ -59,6 +58,34 @@ export const getSpoonacularRecipes = async (
    return recipes.data.results;
 };
 
+export const getSpoonacularRandomRecipes = async () => {
+   let currentUrl = `${url}recipes/random?number=50`;
+   let randomRecipes = await axios.get(currentUrl, {
+      headers: {
+         'X-RapidAPI-Key': `${X_RAPIDAPI_KEY}`,
+         'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
+      },
+   });
+   return randomRecipes.data;
+};
+
+type RecipeQuery = {
+   offset: string;
+   number: string;
+   query: string;
+};
+
+export const getSpoonacularRecipesByQuery = async (query: RecipeQuery) => {
+   let currentUrl = `${url}recipes/complexSearch?query=${query.query}&offset=${query.offset}&number=${query.number}`;
+   let matchingRecipes = await axios.get(currentUrl, {
+      headers: {
+         'X-RapidAPI-Key': `${X_RAPIDAPI_KEY}`,
+         'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
+      },
+   });
+   return matchingRecipes.data.results;
+};
+
 export const getSpoonacularRecipeById = async (id: number) => {
    const currentUrl = `${url}recipes/${id}/information?includeNutrition=true`;
    let recipeInfo = await axios.get(currentUrl, {
@@ -67,7 +94,6 @@ export const getSpoonacularRecipeById = async (id: number) => {
          'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
       },
    });
-
    return recipeInfo.data; //must return only the .data object otherwise will get JSON type error
 };
 

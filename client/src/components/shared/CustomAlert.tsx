@@ -4,7 +4,7 @@ import { Snackbar, Alert, AlertColor } from '@mui/material';
 interface Props {
    openAlert: boolean;
    handleAlert: (event: React.SyntheticEvent | Event) => void;
-   alertSeverity: AlertColor | undefined;
+   alertSeverity: AlertColor;
    alertMessage: string;
 }
 

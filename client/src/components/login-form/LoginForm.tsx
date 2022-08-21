@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './LoginForm.scss';
 import { Typography, Stack, Paper, Button } from '@mui/material';
-import { PasswordTextField } from '../text-fields/password-textfield/PasswordTextField';
-import { UsernameTextField } from '../text-fields/username-textfield/UsernameTextField';
+import { PasswordTextField } from '../shared/text-fields/password-textfield/PasswordTextField';
+import { UsernameTextField } from '../shared/text-fields/username-textfield/UsernameTextField';
 import { useNavigate } from 'react-router-dom';
 import LoginSvg from '../../../img/secure_login.svg';
 import GoogleIcon from '@mui/icons-material/Google';

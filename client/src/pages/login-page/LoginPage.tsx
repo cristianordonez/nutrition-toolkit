@@ -16,9 +16,7 @@ type LocationType = {
 
 const LoginPage = () => {
    const [showSignup, setShowSignup] = useState(false);
-   const [alertSeverity, setAlertSeverity] = useState<AlertColor | undefined>(
-      'success'
-   );
+   const [alertSeverity, setAlertSeverity] = useState<AlertColor>('success');
    const [showTextFieldError, setShowTextFieldError] = useState(false); //this is used to show the showTextFieldError helper text on textfields
    const [openErrorAlert, setOpenErrorAlert] = useState(false);
    const [errorMessage, setErrorMessage] = useState(''); //message displayed on snackbar

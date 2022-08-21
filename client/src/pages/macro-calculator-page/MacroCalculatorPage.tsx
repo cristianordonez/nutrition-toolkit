@@ -10,9 +10,7 @@ const MacroCalculatorPage = () => {
    const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
    const [showNextPage, setShowNextPage] = useState(false);
    const [showSignup, setShowSignup] = useState(false);
-   const [alertSeverity, setAlertSeverity] = useState<AlertColor | undefined>(
-      'error'
-   );
+   const [alertSeverity, setAlertSeverity] = useState<AlertColor>('error');
    const [alertMessage, setAlertMessage] = useState<string>(
       'No options matched your search. Try again with a broader search.'
    );

@@ -24,7 +24,7 @@ interface Props {
    restaurantChain?: string;
    setAlertMessage: Dispatch<SetStateAction<string>>;
    setOpenSnackbar: Dispatch<SetStateAction<boolean>>;
-   setAlertSeverity: Dispatch<SetStateAction<AlertColor | undefined>>;
+   setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
 }
 
 export const FoodSearchItem = ({

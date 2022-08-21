@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { SetStateAction, Dispatch, MouseEventHandler } from 'react';
 import './index.scss';
 import { FoodSearchItem } from './food-search-item/FoodSearchItem';
 import Grid from '@mui/material/Grid';
@@ -7,6 +7,17 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { FoodItemType } from './food-search-list.types';
+import { AlertColor } from '@mui/material';
+
+interface Props {
+   apiData: never[];
+   route: string;
+   handleLoadMore: MouseEventHandler<HTMLButtonElement>;
+   setAlertMessage: Dispatch<SetStateAction<string>>;
+   setOpenSnackbar: Dispatch<SetStateAction<boolean>>;
+   setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
+   showLoadMoreBtn: boolean;
+}
 
 export const FoodSearchList = ({
    apiData,
@@ -16,7 +27,7 @@ export const FoodSearchList = ({
    setOpenSnackbar,
    setAlertSeverity,
    showLoadMoreBtn,
-}: any) => {
+}: Props) => {
    return (
       <div className='food-search-list'>
          <Stack direction='row' spacing={1}>

@@ -13,7 +13,7 @@ interface Props {
    servings: number;
    title: string;
    setOpenSnackbar: Dispatch<SetStateAction<boolean>>;
-   setAlertSeverity: Dispatch<SetStateAction<AlertColor | undefined>>;
+   setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    setAlertMessage: Dispatch<SetStateAction<string>>;
    setMealPlanItems: Dispatch<SetStateAction<[]>>;
    currentDay: string;

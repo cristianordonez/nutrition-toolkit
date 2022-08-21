@@ -122,7 +122,7 @@ const NavBar = ({ isSettingsPage }: Props) => {
                   letterSpacing: '.3rem',
                   color: 'inherit',
                   textDecoration: 'none',
-                  flexGrow: 1,
+                  // flexGrow: 1,
                   '&:hover': {
                      cursor: 'pointer',
                   },
@@ -130,6 +130,7 @@ const NavBar = ({ isSettingsPage }: Props) => {
             >
                DiabetesCalculator
             </Typography>
+            {/* is user is logged in show all routes, and check if user is viewing their settings */}
             {isLoggedIn === true ? (
                <>
                   <Box
@@ -170,7 +171,7 @@ const NavBar = ({ isSettingsPage }: Props) => {
                         }}
                      >
                         <Stack direction='column' sx={{ padding: '0.5rem' }}>
-                           {/* different links to show active page */}
+                           {/* show different links to show active page */}
                            {pages.map((page) =>
                               page.toLowerCase().replace(' ', '') ===
                               location.pathname.slice(1) ? (
@@ -290,6 +291,7 @@ const NavBar = ({ isSettingsPage }: Props) => {
                   </Box>
                </>
             ) : (
+               // if user is not logged in then just show link to login page
                <Link
                   href='/login'
                   underline='hover'
