@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './MealPlanPage.scss';
-import { SidebarMealplan } from '../../components/sidebar-mealplan/SideBarMealPlan';
-import { DateSelectForm } from '../../components/date-select-form/DateSelectForm';
-import { MealplanDay, MealplanItemType } from '../../components/mealplan-day';
-import { CustomAlert } from '../../components/shared/CustomAlert';
-import { MealPlanWeekText } from '../../components/mealplan-week-text/MealPlanWeekText';
+import { SidebarMealplan } from './sidebar-mealplan/SideBarMealPlan';
+import { DateSelectForm } from './date-select-form/DateSelectForm';
+import { MealplanDay, MealplanItemType } from './mealplan-day';
+import { CustomAlert } from '../../components/CustomAlert';
+import { MealPlanWeekText } from './mealplan-week-text/MealPlanWeekText';
 import {
    Typography,
    Box,

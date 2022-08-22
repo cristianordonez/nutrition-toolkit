@@ -1,0 +1,16 @@
+@use '../../../../index.scss' as *;
+
+img {
+   @include cover-background();
+   //    display: none;
+}
+.sample-recipe-content {
+   @include set-size(100px, 100%);
+
+   //   position: absolute;
+   //   top: 10px;
+   position: relative;
+   bottom: 100px;
+   background-color: black;
+   opacity: 70%;
+}

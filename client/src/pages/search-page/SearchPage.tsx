@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './SearchPage.scss';
-import { SearchForm } from '../../components/search-form';
-import { CustomAlert } from '../../components/shared/CustomAlert';
-import { FoodSearchList } from '../../components/food-search-list';
+import { SearchForm } from './search-form';
+import { CustomAlert } from '../../components/CustomAlert';
+import { FoodSearchList } from './food-search-list';
 import {
    Box,
    Toolbar,
@@ -10,7 +10,7 @@ import {
    CircularProgress,
    AlertColor,
 } from '@mui/material';
-import { SideBarSearchPage } from '../../components/sidebar-searchpage/SideBarSearchPage';
+import { SideBarSearchPage } from './sidebar-searchpage/SideBarSearchPage';
 import { useAuth } from '../../context/authContext';
 import axios from 'axios';
 import NavBar from '../../components/navbar/NavBar';

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Footer } from '../../components/footer/Footer';
-import { LoginForm } from '../../components/login-form/LoginForm';
-import { SignupForm } from '../../components/sign-up-form/SignupForm';
-import { CustomAlert } from '../../components/shared/CustomAlert';
+import { LoginForm } from './login-form/LoginForm';
+import { SignupForm } from './sign-up-form/SignupForm';
+import { CustomAlert } from '../../components/CustomAlert';
 import { AlertColor } from '@mui/material';
 import NavBar from '../../components/navbar/NavBar';
 import { useLocation } from 'react-router-dom';

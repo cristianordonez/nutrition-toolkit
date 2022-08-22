@@ -8,8 +8,8 @@ import {
    Slide,
    AlertColor,
 } from '@mui/material';
-import { HomePageCard } from '../../components/home-page-card/HomePageCard';
-import { CustomAlert } from '../../components/shared/CustomAlert';
+import { HomePageCard } from './home-page-card/HomePageCard';
+import { CustomAlert } from '../../components/CustomAlert';
 import NavBar from '../../components/navbar/NavBar';
 import './Home.scss';
 import DietitianSvg from '../../../img/dietitian.svg';

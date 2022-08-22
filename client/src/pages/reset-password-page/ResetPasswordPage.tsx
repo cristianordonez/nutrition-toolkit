@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { PasswordTextField } from '../../components/shared/text-fields/password-textfield/PasswordTextField';
-import { ConfirmPasswordTextField } from '../../components/shared/text-fields/confirm-password-textfield/ConfirmPasswordTextField';
-import { CustomAlert } from '../../components/shared/CustomAlert';
+import { PasswordTextField } from '../../components/text-fields/password-textfield/PasswordTextField';
+import { ConfirmPasswordTextField } from '../../components/text-fields/confirm-password-textfield/ConfirmPasswordTextField';
+import { CustomAlert } from '../../components/CustomAlert';
 import { Typography, Paper, Button, AlertColor } from '@mui/material';
 import NavBar from '../../components/navbar/NavBar';
 import axios from 'axios';

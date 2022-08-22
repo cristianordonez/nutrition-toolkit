@@ -1,0 +1,11 @@
+@use '../../index.scss' as *;
+
+.MuiCard-root {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+}
+
+.card-button {
+   @include set-size(100%);
+}

@@ -1,0 +1,47 @@
+@use '../../../index.scss' as *;
+
+.login-form {
+   display: flex;
+   @include set-size(100%);
+   @include devices(mobile) {
+      padding-top: 0;
+   }
+   padding-top: 10vh;
+   align-items: center;
+   justify-content: center;
+   gap: 1vw;
+   img {
+      @include set-size(auto, 40vw);
+      max-width: 600px;
+      @include devices(mobile) {
+         display: none;
+      }
+   }
+}
+
+.login-form-card {
+   max-width: 730px;
+   @include set-size(100%, 50vw);
+   @include devices(mobile) {
+      padding-left: 0;
+      padding-right: 0;
+      @include set-size(100%);
+   }
+   padding-left: 5vw;
+   padding-right: 5vw;
+
+   .login-form-input {
+      padding: 1rem;
+      @include set-size(100%);
+      @include flex-center();
+      flex-direction: column;
+      gap: 1em;
+      .login-form-account-text {
+         align-self: center;
+      }
+   }
+   .login-form-text {
+      text-transform: none;
+      align-self: flex-start;
+   }
+}

@@ -1,0 +1,23 @@
+@use '../../index.scss' as *;
+
+.daily-goals {
+   @include flex-center-column();
+   gap: 1rem;
+   .daily-goals-heading {
+      position: relative;
+      bottom: 20%;
+      @include flex-center-column();
+   }
+   .daily-goals-kcal {
+      @include flex-center-column;
+      padding: 2rem;
+      .daily-goals-kcal-title {
+         position: absolute;
+      }
+   }
+   .daily-goals-items {
+      @include flex-center();
+      flex-wrap: wrap;
+      gap: 3rem;
+   }
+}

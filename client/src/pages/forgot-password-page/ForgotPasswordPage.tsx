@@ -2,9 +2,9 @@ import React, { useState, ChangeEvent, SyntheticEvent } from 'react';
 import './ForgotPasswordPage.scss';
 import { Paper, Typography, Button, AlertColor } from '@mui/material';
 import NavBar from '../../components/navbar/NavBar';
-import { EmailTextField } from '../../components/shared/text-fields/email-textfield/EmailTextField';
+import { EmailTextField } from '../../components/text-fields/email-textfield/EmailTextField';
 import axios, { AxiosError } from 'axios';
-import { CustomAlert } from '../../components/shared/CustomAlert';
+import { CustomAlert } from '../../components/CustomAlert';
 
 const ForgotPasswordPage = () => {
    const [email, setEmail] = useState<string>('');

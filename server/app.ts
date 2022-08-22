@@ -15,23 +15,21 @@ import { router as groceryProductsRoute } from './routes/groceryproducts.route';
 import { router as metricsRoute } from './routes/metrics.route';
 import { router as mealplanRoute } from './routes/mealplan.route';
 import { Strategy as LocalStrategy } from 'passport-local';
-const GoogleStrategy = require('passport-google-oidc');
-const generator = require('generate-password');
 import { db } from './database/db';
 import bcrypt from 'bcrypt';
+import favicon from 'serve-favicon';
+
+const GoogleStrategy = require('passport-google-oidc');
+const generator = require('generate-password');
 const pgSession = require('connect-pg-simple')(session);
 const app = express();
 
 //MIDDLEWARE
-require('@cypress/code-coverage/middleware/express')(app);
+app.use(favicon(path.join(__dirname, '../favicon_io', 'favicon.ico')));
 app.use(cors());
-
 app.use(compression());
-
 app.use(express.static(path.join(__dirname, '../client/dist')));
-
 app.use(bodyParser.urlencoded({ extended: false }));
-
 app.use(bodyParser.json());
 
 const database =

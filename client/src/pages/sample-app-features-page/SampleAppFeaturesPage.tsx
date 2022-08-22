@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from '../../components/navbar/NavBar';
-
+import { SampleRecipeList } from './sample-recipe-list';
 import { useLocation } from 'react-router-dom';
-import { CustomAlert } from '../../components/shared/CustomAlert';
-import { AlertColor } from '@mui/material';
+import { CustomAlert } from '../../components/CustomAlert';
+import { AlertColor, CircularProgress, Stack } from '@mui/material';
 import axios from 'axios';
 //todo render either random recipes view, macro calculator, search
 //  window, or a uneditable custom mealplan view based on props
@@ -15,6 +15,26 @@ type LocationType = {
    search: string;
    state: { featureView: string };
 };
+
+interface Recipe {
+   aggregateLikes: number;
+   id: number;
+   image: string;
+   servings: number;
+   title: string;
+   sourceUrl: string;
+   spoonacularSourceUrl: string;
+   summary: string;
+   readyInMinutes: number;
+   vegetarian: boolean;
+   vegan: boolean;
+   cheap: boolean;
+   instructions: string;
+   sustainable: boolean;
+   dairyFree: boolean;
+   veryHealthy: boolean;
+   veryPopular: boolean;
+}
 
 //todo provide a go back button somewhere on page that user can user to go back to home page
 const SampleAppFeaturesPage = () => {
@@ -29,6 +49,8 @@ const SampleAppFeaturesPage = () => {
       setOpenAlert(!openAlert);
    };
 
+   //todo move components folders into page folder it belongs to
+   //todo move all components that are used more than once to components folder or keep there, and remove shared folder
    useEffect(() => {
       if (location.state.featureView === 'recipes') {
          axios
@@ -54,9 +76,13 @@ const SampleAppFeaturesPage = () => {
          <NavBar />
          {popularRecipes.length && location.state.featureView === 'recipes' ? (
             <>
-               <div>this is a test</div>
+               <SampleRecipeList popularRecipes={popularRecipes} />
             </>
-         ) : null}
+         ) : (
+            <Stack alignItems='center'>
+               <CircularProgress size={100} />
+            </Stack>
+         )}
          <CustomAlert
             openAlert={openAlert}
             alertSeverity={alertSeverity}
