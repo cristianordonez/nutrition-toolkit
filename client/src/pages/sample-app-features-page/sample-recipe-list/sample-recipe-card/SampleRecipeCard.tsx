@@ -1,15 +1,21 @@
 import React from 'react';
 import './SampleRecipeCard.scss';
-
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import {
    Grid,
+   IconButton,
+   Divider,
+   Stack,
    Card,
+   CardHeader,
    CardActions,
    CardContent,
    CardMedia,
    Typography,
    Button,
+   Tooltip,
 } from '@mui/material';
+import { pointer } from '@testing-library/user-event/dist/types/setup/directApi';
 
 interface Props {
    image: string | undefined;
@@ -22,6 +28,7 @@ interface Props {
    lowFodmap: boolean;
    dairyFree: boolean;
    instructions: string;
+   diets: string[];
 }
 
 export const SampleRecipeCard = ({
@@ -35,50 +42,61 @@ export const SampleRecipeCard = ({
    lowFodmap,
    dairyFree,
    instructions,
+   diets,
 }: Props) => {
+   const openInNewTab = (url: string): void => {
+      const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+      if (newWindow) newWindow.opener = null;
+   };
+
    if (image !== undefined) {
-      const GridStyle = {
-         // backgroundImage: `url(${image})`,
-         // backgroundRepeat: 'no-repeat',
-         // backgroundSize: 'cover',
-         // backgroundPosition: 'center',
-         overflow: 'hidden',
-         maxHeight: '400px',
-      };
+      diets = diets.slice(0, 2);
       return (
          <>
-            <Grid item xs={4} style={GridStyle}>
-               <img src={image} />
-               <div className='sample-recipe-content'></div>
-
-               {/* <div className='sample-recipe-content'></div> */}
-               {/* <Card elevation={1}>
-
+            <Grid
+               item
+               xs={4}
+               sm={4}
+               md={6}
+               // onClick={() => openInNewTab(sourceUrl)}
+            >
+               <Card sx={{ height: '100%', width: '100%' }}>
+                  <CardHeader
+                     title={title}
+                     action={
+                        <Tooltip title='Open recipe in new tab'>
+                           <IconButton onClick={() => openInNewTab(sourceUrl)}>
+                              <OpenInNewIcon />
+                           </IconButton>
+                        </Tooltip>
+                     }
+                  />
                   <CardMedia
-                  component='img'
-                  height='200'
-                  alt={title}
-                  image={image}
+                     component='img'
+                     image={image}
+                     alt={title}
+                     height='180'
                   />
                   <CardContent>
-                  <Typography variant='h6'>{title}</Typography>
-                  <Typography variant='h6'>{servings}</Typography>
+                     <Stack
+                        direction='row'
+                        justifyContent='space-evenly'
+                        alignItems='center'
+                        spacing={2}
+                        divider={<Divider orientation='vertical' flexItem />}
+                     >
+                        {diets.map((diet) => (
+                           <Typography
+                              key={diet}
+                              className='recipe-card-diet-label'
+                              variant='overline'
+                           >
+                              {diet}
+                           </Typography>
+                        ))}
+                     </Stack>
                   </CardContent>
-                  <CardActions>
-                  <Button
-                  fullWidth
-                  component='a'
-                  href={sourceUrl}
-                  target='_blank'
-                  className='card-button'
-                  variant='contained'
-                  color='secondary'
-                  size='small'
-                  >
-                  View Recipe
-                  </Button>
-                  </CardActions>
-               </Card> */}
+               </Card>
             </Grid>
          </>
       );

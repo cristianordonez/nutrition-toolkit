@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import './index.scss';
 import { SampleRecipeCard } from './sample-recipe-card/SampleRecipeCard';
-import { Grid } from '@mui/material';
+import { SampleRecipeSideBar } from './sample-recipe-sidebar/SampleRecipeSidebar';
+import { Grid, Toolbar, IconButton } from '@mui/material';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 interface Recipe {
    aggregateLikes: number;
@@ -31,12 +34,33 @@ interface Props {
 
 export const SampleRecipeList = ({ popularRecipes }: Props) => {
    // popularRecipes = popularRecipes.slice(0, 8);
+   const [mobileOpen, setMobileOpen] = React.useState(false);
+
+   const handleDrawerToggle = () => {
+      setMobileOpen(!mobileOpen);
+   };
    return (
       <>
+         <Toolbar sx={{ display: { sm: 'none' } }}>
+            <IconButton
+               color='inherit'
+               aria-label='open drawer'
+               edge='start'
+               onClick={handleDrawerToggle}
+               sx={{ mr: 2, display: { sm: 'none' } }}
+            >
+               <ArrowForwardIosIcon />
+            </IconButton>
+         </Toolbar>
+         <SampleRecipeSideBar
+            mobileOpen={mobileOpen}
+            handleDrawerToggle={handleDrawerToggle}
+         />
          <Grid
             container
             spacing={{ xs: 2, md: 3 }}
-            columns={{ xs: 4, sm: 8, md: 12, lg: 16 }}
+            columns={{ xs: 4, sm: 4, md: 12 }}
+            className='recipe-search-list'
          >
             {popularRecipes.map((recipe: Recipe) => (
                <SampleRecipeCard
@@ -51,6 +75,7 @@ export const SampleRecipeList = ({ popularRecipes }: Props) => {
                   lowFodmap={recipe.lowFodmap}
                   dairyFree={recipe.dairyFree}
                   instructions={recipe.instructions}
+                  diets={recipe.diets}
                />
             ))}
          </Grid>

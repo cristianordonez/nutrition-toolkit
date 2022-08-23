@@ -16,26 +16,6 @@ type LocationType = {
    state: { featureView: string };
 };
 
-interface Recipe {
-   aggregateLikes: number;
-   id: number;
-   image: string;
-   servings: number;
-   title: string;
-   sourceUrl: string;
-   spoonacularSourceUrl: string;
-   summary: string;
-   readyInMinutes: number;
-   vegetarian: boolean;
-   vegan: boolean;
-   cheap: boolean;
-   instructions: string;
-   sustainable: boolean;
-   dairyFree: boolean;
-   veryHealthy: boolean;
-   veryPopular: boolean;
-}
-
 //todo provide a go back button somewhere on page that user can user to go back to home page
 const SampleAppFeaturesPage = () => {
    const location = useLocation() as unknown as LocationType;
@@ -49,7 +29,6 @@ const SampleAppFeaturesPage = () => {
       setOpenAlert(!openAlert);
    };
 
-   //todo move components folders into page folder it belongs to
    //todo move all components that are used more than once to components folder or keep there, and remove shared folder
    useEffect(() => {
       if (location.state.featureView === 'recipes') {
@@ -75,9 +54,7 @@ const SampleAppFeaturesPage = () => {
       <>
          <NavBar />
          {popularRecipes.length && location.state.featureView === 'recipes' ? (
-            <>
-               <SampleRecipeList popularRecipes={popularRecipes} />
-            </>
+            <SampleRecipeList popularRecipes={popularRecipes} />
          ) : (
             <Stack alignItems='center'>
                <CircularProgress size={100} />
