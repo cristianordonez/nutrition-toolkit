@@ -1,17 +1,31 @@
-import React, { useState } from 'react';
-import { Drawer, Toolbar, IconButton } from '@mui/material';
+import React, { FormEventHandler, useState } from 'react';
+import { Drawer, Toolbar, IconButton, SelectChangeEvent } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { SearchFormCustom } from '../../../../components/search-forms/SearchFormCustom';
+import { RouteValues } from '../../SampleAppFeaturesPage';
 
 const drawerWidth = 350;
 
 interface Props {
    handleDrawerToggle: () => void;
    mobileOpen: boolean;
+   route: string;
+   values: RouteValues;
+   handleRouteChange: (event: SelectChangeEvent) => void;
+   handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+   handleTypeSelect: (event: SelectChangeEvent) => void;
+   handleSubmit: FormEventHandler<HTMLFormElement>;
 }
 
 export const SampleRecipeSideBar = ({
    handleDrawerToggle,
    mobileOpen,
+   route,
+   values,
+   handleRouteChange,
+   handleInputChange,
+   handleTypeSelect,
+   handleSubmit,
 }: Props) => {
    return (
       <>
@@ -43,6 +57,14 @@ export const SampleRecipeSideBar = ({
                </IconButton>
             </Toolbar>
             {/* MOBILE */}
+            <SearchFormCustom
+               route={route}
+               values={values}
+               handleSubmit={handleSubmit}
+               handleRouteChange={handleRouteChange}
+               handleInputChange={handleInputChange}
+               handleTypeSelect={handleTypeSelect}
+            />
          </Drawer>
 
          <Drawer
@@ -57,7 +79,16 @@ export const SampleRecipeSideBar = ({
                   pt: '100px',
                },
             }}
-         ></Drawer>
+         >
+            <SearchFormCustom
+               route={route}
+               values={values}
+               handleSubmit={handleSubmit}
+               handleRouteChange={handleRouteChange}
+               handleInputChange={handleInputChange}
+               handleTypeSelect={handleTypeSelect}
+            />
+         </Drawer>
       </>
    );
 };

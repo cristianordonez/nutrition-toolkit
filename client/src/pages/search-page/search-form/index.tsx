@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import './index.scss';
 import ScreenSearchDesktopIcon from '@mui/icons-material/ScreenSearchDesktop';
 import { Stack, Tabs, Tab, Typography } from '@mui/material';
-import { SearchFormSuggested } from './SearchFormSuggested';
-import { SearchFormCustom } from './SearchFormCustom';
+import { SearchFormSuggested } from '../../../components/search-forms/SearchFormSuggested';
+import { SearchFormCustom } from '../../../components/search-forms/SearchFormCustom';
 import { SelectChangeEvent } from '@mui/material/Select';
 
 type Goals = {
@@ -60,9 +60,6 @@ export const SearchForm = ({
       <div className='search-form'>
          <Stack direction='row' spacing={1}>
             <ScreenSearchDesktopIcon />
-            {/* <Typography variant='h4' component='h1'>
-               Search
-            </Typography> */}
             <Typography variant='body1'>
                Find recipes, grocery products, or menu items from over 800+
                restaurants that match your nutrient goals

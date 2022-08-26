@@ -27,13 +27,10 @@ export const connectUser = async (user: UserType) => {
 export const getSpoonacularRecipes = async (
    recipeQuery: QueryType
 ): Promise<object> => {
-   let intoleranceQuery = recipeQuery.intolerance.length
-      ? recipeQuery.intolerance
-      : false;
+   console.log('recipeQuery in getspoonacular recipes:', recipeQuery);
    let recipes = await axios.get(`${url}recipes/complexSearch`, {
       params: {
          query: `${recipeQuery.query}`,
-         intolerances: `${intoleranceQuery}`,
          type: `${recipeQuery.type}`,
          instructionsRequired: 'true',
          addRecipeInformation: 'true',

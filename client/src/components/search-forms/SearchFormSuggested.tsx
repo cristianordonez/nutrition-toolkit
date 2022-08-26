@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button, Typography, Stack } from '@mui/material';
-import { NutrientInputForm } from './NutrientInputForm';
-import { SearchInput } from './SearchInput';
-import { QueryTextField } from './QueryTextField';
-import { TypeDropDown } from './TypeDropDown';
+import { NutrientInputForm } from '../../pages/search-page/search-form/NutrientInputForm';
+import { SearchInput } from '../../pages/search-page/search-form/SearchInput';
+import { QueryTextField } from '../../pages/search-page/search-form/QueryTextField';
+import { TypeDropDown } from '../../pages/search-page/search-form/TypeDropDown';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 
 interface Props {
@@ -29,10 +29,6 @@ export const SearchFormSuggested = ({
       <>
          <form onSubmit={handleSuggestedSubmit}>
             <Stack spacing={3}>
-               {/* <Typography variant='body1'>
-                  Search for either recipe, a grocery product, or a menu item
-                  from large list of restaurants
-               </Typography> */}
                {/* ROUTES */}
                <Typography variant='subtitle2'>
                   {' '}

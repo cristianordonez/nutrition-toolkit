@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './index.scss';
 import { SampleRecipeCard } from './sample-recipe-card/SampleRecipeCard';
-import { SampleRecipeSideBar } from './sample-recipe-sidebar/SampleRecipeSidebar';
-import { Grid, Toolbar, IconButton } from '@mui/material';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { Grid } from '@mui/material';
 
 interface Recipe {
    aggregateLikes: number;
@@ -26,36 +24,17 @@ interface Recipe {
    veryPopular: boolean;
    lowFodmap: boolean;
    diets: string[];
+   restaurantChain?: string | undefined;
 }
 
 interface Props {
    popularRecipes: Recipe[];
+   route: string;
 }
 
-export const SampleRecipeList = ({ popularRecipes }: Props) => {
-   // popularRecipes = popularRecipes.slice(0, 8);
-   const [mobileOpen, setMobileOpen] = React.useState(false);
-
-   const handleDrawerToggle = () => {
-      setMobileOpen(!mobileOpen);
-   };
+export const SampleRecipeList = ({ popularRecipes, route }: Props) => {
    return (
       <>
-         <Toolbar sx={{ display: { sm: 'none' } }}>
-            <IconButton
-               color='inherit'
-               aria-label='open drawer'
-               edge='start'
-               onClick={handleDrawerToggle}
-               sx={{ mr: 2, display: { sm: 'none' } }}
-            >
-               <ArrowForwardIosIcon />
-            </IconButton>
-         </Toolbar>
-         <SampleRecipeSideBar
-            mobileOpen={mobileOpen}
-            handleDrawerToggle={handleDrawerToggle}
-         />
          <Grid
             container
             spacing={{ xs: 2, md: 3 }}
@@ -68,14 +47,9 @@ export const SampleRecipeList = ({ popularRecipes }: Props) => {
                   image={recipe.image}
                   sourceUrl={recipe.sourceUrl}
                   title={recipe.title}
-                  spoonacularSourceUrl={recipe.spoonacularSourceUrl}
-                  servings={recipe.servings}
-                  vegan={recipe.vegan}
-                  vegetarian={recipe.vegetarian}
-                  lowFodmap={recipe.lowFodmap}
-                  dairyFree={recipe.dairyFree}
-                  instructions={recipe.instructions}
                   diets={recipe.diets}
+                  restaurantChain={recipe.restaurantChain}
+                  route={route}
                />
             ))}
          </Grid>

@@ -1,19 +1,30 @@
-import React from 'react';
+import React, { FormEventHandler } from 'react';
 
-import { Button, Typography, Stack } from '@mui/material';
-import { NutrientInputForm } from './NutrientInputForm';
-import { SearchInput } from './SearchInput';
-import { QueryTextField } from './QueryTextField';
-import { TypeDropDown } from './TypeDropDown';
+import { Button, Typography, Stack, SelectChangeEvent } from '@mui/material';
+import { NutrientInputForm } from '../../pages/search-page/search-form/NutrientInputForm';
+import { SearchInput } from '../../pages/search-page/search-form/SearchInput';
+import { QueryTextField } from '../../pages/search-page/search-form/QueryTextField';
+import { TypeDropDown } from '../../pages/search-page/search-form/TypeDropDown';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 
 interface Props {
-   route: any;
-   values: any;
-   handleSubmit: any;
-   handleRouteChange: any;
-   handleInputChange: any;
-   handleTypeSelect: any;
+   route: string;
+   values: {
+      query: string;
+      type: string;
+      minCalories: string;
+      maxCalories: string;
+      minProtein: string;
+      maxProtein: string;
+      minCarbs: string;
+      maxCarbs: string;
+      minFat: string;
+      maxFat: string;
+   };
+   handleSubmit: FormEventHandler<HTMLFormElement>;
+   handleRouteChange: (event: SelectChangeEvent) => void;
+   handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+   handleTypeSelect: (event: SelectChangeEvent) => void;
 }
 
 export const SearchFormCustom = ({
@@ -28,10 +39,6 @@ export const SearchFormCustom = ({
       <>
          <form onSubmit={handleSubmit}>
             <Stack spacing={3}>
-               {/* <Typography variant='body1'>
-                  Search for either recipe, a grocery product, or a menu item
-                  from large list of restaurants
-               </Typography> */}
                {/* ROUTES */}
 
                <SearchInput
