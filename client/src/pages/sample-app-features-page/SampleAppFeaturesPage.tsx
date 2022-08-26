@@ -43,6 +43,7 @@ export type RouteValues = {
 //todo provide a go back button somewhere on page that user can user to go back to home page
 const SampleAppFeaturesPage = () => {
    const location = useLocation() as unknown as LocationType;
+   const [showPopularRecipes, setShowPopularRecipes] = useState<boolean>(true);
    const [openAlert, setOpenAlert] = useState<boolean>(false);
    const [alertSeverity, setAlertSeverity] = useState<AlertColor>('error');
    const [alertMessage, setAlertMessage] = useState<string>('');
@@ -128,6 +129,7 @@ const SampleAppFeaturesPage = () => {
             setAlertSeverity('success');
             setAlertMessage('Success! Here are your matching items.');
             setOpenAlert(true);
+            setShowPopularRecipes(false);
             setPopularRecipes(foodItems.data);
          }
          setIsLoading(false); //used to trigger the loading circle
@@ -166,7 +168,11 @@ const SampleAppFeaturesPage = () => {
             </Stack>
          ) : null}
          {popularRecipes.length && location.state.featureView === 'recipes' ? (
-            <SampleRecipeList popularRecipes={popularRecipes} route={route} />
+            <SampleRecipeList
+               showPopularRecipes={showPopularRecipes}
+               popularRecipes={popularRecipes}
+               route={route}
+            />
          ) : (
             <Stack alignItems='center'>
                <CircularProgress size={100} />

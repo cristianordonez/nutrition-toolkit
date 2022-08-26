@@ -1,5 +1,4 @@
 import React from 'react';
-import './SampleRecipeCard.scss';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import {
    Grid,
@@ -43,10 +42,11 @@ export const SampleRecipeCard = ({
       }
       return (
          <>
-            <Grid item xs={4} sm={4} md={6}>
+            <Grid item xs={4} sm={4} md={4} lg={4}>
                <Card sx={{ height: '100%', width: '100%' }}>
                   <CardHeader
                      title={title}
+                     titleTypographyProps={{ variant: 'h6' }}
                      action={
                         <Tooltip title='Open recipe in new tab'>
                            <IconButton onClick={() => openInNewTab(sourceUrl)}>

@@ -1,5 +1,11 @@
-import React, { FormEventHandler, useState } from 'react';
-import { Drawer, Toolbar, IconButton, SelectChangeEvent } from '@mui/material';
+import React, { FormEventHandler } from 'react';
+import {
+   Drawer,
+   Typography,
+   Toolbar,
+   IconButton,
+   SelectChangeEvent,
+} from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { SearchFormCustom } from '../../../../components/search-forms/SearchFormCustom';
 import { RouteValues } from '../../SampleAppFeaturesPage';
@@ -41,7 +47,10 @@ export const SampleRecipeSideBar = ({
                '& .MuiDrawer-paper': {
                   boxSizing: 'border-box',
                   width: drawerWidth,
-                  pt: '100px',
+                  pt: '50px',
+                  pl: '1rem',
+                  pr: '1rem',
+                  pb: '1rem',
                },
             }}
          >
@@ -57,6 +66,9 @@ export const SampleRecipeSideBar = ({
                </IconButton>
             </Toolbar>
             {/* MOBILE */}
+            <Typography variant='h5' align='center' sx={{ pb: '1rem' }}>
+               Search Recipes
+            </Typography>
             <SearchFormCustom
                route={route}
                values={values}
@@ -77,9 +89,15 @@ export const SampleRecipeSideBar = ({
                   boxSizing: 'border-box',
                   width: drawerWidth,
                   pt: '100px',
+                  pl: '1rem',
+                  pr: '1rem',
+                  pb: '1rem',
                },
             }}
          >
+            <Typography variant='h5' align='center' sx={{ pb: '1rem' }}>
+               Search Recipes
+            </Typography>
             <SearchFormCustom
                route={route}
                values={values}

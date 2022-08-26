@@ -1,8 +1,12 @@
 @use '../../../index.scss' as *;
 
-.recipe-search-list {
+.recipe-search-container {
    @include devices(mobile) {
       padding-left: 0;
    }
    padding-left: 350px;
+   padding-top: 1rem;
+   .recipe-search-list {
+      padding: 1rem;
+   }
 }

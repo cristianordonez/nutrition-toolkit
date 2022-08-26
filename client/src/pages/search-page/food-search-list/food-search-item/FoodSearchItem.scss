@@ -3,7 +3,6 @@
 .food-search-paper {
    @include set-size(100%);
    .search-item {
-      // max-width: 00px;
       @include set-size(100%);
       .search-item-nutrition {
          @include flex-center();
