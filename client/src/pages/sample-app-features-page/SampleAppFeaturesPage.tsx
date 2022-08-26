@@ -22,7 +22,7 @@ type LocationType = {
    pathname: string;
    key: string;
    search: string;
-   state: { featureView: string };
+   state: { featureView: 'recipes' | 'calculator' | 'mealplan' };
 };
 
 export type RouteValues = {

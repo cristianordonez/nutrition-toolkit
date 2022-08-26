@@ -49,7 +49,7 @@ const Home = () => {
    const cardImages = [CalculateSvg, MaleChefSvg, ScheduleSvg];
 
    //pass down the feature view to cards so that they can be used to call the handleNavigatingToFeatures function
-   const featureView = ['calculator', 'search', 'mealplan'];
+   const featureView = ['calculator', 'recipes', 'mealplan'];
 
    const location = useLocation() as LocationType;
 
