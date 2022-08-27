@@ -6,16 +6,30 @@ import { ThemeProvider } from '@emotion/react';
 import { PaletteMode } from '@mui/material';
 import { teal, grey } from '@mui/material/colors';
 import { useLocalStorageState } from '../hooks/useLocalStorage';
-import SampleAppFeaturesPage from './sample-app-features-page/SampleAppFeaturesPage';
+import SampleAppRecipePage from './sample-app-recipes-page/SampleAppRecipePage';
 
 const Home = lazy(
    () => import(/* webpackChunkName: "HomePage" */ './home/Home')
 );
 
-const BrowseRecipes = lazy(
+const SampleRecipePage = lazy(
    () =>
       import(
-         /* webpackChunkName: "BrowseRecipesPage" */ './sample-app-features-page/SampleAppFeaturesPage'
+         /* webpackChunkName: "SampleRecipesPage" */ './sample-app-recipes-page/SampleAppRecipePage'
+      )
+);
+
+const SampleCalculatorPage = lazy(
+   () =>
+      import(
+         /* webpackChunkName: "SampleCalculatorPage" */ './sample-app-calculator-page/SampleCalculatorPage'
+      )
+);
+
+const SampleMealPlanPage = lazy(
+   () =>
+      import(
+         /* webpackChunkName: "SampleMealPlanPage" */ './sample-app-mealplan-page/SampleMealPlanPage'
       )
 );
 
@@ -66,7 +80,7 @@ const ForgotPasswordPage = lazy(
 const ResetPasswordPage = lazy(
    () =>
       import(
-         /* webpackChunkName: "SampleAppFeaturesPage" */ './sample-app-features-page/SampleAppFeaturesPage'
+         /* webpackChunkName: "SampleAppFeaturesPage" */ './sample-app-recipes-page/SampleAppRecipePage'
       )
 );
 
@@ -82,7 +96,7 @@ const getDesignTokens = (mode: PaletteMode) => ({
       secondary: {
          ...teal,
          ...(mode === 'dark' && {
-            main: '#912F00',
+            main: '#F27B49',
          }),
       },
 
@@ -138,8 +152,16 @@ export const App = () => {
                   <Routes>
                      <Route path='/' element={<Home />} />
                      <Route
-                        path='/diabetes-calculator-features'
-                        element={<SampleAppFeaturesPage />}
+                        path='/diabetes-calculator-features/recipes'
+                        element={<SampleAppRecipePage />}
+                     />
+                     <Route
+                        path='/diabetes-calculator-features/calculator'
+                        element={<SampleCalculatorPage />}
+                     />
+                     <Route
+                        path='/diabetes-calculator-features/mealplan'
+                        element={<SampleMealPlanPage />}
                      />
                      <Route path='/login' element={<LoginPage />} />
                      <Route

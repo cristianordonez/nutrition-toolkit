@@ -3,7 +3,7 @@ import './MealPlanPage.scss';
 import { SidebarMealplan } from './sidebar-mealplan/SideBarMealPlan';
 import { DateSelectForm } from './date-select-form/DateSelectForm';
 import { MealplanDay, MealplanItemType } from './mealplan-day';
-import { CustomAlert } from '../../components/CustomAlert';
+import { CustomAlert } from '../../components/custom-alert/CustomAlert';
 import { MealPlanWeekText } from './mealplan-week-text/MealPlanWeekText';
 import {
    Typography,

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './UserProfilePage.scss';
 import { DailyGoals } from '../../components/daily-goals';
-import { CustomAlert } from '../../components/CustomAlert';
+import { CustomAlert } from '../../components/custom-alert/CustomAlert';
 import { AlertColor, Button, Typography, Stack } from '@mui/material';
 import axios from 'axios';
 import { GoalsType } from '../../../types/types';

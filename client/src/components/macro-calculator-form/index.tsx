@@ -1,13 +1,12 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import './index.scss';
 import axios from 'axios';
+import { Calculator } from '../calculator-contents/Calculator';
 import {
    Paper,
    Stack,
    Typography,
    Button,
-   ToggleButtonGroup,
-   ToggleButton,
    AlertColor,
    Dialog,
    DialogTitle,
@@ -15,9 +14,6 @@ import {
    DialogActions,
    Box,
 } from '@mui/material';
-import { HeightInputField } from './HeightInputField';
-import { WeightInputField } from './WeightInputField';
-import { AgeInputField } from './AgeInputField';
 import { useMetrics } from '../../helper-functions/use-metrics/useMetrics';
 import { useNavigate } from 'react-router-dom';
 import { BsCalculatorFill } from 'react-icons/bs';
@@ -106,11 +102,11 @@ export const MacroCalculatorForm = ({
                   <Stack direction='row' sx={{ gap: '1em' }}>
                      <BsCalculatorFill className='macro-calculator-icon' />
                      <Typography align='center' variant='h6'>
-                        Recalculate your Macronutrient Recommendations
+                        Calculate your Macronutrient Recommendations
                      </Typography>
                   </Stack>
                   <Typography variant='subtitle1'>
-                     Fill out the form below to recalculate your recommended
+                     Fill out the form below to calculate your recommended
                      nutrient needs (note that all recommendations are made for
                      individuals with Type 2 Diabetes).
                   </Typography>
@@ -127,36 +123,18 @@ export const MacroCalculatorForm = ({
                   </Typography>
                </>
             )}
-            {/* GENDER */}
-            <ToggleButtonGroup
-               color='primary'
-               fullWidth={true}
-               value={gender}
-               exclusive
-               onChange={handleGenderChange}
-            >
-               <ToggleButton value='male'>Male</ToggleButton>
-               <ToggleButton value='female'>Female</ToggleButton>
-               <ToggleButton value='other'>Other</ToggleButton>
-            </ToggleButtonGroup>
-            {/* ACTIVITY LEVEL */}
-            <ToggleButtonGroup
-               color='primary'
-               fullWidth={true}
-               value={activityLevel}
-               exclusive
-               onChange={handleActivityLevelChange}
-            >
-               <ToggleButton value={1}>Sedentary(no exercise)</ToggleButton>
-               <ToggleButton value={1.25}>
-                  Moderate (2x - 4x per week)
-               </ToggleButton>
-               <ToggleButton value={1.5}>Active (5x+ per week)</ToggleButton>
-            </ToggleButtonGroup>
-            {/* AGE HEIGHT AND WEIGHT*/}
-            <AgeInputField age={age} setAge={setAge} />
-            <HeightInputField height={height} setHeight={setHeight} />
-            <WeightInputField weight={weight} setWeight={setWeight} />
+            <Calculator
+               handleGenderChange={handleGenderChange}
+               gender={gender}
+               activityLevel={activityLevel}
+               handleActivityLevelChange={handleActivityLevelChange}
+               age={age}
+               setAge={setAge}
+               height={height}
+               setHeight={setHeight}
+               weight={weight}
+               setWeight={setWeight}
+            />
 
             {page !== undefined && page === 'macrocalculator' ? (
                <Button
@@ -165,7 +143,7 @@ export const MacroCalculatorForm = ({
                   onClick={() => setShowNextPage(true)}
                   variant='contained'
                >
-                  Recalculate
+                  Calculate
                </Button>
             ) : (
                <Button fullWidth type='submit' variant='contained'>
@@ -175,8 +153,8 @@ export const MacroCalculatorForm = ({
             {page !== undefined && page === 'macrocalculator' ? (
                <Dialog open={showNextPage}>
                   <DialogTitle>
-                     Are you sure you want to recalculate your macronutrient
-                     needs? This will overwrite your current settings.
+                     Are you sure you want to update your metrics? This will
+                     overwrite any of your current settings.
                   </DialogTitle>
                   <form>
                      <DialogContent>

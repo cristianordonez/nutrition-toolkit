@@ -1,0 +1,10 @@
+@use '../../index.scss' as *;
+
+.calculator-page {
+   //    @include set-size(100%);
+   @include flex-center();
+   flex-direction: column;
+   max-width: 720px;
+   padding: 1rem;
+   gap: 1em;
+}

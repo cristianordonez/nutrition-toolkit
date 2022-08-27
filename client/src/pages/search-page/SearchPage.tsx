@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './SearchPage.scss';
 import { SearchForm } from './search-form';
-import { CustomAlert } from '../../components/CustomAlert';
+import { CustomAlert } from '../../components/custom-alert/CustomAlert';
 import { FoodSearchList } from './food-search-list';
 import {
    Box,

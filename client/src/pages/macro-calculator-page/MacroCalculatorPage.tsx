@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CustomAlert } from '../../components/CustomAlert';
+import { CustomAlert } from '../../components/custom-alert/CustomAlert';
 import { AlertColor } from '@mui/material';
 import { MacroCalculatorForm } from '../../components/macro-calculator-form';
 import NavBar from '../../components/navbar/NavBar';

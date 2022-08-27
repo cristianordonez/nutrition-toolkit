@@ -4,7 +4,7 @@ import { Paper, Typography, Button, AlertColor } from '@mui/material';
 import NavBar from '../../components/navbar/NavBar';
 import { EmailTextField } from '../../components/text-fields/email-textfield/EmailTextField';
 import axios, { AxiosError } from 'axios';
-import { CustomAlert } from '../../components/CustomAlert';
+import { CustomAlert } from '../../components/custom-alert/CustomAlert';
 
 const ForgotPasswordPage = () => {
    const [email, setEmail] = useState<string>('');

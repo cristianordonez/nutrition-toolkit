@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import NavBar from '../../components/navbar/NavBar';
 import { SampleRecipeList } from './sample-recipe-list';
 import { SampleRecipeSideBar } from './sample-recipe-list/sample-recipe-sidebar/SampleRecipeSideBar';
-import { useLocation } from 'react-router-dom';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { CustomAlert } from '../../components/CustomAlert';
+import { CustomAlert } from '../../components/custom-alert/CustomAlert';
 import {
    AlertColor,
    CircularProgress,
@@ -14,16 +13,6 @@ import {
    IconButton,
 } from '@mui/material';
 import axios from 'axios';
-//todo render either random recipes view, macro calculator, search
-//  window, or a uneditable custom mealplan view based on props
-// passed to component from user router and lcoation
-
-type LocationType = {
-   pathname: string;
-   key: string;
-   search: string;
-   state: { featureView: 'recipes' | 'calculator' | 'mealplan' };
-};
 
 export type RouteValues = {
    query: string;
@@ -41,8 +30,7 @@ export type RouteValues = {
 };
 
 //todo provide a go back button somewhere on page that user can user to go back to home page
-const SampleAppFeaturesPage = () => {
-   const location = useLocation() as unknown as LocationType;
+const SampleAppRecipePage = () => {
    const [showPopularRecipes, setShowPopularRecipes] = useState<boolean>(true);
    const [openAlert, setOpenAlert] = useState<boolean>(false);
    const [alertSeverity, setAlertSeverity] = useState<AlertColor>('error');
@@ -78,21 +66,17 @@ const SampleAppFeaturesPage = () => {
    };
 
    useEffect(() => {
-      if (location.state.featureView === 'recipes') {
-         axios
-            .get('/api/recipes/popular')
-            .then((results) => {
-               setPopularRecipes(results.data.recipes);
-            })
-            .catch((err) => {
-               console.log('err: ', err);
-               setAlertSeverity('error');
-               setAlertMessage(
-                  'An error has occurred. Please try again later.'
-               );
-               setOpenAlert(true);
-            });
-      }
+      axios
+         .get('/api/recipes/popular')
+         .then((results) => {
+            setPopularRecipes(results.data.recipes);
+         })
+         .catch((err) => {
+            console.log('err: ', err);
+            setAlertSeverity('error');
+            setAlertMessage('An error has occurred. Please try again later.');
+            setOpenAlert(true);
+         });
    }, []);
 
    const handleRouteChange = (event: SelectChangeEvent) => {
@@ -167,7 +151,7 @@ const SampleAppFeaturesPage = () => {
                <CircularProgress size={100} />
             </Stack>
          ) : null}
-         {popularRecipes.length && location.state.featureView === 'recipes' ? (
+         {popularRecipes.length ? (
             <SampleRecipeList
                showPopularRecipes={showPopularRecipes}
                popularRecipes={popularRecipes}
@@ -189,4 +173,4 @@ const SampleAppFeaturesPage = () => {
    );
 };
 
-export default SampleAppFeaturesPage;
+export default SampleAppRecipePage;

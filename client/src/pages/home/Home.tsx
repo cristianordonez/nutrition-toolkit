@@ -9,7 +9,7 @@ import {
    AlertColor,
 } from '@mui/material';
 import { HomePageCard } from './home-page-card/HomePageCard';
-import { CustomAlert } from '../../components/CustomAlert';
+import { CustomAlert } from '../../components/custom-alert/CustomAlert';
 import NavBar from '../../components/navbar/NavBar';
 import './Home.scss';
 import DietitianSvg from '../../../img/dietitian.svg';
@@ -64,7 +64,7 @@ const Home = () => {
 
    //used to navigate to the SampleAppFeaturesPage with the correction variable passed down in location state
    const handleNavigatingToFeatures = (featureView: string) => {
-      navigate('/diabetes-calculator-features', { state: { featureView } });
+      navigate(`/diabetes-calculator-features/${featureView}`);
    };
 
    return (
