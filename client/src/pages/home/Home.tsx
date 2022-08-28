@@ -55,10 +55,13 @@ const Home = () => {
 
    //when logged out, react router sends state saying log out was successful to show alert
    useEffect(() => {
+      console.log('location.state:', location.state);
       if (location.state && location.state.loggedOut) {
          setAlertSeverity('success');
          setAlertMessage('You have been logged out.');
          setOpenAlert(true);
+         location.state.loggedOut = false;
+         window.history.replaceState({}, document.title);
       }
    }, [location]);
 

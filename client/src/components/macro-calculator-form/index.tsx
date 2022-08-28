@@ -14,7 +14,7 @@ import {
    DialogActions,
    Box,
 } from '@mui/material';
-import { useMetrics } from '../../helper-functions/use-metrics/useMetrics';
+import { getMetrics } from '../../helper-functions/get-metrics/getMetrics';
 import { useNavigate } from 'react-router-dom';
 import { BsCalculatorFill } from 'react-icons/bs';
 interface Props {
@@ -61,7 +61,7 @@ export const MacroCalculatorForm = ({
    //handles submission of metrics, then navigates to search page
    const handleSubmit = async (event: React.SyntheticEvent) => {
       event.preventDefault();
-      const metrics = useMetrics({
+      const metrics = getMetrics({
          gender,
          age,
          height,

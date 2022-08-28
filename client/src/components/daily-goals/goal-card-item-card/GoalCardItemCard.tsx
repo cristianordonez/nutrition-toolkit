@@ -3,8 +3,6 @@ import './GoalCardItemCard.scss';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 import { GoalsType } from '../../../../types/types';
 import { Card, CardContent, Typography, Stack, Input } from '@mui/material';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { IconType } from 'react-icons';
 
 interface Props {
@@ -24,15 +22,6 @@ export const GoalCardItemCard = ({
    setGoals,
    goals,
 }: Props): ReactJSXElement => {
-   // const Arrow: JSX.Element = (
-   //    <>
-   //       <Stack direction={'column'}>
-   //          <KeyboardArrowUpIcon />
-   //          <KeyboardArrowDownIcon />
-   //       </Stack>
-   //    </>
-   // );
-
    //takes in total macronutrient amount entered and also changes associated min and max amounts
    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       if (setGoals !== undefined) {
@@ -80,9 +69,17 @@ export const GoalCardItemCard = ({
                   height: '10rem',
                   width: '10rem',
                   aligItems: 'center',
+                  gap: '1rem',
                   justifyContent: 'center',
                }}
             >
+               <Typography
+                  className='nutrient-type-text'
+                  align='center'
+                  variant='body1'
+               >
+                  {type}
+               </Typography>
                <IconSvg size='1.5em' className='goal-card-icon' />
                {page === 'user-profile' ? (
                   <Input
@@ -100,9 +97,36 @@ export const GoalCardItemCard = ({
                      {nutrientsTotal} g
                   </Typography>
                )}
-               <Typography align='center' variant='body2'>
-                  {type}
-               </Typography>
+               {type === 'Carbohydrates' && (
+                  <Typography
+                     align='center'
+                     className='range-text'
+                     variant='subtitle2'
+                  >
+                     Per meal: {goals.min_carbs_per_meal} -{' '}
+                     {goals.max_carbs_per_meal}g
+                  </Typography>
+               )}
+               {type === 'Protein' && (
+                  <Typography
+                     align='center'
+                     className='range-text'
+                     variant='subtitle2'
+                  >
+                     Per meal: {goals.min_protein_per_meal} -{' '}
+                     {goals.max_protein_per_meal}g
+                  </Typography>
+               )}
+               {type === 'Fat' && (
+                  <Typography
+                     align='center'
+                     className='range-text'
+                     variant='subtitle2'
+                  >
+                     Per meal: {goals.min_fat_per_meal} -{' '}
+                     {goals.max_fat_per_meal}g
+                  </Typography>
+               )}
             </CardContent>
          </Card>
       </>

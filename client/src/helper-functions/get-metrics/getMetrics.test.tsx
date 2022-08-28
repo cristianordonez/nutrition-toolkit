@@ -6,9 +6,9 @@ import { expect } from '../../../../jestGlobals';
 
 import { renderHook } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { useMetrics } from './useMetrics';
+import { getMetrics } from './getMetrics';
 import userEvent from '@testing-library/user-event';
-import { MetricsType } from './useMetrics.types';
+import { MetricsType } from './getMetrics.types';
 
 interface Props {
    goals: MetricsType;
@@ -21,10 +21,10 @@ const goals = {
    age: 27,
    activityLevel: 1.2,
 };
-describe('useMetrics hook ', () => {
+describe('getMetrics hook ', () => {
    test('calculates correct values ', async () => {
       const user = userEvent.setup();
-      const { result } = renderHook(() => useMetrics(goals));
+      const { result } = renderHook(() => getMetrics(goals));
       expect(result.current.total_calories).toEqual(1737);
       expect(result.current.total_carbohydrates).toEqual(162);
       expect(result.current.total_protein).toEqual(68);

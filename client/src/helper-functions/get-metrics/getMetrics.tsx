@@ -1,6 +1,6 @@
-import { MetricsType } from './useMetrics.types';
+import { MetricsType } from './getMetrics.types';
 
-type Goals = {
+export type Goals = {
    total_carbohydrates: number;
    min_carbs_per_meal: number;
    max_carbs_per_meal: number;
@@ -16,7 +16,7 @@ type Goals = {
 };
 
 //calculations are primarily for diabetes
-export const useMetrics = ({
+export const getMetrics = ({
    age,
    weight,
    gender,

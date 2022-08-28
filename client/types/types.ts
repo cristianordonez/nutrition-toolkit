@@ -1,5 +1,5 @@
 export type GoalsType = {
-   user_id: number;
+   user_id?: number;
    total_carbohydrates: number;
    min_carbs_per_meal: number;
    max_carbs_per_meal: number;

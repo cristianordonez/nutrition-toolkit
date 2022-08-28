@@ -1,12 +1,13 @@
 import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import './index.scss';
+import { GoalCardItemList } from './goal-card-item-list/GoalCardItemList';
 import { Typography, CircularProgress, Button } from '@mui/material';
 import { GoalCardItemLinearProgress } from './GoalCardItemLinearProgress';
 import { GoalCardItemCard } from './goal-card-item-card/GoalCardItemCard';
 import { GoalsType } from '../../../types/types';
-import { BsEggFried } from 'react-icons/bs';
-import { GiAvocado } from 'react-icons/gi';
-import { FaBreadSlice } from 'react-icons/fa';
+// import { BsEggFried } from 'react-icons/bs';
+// import { GiAvocado } from 'react-icons/gi';
+// import { FaBreadSlice } from 'react-icons/fa';
 
 type nutrientType = {
    name: string;
@@ -136,29 +137,10 @@ export const DailyGoals = ({
                      onSubmit={handleSubmitUpdatedGoals}
                      className='daily-goals-items'
                   >
-                     <GoalCardItemCard
-                        type={'Carbohydrates'}
-                        IconSvg={FaBreadSlice}
-                        nutrientsTotal={goals.total_carbohydrates}
+                     <GoalCardItemList
+                        goals={goals}
                         page={page}
                         setGoals={setGoals}
-                        goals={goals}
-                     />
-                     <GoalCardItemCard
-                        nutrientsTotal={goals.total_protein}
-                        IconSvg={BsEggFried}
-                        type={'Protein'}
-                        page={page}
-                        setGoals={setGoals}
-                        goals={goals}
-                     />
-                     <GoalCardItemCard
-                        nutrientsTotal={goals.total_fat}
-                        IconSvg={GiAvocado}
-                        type={'Fat'}
-                        page={page}
-                        setGoals={setGoals}
-                        goals={goals}
                      />
                      {page === 'user-profile' ? (
                         <Button variant='contained' fullWidth type='submit'>
