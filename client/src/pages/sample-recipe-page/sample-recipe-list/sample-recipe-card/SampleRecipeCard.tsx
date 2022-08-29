@@ -12,7 +12,6 @@ import {
    Typography,
    Tooltip,
 } from '@mui/material';
-import { pointer } from '@testing-library/user-event/dist/types/setup/directApi';
 
 interface Props {
    image: string | undefined;

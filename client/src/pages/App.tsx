@@ -6,16 +6,12 @@ import { ThemeProvider } from '@emotion/react';
 import { PaletteMode } from '@mui/material';
 import { teal, grey } from '@mui/material/colors';
 import { useLocalStorageState } from '../hooks/useLocalStorage';
-import SampleAppRecipePage from './sample-app-recipes-page/SampleAppRecipePage';
-
-const Home = lazy(
-   () => import(/* webpackChunkName: "HomePage" */ './home/Home')
-);
+import Home from './home/Home';
 
 const SampleRecipePage = lazy(
    () =>
       import(
-         /* webpackChunkName: "SampleRecipesPage" */ './sample-app-recipes-page/SampleAppRecipePage'
+         /* webpackChunkName: "SampleRecipePage" */ './sample-recipe-page/SampleRecipePage'
       )
 );
 
@@ -80,7 +76,7 @@ const ForgotPasswordPage = lazy(
 const ResetPasswordPage = lazy(
    () =>
       import(
-         /* webpackChunkName: "SampleAppFeaturesPage" */ './sample-app-recipes-page/SampleAppRecipePage'
+         /* webpackChunkName: "ResetPage" */ './reset-password-page/ResetPasswordPage'
       )
 );
 
@@ -153,7 +149,7 @@ export const App = () => {
                      <Route path='/' element={<Home />} />
                      <Route
                         path='/diabetes-calculator-features/recipes'
-                        element={<SampleAppRecipePage />}
+                        element={<SampleRecipePage />}
                      />
                      <Route
                         path='/diabetes-calculator-features/calculator'

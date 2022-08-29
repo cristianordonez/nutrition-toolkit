@@ -297,24 +297,27 @@ const NavBar = ({ isSettingsPage }: Props) => {
                   underline='hover'
                   data-testid='home-page'
                   className='navbar-login'
-                  variant='overline'
-                  sx={{ fontWeight: 'bold', marginLeft: 'auto' }}
+                  sx={{ marginLeft: 'auto' }}
                >
-                  <Typography variant='overline'>Log in</Typography>
+                  <Typography sx={{ fontWeight: '500' }} variant='body2'>
+                     Log in
+                  </Typography>
                </Link>
             )}
-            <IconButton
-               sx={{ ml: 1 }}
-               onClick={colorMode.toggleColorMode}
-               color='inherit'
-               aria-label='Toggle color theme'
-            >
-               {theme.palette.mode === 'dark' ? (
-                  <Brightness7Icon />
-               ) : (
-                  <Brightness4Icon />
-               )}
-            </IconButton>
+            <Tooltip title='Toggle theme'>
+               <IconButton
+                  sx={{ ml: 1 }}
+                  onClick={colorMode.toggleColorMode}
+                  color='inherit'
+                  aria-label='Toggle color theme'
+               >
+                  {theme.palette.mode === 'dark' ? (
+                     <Brightness7Icon />
+                  ) : (
+                     <Brightness4Icon />
+                  )}
+               </IconButton>
+            </Tooltip>
          </Toolbar>
       </AppBar>
    );

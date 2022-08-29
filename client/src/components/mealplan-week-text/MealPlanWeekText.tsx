@@ -3,7 +3,6 @@ import { Paper } from '@mui/material';
 import './MealPlanWeekText.scss';
 import startOfWeek from 'date-fns/startOfWeek';
 import format from 'date-fns/format';
-
 import endOfWeek from 'date-fns/endOfWeek';
 import { Typography } from '@mui/material';
 

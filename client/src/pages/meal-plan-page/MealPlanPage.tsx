@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './MealPlanPage.scss';
 import { SidebarMealplan } from './sidebar-mealplan/SideBarMealPlan';
 import { DateSelectForm } from './date-select-form/DateSelectForm';
-import { MealplanDay, MealplanItemType } from './mealplan-day';
+import { MealplanDay, MealplanItemType } from '../../components/mealplan-day';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
-import { MealPlanWeekText } from './mealplan-week-text/MealPlanWeekText';
+import { MealPlanWeekText } from '../../components/mealplan-week-text/MealPlanWeekText';
 import {
    Typography,
    Box,
@@ -135,7 +135,7 @@ const MealPlanPage = () => {
       }
    };
 
-   return isLoading ? null : (
+   return (
       <>
          <NavBar />
          <div className='mealplan-page'>
@@ -191,15 +191,16 @@ const MealPlanPage = () => {
                      <Tab key={day} label={day} />
                   ))}
                </Tabs>
-
-               <MealplanDay
-                  setMealPlanItems={setMealplanItems}
-                  currentDay={currentDay}
-                  mealplanItems={mealplanItems}
-                  setOpenSnackbar={setOpenSnackbar}
-                  setAlertSeverity={setAlertSeverity}
-                  setAlertMessage={setAlertMessage}
-               />
+               {isLoading ? null : (
+                  <MealplanDay
+                     setMealPlanItems={setMealplanItems}
+                     currentDay={currentDay}
+                     mealplanItems={mealplanItems}
+                     setOpenSnackbar={setOpenSnackbar}
+                     setAlertSeverity={setAlertSeverity}
+                     setAlertMessage={setAlertMessage}
+                  />
+               )}
 
                <CustomAlert
                   openAlert={openSnackbar}

@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { SearchFormCustom } from '../../../../components/search-forms/SearchFormCustom';
-import { RouteValues } from '../../SampleAppRecipePage';
+import { RouteValues } from '../../SampleRecipePage';
 
 const drawerWidth = 350;
 

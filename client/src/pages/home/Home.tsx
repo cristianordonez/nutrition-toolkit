@@ -51,20 +51,6 @@ const Home = () => {
    //pass down the feature view to cards so that they can be used to call the handleNavigatingToFeatures function
    const featureView = ['calculator', 'recipes', 'mealplan'];
 
-   const location = useLocation() as LocationType;
-
-   //when logged out, react router sends state saying log out was successful to show alert
-   useEffect(() => {
-      console.log('location.state:', location.state);
-      if (location.state && location.state.loggedOut) {
-         setAlertSeverity('success');
-         setAlertMessage('You have been logged out.');
-         setOpenAlert(true);
-         location.state.loggedOut = false;
-         window.history.replaceState({}, document.title);
-      }
-   }, [location]);
-
    //used to navigate to the SampleAppFeaturesPage with the correction variable passed down in location state
    const handleNavigatingToFeatures = (featureView: string) => {
       navigate(`/diabetes-calculator-features/${featureView}`);

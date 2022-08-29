@@ -4,7 +4,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { TextField, Box } from '@mui/material';
-import { MealplanItemType } from '../mealplan-day';
+import { MealplanItemType } from '../../../components/mealplan-day';
 import getDay from 'date-fns/getDay';
 import format from 'date-fns/format';
 
