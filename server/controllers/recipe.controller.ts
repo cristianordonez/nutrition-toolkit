@@ -6,9 +6,7 @@ export const getRecipes = async (req: Request, res: Response) => {
    const query = req.query as unknown as Query;
    try {
       if (req.query) {
-         console.log('query in getrecipes:', query);
          let recipes = await apiHelpers.getSpoonacularRecipes(query);
-         console.log('recipes in getrecipes:', recipes);
          res.send(recipes);
       }
    } catch (err) {
@@ -52,7 +50,6 @@ export const getRecipesByQuery = async (req: Request, res: Response) => {
 export const getRandomRecipes = async (req: Request, res: Response) => {
    try {
       let popularRecipes = await apiHelpers.getSpoonacularRandomRecipes();
-      console.log('here in getrandom recipes');
       res.status(200).send(popularRecipes);
    } catch (err) {
       console.log('err: ', err);

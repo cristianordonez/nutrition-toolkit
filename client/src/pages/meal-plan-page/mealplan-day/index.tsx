@@ -39,7 +39,6 @@ export const MealplanDay = ({
       let dinnerItems: MealplanItemType[] = [];
 
       mealplanItems.forEach((item) => {
-         console.log('item:', item);
          if (item.slot === 1) {
             breakfastItems.push(item);
          } else if (item.slot === 2) {
@@ -48,7 +47,6 @@ export const MealplanDay = ({
             dinnerItems.push(item);
          }
       });
-      console.log('breakfastItems:', dinnerItems);
       return (
          <>
             <Stack direction='column'>

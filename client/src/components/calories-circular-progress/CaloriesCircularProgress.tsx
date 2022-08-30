@@ -13,7 +13,6 @@ export const CaloriesCircularProgress = ({
    caloriesUsed,
    caloriesTotal,
 }: Props) => {
-   console.log('calories:', calories);
    return (
       <>
          <div className='daily-goals-kcal'>

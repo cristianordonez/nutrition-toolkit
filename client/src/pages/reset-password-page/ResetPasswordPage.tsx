@@ -65,7 +65,7 @@ const ResetPasswordPage = () => {
          setAlertSeverity('error');
          setAlertMessage('Unable to change password.');
          setOpenAlert(true);
-         console.log('err in form submit change password: ', err);
+         console.log(err);
       }
    };
 

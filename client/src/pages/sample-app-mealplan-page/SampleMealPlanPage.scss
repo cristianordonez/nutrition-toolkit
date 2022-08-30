@@ -1,6 +1,8 @@
 @use '../../index.scss' as *;
 
 .sample-mealplan-page {
+   @include flex-center();
+   flex-direction: column;
    @include set-size(100%);
    @include devices(mobile) {
       padding-left: 0;

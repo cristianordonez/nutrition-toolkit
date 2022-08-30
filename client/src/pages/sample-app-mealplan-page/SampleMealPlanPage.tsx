@@ -108,7 +108,6 @@ const SampleMealPlanPage = () => {
          .get('/api/mealplan/sample')
          .then((response) => {
             setNutritionSummary(response.data.nutrients);
-            console.log('response:', response);
             const currentMealplanItems = response.data.meals;
             setSampleMealplanItems(currentMealplanItems);
             const promises = currentMealplanItems.map(
@@ -125,7 +124,11 @@ const SampleMealPlanPage = () => {
             });
          })
          .catch((err) => {
-            console.log('err:', err);
+            setAlertMessage(
+               'Unable to retrieve meal plan items. Please try again later.'
+            );
+            setAlertSeverity('error');
+            setOpenSnackbar(true);
          });
    }, [currentDay]);
 

@@ -43,6 +43,6 @@ module.exports = {
       new MiniCssExtractPlugin(),
       new ForkTsCheckerWebpackPlugin(),
       //! uncomment this line to visualize webpack bundles in browser
-      // new BundleAnalyzerPlugin(),
+      new BundleAnalyzerPlugin(),
    ],
 };

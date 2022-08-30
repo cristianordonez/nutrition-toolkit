@@ -27,7 +27,6 @@ export const connectUser = async (user: UserType) => {
 export const getSpoonacularRecipes = async (
    recipeQuery: QueryType
 ): Promise<object> => {
-   console.log('recipeQuery in getspoonacular recipes:', recipeQuery);
    let recipes = await axios.get(`${url}recipes/complexSearch`, {
       params: {
          query: `${recipeQuery.query}`,
@@ -85,7 +84,6 @@ export const getSpoonacularRecipesByQuery = async (query: RecipeQuery) => {
 
 export const generateMealplanDay = async () => {
    const currentUrl = `${url}recipes/mealplans/generate`;
-   console.log('currentUrl:', currentUrl);
    const generatedItems = await axios.get(currentUrl, {
       params: { timeFrame: 'day', targetCalories: '1500' },
       headers: {
@@ -93,7 +91,6 @@ export const generateMealplanDay = async () => {
          'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
       },
    });
-   console.log('generateItems:', generatedItems);
    return generatedItems.data;
 };
 
