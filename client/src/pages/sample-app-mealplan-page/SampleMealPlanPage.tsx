@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import './SampleMealPlanPage.scss';
 import NavBar from '../../components/navbar/NavBar';
-import { SampleMealplanSidebar } from './sample-mealplan-sidebar/SampleMealplanSidebar';
+import { SampleMealplanSidebar } from './sample-mealplan-sidebar';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
 import { MealPlanWeekText } from '../../components/mealplan-week-text/MealPlanWeekText';
-import { AlertColor, Tabs, Tab } from '@mui/material';
+import { AlertColor, Tabs, Tab, Toolbar, IconButton } from '@mui/material';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
 import getDay from 'date-fns/getDay';
 import addDays from 'date-fns/addDays';
 import subDays from 'date-fns/subDays';
@@ -103,15 +106,15 @@ const SampleMealPlanPage = () => {
    }, [currentDay]);
 
    const sampleGoals = {
-      total_carbohydrates: 150,
+      total_carbohydrates: 135,
       min_carbs_per_meal: 45,
       max_carbs_per_meal: 55,
-      total_protein: 145,
-      min_protein_per_meal: 40,
-      max_protein_per_meal: 60,
-      total_fat: 80,
-      min_fat_per_meal: 15,
-      max_fat_per_meal: 35,
+      total_protein: 135,
+      min_protein_per_meal: 30,
+      max_protein_per_meal: 50,
+      total_fat: 100,
+      min_fat_per_meal: 25,
+      max_fat_per_meal: 45,
       total_calories: 2000,
       min_calories_per_meal: 450,
       max_calories_per_meal: 650,
@@ -126,13 +129,25 @@ const SampleMealPlanPage = () => {
             nutritionSummary={nutritionSummary}
             goals={sampleGoals}
          />
-         <MealPlanWeekText currentDay={currentDay} />
-         <Tabs value={dayIndex} onChange={handleTabChange}>
-            {days.map((day) => (
-               <Tab key={day} label={day} />
-            ))}
-         </Tabs>
-
+         <Toolbar sx={{ display: { sm: 'none' } }}>
+            <IconButton
+               color='inherit'
+               aria-label='open drawer'
+               edge='start'
+               onClick={handleDrawerToggle}
+               sx={{ mr: 2, display: { sm: 'none' } }}
+            >
+               <ArrowForwardIosIcon />
+            </IconButton>
+         </Toolbar>
+         <div className='sample-mealplan-page'>
+            <MealPlanWeekText currentDay={currentDay} />
+            <Tabs value={dayIndex} onChange={handleTabChange}>
+               {days.map((day) => (
+                  <Tab key={day} label={day} />
+               ))}
+            </Tabs>
+         </div>
          <CustomAlert
             openAlert={openSnackbar}
             handleAlert={handleClose}

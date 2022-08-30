@@ -87,7 +87,7 @@ export const generateMealplanDay = async () => {
    const currentUrl = `${url}recipes/mealplans/generate`;
    console.log('currentUrl:', currentUrl);
    const generatedItems = await axios.get(currentUrl, {
-      params: { timeFrame: 'day', targetCalories: '2000' },
+      params: { timeFrame: 'day', targetCalories: '1500' },
       headers: {
          'X-RapidAPI-Key': `${X_RAPIDAPI_KEY}`,
          'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,

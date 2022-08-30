@@ -3,11 +3,9 @@ import './GoalCardItemCard.scss';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 import { CurrentGoals } from '../../../../../types/types';
 import { Card, CardContent, Typography, Stack, Input } from '@mui/material';
-import { IconType } from 'react-icons';
 
 interface Props {
    type: 'Carbohydrates' | 'Protein' | 'Fat';
-   IconSvg: IconType;
    nutrientsTotal: number;
    page: 'search' | 'user-profile' | 'mealplan';
    setGoals?: Dispatch<SetStateAction<CurrentGoals>>;
@@ -16,7 +14,6 @@ interface Props {
 
 export const GoalCardItemCard = ({
    nutrientsTotal,
-   IconSvg,
    type,
    page,
    setGoals,
@@ -77,10 +74,10 @@ export const GoalCardItemCard = ({
                   className='nutrient-type-text'
                   align='center'
                   variant='body1'
+                  component='div'
                >
                   {type}
                </Typography>
-               <IconSvg size='1.5em' className='goal-card-icon' />
                {page === 'user-profile' ? (
                   <Input
                      value={`${nutrientsTotal}`}

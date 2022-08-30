@@ -1,4 +1,5 @@
 import React from 'react';
+import './CaloriesCircularProgress.scss';
 import { Typography, CircularProgress, Button } from '@mui/material';
 
 interface Props {

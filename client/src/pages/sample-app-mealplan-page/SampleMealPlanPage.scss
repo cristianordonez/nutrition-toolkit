@@ -1,0 +1,9 @@
+@use '../../index.scss' as *;
+
+.sample-mealplan-page {
+   @include set-size(100%);
+   @include devices(mobile) {
+      padding-left: 0;
+   }
+   padding-left: 350px;
+}

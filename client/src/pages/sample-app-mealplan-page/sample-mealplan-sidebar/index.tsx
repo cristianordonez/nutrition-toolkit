@@ -1,6 +1,6 @@
 import React, { MouseEventHandler } from 'react';
-import './SampleMealplanSidebar.scss';
-import { IconButton, Toolbar, Drawer } from '@mui/material';
+import { IconButton, Toolbar, Drawer, Typography } from '@mui/material';
+import { SampleMealplanSidebarContents } from './SampleMealplanSidebarContents';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { GoalCardItemLinearProgress } from '../../../components/goal-card-item-linear-progress/GoalCardItemLinearProgress';
 import { CaloriesCircularProgress } from '../../../components/calories-circular-progress/CaloriesCircularProgress';
@@ -58,6 +58,10 @@ export const SampleMealplanSidebar = ({
                   <ArrowBackIosIcon />
                </IconButton>
             </Toolbar>
+            <SampleMealplanSidebarContents
+               goals={goals}
+               nutritionSummary={nutritionSummary}
+            />
          </Drawer>
 
          <Drawer
@@ -73,15 +77,9 @@ export const SampleMealplanSidebar = ({
                },
             }}
          >
-            <CaloriesCircularProgress
-               calories={calories}
-               caloriesUsed={Math.floor(nutritionSummary.calories)}
-               caloriesTotal={goals.total_calories}
-            />
-            <GoalCardItemLinearProgress
-               nutrientsTotal={5}
-               type={'Protein'}
-               nutrientsInMealPlan={200}
+            <SampleMealplanSidebarContents
+               goals={goals}
+               nutritionSummary={nutritionSummary}
             />
          </Drawer>
       </>

@@ -1,10 +1,11 @@
 import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import './index.scss';
 import { CaloriesCircularProgress } from '../calories-circular-progress/CaloriesCircularProgress';
-import { GoalCardItemList } from './goal-card-item-list/GoalCardItemList';
-import { Typography, CircularProgress, Button } from '@mui/material';
+import { CaloriesCircularProgressWithoutGoals } from '../calories-circular-progress/CaloriesCircularProgressWithoutGoals';
+import { GoalCardItemList } from '../goal-card-item-list/GoalCardItemList';
+import { Typography, Button } from '@mui/material';
 import { GoalCardItemLinearProgress } from '../goal-card-item-linear-progress/GoalCardItemLinearProgress';
-import { GoalCardItemCard } from './goal-card-item-card/GoalCardItemCard';
+import { GoalCardItemCard } from '../goal-card-item-list/goal-card-item-card/GoalCardItemCard';
 import { CurrentGoals } from '../../../../types/types';
 
 type nutrientType = {
@@ -103,7 +104,7 @@ export const DailyGoals = ({
                nutritionSummary !== undefined &&
                nutritionSummary.length === 0) ? (
                <>
-                  <div className='daily-goals-kcal'>
+                  {/* <div className='daily-goals-kcal'>
                      <CircularProgress
                         variant='determinate'
                         size={200}
@@ -118,7 +119,8 @@ export const DailyGoals = ({
                            {goals.total_calories}
                         </Typography>
                      </div>
-                  </div>
+                  </div> */}
+                  <CaloriesCircularProgressWithoutGoals goals={goals} />
                   <form
                      onSubmit={handleSubmitUpdatedGoals}
                      className='daily-goals-items'

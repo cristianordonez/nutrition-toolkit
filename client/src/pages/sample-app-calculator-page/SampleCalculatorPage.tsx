@@ -2,12 +2,20 @@ import React, { useState } from 'react';
 import './SampleCalculatorPage.scss';
 import { Calculator } from '../../components/calculator-contents/Calculator';
 import { Goals } from '../../helper-functions/get-metrics/getMetrics';
-import { CurrentGoals } from '../../../../types/types';
+import { CaloriesCircularProgress } from '../../components/calories-circular-progress/CaloriesCircularProgress';
 import NavBar from '../../components/navbar/NavBar';
-import { GoalCardItemList } from '../../components/daily-goals/goal-card-item-list/GoalCardItemList';
+import { GoalCardItemList } from '../../components/goal-card-item-list/GoalCardItemList';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
-import { AlertColor, Paper, Button, Stack, Typography } from '@mui/material';
+import {
+   CircularProgress,
+   AlertColor,
+   Paper,
+   Button,
+   Stack,
+   Typography,
+} from '@mui/material';
 import { getMetrics } from '../../helper-functions/get-metrics/getMetrics';
+import { CaloriesCircularProgressWithoutGoals } from '../../components/calories-circular-progress/CaloriesCircularProgressWithoutGoals';
 
 const SampleCalculatorPage = () => {
    const [alertSeverity, setAlertSeverity] = useState<AlertColor>('success');
@@ -53,7 +61,6 @@ const SampleCalculatorPage = () => {
       setActivityLevel(newActivityLevel);
    };
 
-   //todo after submit show the results of calculations
    const handleSubmit = (event: React.SyntheticEvent) => {
       event.preventDefault();
       const currentGoals = getMetrics({
@@ -73,12 +80,13 @@ const SampleCalculatorPage = () => {
             direction='column'
             alignItems='center'
             justifyContent={'center'}
-            sx={{ pt: '2rem' }}
+            sx={{ pt: '2rem', pb: '2rem' }}
             spacing={2}
          >
             {goals.total_calories !== 0 ? (
                <>
                   <Typography variant='h3'>Recommended Daily Goals</Typography>
+                  <CaloriesCircularProgressWithoutGoals goals={goals} />
                   <div className='goal-card-items'>
                      <GoalCardItemList goals={goals} page={'mealplan'} />
                   </div>
