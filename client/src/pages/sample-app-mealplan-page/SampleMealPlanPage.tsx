@@ -20,6 +20,7 @@ import addDays from 'date-fns/addDays';
 import subDays from 'date-fns/subDays';
 import format from 'date-fns/format';
 import axios from 'axios';
+import { Box } from '@mui/system';
 
 const days = [
    'Sunday',
@@ -30,6 +31,8 @@ const days = [
    'Friday',
    'Saturday',
 ];
+
+const daysMobile = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
 
 const SampleMealPlanPage = () => {
    const [dayIndex, setDayIndex] = useState<number>(getDay(Date.now())); //used for tab highlighting
@@ -104,6 +107,7 @@ const SampleMealPlanPage = () => {
    };
 
    useEffect(() => {
+      console.log('this should be called after tab change');
       axios
          .get('/api/mealplan/sample')
          .then((response) => {
@@ -169,11 +173,19 @@ const SampleMealPlanPage = () => {
          </Toolbar>
          <div className='sample-mealplan-page'>
             <MealPlanWeekText currentDay={currentDay} />
-            <Tabs value={dayIndex} onChange={handleTabChange}>
-               {days.map((day) => (
-                  <Tab key={day} label={day} />
-               ))}
-            </Tabs>
+            <Box sx={{ maxWidth: { xs: 320, sm: 480 } }}>
+               <Tabs
+                  value={dayIndex}
+                  onChange={handleTabChange}
+                  variant='scrollable'
+                  scrollButtons='auto'
+                  aria-label='change mealplan date'
+               >
+                  {days.map((day) => (
+                     <Tab key={day} label={day} />
+                  ))}
+               </Tabs>
+            </Box>
             {mealplanItems.length > 0 && sampleMealplanItems.length > 0 ? (
                <SampleMealPlanDay
                   mealplanItems={mealplanItems}

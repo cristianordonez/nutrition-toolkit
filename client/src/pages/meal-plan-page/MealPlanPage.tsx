@@ -184,11 +184,19 @@ const MealPlanPage = () => {
                   setValue={setValue}
                />
                <MealPlanWeekText currentDay={currentDay} />
-               <Tabs value={dayIndex} onChange={handleTabChange}>
-                  {days.map((day) => (
-                     <Tab key={day} label={day} />
-                  ))}
-               </Tabs>
+               <Box sx={{ maxWidth: { xs: 320, sm: 480 } }}>
+                  <Tabs
+                     value={dayIndex}
+                     onChange={handleTabChange}
+                     variant='scrollable'
+                     scrollButtons='auto'
+                     aria-label='change mealplan date'
+                  >
+                     {days.map((day) => (
+                        <Tab key={day} label={day} />
+                     ))}
+                  </Tabs>
+               </Box>
                {isLoading ? null : (
                   <MealplanDay
                      setMealPlanItems={setMealplanItems}
