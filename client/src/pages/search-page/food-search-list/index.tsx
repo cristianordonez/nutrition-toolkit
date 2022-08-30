@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import { FoodItemType } from './food-search-list.types';
+import { FoodItemType } from '../../../../../types/types';
 import { AlertColor } from '@mui/material';
 
 interface Props {

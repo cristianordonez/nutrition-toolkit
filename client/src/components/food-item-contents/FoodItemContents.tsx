@@ -17,7 +17,7 @@ import {
    GroceryItemNutrition,
    RecipeItemNutrition,
    MenuItemNutrition,
-} from '../../pages/search-page/food-search-list/food-search-list.types';
+} from '../../../../types/types';
 
 interface Props {
    route: string;
@@ -78,7 +78,7 @@ export const FoodItemContents = ({
    return (
       <Paper elevation={1} className='food-search-paper'>
          <Card className='search-item' data-testid='food-search-item'>
-            {isMealPlanItem ? (
+            {isMealPlanItem && handleOpeningDialog !== undefined ? (
                <Tooltip title='Delete from Mealplan'>
                   <IconButton
                      sx={{

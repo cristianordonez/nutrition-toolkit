@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import './SampleMealPlanPage.scss';
 import NavBar from '../../components/navbar/NavBar';
+import { SampleMealPlanDay } from './sample-mealplan-day/SampleMealplanDay';
 import { SampleMealplanSidebar } from './sample-mealplan-sidebar';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
 import { MealPlanWeekText } from '../../components/mealplan-week-text/MealPlanWeekText';
-import { AlertColor, Tabs, Tab, Toolbar, IconButton } from '@mui/material';
+import {
+   AlertColor,
+   Tabs,
+   Tab,
+   Toolbar,
+   IconButton,
+   CircularProgress,
+} from '@mui/material';
+import { SampleMealplanItem, FoodItemType } from '../../../../types/types';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-
 import getDay from 'date-fns/getDay';
 import addDays from 'date-fns/addDays';
 import subDays from 'date-fns/subDays';
@@ -25,7 +33,10 @@ const days = [
 
 const SampleMealPlanPage = () => {
    const [dayIndex, setDayIndex] = useState<number>(getDay(Date.now())); //used for tab highlighting
-   const [mealplanItems, setMealplanItems] = useState<[]>([]);
+   const [mealplanItems, setMealplanItems] = useState<FoodItemType[] | []>([]);
+   const [sampleMealplanItems, setSampleMealplanItems] = useState<
+      SampleMealplanItem[] | []
+   >([]);
    const [mobileOpen, setMobileOpen] = React.useState(false);
    const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
    const [alertSeverity, setAlertSeverity] = useState<AlertColor>('error');
@@ -96,9 +107,22 @@ const SampleMealPlanPage = () => {
       axios
          .get('/api/mealplan/sample')
          .then((response) => {
-            console.log('response:', response);
-            setMealplanItems(response.data.meals);
             setNutritionSummary(response.data.nutrients);
+            console.log('response:', response);
+            const currentMealplanItems = response.data.meals;
+            setSampleMealplanItems(currentMealplanItems);
+            const promises = currentMealplanItems.map(
+               (item: SampleMealplanItem) => {
+                  return axios
+                     .get(`/api/recipes/${item.id}`)
+                     .then((response) => {
+                        return response.data;
+                     });
+               }
+            );
+            Promise.all(promises).then((mealItems) => {
+               setMealplanItems(mealItems);
+            });
          })
          .catch((err) => {
             console.log('err:', err);
@@ -147,6 +171,14 @@ const SampleMealPlanPage = () => {
                   <Tab key={day} label={day} />
                ))}
             </Tabs>
+            {mealplanItems.length > 0 && sampleMealplanItems.length > 0 ? (
+               <SampleMealPlanDay
+                  mealplanItems={mealplanItems}
+                  sampleMealplanItems={sampleMealplanItems}
+               />
+            ) : (
+               <CircularProgress size={100} />
+            )}
          </div>
          <CustomAlert
             openAlert={openSnackbar}

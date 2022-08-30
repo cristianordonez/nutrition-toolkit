@@ -7,7 +7,7 @@ import {
    GroceryItemNutrition,
    RecipeItemNutrition,
    MenuItemNutrition,
-} from '../food-search-list.types';
+} from '../../../../../../types/types';
 
 interface Props {
    id: number;

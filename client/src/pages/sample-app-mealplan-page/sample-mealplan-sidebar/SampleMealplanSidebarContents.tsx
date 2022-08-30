@@ -49,6 +49,11 @@ export const SampleMealplanSidebarContents = ({
                type={'Fat'}
                nutrientsInMealPlan={nutritionSummary.fat}
             />
+            <Typography variant='caption' align='center' sx={{ pt: '5rem' }}>
+               Note: goals and mealplan items are generated randomly. Please log
+               in or create an account to search and save items to your meal
+               plan.
+            </Typography>
          </Stack>
       </>
    );

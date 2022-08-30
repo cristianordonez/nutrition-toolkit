@@ -2,7 +2,7 @@ import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { ConfirmDeleteDialog } from './ConfirmDeleteDialog';
 import { FoodItemContents } from '../../../components/food-item-contents/FoodItemContents';
 import { AlertColor, Grid } from '@mui/material';
-import { FoodItemType } from '../../search-page/food-search-list/food-search-list.types';
+import { FoodItemType } from '../../../../../types/types';
 import axios from 'axios';
 
 interface Props {
