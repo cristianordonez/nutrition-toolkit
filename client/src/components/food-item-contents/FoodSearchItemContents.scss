@@ -9,3 +9,12 @@
 .card-button {
    @include set-size(100%);
 }
+
+.search-item-nutrition {
+   @include flex-center();
+   flex-wrap: nowrap;
+   justify-content: space-evenly;
+   .search-item-nutrient {
+      @include flex-center-column();
+   }
+}

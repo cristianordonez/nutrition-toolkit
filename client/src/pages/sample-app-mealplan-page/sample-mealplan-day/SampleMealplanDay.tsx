@@ -12,6 +12,7 @@ export const SampleMealPlanDay = ({
    mealplanItems,
    sampleMealplanItems,
 }: Props) => {
+   console.log('sampleMealplanItems:', sampleMealplanItems);
    return (
       <>
          <div className='meal-plan-slots-container'>
