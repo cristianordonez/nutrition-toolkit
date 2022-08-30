@@ -1,14 +1,14 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { GoalsType } from '../../../../types/types';
+import { CurrentGoals } from '../../../../../types/types';
 import { BsEggFried } from 'react-icons/bs';
 import { GiAvocado } from 'react-icons/gi';
 import { FaBreadSlice } from 'react-icons/fa';
 import { GoalCardItemCard } from '../goal-card-item-card/GoalCardItemCard';
 
 interface Props {
-   goals: GoalsType;
+   goals: CurrentGoals;
    page: 'search' | 'user-profile' | 'mealplan';
-   setGoals?: Dispatch<SetStateAction<GoalsType>>;
+   setGoals?: Dispatch<SetStateAction<CurrentGoals>>;
 }
 
 export const GoalCardItemList = ({ goals, page, setGoals }: Props) => {

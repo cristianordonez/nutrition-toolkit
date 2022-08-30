@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import * as userController from '../controllers/user.controller';
-import { Session } from '../types/types';
+import { Session } from '../../types/types';
 import passport from 'passport';
 const router = Router();
 

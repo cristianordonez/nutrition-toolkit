@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './SampleCalculatorPage.scss';
 import { Calculator } from '../../components/calculator-contents/Calculator';
 import { Goals } from '../../helper-functions/get-metrics/getMetrics';
-import { GoalsType } from '../../../types/types';
+import { CurrentGoals } from '../../../../types/types';
 import NavBar from '../../components/navbar/NavBar';
 import { GoalCardItemList } from '../../components/daily-goals/goal-card-item-list/GoalCardItemList';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';

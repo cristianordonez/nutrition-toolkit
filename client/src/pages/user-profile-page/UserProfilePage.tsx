@@ -4,7 +4,7 @@ import { DailyGoals } from '../../components/daily-goals';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
 import { AlertColor, Button, Typography, Stack } from '@mui/material';
 import axios from 'axios';
-import { GoalsType } from '../../../types/types';
+import { CurrentGoals } from '../../../../types/types';
 import NavBar from '../../components/navbar/NavBar';
 import { useAuth } from '../../context/authContext';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -14,7 +14,7 @@ const UserSettingsPage = () => {
    const [openAlert, setOpenAlert] = useState<boolean>(false);
    const [alertSeverity, setAlertSeverity] = useState<AlertColor>('error');
    const [alertMessage, setAlertMessage] = useState<string>('');
-   const [goals, setGoals] = useState({} as GoalsType);
+   const [goals, setGoals] = useState({} as CurrentGoals);
    const handleAlert = () => {
       setOpenAlert(!openAlert);
    };

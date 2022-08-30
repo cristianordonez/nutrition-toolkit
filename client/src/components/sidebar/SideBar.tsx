@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react';
 import { DailyGoals } from '../daily-goals';
 import { IconButton, Toolbar, Drawer } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { CurrentGoals } from '../../pages/search-page/sidebar-searchpage/SideBarSearchPage';
+import { CurrentGoals } from '../../../../types/types';
 
 interface Props {
    mobileOpen: boolean | undefined;
@@ -30,6 +30,7 @@ export const SideBar = ({
 }: Props) => {
    return (
       <>
+         {/* IF PAGE IS SEARCH, RENDER THIS PART */}
          {page === 'search' && (
             <>
                <Drawer
@@ -37,7 +38,7 @@ export const SideBar = ({
                   open={mobileOpen}
                   onClose={handleDrawerToggle}
                   ModalProps={{
-                     keepMounted: true, // Better open performance on mobile.
+                     keepMounted: true,
                   }}
                   sx={{
                      display: { xs: 'block', sm: 'none' },
@@ -87,6 +88,7 @@ export const SideBar = ({
                </Drawer>
             </>
          )}
+         {/* IF PAGE IS MEALPLAN, RENDER EVERYTHING BELOW */}
          {page === 'mealplan' && goals !== undefined && (
             <>
                <Drawer
@@ -94,7 +96,7 @@ export const SideBar = ({
                   open={mobileOpen}
                   onClose={handleDrawerToggle}
                   ModalProps={{
-                     keepMounted: true, // Better open performance on mobile.
+                     keepMounted: true,
                   }}
                   sx={{
                      display: { xs: 'block', sm: 'none' },
@@ -116,7 +118,6 @@ export const SideBar = ({
                         <ArrowBackIosIcon />
                      </IconButton>
                   </Toolbar>
-                  {/* MOBILE */}
                   {nutritionSummary ? (
                      <DailyGoals
                         goals={goals}
@@ -139,7 +140,6 @@ export const SideBar = ({
                      },
                   }}
                >
-                  {/* DESKTOP - RENDER WHOLE VIEW AT ONCE */}
                   {nutritionSummary.length ? (
                      <DailyGoals
                         goals={goals}
@@ -147,7 +147,6 @@ export const SideBar = ({
                         page={'mealplan'}
                      />
                   ) : null}
-                  {/* SHOWN ON DAYS WITH NO MEALPLANS */}
                   {!nutritionSummary.length && !mealplanItemsFound ? (
                      <DailyGoals goals={goals} page={'search'} />
                   ) : null}

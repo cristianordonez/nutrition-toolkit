@@ -1,0 +1,9 @@
+@use '../../../index.scss' as *;
+
+.daily-goals-kcal {
+   @include flex-center-column;
+   padding: 2rem;
+   .daily-goals-kcal-title {
+      position: absolute;
+   }
+}

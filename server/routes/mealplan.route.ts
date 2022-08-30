@@ -17,6 +17,11 @@ router.get('/week', (req: Request, res: Response) => {
    mealplanController.getMealPlanWeek(req, res);
 });
 
+//grabs meaplan day from api
+router.get('/sample', (req: Request, res: Response) => {
+   mealplanController.generateMealplanDay(req, res);
+});
+
 //handles deleting item from user mealplan
 router.delete('/delete/:id', (req: Request, res: Response) => {
    mealplanController.deleteMealPlanItem(req, res);

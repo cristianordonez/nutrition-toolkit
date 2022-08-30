@@ -1,13 +1,11 @@
 import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import './index.scss';
+import { CaloriesCircularProgress } from '../calories-circular-progress/CaloriesCircularProgress';
 import { GoalCardItemList } from './goal-card-item-list/GoalCardItemList';
 import { Typography, CircularProgress, Button } from '@mui/material';
-import { GoalCardItemLinearProgress } from './GoalCardItemLinearProgress';
+import { GoalCardItemLinearProgress } from '../goal-card-item-linear-progress/GoalCardItemLinearProgress';
 import { GoalCardItemCard } from './goal-card-item-card/GoalCardItemCard';
-import { GoalsType } from '../../../types/types';
-// import { BsEggFried } from 'react-icons/bs';
-// import { GiAvocado } from 'react-icons/gi';
-// import { FaBreadSlice } from 'react-icons/fa';
+import { CurrentGoals } from '../../../../types/types';
 
 type nutrientType = {
    name: string;
@@ -17,10 +15,10 @@ type nutrientType = {
 };
 
 export interface Props {
-   goals: GoalsType;
+   goals: CurrentGoals;
    nutritionSummary?: nutrientType[];
    page?: string;
-   setGoals?: Dispatch<SetStateAction<GoalsType>>;
+   setGoals?: Dispatch<SetStateAction<CurrentGoals>>;
    handleSubmitUpdatedGoals?: (event: React.FormEvent) => Promise<void>;
 }
 
@@ -70,23 +68,11 @@ export const DailyGoals = ({
             nutritionSummary !== undefined &&
             nutritionSummary.length ? (
                <>
-                  <div className='daily-goals-kcal'>
-                     <CircularProgress
-                        variant='determinate'
-                        size={200}
-                        value={calories}
-                        thickness={1}
-                     />
-                     <div className='daily-goals-kcal-title'>
-                        <Typography variant='body1' align='center'>
-                           Calories
-                        </Typography>
-                        <Typography variant='h6'>
-                           {Math.floor(nutritionSummary[5].amount)} /{' '}
-                           {goals.total_calories}
-                        </Typography>
-                     </div>
-                  </div>
+                  <CaloriesCircularProgress
+                     calories={calories}
+                     caloriesTotal={goals.total_calories}
+                     caloriesUsed={Math.floor(nutritionSummary[5].amount)}
+                  />
                   <div
                      className='daily-goals-items'
                      data-testid='mealplan-goal-items'

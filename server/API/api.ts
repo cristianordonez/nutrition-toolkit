@@ -83,6 +83,20 @@ export const getSpoonacularRecipesByQuery = async (query: RecipeQuery) => {
    return matchingRecipes.data.results;
 };
 
+export const generateMealplanDay = async () => {
+   const currentUrl = `${url}recipes/mealplans/generate`;
+   console.log('currentUrl:', currentUrl);
+   const generatedItems = await axios.get(currentUrl, {
+      params: { timeFrame: 'day', targetCalories: '2000' },
+      headers: {
+         'X-RapidAPI-Key': `${X_RAPIDAPI_KEY}`,
+         'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
+      },
+   });
+   console.log('generateItems:', generatedItems);
+   return generatedItems.data;
+};
+
 export const getSpoonacularRecipeById = async (id: number) => {
    const currentUrl = `${url}recipes/${id}/information?includeNutrition=true`;
    let recipeInfo = await axios.get(currentUrl, {

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import * as apiHelpers from '../API/api';
-import { Query } from './controllers.types';
+import { Query } from '../../types/types';
 
 export const getRecipes = async (req: Request, res: Response) => {
    const query = req.query as unknown as Query;

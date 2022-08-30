@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { SideBar } from '../../../components/sidebar/SideBar';
 import axios from 'axios';
-import { CurrentGoals } from '../../search-page/sidebar-searchpage/SideBarSearchPage';
+import { CurrentGoals } from '../../../../../types/types';
 
 interface Props {
    mobileOpen: boolean | undefined;
    handleDrawerToggle: any;
-   page: string;
    nutritionSummary: any[];
-   mealplanItems: [];
    mealplanItemsFound: boolean;
 }
 
 export const SidebarMealplan = ({
    mobileOpen,
    handleDrawerToggle,
-   page,
    nutritionSummary,
-   mealplanItems,
    mealplanItemsFound,
 }: Props) => {
    const [goals, setGoals] = useState<CurrentGoals>();
@@ -38,7 +34,7 @@ export const SidebarMealplan = ({
 
    return (
       <>
-         {goals !== undefined && Object.keys(goals).length && (
+         {goals !== undefined && Object.keys(goals).length ? (
             <SideBar
                mobileOpen={mobileOpen}
                handleDrawerToggle={handleDrawerToggle}
@@ -47,7 +43,7 @@ export const SidebarMealplan = ({
                goals={goals}
                mealplanItemsFound={mealplanItemsFound}
             />
-         )}
+         ) : null}
       </>
    );
 };

@@ -92,3 +92,17 @@ export const deleteMealPlanItem = async function (req: Request, res: Response) {
       console.log(err);
    }
 };
+
+export const generateMealplanDay = async function (
+   req: Request,
+   res: Response
+) {
+   try {
+      let mealplanItems = await apiHelpers.generateMealplanDay();
+      console.log('mealplanItems:', mealplanItems);
+      res.status(200).send(mealplanItems);
+   } catch (err) {
+      res.status(400).send('Unable to delete item.');
+      console.log(err);
+   }
+};

@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import './GoalCardItemCard.scss';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
-import { GoalsType } from '../../../../types/types';
+import { CurrentGoals } from '../../../../../types/types';
 import { Card, CardContent, Typography, Stack, Input } from '@mui/material';
 import { IconType } from 'react-icons';
 
@@ -10,8 +10,8 @@ interface Props {
    IconSvg: IconType;
    nutrientsTotal: number;
    page: 'search' | 'user-profile' | 'mealplan';
-   setGoals?: Dispatch<SetStateAction<GoalsType>>;
-   goals: GoalsType;
+   setGoals?: Dispatch<SetStateAction<CurrentGoals>>;
+   goals: CurrentGoals;
 }
 
 export const GoalCardItemCard = ({
