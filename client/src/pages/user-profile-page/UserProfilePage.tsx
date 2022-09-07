@@ -5,7 +5,6 @@ import { CustomAlert } from '../../components/custom-alert/CustomAlert';
 import { AlertColor, Button, Typography, Stack } from '@mui/material';
 import axios from 'axios';
 import { CurrentGoals } from '../../../../types/types';
-import NavBar from '../../components/navbar/NavBar';
 import { useAuth } from '../../context/authContext';
 import SettingsIcon from '@mui/icons-material/Settings';
 
@@ -65,7 +64,6 @@ const UserSettingsPage = () => {
 
    return isLoading ? null : (
       <>
-         <NavBar isSettingsPage={true} />
          <div className='user-profile-page'>
             <Stack direction='row' spacing={1} sx={{ paddingBottom: '1rem' }}>
                <SettingsIcon />

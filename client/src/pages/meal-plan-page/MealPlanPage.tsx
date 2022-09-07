@@ -17,7 +17,6 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import format from 'date-fns/format';
-import NavBar from '../../components/navbar/NavBar';
 import getDay from 'date-fns/getDay';
 import addDays from 'date-fns/addDays';
 import subDays from 'date-fns/subDays';
@@ -137,7 +136,6 @@ const MealPlanPage = () => {
 
    return (
       <>
-         <NavBar />
          <div className='mealplan-page'>
             <Toolbar sx={{ display: { sm: 'none' } }}>
                <IconButton

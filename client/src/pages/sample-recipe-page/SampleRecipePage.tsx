@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import NavBar from '../../components/navbar/NavBar';
 import { SampleRecipeList } from './sample-recipe-list';
 import { SampleRecipeSideBar } from './sample-recipe-list/sample-recipe-sidebar/SampleRecipeSideBar';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -124,7 +123,6 @@ const SampleAppRecipePage = () => {
 
    return (
       <>
-         <NavBar />
          <Toolbar sx={{ display: { sm: 'none' } }}>
             <IconButton
                color='inherit'

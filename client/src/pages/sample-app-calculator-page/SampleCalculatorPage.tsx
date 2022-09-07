@@ -2,18 +2,9 @@ import React, { useState } from 'react';
 import './SampleCalculatorPage.scss';
 import { Calculator } from '../../components/calculator-contents/Calculator';
 import { Goals } from '../../helper-functions/get-metrics/getMetrics';
-import { CaloriesCircularProgress } from '../../components/calories-circular-progress/CaloriesCircularProgress';
-import NavBar from '../../components/navbar/NavBar';
 import { GoalCardItemList } from '../../components/goal-card-item-list/GoalCardItemList';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
-import {
-   CircularProgress,
-   AlertColor,
-   Paper,
-   Button,
-   Stack,
-   Typography,
-} from '@mui/material';
+import { AlertColor, Paper, Button, Stack, Typography } from '@mui/material';
 import { getMetrics } from '../../helper-functions/get-metrics/getMetrics';
 import { CaloriesCircularProgressWithoutGoals } from '../../components/calories-circular-progress/CaloriesCircularProgressWithoutGoals';
 
@@ -74,8 +65,6 @@ const SampleCalculatorPage = () => {
    };
    return (
       <>
-         <NavBar />
-
          <Stack
             direction='column'
             alignItems='center'

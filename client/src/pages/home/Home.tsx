@@ -17,6 +17,7 @@ import MaleChefSvg from '../../../img/male-chef.svg';
 import ScheduleSvg from '../../../img/schedule.svg';
 import CalculateSvg from '../../../img/calculate.svg';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../../context/authContext';
 
 type LocationType = {
    pathname: string;
@@ -26,6 +27,7 @@ type LocationType = {
 };
 
 const Home = () => {
+   const [isLoading, isLoggedIn] = useAuth();
    const [alertSeverity, setAlertSeverity] = useState<AlertColor>('success');
    const [openAlert, setOpenAlert] = useState(false);
    const [alertMessage, setAlertMessage] = useState(''); //message displayed on snackbar

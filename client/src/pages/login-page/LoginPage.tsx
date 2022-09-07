@@ -4,7 +4,6 @@ import { LoginForm } from './login-form/LoginForm';
 import { SignupForm } from './sign-up-form/SignupForm';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
 import { AlertColor } from '@mui/material';
-import NavBar from '../../components/navbar/NavBar';
 import { useLocation } from 'react-router-dom';
 
 type LocationType = {
@@ -44,7 +43,6 @@ const LoginPage = () => {
 
    return (
       <>
-         <NavBar />
          {showSignup ? (
             <SignupForm
                showSignup={showSignup}

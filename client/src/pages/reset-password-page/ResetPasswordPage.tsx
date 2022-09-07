@@ -3,7 +3,6 @@ import { PasswordTextField } from '../../components/text-fields/password-textfie
 import { ConfirmPasswordTextField } from '../../components/text-fields/confirm-password-textfield/ConfirmPasswordTextField';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
 import { Typography, Paper, Button, AlertColor } from '@mui/material';
-import NavBar from '../../components/navbar/NavBar';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -71,7 +70,6 @@ const ResetPasswordPage = () => {
 
    return (
       <>
-         <NavBar />
          <div className='signup'>
             <Paper
                elevation={2}

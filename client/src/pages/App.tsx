@@ -5,6 +5,7 @@ import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { ThemeProvider } from '@emotion/react';
 import { PaletteMode } from '@mui/material';
 import { teal, grey } from '@mui/material/colors';
+import NavBar from '../components/navbar/NavBar';
 import { useLocalStorageState } from '../hooks/useLocalStorage';
 import Home from './home/Home';
 
@@ -126,7 +127,6 @@ export const App = () => {
       () => ({
          // The dark mode switch would invoke this method
          toggleColorMode: () => {
-            let currentMode = mode === 'light' ? 'dark' : 'light';
             localStorage.setItem('mode', mode === 'light' ? 'dark' : 'light');
             setMode((prevMode: PaletteMode) =>
                prevMode === 'light' ? 'dark' : 'light'
@@ -144,67 +144,48 @@ export const App = () => {
          <ColorModeContext.Provider value={colorMode}>
             <ThemeProvider theme={theme}>
                <CssBaseline />
-               <Suspense fallback={<></>}>
-                  <Routes>
-                     <Route path='/' element={<Home />} />
-                     <Route
-                        path='/diabetes-calculator-features/recipes'
-                        element={<SampleRecipePage />}
-                     />
-                     <Route
-                        path='/diabetes-calculator-features/calculator'
-                        element={<SampleCalculatorPage />}
-                     />
-                     <Route
-                        path='/diabetes-calculator-features/mealplan'
-                        element={<SampleMealPlanPage />}
-                     />
-                     <Route path='/login' element={<LoginPage />} />
-                     <Route
-                        path='/search'
-                        element={
-                           <AuthProvider>
-                              <SearchPage />
-                           </AuthProvider>
-                        }
-                     />
-                     <Route
-                        path='/mealplan'
-                        element={
-                           <AuthProvider>
-                              <MealPlanPage />
-                           </AuthProvider>
-                        }
-                     />
-                     <Route
-                        path='/macrocalculator'
-                        element={
-                           <AuthProvider>
-                              <MacroCalculatorPage />
-                           </AuthProvider>
-                        }
-                     />
-                     <Route
-                        path='/settings'
-                        element={
-                           <AuthProvider>
-                              <UserSettingsPage />
-                           </AuthProvider>
-                        }
-                     />
-                     <Route
-                        path='/account-recovery'
-                        element={<ForgotPasswordPage />}
-                     />
+               <AuthProvider>
+                  <NavBar />
+                  <Suspense fallback={<></>}>
+                     <Routes>
+                        <Route path='/' element={<Home />} />
+                        <Route
+                           path='/diabetes-calculator-features/recipes'
+                           element={<SampleRecipePage />}
+                        />
+                        <Route
+                           path='/diabetes-calculator-features/calculator'
+                           element={<SampleCalculatorPage />}
+                        />
+                        <Route
+                           path='/diabetes-calculator-features/mealplan'
+                           element={<SampleMealPlanPage />}
+                        />
+                        <Route path='/login' element={<LoginPage />} />
+                        <Route path='/search' element={<SearchPage />} />
+                        <Route path='/mealplan' element={<MealPlanPage />} />
+                        <Route
+                           path='/macrocalculator'
+                           element={<MacroCalculatorPage />}
+                        />
+                        <Route
+                           path='/settings'
+                           element={<UserSettingsPage />}
+                        />
+                        <Route
+                           path='/account-recovery'
+                           element={<ForgotPasswordPage />}
+                        />
 
-                     <Route
-                        path='/passwordReset'
-                        element={<ResetPasswordPage />}
-                     />
+                        <Route
+                           path='/passwordReset'
+                           element={<ResetPasswordPage />}
+                        />
 
-                     <Route path='*' element={<NoPageFound />} />
-                  </Routes>
-               </Suspense>
+                        <Route path='*' element={<NoPageFound />} />
+                     </Routes>
+                  </Suspense>
+               </AuthProvider>
             </ThemeProvider>
          </ColorModeContext.Provider>
       </>

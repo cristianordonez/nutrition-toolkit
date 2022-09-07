@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
 import { AlertColor } from '@mui/material';
 import { MacroCalculatorForm } from '../../components/macro-calculator-form';
-import NavBar from '../../components/navbar/NavBar';
 import { useAuth } from '../../context/authContext';
 
 const MacroCalculatorPage = () => {
@@ -21,7 +20,6 @@ const MacroCalculatorPage = () => {
 
    return isLoading ? null : (
       <>
-         <NavBar />
          <MacroCalculatorForm
             setOpenErrorAlert={setOpenSnackbar}
             setErrorMessage={setAlertMessage}

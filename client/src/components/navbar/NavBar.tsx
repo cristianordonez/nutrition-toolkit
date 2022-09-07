@@ -1,5 +1,8 @@
 import React, { useState, useContext } from 'react';
-import MenuIcon from '@mui/icons-material/Menu';
+import { ColorModeContext } from '../../pages/App';
+import { useNavigate } from 'react-router-dom';
+import DefaultAvatar from '../../../img/default-avatar.svg';
+import LOGO from '../../../img/LOGO.svg';
 import {
    AppBar,
    Box,
@@ -14,32 +17,21 @@ import {
    Link,
    Stack,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { useAuth } from '../../context/authContext';
-import LOGO from '../../../img/LOGO.svg';
-import { ColorModeContext } from '../../pages/App';
 import { useTheme } from '@mui/material/styles';
+import MenuIcon from '@mui/icons-material/Menu';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useLocation } from 'react-router-dom';
+
 const pages = ['Search', 'Macro Calculator', 'Meal Plan'];
 
-interface Props {
-   isSettingsPage?: boolean;
-}
-
-const NavBar = ({ isSettingsPage }: Props) => {
+const NavBar = () => {
    const location = useLocation();
-
-   //! setting the theme here
    const theme = useTheme();
    const colorMode = useContext(ColorModeContext);
-
-   ///////////////////////////////////
-
    const navigate = useNavigate();
-   const { isLoading, isLoggedIn, username } = useAuth(); //used to check if data is still being retrieved from database
+   const { isLoading, isLoggedIn, username, handleLogout } = useAuth(); //used to check if data is still being retrieved from database
    const [isOpen, setIsOpen] = useState(false);
 
    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -69,19 +61,66 @@ const NavBar = ({ isSettingsPage }: Props) => {
       navigate('/settings');
    };
 
-   const handleLogout = async () => {
-      try {
-         if (isLoggedIn === true) {
-            await axios.post('/api/logout');
-            navigate('/', { state: { loggedOut: true }, replace: true });
-         } else {
-            navigate('/');
-         }
-      } catch (err) {
-         console.log('err:', err);
-      }
-   };
+   // const handleLogout = async () => {
+   //    try {
+   //       if (isLoggedIn === true) {
+   //          await axios.post('/api/logout');
+   //          navigate('/', { state: { loggedOut: true }, replace: true });
+   //       } else {
+   //          navigate('/');
+   //       }
+   //    } catch (err) {
+   //       console.log('err:', err);
+   //    }
+   // };
 
+   //todo add useEffect hook that replaces navigate found in authcontext
+   // if (isLoading) {
+   //    return (
+   //       <AppBar
+   //          position='fixed'
+   //          sx={{
+   //             zIndex: (theme) => theme.zIndex.drawer + 1,
+   //             boxShadow: 'none',
+   //             padding: '0 1vw',
+   //          }}
+   //          color='default'
+   //          enableColorOnDark={true}
+   //       >
+   //          <Toolbar disableGutters>
+   //             <Box
+   //                component='img'
+   //                src={LOGO}
+   //                alt='Logo'
+   //                sx={{
+   //                   display: { md: 'flex' },
+   //                   mr: 1,
+   //                   objectFit: 'contain',
+   //                   height: '2.5rem',
+   //                   '&:hover': {
+   //                      cursor: 'pointer',
+   //                   },
+   //                }}
+   //                onClick={handleLogout}
+   //             ></Box>
+   //             <Tooltip title='Toggle theme'>
+   //                <IconButton
+   //                   sx={{ ml: 'auto' }}
+   //                   onClick={colorMode.toggleColorMode}
+   //                   color='inherit'
+   //                   aria-label='Toggle color theme'
+   //                >
+   //                   {theme.palette.mode === 'dark' ? (
+   //                      <Brightness7Icon />
+   //                   ) : (
+   //                      <Brightness4Icon />
+   //                   )}
+   //                </IconButton>
+   //             </Tooltip>
+   //          </Toolbar>
+   //       </AppBar>
+   //    );
+   // } else {
    return (
       <AppBar
          position='fixed'
@@ -94,7 +133,7 @@ const NavBar = ({ isSettingsPage }: Props) => {
          enableColorOnDark={true}
       >
          <Toolbar disableGutters>
-            {/* MOBILE DESKTOP*/}
+            {/* logo that appears at all times*/}
             <Box
                component='img'
                src={LOGO}
@@ -110,6 +149,7 @@ const NavBar = ({ isSettingsPage }: Props) => {
                }}
                onClick={handleLogout}
             ></Box>
+            {/* title that appears desktop only */}
             <Typography
                variant='h6'
                noWrap
@@ -122,7 +162,6 @@ const NavBar = ({ isSettingsPage }: Props) => {
                   letterSpacing: '.3rem',
                   color: 'inherit',
                   textDecoration: 'none',
-                  // flexGrow: 1,
                   '&:hover': {
                      cursor: 'pointer',
                   },
@@ -130,9 +169,10 @@ const NavBar = ({ isSettingsPage }: Props) => {
             >
                DiabetesCalculator
             </Typography>
-            {/* is user is logged in show all routes, and check if user is viewing their settings */}
+            {/* USER IS LOGGED IN */}
             {isLoggedIn === true ? (
                <>
+                  {/* MOBILE ONLY */}
                   <Box
                      sx={{
                         flexGrow: 1,
@@ -171,7 +211,6 @@ const NavBar = ({ isSettingsPage }: Props) => {
                         }}
                      >
                         <Stack direction='column' sx={{ padding: '0.5rem' }}>
-                           {/* show different links to show active page */}
                            {pages.map((page) =>
                               page.toLowerCase().replace(' ', '') ===
                               location.pathname.slice(1) ? (
@@ -204,6 +243,7 @@ const NavBar = ({ isSettingsPage }: Props) => {
                         </Stack>
                      </Menu>
                   </Box>
+                  {/* CONTINUE DESKTOP ONLY */}
                   <Box
                      sx={{
                         flexGrow: 1,
@@ -211,12 +251,13 @@ const NavBar = ({ isSettingsPage }: Props) => {
                         gap: 2,
                      }}
                   >
-                     {isSettingsPage !== undefined &&
-                     isSettingsPage === true ? (
+                     {/* SHOW ONLY ON SETTINGS PAGE WHEN ON DESKTOP*/}
+                     {location.pathname === '/settings' ? (
                         <Button variant='text' onClick={() => history.back()}>
                            Go Back
                         </Button>
                      ) : (
+                        // SHOW ON ALL PAGES WHEN ON DESKTOP
                         pages.map((page) =>
                            page.toLowerCase().replace(' ', '') ===
                            location.pathname.slice(1) ? (
@@ -246,7 +287,7 @@ const NavBar = ({ isSettingsPage }: Props) => {
                         )
                      )}
                   </Box>
-
+                  {/* SHOW THIS ON ALL PAGES */}
                   <Box sx={{ flexGrow: 0 }}>
                      <Tooltip title='Open settings'>
                         <IconButton
@@ -254,10 +295,7 @@ const NavBar = ({ isSettingsPage }: Props) => {
                            sx={{ p: 0 }}
                            data-testid='avatar'
                         >
-                           <Avatar
-                              alt='user avatar'
-                              // src='/static/images/avatar/2.jpg'
-                           />
+                           <Avatar alt='user avatar' src={DefaultAvatar} />
                         </IconButton>
                      </Tooltip>
                      <Menu
@@ -290,14 +328,19 @@ const NavBar = ({ isSettingsPage }: Props) => {
                      </Menu>
                   </Box>
                </>
-            ) : (
-               // if user is not logged in then just show link to login page
+            ) : // END USER IS LOGGED IN
+            null}
+            {isLoading === false && isLoggedIn === false && (
                <Link
                   href='/login'
                   underline='hover'
                   data-testid='home-page'
                   className='navbar-login'
-                  sx={{ marginLeft: 'auto' }}
+                  sx={{
+                     marginLeft: 'auto',
+                     position: 'absolute',
+                     right: '50px',
+                  }}
                >
                   <Typography sx={{ fontWeight: '500' }} variant='body2'>
                      Log in
@@ -306,7 +349,7 @@ const NavBar = ({ isSettingsPage }: Props) => {
             )}
             <Tooltip title='Toggle theme'>
                <IconButton
-                  sx={{ ml: 1 }}
+                  sx={{ ml: 'auto' }}
                   onClick={colorMode.toggleColorMode}
                   color='inherit'
                   aria-label='Toggle color theme'

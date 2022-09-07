@@ -1,7 +1,6 @@
 import React, { useState, ChangeEvent, SyntheticEvent } from 'react';
 import './ForgotPasswordPage.scss';
 import { Paper, Typography, Button, AlertColor } from '@mui/material';
-import NavBar from '../../components/navbar/NavBar';
 import { EmailTextField } from '../../components/text-fields/email-textfield/EmailTextField';
 import axios, { AxiosError } from 'axios';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
@@ -39,7 +38,6 @@ const ForgotPasswordPage = () => {
 
    return (
       <>
-         <NavBar />
          <div className='forgot-password-page'>
             <Paper
                sx={{

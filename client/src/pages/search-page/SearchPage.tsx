@@ -13,7 +13,6 @@ import {
 import { SideBarSearchPage } from './sidebar-searchpage/SideBarSearchPage';
 import { useAuth } from '../../context/authContext';
 import axios from 'axios';
-import NavBar from '../../components/navbar/NavBar';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 export type Goals = {
@@ -210,11 +209,12 @@ const SearchPage = () => {
       <>
          {isLoading ? null : (
             <>
-               <NavBar />
                <Box className='search-page' sx={{ width: '100vw' }}>
                   {/* PROGRESS BAR */}
-                  {loading && <CircularProgress size={68} />}
-                  <Toolbar sx={{ display: { sm: 'none' } }}>
+                  {loading ? <CircularProgress size={68} /> : null}
+                  <Toolbar
+                     sx={{ display: { sm: 'none' }, alignSelf: 'flex-start' }}
+                  >
                      <IconButton
                         color='inherit'
                         aria-label='open drawer'

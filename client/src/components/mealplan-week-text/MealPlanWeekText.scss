@@ -2,7 +2,7 @@
 
 .mealplan-week-text {
    @include set-size(100%);
-   min-width: 100vw;
+   // min-width: 100vw;
    padding: 0.5rem;
    display: flex;
    gap: 1em;

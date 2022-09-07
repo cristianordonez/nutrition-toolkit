@@ -1,6 +1,8 @@
+//@ts-nocheck
 /**
  * @jest-environment jsdom
  */
+
 import React, { useState } from 'react';
 import { expect } from '../../../../../jestGlobals';
 import { render, waitFor, screen, fireEvent } from '@testing-library/react';
@@ -17,10 +19,13 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('LoginForm Component ', () => {
+   const handleRedirectToSignup = jest.fn();
    test('Error message is shown when error is true', async () => {
       render(
          <LoginForm
-            showTextFieldError={true}
+            handleRedirectToSignup={handleRedirectToSignup}
+            showSignup={true}
+            showTextFieldError={false}
             errorMessage='this should display'
          />
       );
@@ -30,7 +35,14 @@ describe('LoginForm Component ', () => {
    test('Clicking on create account button calls the handleRedirect function', async () => {
       const user = userEvent.setup();
       const handleRedirectToSignup = jest.fn();
-      render(<LoginForm handleRedirectToSignup={handleRedirectToSignup} />);
+      render(
+         <LoginForm
+            handleRedirectToSignup={handleRedirectToSignup}
+            showSignup={true}
+            showTextFieldError={false}
+            errorMessage='this should not display'
+         />
+      );
       await user.click(screen.getByTestId('create-account-btn'));
       expect(handleRedirectToSignup).toHaveBeenCalledTimes(1);
    });

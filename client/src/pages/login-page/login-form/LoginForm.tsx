@@ -1,12 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, Dispatch, SetStateAction } from 'react';
 import './LoginForm.scss';
-import { Typography, Stack, Paper, Button } from '@mui/material';
+import { Typography, Stack, Paper, Button, AlertColor } from '@mui/material';
 import { PasswordTextField } from '../../../components/text-fields/password-textfield/PasswordTextField';
 import { UsernameTextField } from '../../../components/text-fields/username-textfield/UsernameTextField';
 import { useNavigate } from 'react-router-dom';
 import LoginSvg from '../../../../img/secure_login.svg';
 import GoogleIcon from '@mui/icons-material/Google';
 import axios from 'axios';
+
+interface Props {
+   showSignup: boolean;
+   setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
+   handleRedirectToSignup: any;
+   showTextFieldError: boolean;
+   setShowTextFieldError: Dispatch<SetStateAction<boolean>>;
+   errorMessage: string;
+   setErrorMessage: Dispatch<SetStateAction<string>>;
+   handleErrorAlert: any;
+}
 
 export const LoginForm = ({
    showSignup,
@@ -17,7 +28,7 @@ export const LoginForm = ({
    errorMessage,
    setErrorMessage,
    handleErrorAlert,
-}: any) => {
+}: Props) => {
    const navigate = useNavigate();
 
    const [loginValues, setLoginValues] = useState({

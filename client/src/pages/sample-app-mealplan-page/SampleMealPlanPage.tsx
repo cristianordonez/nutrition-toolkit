@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './SampleMealPlanPage.scss';
-import NavBar from '../../components/navbar/NavBar';
 import { SampleMealPlanDay } from './sample-mealplan-day/SampleMealplanDay';
 import { SampleMealplanSidebar } from './sample-mealplan-sidebar';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
@@ -153,7 +152,6 @@ const SampleMealPlanPage = () => {
 
    return (
       <>
-         <NavBar />
          <SampleMealplanSidebar
             handleDrawerToggle={handleDrawerToggle}
             mobileOpen={mobileOpen}

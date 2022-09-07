@@ -73,7 +73,7 @@ export const checkAuthentication = async (req: Request, res: Response) => {
    if (session.passport || session.username) {
       res.status(201).send(session.username);
    } else {
-      res.status(500).send('User is not logged in.');
+      res.status(403).send('User is not logged in.');
    }
 };
 
