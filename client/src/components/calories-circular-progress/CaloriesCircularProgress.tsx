@@ -21,6 +21,7 @@ export const CaloriesCircularProgress = ({
                size={200}
                value={calories}
                thickness={1}
+               color='secondary'
             />
             <div className='daily-goals-kcal-title'>
                <Typography variant='body1' align='center'>

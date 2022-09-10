@@ -90,3 +90,16 @@ export type SampleMealplanItem = {
    sourceUrl: string;
    title: string;
 };
+
+export type MealplanItemType = {
+   id: number;
+   position: number;
+   slot: number;
+   type: string;
+   value: {
+      id: number;
+      imageType: string;
+      servings: number;
+      title: string;
+   };
+};

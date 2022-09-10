@@ -28,16 +28,21 @@ export const FoodSearchList = ({
    setAlertSeverity,
    showLoadMoreBtn,
 }: Props) => {
+   console.log('apiDatra:', apiData);
    return (
       <div className='food-search-list'>
-         <Stack direction='row' spacing={1}>
+         <Stack
+            direction='row'
+            spacing={{ xs: 0, sm: 1 }}
+            sx={{ width: '100%' }}
+         >
             <MenuBookIcon />
             <Typography variant='body1'>
                Click on the Add to Mealplan button then choose intended date and
                slot (morning, afternoon, or evening) to save any item
             </Typography>
          </Stack>
-         <Grid container spacing={2}>
+         <div className='food-search-main-container'>
             {apiData.map((item: FoodItemType) => (
                <FoodSearchItem
                   key={item.id}
@@ -47,14 +52,14 @@ export const FoodSearchList = ({
                   title={item.title}
                   nutrition={item.nutrition}
                   route={route}
-                  url={item.sourceUrl || undefined} //only found in recipe item
-                  restaurantChain={item.restaurantChain || undefined} //only found in menu items
+                  url={item.sourceUrl} //only found in recipe item
+                  restaurantChain={item.restaurantChain} //only found in menu items
                   setAlertMessage={setAlertMessage}
                   setOpenSnackbar={setOpenSnackbar}
                   setAlertSeverity={setAlertSeverity}
                />
             ))}
-         </Grid>
+         </div>
          {showLoadMoreBtn ? (
             <Button fullWidth onClick={handleLoadMore} variant='contained'>
                Load More

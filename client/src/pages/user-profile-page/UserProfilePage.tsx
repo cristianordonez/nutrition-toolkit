@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import './UserProfilePage.scss';
+import { SideBar } from '../../components/sidebar/SideBar';
 import { DailyGoals } from '../../components/daily-goals';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
-import { AlertColor, Button, Typography, Stack } from '@mui/material';
+import {
+   AlertColor,
+   Button,
+   Typography,
+   Stack,
+   Paper,
+   Toolbar,
+   IconButton,
+} from '@mui/material';
 import axios from 'axios';
 import { CurrentGoals } from '../../../../types/types';
 import { useAuth } from '../../context/authContext';
 import SettingsIcon from '@mui/icons-material/Settings';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const UserSettingsPage = () => {
    const { isLoading, isLoggedIn, username } = useAuth();
@@ -14,8 +24,14 @@ const UserSettingsPage = () => {
    const [alertSeverity, setAlertSeverity] = useState<AlertColor>('error');
    const [alertMessage, setAlertMessage] = useState<string>('');
    const [goals, setGoals] = useState({} as CurrentGoals);
+   const [mobileOpen, setMobileOpen] = React.useState(false);
+
    const handleAlert = () => {
       setOpenAlert(!openAlert);
+   };
+
+   const handleDrawerToggle = () => {
+      setMobileOpen(!mobileOpen);
    };
 
    useEffect(() => {
@@ -64,27 +80,54 @@ const UserSettingsPage = () => {
 
    return isLoading ? null : (
       <>
-         <div className='user-profile-page'>
-            <Stack direction='row' spacing={1} sx={{ paddingBottom: '1rem' }}>
-               <SettingsIcon />
-               <Typography variant='body1' align='center'>
-                  Welcome to your account, {username}! Edit your macronutrient
-                  goals to a custom amount (calories will be calculated based on
-                  your input).
-               </Typography>
-            </Stack>
-            <DailyGoals
+         {goals !== undefined && Object.keys(goals).length > 0 ? (
+            <SideBar
+               mobileOpen={mobileOpen}
+               handleDrawerToggle={handleDrawerToggle}
+               page='user-profile'
                goals={goals}
-               page={'user-profile'}
-               setGoals={setGoals}
-               handleSubmitUpdatedGoals={handleSubmitUpdatedGoals}
             />
-            <CustomAlert
-               openAlert={openAlert}
-               handleAlert={handleAlert}
-               alertSeverity={alertSeverity}
-               alertMessage={alertMessage}
-            />
+         ) : null}
+         <div className='user-profile-page'>
+            <Paper className='user-profile-container'>
+               <Toolbar
+                  sx={{ display: { sm: 'none' }, alignSelf: 'flex-start' }}
+               >
+                  <IconButton
+                     color='inherit'
+                     aria-label='open drawer'
+                     edge='start'
+                     onClick={handleDrawerToggle}
+                     sx={{ mr: 2, display: { sm: 'none' } }}
+                  >
+                     <ArrowForwardIosIcon />
+                  </IconButton>
+               </Toolbar>
+               <Stack
+                  direction='row'
+                  spacing={2}
+                  sx={{ paddingBottom: '1rem' }}
+               >
+                  <SettingsIcon />
+                  <Typography variant='body1' align='left'>
+                     Welcome to your account, {username}! Edit your
+                     macronutrient goals to a custom amount (calories will be
+                     calculated based on your input).
+                  </Typography>
+               </Stack>
+               <DailyGoals
+                  goals={goals}
+                  page={'user-profile'}
+                  setGoals={setGoals}
+                  handleSubmitUpdatedGoals={handleSubmitUpdatedGoals}
+               />
+               <CustomAlert
+                  openAlert={openAlert}
+                  handleAlert={handleAlert}
+                  alertSeverity={alertSeverity}
+                  alertMessage={alertMessage}
+               />
+            </Paper>
          </div>
       </>
    );

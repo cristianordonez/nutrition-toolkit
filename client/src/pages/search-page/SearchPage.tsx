@@ -182,6 +182,7 @@ const SearchPage = () => {
    useEffect(() => {
       let promise = axios.get('/api/metrics', { withCredentials: true });
       promise.then((results) => {
+         console.log('results:', results.data);
          setGoals(results.data);
       });
       promise.catch((err) => {

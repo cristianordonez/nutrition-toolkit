@@ -104,22 +104,6 @@ export const DailyGoals = ({
                nutritionSummary !== undefined &&
                nutritionSummary.length === 0) ? (
                <>
-                  {/* <div className='daily-goals-kcal'>
-                     <CircularProgress
-                        variant='determinate'
-                        size={200}
-                        value={100}
-                        thickness={1}
-                     />
-                     <div className='daily-goals-kcal-title'>
-                        <Typography align='center' variant='body1'>
-                           Total Calories
-                        </Typography>
-                        <Typography align='center' variant='h6'>
-                           {goals.total_calories}
-                        </Typography>
-                     </div>
-                  </div> */}
                   <CaloriesCircularProgressWithoutGoals goals={goals} />
                   <form
                      onSubmit={handleSubmitUpdatedGoals}

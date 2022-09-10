@@ -40,6 +40,7 @@ export const WeightInputField = ({ weight, setWeight }: Props) => {
                   min={70}
                   max={400}
                   aria-labelledby='weight-input-slider'
+                  color='secondary'
                />
             </Grid>
             <Grid item>

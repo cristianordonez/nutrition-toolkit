@@ -80,9 +80,12 @@ export const checkAuthentication = async (req: Request, res: Response) => {
 //# gets metrics from user from database
 export const getMetrics = async (req: any, res: Response) => {
    try {
+      console.log('here in get metrics');
       let user_id = req.session.user_id;
       let userGoals: any = await dailyGoalsModel.getGoals(user_id);
-      res.json(userGoals[0]);
+      console.log('userGoals:', userGoals);
+      res.status(201).send(userGoals[0]);
+      // res.json(userGoals[0]);
    } catch (err) {
       console.log(err);
       res.status(500).send('Unable to retrieve daily goals.');

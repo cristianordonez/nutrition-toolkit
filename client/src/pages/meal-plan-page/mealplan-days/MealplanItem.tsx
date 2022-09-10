@@ -6,7 +6,6 @@ import { FoodItemType } from '../../../../../types/types';
 import axios from 'axios';
 
 interface Props {
-   position: number;
    type: string;
    id: number;
    shoppingListId: number;
@@ -20,7 +19,6 @@ interface Props {
 }
 
 export const MealplanItem = ({
-   position, //position in the slot
    type,
    id,
    shoppingListId,
@@ -62,7 +60,7 @@ export const MealplanItem = ({
 
    if (itemData) {
       return (
-         <Grid item xs={12} sm={6} md={4} xl={3}>
+         <>
             <FoodItemContents
                servings={servings}
                route={type}
@@ -85,7 +83,7 @@ export const MealplanItem = ({
                setOpenDialog={setOpenDialog}
                handleOpeningDialog={handleOpeningDialog}
             />
-         </Grid>
+         </>
       );
    } else {
       return <div>Loading...</div>;

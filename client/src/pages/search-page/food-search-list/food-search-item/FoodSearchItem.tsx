@@ -1,5 +1,5 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
-import './FoodSearchItem.scss';
+// import './FoodSearchItem.scss';
 import { FoodItemContents } from '../../../../components/food-item-contents/FoodItemContents';
 import { Grid, AlertColor } from '@mui/material';
 import { AddToCartModal } from '../AddToCartModal';
@@ -47,19 +47,17 @@ export const FoodSearchItem = ({
    };
 
    return (
-      <>
-         <Grid item xs={12} sm={6} md={4} data-testid='food-search-item'>
-            <FoodItemContents
-               route={route}
-               image={image}
-               title={title}
-               restaurantChain={restaurantChain}
-               nutrition={nutrition}
-               url={url}
-               handleOpeningDialog={handleOpeningDialog}
-               isMealPlanItem={false} //used to add a X icon to delete mealplans
-            />
-         </Grid>
+      <div data-testid='food-search-item'>
+         <FoodItemContents
+            route={route}
+            image={image}
+            title={title}
+            restaurantChain={restaurantChain}
+            nutrition={nutrition}
+            url={url}
+            handleOpeningDialog={handleOpeningDialog}
+            isMealPlanItem={false} //used to add a X icon to delete mealplans
+         />
          <AddToCartModal
             openDialog={openDialog}
             handleOpeningDialog={handleOpeningDialog}
@@ -72,6 +70,6 @@ export const FoodSearchItem = ({
             setOpenSnackbar={setOpenSnackbar}
             setAlertSeverity={setAlertSeverity}
          />
-      </>
+      </div>
    );
 };

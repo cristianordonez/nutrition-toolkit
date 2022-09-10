@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import './GoalCardItemCard.scss';
+import { useLocalStorageState } from '../../../hooks/useLocalStorage';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 import { CurrentGoals } from '../../../../../types/types';
 import { Card, CardContent, Typography, Stack, Input } from '@mui/material';
@@ -19,6 +20,9 @@ export const GoalCardItemCard = ({
    setGoals,
    goals,
 }: Props): ReactJSXElement => {
+   const [colorMode, setColorMode] = useLocalStorageState('mode', 'dark');
+   console.log('colorMode:', colorMode);
+
    //takes in total macronutrient amount entered and also changes associated min and max amounts
    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       if (setGoals !== undefined) {
@@ -56,9 +60,10 @@ export const GoalCardItemCard = ({
          }
       }
    };
+
    return (
       <>
-         <Card sx={{ borderRadius: '15%' }}>
+         <Card sx={{ borderRadius: '15%' }} elevation={5}>
             <CardContent
                sx={{
                   display: 'flex',

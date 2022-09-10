@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './MealPlanPage.scss';
 import { SidebarMealplan } from './sidebar-mealplan/SideBarMealPlan';
 import { DateSelectForm } from './date-select-form/DateSelectForm';
-import { MealplanDay, MealplanItemType } from './mealplan-day';
+import { MealplanDays } from './mealplan-days';
+import { MealplanItemType } from '../../../../types/types';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
 import { MealPlanWeekText } from '../../components/mealplan-week-text/MealPlanWeekText';
 import {
@@ -137,7 +138,7 @@ const MealPlanPage = () => {
    return (
       <>
          <div className='mealplan-page'>
-            <Toolbar sx={{ display: { sm: 'none' } }}>
+            <Toolbar sx={{ display: { sm: 'none' }, alignSelf: 'flex-start' }}>
                <IconButton
                   color='inherit'
                   aria-label='open drawer'
@@ -148,6 +149,7 @@ const MealPlanPage = () => {
                   <ArrowForwardIosIcon />
                </IconButton>
             </Toolbar>
+            <MealPlanWeekText currentDay={currentDay} />
 
             <SidebarMealplan
                mobileOpen={mobileOpen}
@@ -155,34 +157,31 @@ const MealPlanPage = () => {
                nutritionSummary={nutritionSummary}
                mealplanItemsFound={mealplanItemsFound}
             />
-            <Box
-               sx={{
-                  p: '1rem',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '2rem',
-                  justifyContent: 'space-evenly',
-               }}
-            >
-               <Stack direction='row' spacing={1}>
-                  <CalendarMonthIcon />
-                  <Typography variant='body1'>
-                     View your daily meal plan items or begin to add items to
-                     your meal plan
-                  </Typography>
+            <div className='mealplan-page-main-content'>
+               <Stack
+                  direction='row'
+                  spacing={{ xs: 1, sm: 4 }}
+                  alignItems='space-evenly'
+               >
+                  <Stack direction='row' spacing={0.5} sx={{ width: '50%' }}>
+                     <CalendarMonthIcon />
+                     <Typography variant='body1'>
+                        View your daily meal plan items or begin to add items to
+                        your meal plan
+                     </Typography>
+                  </Stack>
+                  <DateSelectForm
+                     setBreakfastItems={setBreakfastItems}
+                     setLunchItems={setLunchItems}
+                     setDinnerItems={setDinnerItems}
+                     currentDay={currentDay}
+                     setCurrentDay={setCurrentDay}
+                     setDayIndex={setDayIndex}
+                     value={value}
+                     setValue={setValue}
+                  />
                </Stack>
-               <DateSelectForm
-                  setBreakfastItems={setBreakfastItems}
-                  setLunchItems={setLunchItems}
-                  setDinnerItems={setDinnerItems}
-                  currentDay={currentDay}
-                  setCurrentDay={setCurrentDay}
-                  setDayIndex={setDayIndex}
-                  value={value}
-                  setValue={setValue}
-               />
-               <MealPlanWeekText currentDay={currentDay} />
-               <Box sx={{ maxWidth: { xs: 320, sm: 480 } }}>
+               <div className='tabs-container'>
                   <Tabs
                      value={dayIndex}
                      onChange={handleTabChange}
@@ -194,9 +193,10 @@ const MealPlanPage = () => {
                         <Tab key={day} label={day} />
                      ))}
                   </Tabs>
-               </Box>
+               </div>
+
                {isLoading ? null : (
-                  <MealplanDay
+                  <MealplanDays
                      setMealPlanItems={setMealplanItems}
                      currentDay={currentDay}
                      mealplanItems={mealplanItems}
@@ -212,7 +212,7 @@ const MealPlanPage = () => {
                   alertSeverity={alertSeverity}
                   alertMessage={alertMessage}
                />
-            </Box>
+            </div>
          </div>
       </>
    );

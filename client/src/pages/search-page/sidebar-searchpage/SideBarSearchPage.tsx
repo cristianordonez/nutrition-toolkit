@@ -16,7 +16,6 @@ export const SideBarSearchPage = ({
    apiData,
    goals,
 }: SearchPageSidebarProps) => {
-   const drawerWidth = 350;
    return (
       <>
          <SideBar

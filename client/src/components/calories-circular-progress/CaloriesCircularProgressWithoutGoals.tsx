@@ -16,6 +16,7 @@ export const CaloriesCircularProgressWithoutGoals = ({ goals }: Props) => {
                size={200}
                value={100}
                thickness={1}
+               color='secondary'
             />
             <div className='daily-goals-kcal-title'>
                <Typography align='center' variant='body1'>

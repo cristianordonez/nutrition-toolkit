@@ -1,8 +1,19 @@
 @use '../../index.scss' as *;
 
 .user-profile-page {
-   @include set-size(auto, 100vw);
+   @include set-size(100%);
    @include flex-center();
-   flex-direction: column;
-   padding-top: 5vh;
+   @include devices(mobile) {
+      padding-left: 0;
+   }
+   padding-left: 350px;
+   .user-profile-container {
+      @include set-size(auto, 100vw);
+      @include flex-center();
+      gap: 1rem;
+      flex-direction: column;
+      margin-top: 5vh;
+      padding: 1rem;
+      max-width: $login-form-max-width;
+   }
 }

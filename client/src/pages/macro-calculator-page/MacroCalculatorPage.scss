@@ -1,0 +1,11 @@
+@use '../../index.scss' as *;
+
+.macro-calc-page {
+   @include set-size(100%);
+   @include devices(mobile) {
+      padding-left: 0;
+   }
+   @include flex-center-horiz();
+   padding-left: 350px;
+   align-items: center;
+}

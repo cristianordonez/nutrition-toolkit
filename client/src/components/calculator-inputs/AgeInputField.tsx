@@ -38,6 +38,7 @@ export const AgeInputField = ({ age, setAge }: Props) => {
                   aria-labelledby='input-slider'
                   min={18}
                   max={100}
+                  color='secondary'
                />
             </Grid>
             <Grid item>

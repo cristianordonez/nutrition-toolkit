@@ -1,10 +1,12 @@
 //shared sidebar
 import React, { ReactNode } from 'react';
 import { DailyGoals } from '../daily-goals';
-import { IconButton, Toolbar, Drawer } from '@mui/material';
+import { IconButton, Toolbar, Drawer, Stack } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { CurrentGoals } from '../../../../types/types';
-
+import { useAuth } from '../../context/authContext';
+import { MainTitleLogo } from '../main-title-logo/MainTitleLogo';
+import { LogoIcon } from '../logo-icon/LogoIcon';
 interface Props {
    mobileOpen: boolean | undefined;
    handleDrawerToggle: any;
@@ -28,131 +30,118 @@ export const SideBar = ({
    nutritionSummary,
    mealplanItemsFound,
 }: Props) => {
+   console.log('nutritionSummary:', nutritionSummary);
+   console.log('mealplanItemsFound:', mealplanItemsFound);
+   console.log('goals:', goals);
    return (
       <>
-         {/* IF PAGE IS SEARCH, RENDER THIS PART */}
-         {page === 'search' && (
-            <>
-               <Drawer
-                  variant='temporary'
-                  open={mobileOpen}
-                  onClose={handleDrawerToggle}
-                  ModalProps={{
-                     keepMounted: true,
-                  }}
-                  sx={{
-                     display: { xs: 'block', sm: 'none' },
-                     '& .MuiDrawer-paper': {
-                        boxSizing: 'border-box',
-                        width: drawerWidth,
-                        pt: '100px',
-                     },
-                  }}
+         {/* MOBILE */}
+         <>
+            <Drawer
+               variant='temporary'
+               open={mobileOpen}
+               onClose={handleDrawerToggle}
+               ModalProps={{
+                  keepMounted: true,
+               }}
+               sx={{
+                  display: { xs: 'block', sm: 'none' },
+                  '& .MuiDrawer-paper': {
+                     boxSizing: 'border-box',
+                     width: drawerWidth,
+                     pt: '1rem',
+                  },
+               }}
+            >
+               <Toolbar>
+                  <IconButton
+                     color='inherit'
+                     aria-label='open drawer'
+                     edge='start'
+                     onClick={handleDrawerToggle}
+                     sx={{ mr: 2, display: { sm: 'none' } }}
+                  >
+                     <ArrowBackIosIcon />
+                  </IconButton>
+               </Toolbar>
+               <Stack
+                  sx={{ width: '100%', pb: '5rem' }}
+                  direction='row'
+                  spacing={2}
+                  justifyContent={'center'}
+                  alignItems='center'
                >
-                  <Toolbar>
-                     <IconButton
-                        color='inherit'
-                        aria-label='open drawer'
-                        edge='start'
-                        onClick={handleDrawerToggle}
-                        sx={{ mr: 2, display: { sm: 'none' } }}
-                     >
-                        <ArrowBackIosIcon />
-                     </IconButton>
-                  </Toolbar>
-                  {apiData !== undefined && apiData.length ? (
-                     SearchFormComponent
-                  ) : (
-                     <DailyGoals goals={goals} page={'search'} />
-                  )}
-               </Drawer>
+                  <LogoIcon />
+                  <MainTitleLogo />
+               </Stack>
+               {page === 'search' && apiData !== undefined && apiData.length
+                  ? SearchFormComponent
+                  : null}
+               {page === 'search' && apiData === undefined}{' '}
+               {<DailyGoals goals={goals} page={'search'} />}
+               {page === 'mealplan' && nutritionSummary === true ? (
+                  <DailyGoals
+                     goals={goals}
+                     nutritionSummary={nutritionSummary}
+                     page={'mealplan'}
+                  />
+               ) : null}
+            </Drawer>
 
-               <Drawer
-                  open
-                  variant='permanent'
-                  ModalProps={{ keepMounted: true }}
-                  sx={{
-                     display: { xs: 'none', sm: 'block' },
-                     '& .MuiDrawer-paper': {
-                        boxSizing: 'border-box',
-                        width: drawerWidth,
-                        pt: '100px',
-                     },
-                  }}
+            {/* DESKTOP */}
+            <Drawer
+               open
+               variant='permanent'
+               ModalProps={{ keepMounted: true }}
+               sx={{
+                  display: { xs: 'none', sm: 'block' },
+                  '& .MuiDrawer-paper': {
+                     boxSizing: 'border-box',
+                     width: drawerWidth,
+                     pt: '1rem',
+                  },
+               }}
+            >
+               <Stack
+                  sx={{ width: '100%', pb: '5rem' }}
+                  direction='row'
+                  spacing={2}
+                  justifyContent={'center'}
+                  alignItems='center'
                >
-                  {apiData !== undefined && apiData.length ? (
-                     SearchFormComponent
-                  ) : (
-                     <DailyGoals goals={goals} page={'search'} />
-                  )}
-               </Drawer>
-            </>
-         )}
-         {/* IF PAGE IS MEALPLAN, RENDER EVERYTHING BELOW */}
-         {page === 'mealplan' && goals !== undefined && (
-            <>
-               <Drawer
-                  variant='temporary'
-                  open={mobileOpen}
-                  onClose={handleDrawerToggle}
-                  ModalProps={{
-                     keepMounted: true,
-                  }}
-                  sx={{
-                     display: { xs: 'block', sm: 'none' },
-                     '& .MuiDrawer-paper': {
-                        boxSizing: 'border-box',
-                        width: drawerWidth,
-                        pt: '100px',
-                     },
-                  }}
-               >
-                  <Toolbar>
-                     <IconButton
-                        color='inherit'
-                        aria-label='open drawer'
-                        edge='start'
-                        onClick={handleDrawerToggle}
-                        sx={{ mr: 2, display: { sm: 'none' } }}
-                     >
-                        <ArrowBackIosIcon />
-                     </IconButton>
-                  </Toolbar>
-                  {nutritionSummary ? (
-                     <DailyGoals
-                        goals={goals}
-                        nutritionSummary={nutritionSummary}
-                        page={'mealplan'}
-                     />
-                  ) : null}
-               </Drawer>
+                  <LogoIcon />
+                  <MainTitleLogo />
+               </Stack>
+               {page === 'search' && apiData !== undefined && apiData.length
+                  ? SearchFormComponent
+                  : null}
+               {page === 'search' &&
+               apiData !== undefined &&
+               apiData.length === 0 ? (
+                  <DailyGoals goals={goals} page={'search'} />
+               ) : null}
 
-               <Drawer
-                  open
-                  variant='permanent'
-                  ModalProps={{ keepMounted: true }}
-                  sx={{
-                     display: { xs: 'none', sm: 'block' },
-                     '& .MuiDrawer-paper': {
-                        boxSizing: 'border-box',
-                        width: drawerWidth,
-                        pt: '100px',
-                     },
-                  }}
-               >
-                  {nutritionSummary.length ? (
-                     <DailyGoals
-                        goals={goals}
-                        nutritionSummary={nutritionSummary}
-                        page={'mealplan'}
-                     />
-                  ) : null}
-                  {!nutritionSummary.length && !mealplanItemsFound ? (
-                     <DailyGoals goals={goals} page={'search'} />
-                  ) : null}
-               </Drawer>
-            </>
-         )}
+               {page === 'mealplan' &&
+               nutritionSummary !== undefined &&
+               nutritionSummary.length > 0 ? (
+                  <DailyGoals
+                     goals={goals}
+                     nutritionSummary={nutritionSummary}
+                     page={'mealplan'}
+                  />
+               ) : null}
+               {page === 'mealplan' &&
+               nutritionSummary !== undefined &&
+               !nutritionSummary.length &&
+               !mealplanItemsFound ? (
+                  <DailyGoals goals={goals} page={'search'} />
+               ) : null}
+               {page === 'macrocalculator' ||
+               (page === 'user-profile' && !nutritionSummary) ? (
+                  <DailyGoals goals={goals} page={'search'} />
+               ) : null}
+            </Drawer>
+         </>
       </>
    );
 };

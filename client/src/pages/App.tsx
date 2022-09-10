@@ -4,7 +4,7 @@ import { CssBaseline } from '@mui/material'; //used to provide mui color theme t
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { ThemeProvider } from '@emotion/react';
 import { PaletteMode } from '@mui/material';
-import { teal, grey } from '@mui/material/colors';
+import { getDesignTokens } from '../themes/theme';
 import NavBar from '../components/navbar/NavBar';
 import { useLocalStorageState } from '../hooks/useLocalStorage';
 import Home from './home/Home';
@@ -81,42 +81,6 @@ const ResetPasswordPage = lazy(
       )
 );
 
-const getDesignTokens = (mode: PaletteMode) => ({
-   palette: {
-      mode,
-      primary: {
-         ...teal,
-         ...(mode === 'dark' && {
-            main: '#14ffec',
-         }),
-      },
-      secondary: {
-         ...teal,
-         ...(mode === 'dark' && {
-            main: '#F27B49',
-         }),
-      },
-
-      ...(mode === 'dark' && {
-         background: {
-            default: '#121212',
-            paper: '#121212',
-         },
-      }),
-      text: {
-         ...(mode === 'light'
-            ? {
-                 primary: grey[900],
-                 secondary: grey[800],
-              }
-            : {
-                 primary: '#fff',
-                 secondary: grey[500],
-              }),
-      },
-   },
-});
-
 export const ColorModeContext = React.createContext({
    toggleColorMode: () => {},
 });
@@ -125,8 +89,8 @@ export const App = () => {
    const [mode, setMode] = useLocalStorageState('mode', 'dark');
    const colorMode = React.useMemo(
       () => ({
-         // The dark mode switch would invoke this method
          toggleColorMode: () => {
+            // The dark mode switch would invoke this method
             localStorage.setItem('mode', mode === 'light' ? 'dark' : 'light');
             setMode((prevMode: PaletteMode) =>
                prevMode === 'light' ? 'dark' : 'light'

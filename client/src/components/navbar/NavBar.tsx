@@ -1,8 +1,9 @@
 import React, { useState, useContext } from 'react';
+import './Navbar.scss';
 import { ColorModeContext } from '../../pages/App';
 import { useNavigate } from 'react-router-dom';
 import DefaultAvatar from '../../../img/default-avatar.svg';
-import LOGO from '../../../img/LOGO.svg';
+import { Link } from 'react-router-dom';
 import {
    AppBar,
    Box,
@@ -14,7 +15,6 @@ import {
    Button,
    Tooltip,
    MenuItem,
-   Link,
    Stack,
 } from '@mui/material';
 import { useAuth } from '../../context/authContext';
@@ -23,6 +23,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useLocation } from 'react-router-dom';
+import { MainTitleLogo } from '../main-title-logo/MainTitleLogo';
+import { LogoIcon } from '../logo-icon/LogoIcon';
 
 const pages = ['Search', 'Macro Calculator', 'Meal Plan'];
 
@@ -61,80 +63,22 @@ const NavBar = () => {
       navigate('/settings');
    };
 
-   // const handleLogout = async () => {
-   //    try {
-   //       if (isLoggedIn === true) {
-   //          await axios.post('/api/logout');
-   //          navigate('/', { state: { loggedOut: true }, replace: true });
-   //       } else {
-   //          navigate('/');
-   //       }
-   //    } catch (err) {
-   //       console.log('err:', err);
-   //    }
-   // };
-
-   //todo add useEffect hook that replaces navigate found in authcontext
-   // if (isLoading) {
-   //    return (
-   //       <AppBar
-   //          position='fixed'
-   //          sx={{
-   //             zIndex: (theme) => theme.zIndex.drawer + 1,
-   //             boxShadow: 'none',
-   //             padding: '0 1vw',
-   //          }}
-   //          color='default'
-   //          enableColorOnDark={true}
-   //       >
-   //          <Toolbar disableGutters>
-   //             <Box
-   //                component='img'
-   //                src={LOGO}
-   //                alt='Logo'
-   //                sx={{
-   //                   display: { md: 'flex' },
-   //                   mr: 1,
-   //                   objectFit: 'contain',
-   //                   height: '2.5rem',
-   //                   '&:hover': {
-   //                      cursor: 'pointer',
-   //                   },
-   //                }}
-   //                onClick={handleLogout}
-   //             ></Box>
-   //             <Tooltip title='Toggle theme'>
-   //                <IconButton
-   //                   sx={{ ml: 'auto' }}
-   //                   onClick={colorMode.toggleColorMode}
-   //                   color='inherit'
-   //                   aria-label='Toggle color theme'
-   //                >
-   //                   {theme.palette.mode === 'dark' ? (
-   //                      <Brightness7Icon />
-   //                   ) : (
-   //                      <Brightness4Icon />
-   //                   )}
-   //                </IconButton>
-   //             </Tooltip>
-   //          </Toolbar>
-   //       </AppBar>
-   //    );
-   // } else {
    return (
       <AppBar
          position='fixed'
          sx={{
-            zIndex: (theme) => theme.zIndex.drawer + 1,
+            // zIndex: (theme) => theme.zIndex.drawer + 1,
             boxShadow: 'none',
+            background: '#080C24',
             padding: '0 1vw',
+            backdropFilter: 'blue(20px)',
          }}
-         color='default'
+         color='inherit'
          enableColorOnDark={true}
       >
          <Toolbar disableGutters>
             {/* logo that appears at all times*/}
-            <Box
+            {/* <Box
                component='img'
                src={LOGO}
                alt='Logo'
@@ -148,27 +92,28 @@ const NavBar = () => {
                   },
                }}
                onClick={handleLogout}
-            ></Box>
+            ></Box> */}
             {/* title that appears desktop only */}
-            <Typography
+            {/* <Typography
                variant='h6'
                noWrap
                data-testid='navlink'
+               color='text'
                onClick={handleLogout}
                sx={{
                   mr: 2,
                   display: { xs: 'none', md: 'flex' },
                   fontWeight: 700,
                   letterSpacing: '.3rem',
-                  color: 'inherit',
                   textDecoration: 'none',
+                  flexGrow: 1,
                   '&:hover': {
                      cursor: 'pointer',
                   },
                }}
             >
                DiabetesCalculator
-            </Typography>
+            </Typography> */}
             {/* USER IS LOGGED IN */}
             {isLoggedIn === true ? (
                <>
@@ -177,6 +122,10 @@ const NavBar = () => {
                      sx={{
                         flexGrow: 1,
                         display: { xs: 'flex', md: 'none' },
+                        paddingLeft: {
+                           xs: 0,
+                           sm: '350px',
+                        },
                      }}
                   >
                      <IconButton
@@ -204,10 +153,7 @@ const NavBar = () => {
                         open={Boolean(anchorElNav)}
                         onClose={handleCloseNavMenu}
                         sx={{
-                           display: {
-                              xs: 'block',
-                              md: 'none',
-                           },
+                           display: 'block',
                         }}
                      >
                         <Stack direction='column' sx={{ padding: '0.5rem' }}>
@@ -217,9 +163,10 @@ const NavBar = () => {
                                  <Link
                                     onClick={handleCloseNavMenu}
                                     key={page}
-                                    underline='hover'
-                                    variant='overline'
-                                    href={`/${page
+                                    // underline='always'
+                                    // variant='overline'
+                                    // color='inherit'
+                                    to={`/${page
                                        .toLowerCase()
                                        .replace(/ /g, '')}`}
                                  >
@@ -229,10 +176,10 @@ const NavBar = () => {
                                  <Link
                                     onClick={handleCloseNavMenu}
                                     key={page}
-                                    underline='hover'
-                                    variant='overline'
-                                    color='secondary'
-                                    href={`/${page
+                                    // underline='hover'
+                                    // variant='overline'
+                                    // color='inherit'
+                                    to={`/${page
                                        .toLowerCase()
                                        .replace(/ /g, '')}`}
                                  >
@@ -242,18 +189,30 @@ const NavBar = () => {
                            )}
                         </Stack>
                      </Menu>
+                     {location.pathname === '/settings' ? (
+                        <Button variant='text' onClick={() => history.back()}>
+                           Go Back
+                        </Button>
+                     ) : null}
                   </Box>
                   {/* CONTINUE DESKTOP ONLY */}
                   <Box
                      sx={{
                         flexGrow: 1,
                         display: { xs: 'none', md: 'flex' },
-                        gap: 2,
+                        gap: 4,
+                        // justifyContent: 'flex-end',
+                        pl: { xs: 0, sm: '350px' },
+                        justifyContent: 'center',
                      }}
                   >
                      {/* SHOW ONLY ON SETTINGS PAGE WHEN ON DESKTOP*/}
                      {location.pathname === '/settings' ? (
-                        <Button variant='text' onClick={() => history.back()}>
+                        <Button
+                           variant='text'
+                           color='inherit'
+                           onClick={() => history.back()}
+                        >
                            Go Back
                         </Button>
                      ) : (
@@ -263,23 +222,20 @@ const NavBar = () => {
                            location.pathname.slice(1) ? (
                               <Link
                                  key={page}
-                                 underline='hover'
-                                 variant='overline'
-                                 href={`/${page
-                                    .toLowerCase()
-                                    .replace(/ /g, '')}`}
+                                 // underline='always'
+                                 // variant='overline'
+                                 // color='inherit'
+                                 to={`/${page.toLowerCase().replace(/ /g, '')}`}
                               >
                                  {page}
                               </Link>
                            ) : (
                               <Link
                                  key={page}
-                                 underline='hover'
-                                 variant='overline'
-                                 color='secondary'
-                                 href={`/${page
-                                    .toLowerCase()
-                                    .replace(/ /g, '')}`}
+                                 // underline='hover'
+                                 // variant='overline'
+                                 // color='inherit'
+                                 to={`/${page.toLowerCase().replace(/ /g, '')}`}
                               >
                                  {page}
                               </Link>
@@ -330,26 +286,46 @@ const NavBar = () => {
                </>
             ) : // END USER IS LOGGED IN
             null}
+            {isLoading === false &&
+            isLoggedIn === false &&
+            location.pathname === '/' ? (
+               <Stack
+                  direction='row'
+                  spacing={1}
+                  justifyContent={'center'}
+                  alignItems='center'
+                  marginRight={1}
+               >
+                  <LogoIcon />
+                  <MainTitleLogo />
+               </Stack>
+            ) : null}
             {isLoading === false && isLoggedIn === false && (
                <Link
-                  href='/login'
-                  underline='hover'
+                  to='/login'
+                  // underline='hover'
                   data-testid='home-page'
-                  className='navbar-login'
-                  sx={{
-                     marginLeft: 'auto',
-                     position: 'absolute',
-                     right: '50px',
-                  }}
+                  className='login-link'
+                  // color='inherit'
+                  // className='navbar-login'
+                  // sx={{
+                  //    marginLeft: 'auto',
+                  //    position: 'absolute',
+                  //    right: '50px',
+                  // }}
                >
-                  <Typography sx={{ fontWeight: '500' }} variant='body2'>
+                  <Typography
+                     // color='text'
+                     sx={{ fontWeight: '500' }}
+                     variant='body2'
+                  >
                      Log in
                   </Typography>
                </Link>
             )}
             <Tooltip title='Toggle theme'>
                <IconButton
-                  sx={{ ml: 'auto' }}
+                  sx={{ ml: '1rem' }}
                   onClick={colorMode.toggleColorMode}
                   color='inherit'
                   aria-label='Toggle color theme'

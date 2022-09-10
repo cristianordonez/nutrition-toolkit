@@ -10,7 +10,7 @@ interface Props {
 }
 export const SampleMealPlanDay = ({
    mealplanItems,
-   sampleMealplanItems,
+   sampleMealplanItems, //this needs to be passed down just to get the correct number of servings
 }: Props) => {
    return (
       <>
@@ -33,17 +33,17 @@ export const SampleMealPlanDay = ({
                      </Typography>
                   )}
                   <div className='mealplan-item-row'>
-                     <div className='mealplan-item-card'>
-                        <FoodItemContents
-                           route={'recipes'}
-                           image={mealplanItem.image}
-                           title={mealplanItem.title}
-                           nutrition={mealplanItem.nutrition}
-                           url={mealplanItem.sourceUrl}
-                           isMealPlanItem={true}
-                           servings={sampleMealplanItems[index].servings}
-                        />
-                     </div>
+                     {/* <div className='mealplan-item-card'> */}
+                     <FoodItemContents
+                        route={'recipes'}
+                        image={mealplanItem.image}
+                        title={mealplanItem.title}
+                        nutrition={mealplanItem.nutrition}
+                        url={mealplanItem.sourceUrl}
+                        isMealPlanItem={true}
+                        servings={sampleMealplanItems[index].servings}
+                     />
+                     {/* </div> */}
                   </div>
                </div>
             ))}

@@ -39,6 +39,7 @@ export const HeightInputField = ({ height, setHeight }: Props) => {
                   aria-labelledby='height-input-slider'
                   min={54}
                   max={84}
+                  color='secondary'
                />
             </Grid>
             <Grid item>

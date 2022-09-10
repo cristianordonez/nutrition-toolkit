@@ -75,6 +75,8 @@ export const FoodItemContents = ({
       carbs = nutrition.carbs;
    }
 
+   console.log('route:', route);
+   console.log('restaurantChain:', restaurantChain);
    return (
       <Paper elevation={1} className='food-search-paper'>
          <Card className='search-item' data-testid='food-search-item'>
@@ -101,7 +103,7 @@ export const FoodItemContents = ({
                image={image}
             />
             <CardContent>
-               <Typography align='center' variant='subtitle1'>
+               <Typography align='center' noWrap variant='subtitle1'>
                   {title}
                </Typography>
                {isMealPlanItem ? (
@@ -112,10 +114,10 @@ export const FoodItemContents = ({
                   </Stack>
                ) : null}
 
-               {route === 'menuItems' ||
-                  (route === 'MENU_ITEM' && (
-                     <Typography variant='h6'>{restaurantChain}</Typography>
-                  ))}
+               {route === 'menuItems' || route === 'MENU_ITEM' ? (
+                  <Typography variant='subtitle2'>{restaurantChain}</Typography>
+               ) : null}
+
                {nutrition !== undefined ? (
                   <div className='search-item-nutrition'>
                      {/* CALORIES */}
