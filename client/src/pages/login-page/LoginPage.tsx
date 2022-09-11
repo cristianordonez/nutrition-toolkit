@@ -30,7 +30,6 @@ const LoginPage = () => {
       setShowSignup(!showSignup);
    };
 
-   // const location = useLocation() as LocationType;
    const location = useLocation() as unknown as LocationType;
    // //when logged out, react router sends state saying log out was successful to show alert
    useEffect(() => {

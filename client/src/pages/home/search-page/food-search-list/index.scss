@@ -1,0 +1,15 @@
+@use '../../../../index.scss' as *;
+
+.food-search-list {
+   @include flex-center();
+   flex-direction: column;
+   padding: 1rem;
+   gap: 1rem;
+   max-width: $mealplan-page-max-width;
+   .food-search-main-container {
+      @include set-size(100%);
+      @include flex-center();
+      flex-wrap: wrap;
+      gap: 1rem;
+   }
+}

@@ -1,11 +1,10 @@
-import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import './index.scss';
 import { CaloriesCircularProgress } from '../calories-circular-progress/CaloriesCircularProgress';
 import { CaloriesCircularProgressWithoutGoals } from '../calories-circular-progress/CaloriesCircularProgressWithoutGoals';
 import { GoalCardItemList } from '../goal-card-item-list/GoalCardItemList';
 import { Typography, Button } from '@mui/material';
 import { GoalCardItemLinearProgress } from '../goal-card-item-linear-progress/GoalCardItemLinearProgress';
-import { GoalCardItemCard } from '../goal-card-item-list/goal-card-item-card/GoalCardItemCard';
 import { CurrentGoals } from '../../../../types/types';
 
 type nutrientType = {
@@ -15,7 +14,7 @@ type nutrientType = {
    unit: string;
 };
 
-export interface Props {
+interface Props {
    goals: CurrentGoals;
    nutritionSummary?: nutrientType[];
    page?: string;

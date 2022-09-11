@@ -4,13 +4,14 @@ import { Paper, Typography, Button, AlertColor } from '@mui/material';
 import { EmailTextField } from '../../components/text-fields/email-textfield/EmailTextField';
 import axios, { AxiosError } from 'axios';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const ForgotPasswordPage = () => {
    const [email, setEmail] = useState<string>('');
    const [openAlert, setOpenAlert] = useState(false);
    const [alertMessage, setAlertMessage] = useState<string>('');
    const [alertSeverity, setAlertSeverity] = useState<AlertColor>('error');
-
+   const navigate = useNavigate();
    const handleAlertChange = () => {
       setOpenAlert(!openAlert);
    };
@@ -29,6 +30,7 @@ const ForgotPasswordPage = () => {
          setAlertSeverity('success');
          setAlertMessage(axiosResponse.data);
          setOpenAlert(true);
+         navigate('/login');
       } catch (err: any) {
          setAlertSeverity('error');
          setAlertMessage(err.response.data);

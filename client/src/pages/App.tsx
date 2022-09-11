@@ -1,5 +1,7 @@
 import React, { lazy, Suspense } from 'react';
+
 import { Routes, Route } from 'react-router-dom';
+
 import { CssBaseline } from '@mui/material'; //used to provide mui color theme to all components
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { ThemeProvider } from '@emotion/react';
@@ -7,63 +9,36 @@ import { PaletteMode } from '@mui/material';
 import { getDesignTokens } from '../themes/theme';
 import NavBar from '../components/navbar/NavBar';
 import { useLocalStorageState } from '../hooks/useLocalStorage';
-import Home from './home/Home';
+import LandingPage from './landing-page/LandingPage';
+import AuthProvider from '../context/authContext';
 
-const SampleRecipePage = lazy(
-   () =>
-      import(
-         /* webpackChunkName: "SampleRecipePage" */ './sample-recipe-page/SampleRecipePage'
-      )
-);
-
-const SampleCalculatorPage = lazy(
-   () =>
-      import(
-         /* webpackChunkName: "SampleCalculatorPage" */ './sample-app-calculator-page/SampleCalculatorPage'
-      )
-);
-
-const SampleMealPlanPage = lazy(
-   () =>
-      import(
-         /* webpackChunkName: "SampleMealPlanPage" */ './sample-app-mealplan-page/SampleMealPlanPage'
-      )
-);
-
-const LoginPage = lazy(
-   () => import(/* webpackChunkName: "LoginPage" */ './login-page/LoginPage')
-);
+const Home = lazy(() => import(/* webpackChunkName: "Home" */ './home/Home'));
 
 const MacroCalculatorPage = lazy(
    () =>
       import(
-         /* webpackChunkName: "MacroCalculatorPage" */ './macro-calculator-page/MacroCalculatorPage'
+         /* webpackChunkName: "MacroCalculatorPage" */ './home/macro-calculator-page/MacroCalculatorPage'
       )
-);
-
-const AuthProvider = lazy(
-   () => import(/* webpackChunkName: "AuthProvider" */ '../context/authContext')
 );
 
 const MealPlanPage = lazy(
    () =>
       import(
-         /* webpackChunkName: "MealPlanPage" */ './meal-plan-page/MealPlanPage'
+         /* webpackChunkName: "MealPlanPage" */ './home/meal-plan-page/MealPlanPage'
       )
 );
 
 const SearchPage = lazy(
-   () => import(/* webpackChunkName: "SearchPage" */ './search-page/SearchPage')
-);
-
-const NoPageFound = lazy(
-   () => import(/* webpackChunkName: "NoPageFound" */ './404-page/404')
+   () =>
+      import(
+         /* webpackChunkName: "SearchPage" */ './home/search-page/SearchPage'
+      )
 );
 
 const UserSettingsPage = lazy(
    () =>
       import(
-         /* webpackChunkName: "UserSettingsPage" */ './user-profile-page/UserProfilePage'
+         /* webpackChunkName: "UserSettingsPage" */ './home/user-profile-page/UserProfilePage'
       )
 );
 
@@ -79,6 +54,42 @@ const ResetPasswordPage = lazy(
       import(
          /* webpackChunkName: "ResetPage" */ './reset-password-page/ResetPasswordPage'
       )
+);
+
+const LoginPage = lazy(
+   () => import(/* webpackChunkName: "LoginPage" */ './login-page/LoginPage')
+);
+
+const SampleFeaturesPage = lazy(
+   () =>
+      import(
+         /* webpackChunkName: "SampleFeaturesPage" */ './sample-features-page'
+      )
+);
+
+const SampleRecipePage = lazy(
+   () =>
+      import(
+         /* webpackChunkName: "SampleRecipePage" */ './sample-features-page/sample-recipe-page/SampleRecipePage'
+      )
+);
+
+const SampleCalculatorPage = lazy(
+   () =>
+      import(
+         /* webpackChunkName: "SampleCalculatorPage" */ './sample-features-page/sample-app-calculator-page/SampleCalculatorPage'
+      )
+);
+
+const SampleMealPlanPage = lazy(
+   () =>
+      import(
+         /* webpackChunkName: "SampleMealPlanPage" */ './sample-features-page/sample-app-mealplan-page/SampleMealPlanPage'
+      )
+);
+
+const NoPageFound = lazy(
+   () => import(/* webpackChunkName: "NoPageFound" */ './404-page/404')
 );
 
 export const ColorModeContext = React.createContext({
@@ -108,43 +119,53 @@ export const App = () => {
          <ColorModeContext.Provider value={colorMode}>
             <ThemeProvider theme={theme}>
                <CssBaseline />
+
                <AuthProvider>
                   <NavBar />
+
                   <Suspense fallback={<></>}>
                      <Routes>
-                        <Route path='/' element={<Home />} />
-                        <Route
-                           path='/diabetes-calculator-features/recipes'
-                           element={<SampleRecipePage />}
-                        />
-                        <Route
-                           path='/diabetes-calculator-features/calculator'
-                           element={<SampleCalculatorPage />}
-                        />
-                        <Route
-                           path='/diabetes-calculator-features/mealplan'
-                           element={<SampleMealPlanPage />}
-                        />
+                        <Route path='/' element={<LandingPage />} />
                         <Route path='/login' element={<LoginPage />} />
-                        <Route path='/search' element={<SearchPage />} />
-                        <Route path='/mealplan' element={<MealPlanPage />} />
-                        <Route
-                           path='/macrocalculator'
-                           element={<MacroCalculatorPage />}
-                        />
-                        <Route
-                           path='/settings'
-                           element={<UserSettingsPage />}
-                        />
                         <Route
                            path='/account-recovery'
                            element={<ForgotPasswordPage />}
                         />
-
                         <Route
                            path='/passwordReset'
                            element={<ResetPasswordPage />}
                         />
+
+                        <Route path='/home' element={<Home />}>
+                           <Route path='search' element={<SearchPage />} />
+                           <Route path='mealplan' element={<MealPlanPage />} />
+                           <Route
+                              path='macrocalculator'
+                              element={<MacroCalculatorPage />}
+                           />
+                           <Route
+                              path='settings'
+                              element={<UserSettingsPage />}
+                           />
+                        </Route>
+
+                        <Route
+                           path='/diabetes-calculator-features'
+                           element={<SampleFeaturesPage />}
+                        >
+                           <Route
+                              path='recipes'
+                              element={<SampleRecipePage />}
+                           />
+                           <Route
+                              path='calculator'
+                              element={<SampleCalculatorPage />}
+                           />
+                           <Route
+                              path='mealplan'
+                              element={<SampleMealPlanPage />}
+                           />
+                        </Route>
 
                         <Route path='*' element={<NoPageFound />} />
                      </Routes>

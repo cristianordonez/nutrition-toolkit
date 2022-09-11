@@ -41,7 +41,7 @@ router.get(
       session.user_id = session.passport.user;
       session.username = user.emails[0].value;
       //redirect user to the search page where session will be checked
-      res.redirect('/search');
+      res.redirect('/home/search');
    }
 );
 

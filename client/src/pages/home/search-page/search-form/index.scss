@@ -1,0 +1,10 @@
+@use '../../../../index.scss' as *;
+
+.search-form {
+   padding: 1rem;
+   max-width: $calc-form-max-width;
+}
+
+.search-form-tabs {
+   padding: 1rem;
+}

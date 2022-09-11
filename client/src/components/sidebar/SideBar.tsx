@@ -4,7 +4,6 @@ import { DailyGoals } from '../daily-goals';
 import { IconButton, Toolbar, Drawer, Stack } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { CurrentGoals } from '../../../../types/types';
-import { useAuth } from '../../context/authContext';
 import { MainTitleLogo } from '../main-title-logo/MainTitleLogo';
 import { LogoIcon } from '../logo-icon/LogoIcon';
 interface Props {
@@ -30,9 +29,6 @@ export const SideBar = ({
    nutritionSummary,
    mealplanItemsFound,
 }: Props) => {
-   console.log('nutritionSummary:', nutritionSummary);
-   console.log('mealplanItemsFound:', mealplanItemsFound);
-   console.log('goals:', goals);
    return (
       <>
          {/* MOBILE */}

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button, Typography, Stack } from '@mui/material';
-import { NutrientInputForm } from '../../pages/search-page/search-form/NutrientInputForm';
-import { SearchInput } from '../../pages/search-page/search-form/SearchInput';
-import { QueryTextField } from '../../pages/search-page/search-form/QueryTextField';
-import { TypeDropDown } from '../../pages/search-page/search-form/TypeDropDown';
+import { NutrientInputForm } from '../../pages/home/search-page/search-form/NutrientInputForm';
+import { SearchInput } from '../../pages/home/search-page/search-form/SearchInput';
+import { QueryTextField } from '../../pages/home/search-page/search-form/QueryTextField';
+import { TypeDropDown } from '../../pages/home/search-page/search-form/TypeDropDown';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 
 interface Props {

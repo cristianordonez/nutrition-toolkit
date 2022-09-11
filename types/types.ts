@@ -103,3 +103,18 @@ export type MealplanItemType = {
       title: string;
    };
 };
+
+export type RouteValues = {
+   query: string;
+   type: string;
+   minCalories: string;
+   maxCalories: string;
+   minProtein: string;
+   maxProtein: string;
+   minCarbs: string;
+   maxCarbs: string;
+   minFat: string;
+   maxFat: string;
+   offset: number;
+   number: number;
+};

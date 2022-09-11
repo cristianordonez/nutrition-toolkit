@@ -1,0 +1,23 @@
+@use '../../../../index.scss' as *;
+
+.meal-plan-slots-container {
+   @include flex-center();
+   flex-wrap: wrap;
+   gap: 2rem;
+   padding: 3rem 0;
+   .mealplan-day-slot {
+      @include flex-center-column();
+      gap: 0.5rem;
+      .mealplan-item-row {
+         @include set-size(100%);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         .mealplan-item-card {
+            max-width: 375px;
+            min-width: 375px;
+            align-self: center;
+         }
+      }
+   }
+}

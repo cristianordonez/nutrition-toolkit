@@ -60,14 +60,13 @@ const NavBar = () => {
 
    const handleUserProfileClick = () => {
       setAnchorElUser(null);
-      navigate('/settings');
+      navigate('/home/settings');
    };
 
    return (
       <AppBar
          position='fixed'
          sx={{
-            // zIndex: (theme) => theme.zIndex.drawer + 1,
             boxShadow: 'none',
             background: '#080C24',
             padding: '0 1vw',
@@ -77,43 +76,6 @@ const NavBar = () => {
          enableColorOnDark={true}
       >
          <Toolbar disableGutters>
-            {/* logo that appears at all times*/}
-            {/* <Box
-               component='img'
-               src={LOGO}
-               alt='Logo'
-               sx={{
-                  display: { md: 'flex' },
-                  mr: 1,
-                  objectFit: 'contain',
-                  height: '2.5rem',
-                  '&:hover': {
-                     cursor: 'pointer',
-                  },
-               }}
-               onClick={handleLogout}
-            ></Box> */}
-            {/* title that appears desktop only */}
-            {/* <Typography
-               variant='h6'
-               noWrap
-               data-testid='navlink'
-               color='text'
-               onClick={handleLogout}
-               sx={{
-                  mr: 2,
-                  display: { xs: 'none', md: 'flex' },
-                  fontWeight: 700,
-                  letterSpacing: '.3rem',
-                  textDecoration: 'none',
-                  flexGrow: 1,
-                  '&:hover': {
-                     cursor: 'pointer',
-                  },
-               }}
-            >
-               DiabetesCalculator
-            </Typography> */}
             {/* USER IS LOGGED IN */}
             {isLoggedIn === true ? (
                <>
@@ -157,36 +119,17 @@ const NavBar = () => {
                         }}
                      >
                         <Stack direction='column' sx={{ padding: '0.5rem' }}>
-                           {pages.map((page) =>
-                              page.toLowerCase().replace(' ', '') ===
-                              location.pathname.slice(1) ? (
-                                 <Link
-                                    onClick={handleCloseNavMenu}
-                                    key={page}
-                                    // underline='always'
-                                    // variant='overline'
-                                    // color='inherit'
-                                    to={`/${page
-                                       .toLowerCase()
-                                       .replace(/ /g, '')}`}
-                                 >
-                                    {page}
-                                 </Link>
-                              ) : (
-                                 <Link
-                                    onClick={handleCloseNavMenu}
-                                    key={page}
-                                    // underline='hover'
-                                    // variant='overline'
-                                    // color='inherit'
-                                    to={`/${page
-                                       .toLowerCase()
-                                       .replace(/ /g, '')}`}
-                                 >
-                                    {page}
-                                 </Link>
-                              )
-                           )}
+                           {pages.map((page) => (
+                              <Link
+                                 onClick={handleCloseNavMenu}
+                                 key={page}
+                                 to={`/home/${page
+                                    .toLowerCase()
+                                    .replace(/ /g, '')}`}
+                              >
+                                 {page}
+                              </Link>
+                           ))}
                         </Stack>
                      </Menu>
                      {location.pathname === '/settings' ? (
@@ -201,7 +144,6 @@ const NavBar = () => {
                         flexGrow: 1,
                         display: { xs: 'none', md: 'flex' },
                         gap: 4,
-                        // justifyContent: 'flex-end',
                         pl: { xs: 0, sm: '350px' },
                         justifyContent: 'center',
                      }}
@@ -217,30 +159,16 @@ const NavBar = () => {
                         </Button>
                      ) : (
                         // SHOW ON ALL PAGES WHEN ON DESKTOP
-                        pages.map((page) =>
-                           page.toLowerCase().replace(' ', '') ===
-                           location.pathname.slice(1) ? (
-                              <Link
-                                 key={page}
-                                 // underline='always'
-                                 // variant='overline'
-                                 // color='inherit'
-                                 to={`/${page.toLowerCase().replace(/ /g, '')}`}
-                              >
-                                 {page}
-                              </Link>
-                           ) : (
-                              <Link
-                                 key={page}
-                                 // underline='hover'
-                                 // variant='overline'
-                                 // color='inherit'
-                                 to={`/${page.toLowerCase().replace(/ /g, '')}`}
-                              >
-                                 {page}
-                              </Link>
-                           )
-                        )
+                        pages.map((page) => (
+                           <Link
+                              key={page}
+                              to={`/home/${page
+                                 .toLowerCase()
+                                 .replace(/ /g, '')}`}
+                           >
+                              {page}
+                           </Link>
+                        ))
                      )}
                   </Box>
                   {/* SHOW THIS ON ALL PAGES */}
@@ -286,39 +214,10 @@ const NavBar = () => {
                </>
             ) : // END USER IS LOGGED IN
             null}
-            {isLoading === false &&
-            isLoggedIn === false &&
-            location.pathname === '/' ? (
-               <Stack
-                  direction='row'
-                  spacing={1}
-                  justifyContent={'center'}
-                  alignItems='center'
-                  marginRight={1}
-               >
-                  <LogoIcon />
-                  <MainTitleLogo />
-               </Stack>
-            ) : null}
+
             {isLoading === false && isLoggedIn === false && (
-               <Link
-                  to='/login'
-                  // underline='hover'
-                  data-testid='home-page'
-                  className='login-link'
-                  // color='inherit'
-                  // className='navbar-login'
-                  // sx={{
-                  //    marginLeft: 'auto',
-                  //    position: 'absolute',
-                  //    right: '50px',
-                  // }}
-               >
-                  <Typography
-                     // color='text'
-                     sx={{ fontWeight: '500' }}
-                     variant='body2'
-                  >
+               <Link to='/login' data-testid='home-page' className='login-link'>
+                  <Typography sx={{ fontWeight: '500' }} variant='body2'>
                      Log in
                   </Typography>
                </Link>
