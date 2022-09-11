@@ -129,7 +129,6 @@ const SampleMealPlanPage = () => {
    };
 
    useEffect(() => {
-      console.log('this should be called after tab change');
       axios
          .get('/api/mealplan/sample')
          .then((response) => {

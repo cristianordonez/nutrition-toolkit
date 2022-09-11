@@ -3,8 +3,7 @@ import { Typography, Stack } from '@mui/material';
 import { GoalCardItemLinearProgress } from '../../../../components/goal-card-item-linear-progress/GoalCardItemLinearProgress';
 import { CaloriesCircularProgress } from '../../../../components/calories-circular-progress/CaloriesCircularProgress';
 import { CurrentGoals } from '../../../../../../types/types';
-
-const drawerWidth = 350;
+import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 
 interface Props {
    nutritionSummary: {
@@ -15,16 +14,15 @@ interface Props {
    };
    goals: CurrentGoals;
 }
-
 export const SampleMealplanSidebarContents = ({
    nutritionSummary,
    goals,
-}: Props) => {
+}: Props): ReactJSXElement => {
    let calories = Math.floor(
       (nutritionSummary.calories / goals.total_calories) * 100
    );
    return (
-      <>
+      <React.Fragment>
          <Typography variant='h4' component='h1' align='center'>
             Today's Goals
          </Typography>
@@ -55,6 +53,6 @@ export const SampleMealplanSidebarContents = ({
                plan.
             </Typography>
          </Stack>
-      </>
+      </React.Fragment>
    );
 };

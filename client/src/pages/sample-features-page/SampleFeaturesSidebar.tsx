@@ -1,23 +1,39 @@
-import React from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import { Drawer, Toolbar, IconButton } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useLocation } from 'react-router-dom';
+import { SearchFormCustom } from '../../components/search-forms/SearchFormCustom';
+import { SampleMealplanSidebarContents } from './sample-app-mealplan-page/sample-mealplan-sidebar/SampleMealplanSidebarContents';
+import { SampleCalculatorSidebarContents } from './sample-app-calculator-page/SampleCalculatorSidebarContentx';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
+
 const drawerWidth = '350px';
 
 interface Props {
    handleDrawerToggle: () => void;
    mobileOpen: boolean;
-   SearchFormCustomComponent: JSX.Element;
-   SampleMealplanSidebarContentsComponent: JSX.Element;
+   route: any;
+   values: any;
+   handleSearch: any;
+   handleRouteChange: any;
+   handleInputChange: any;
+   handleTypeSelect: any;
+   goals: any;
+   nutritionSummary: any;
 }
 
 export const SampleFeaturesSidebar = ({
-   handleDrawerToggle,
    mobileOpen,
-   SearchFormCustomComponent,
-   SampleMealplanSidebarContentsComponent,
-}: Props) => {
+   handleDrawerToggle,
+   route,
+   values,
+   handleSearch,
+   handleRouteChange,
+   handleInputChange,
+   handleTypeSelect,
+   goals,
+   nutritionSummary,
+}: Props): ReactJSXElement => {
    const location = useLocation();
 
    return (
@@ -50,8 +66,25 @@ export const SampleFeaturesSidebar = ({
                </IconButton>
             </Toolbar>
 
+            {location.pathname === '/diabetes-calculator-features/recipes' ? (
+               <SearchFormCustom
+                  route={route}
+                  values={values}
+                  handleSubmit={handleSearch}
+                  handleRouteChange={handleRouteChange}
+                  handleInputChange={handleInputChange}
+                  handleTypeSelect={handleTypeSelect}
+               />
+            ) : null}
             {location.pathname === '/diabetes-calculator-features/mealplan' ? (
-               <SampleMealplanSidebarContentsComponent />
+               <SampleMealplanSidebarContents
+                  goals={goals}
+                  nutritionSummary={nutritionSummary}
+               />
+            ) : null}
+            {location.pathname ===
+            '/diabetes-calculator-features/calculator' ? (
+               <SampleCalculatorSidebarContents goals={goals} />
             ) : null}
          </Drawer>
 
@@ -68,8 +101,25 @@ export const SampleFeaturesSidebar = ({
                },
             }}
          >
+            {location.pathname === '/diabetes-calculator-features/recipes' ? (
+               <SearchFormCustom
+                  route={route}
+                  values={values}
+                  handleSubmit={handleSearch}
+                  handleRouteChange={handleRouteChange}
+                  handleInputChange={handleInputChange}
+                  handleTypeSelect={handleTypeSelect}
+               />
+            ) : null}
             {location.pathname === '/diabetes-calculator-features/mealplan' ? (
-               <SampleMealplanSidebarContentsComponent />
+               <SampleMealplanSidebarContents
+                  goals={goals}
+                  nutritionSummary={nutritionSummary}
+               />
+            ) : null}
+            {location.pathname ===
+            '/diabetes-calculator-features/calculator' ? (
+               <SampleCalculatorSidebarContents goals={goals} />
             ) : null}
          </Drawer>
       </>

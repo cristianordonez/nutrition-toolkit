@@ -5,6 +5,7 @@ interface OutletContext {
    handleDrawerToggle: any;
    setNutritionSummary: any;
    setAlertSeverity: any;
+   openAlert: any;
    setOpenAlert: any;
    handleAlert: any;
    setValues: any;
@@ -14,12 +15,25 @@ interface OutletContext {
    isLoading: any;
    mealplanItems: any;
    setPopularRecipes: any;
-   alertSeverity: any;
-   openAlert: any;
-   alertMessage: any;
-   showPopularRecipes: any;
    popularRecipes: any;
+   alertSeverity: any;
+   showPopularRecipes: any;
+   alertMessage: any;
    sampleMealplanItems: any;
+   goals: any;
+   setGoals: any;
+   setGender: any;
+   gender: any;
+   age: any;
+   route: any;
+   setAge: any;
+   height: any;
+   setHeight: any;
+   weight: any;
+   setWeight: any;
+   activityLevel: any;
+   setActivityLevel: any;
+   handleSubmit: any;
 }
 
 export const useSampleFeaturesOutlet = () => {

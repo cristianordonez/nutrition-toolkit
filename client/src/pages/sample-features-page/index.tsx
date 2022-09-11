@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Routes, Route, Outlet } from 'react-router-dom';
 import { SampleFeaturesSidebar } from './SampleFeaturesSidebar';
 import { SearchFormCustom } from '../../components/search-forms/SearchFormCustom';
+import { getMetrics } from '../../helper-functions/get-metrics/getMetrics';
 import { SampleMealplanSidebarContents } from './sample-app-mealplan-page/sample-mealplan-sidebar/SampleMealplanSidebarContents';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import {
@@ -12,7 +13,11 @@ import {
 } from '@mui/material';
 import { RouteValues } from '../../../../types/types';
 import axios from 'axios';
-import { SampleMealplanItem, FoodItemType } from '../../../../types/types';
+import {
+   SampleMealplanItem,
+   FoodItemType,
+   CurrentGoals,
+} from '../../../../types/types';
 
 const initialState = {
    query: '',
@@ -29,7 +34,22 @@ const initialState = {
    number: 10,
 };
 
-const sampleGoals = {
+// const sampleGoals = {
+//    total_carbohydrates: 135,
+//    min_carbs_per_meal: 45,
+//    max_carbs_per_meal: 55,
+//    total_protein: 135,
+//    min_protein_per_meal: 30,
+//    max_protein_per_meal: 50,
+//    total_fat: 100,
+//    min_fat_per_meal: 25,
+//    max_fat_per_meal: 45,
+//    total_calories: 2000,
+//    min_calories_per_meal: 450,
+//    max_calories_per_meal: 650,
+// };
+
+const initialGoals = {
    total_carbohydrates: 135,
    min_carbs_per_meal: 45,
    max_carbs_per_meal: 55,
@@ -44,11 +64,18 @@ const sampleGoals = {
    max_calories_per_meal: 650,
 };
 
+const initialNutritionSummary = {
+   calories: 0,
+   fat: 0,
+   carbohydrates: 0,
+   protein: 0,
+};
+
 const SampleFeaturesPage = () => {
    const [mobileOpen, setMobileOpen] = React.useState(false);
    const [isLoading, setIsLoading] = useState<boolean>(false);
    const [popularRecipes, setPopularRecipes] = useState([]);
-
+   const [goals, setGoals] = useState<CurrentGoals>(initialGoals);
    const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
    const [alertSeverity, setAlertSeverity] = useState<AlertColor>('error');
    const [alertMessage, setAlertMessage] = useState<string>('');
@@ -57,27 +84,24 @@ const SampleFeaturesPage = () => {
    const [values, setValues] = useState<RouteValues>(initialState);
    const [showPopularRecipes, setShowPopularRecipes] = useState<boolean>(true);
    const [mealplanItems, setMealplanItems] = useState<FoodItemType[] | []>([]);
+   const [age, setAge] = useState<number>(18);
+   const [height, setHeight] = useState<number>(60);
+   const [weight, setWeight] = useState<number>(200);
+   const [activityLevel, setActivityLevel] = useState<number>(1);
 
+   const [gender, setGender] = useState('male');
    const [sampleMealplanItems, setSampleMealplanItems] = useState<
       SampleMealplanItem[] | []
    >([]);
-
-   const [nutritionSummary, setNutritionSummary] = useState({
-      calories: 0,
-      fat: 0,
-      carbohydrates: 0,
-      protein: 0,
-   });
+   const [nutritionSummary, setNutritionSummary] = useState(
+      initialNutritionSummary
+   );
 
    const handleDrawerToggle = () => {
       setMobileOpen(!mobileOpen);
    };
 
-   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValues({ ...values, [event.target.id]: event.target.value });
-   };
-
-   const handleSubmit = async (event: React.SyntheticEvent) => {
+   const handleSearch = async (event: React.SyntheticEvent) => {
       let newValues = { ...values, offset: 0 }; //declare new values so that there are no async bugs, and reset offset to 0 in case user changed it
       setValues(newValues);
       try {
@@ -108,6 +132,18 @@ const SampleFeaturesPage = () => {
       }
    };
 
+   const handleSubmit = (event: React.SyntheticEvent) => {
+      event.preventDefault();
+      const currentGoals = getMetrics({
+         gender,
+         age,
+         height,
+         weight,
+         activityLevel,
+      });
+      setGoals(currentGoals);
+   };
+
    const handleRouteChange = (event: SelectChangeEvent) => {
       setRoute(event.target.value);
    };
@@ -120,33 +156,41 @@ const SampleFeaturesPage = () => {
       setValues({ ...values, type: event.target.value });
    };
 
-   const SearchFormCustomComponent: JSX.Element = (
-      <SearchFormCustom
-         route={route}
-         values={values}
-         handleSubmit={handleSubmit}
-         handleRouteChange={handleRouteChange}
-         handleInputChange={handleInputChange}
-         handleTypeSelect={handleTypeSelect}
-      />
-   );
+   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setValues({ ...values, [event.target.id]: event.target.value });
+   };
 
-   const SampleMealplanSidebarContentsComponent: JSX.Element = (
-      <SampleMealplanSidebarContents
-         goals={sampleGoals}
-         nutritionSummary={nutritionSummary}
-      />
-   );
+   // const SearchFormCustomComponent: any = (
+   //    <SearchFormCustom
+   //       route={route}
+   //       values={values}
+   //       handleSubmit={handleSearch}
+   //       handleRouteChange={handleRouteChange}
+   //       handleInputChange={handleInputChange}
+   //       handleTypeSelect={handleTypeSelect}
+   //    />
+   // );
+
+   // const SampleMealplanSidebar: any = (
+   //    <SampleMealplanSidebarContents
+   //       goals={sampleGoals}
+   //       nutritionSummary={nutritionSummary}
+   //    />
+   // );
 
    return (
       <>
          <SampleFeaturesSidebar
             mobileOpen={mobileOpen}
             handleDrawerToggle={handleDrawerToggle}
-            SearchFormCustomComponent={SearchFormCustomComponent}
-            SampleMealplanSidebarContentsComponent={
-               SampleMealplanSidebarContentsComponent
-            }
+            route={route}
+            values={values}
+            handleSearch={handleSearch}
+            handleRouteChange={handleRouteChange}
+            handleInputChange={handleInputChange}
+            handleTypeSelect={handleTypeSelect}
+            goals={goals}
+            nutritionSummary={nutritionSummary}
          />
          <Toolbar sx={{ display: { sm: 'none' } }}>
             <IconButton
@@ -165,6 +209,7 @@ const SampleFeaturesPage = () => {
                handleDrawerToggle,
                setNutritionSummary,
                setAlertSeverity,
+               openAlert,
                setOpenAlert,
                handleAlert,
                setValues,
@@ -176,10 +221,23 @@ const SampleFeaturesPage = () => {
                setPopularRecipes,
                popularRecipes,
                alertSeverity,
-               openAlert,
                showPopularRecipes,
                alertMessage,
                sampleMealplanItems,
+               goals,
+               setGoals,
+               setGender,
+               gender,
+               route,
+               age,
+               setAge,
+               height,
+               setHeight,
+               weight,
+               setWeight,
+               activityLevel,
+               setActivityLevel,
+               handleSubmit,
             }}
          />
       </>

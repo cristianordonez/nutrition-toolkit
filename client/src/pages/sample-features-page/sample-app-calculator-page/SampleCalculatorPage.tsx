@@ -5,37 +5,70 @@ import { Goals } from '../../../helper-functions/get-metrics/getMetrics';
 import { GoalCardItemList } from '../../../components/goal-card-item-list/GoalCardItemList';
 import { CustomAlert } from '../../../components/custom-alert/CustomAlert';
 import { AlertColor, Paper, Button, Stack, Typography } from '@mui/material';
+import { useSampleFeaturesOutlet } from '../../../hooks/useSampleFeaturesOutlet';
 import { getMetrics } from '../../../helper-functions/get-metrics/getMetrics';
 import { CaloriesCircularProgressWithoutGoals } from '../../../components/calories-circular-progress/CaloriesCircularProgressWithoutGoals';
 
 const SampleCalculatorPage = () => {
-   const [alertSeverity, setAlertSeverity] = useState<AlertColor>('success');
-   const [openAlert, setOpenAlert] = useState(false);
-   const [alertMessage, setAlertMessage] = useState(''); //message displayed on snackbar
-   const [showNextPage, setShowNextPage] = useState<boolean>(false);
-   const [showSignup, setShowSignup] = useState<boolean>(false);
-   const handleAlert = () => {
-      setOpenAlert(!openAlert);
-   };
-   const [activityLevel, setActivityLevel] = useState<number>(1);
-   const [gender, setGender] = useState('male');
-   const [age, setAge] = useState<any>(18);
-   const [height, setHeight] = useState<any>(60);
-   const [weight, setWeight] = useState<any>(200);
-   const [goals, setGoals] = useState<Goals>({
-      total_carbohydrates: 0,
-      min_carbs_per_meal: 0,
-      max_carbs_per_meal: 0,
-      total_protein: 0,
-      min_protein_per_meal: 0,
-      max_protein_per_meal: 0,
-      total_fat: 0,
-      min_fat_per_meal: 0,
-      max_fat_per_meal: 0,
-      total_calories: 0,
-      min_calories_per_meal: 0,
-      max_calories_per_meal: 0,
-   });
+   // const [alertSeverity, setAlertSeverity] = useState<AlertColor>('success');
+   // const [openAlert, setOpenAlert] = useState(false);
+   // const [alertMessage, setAlertMessage] = useState(''); //message displayed on snackbar
+   // const handleAlert = () => {
+   //    setOpenAlert(!openAlert);
+   // };
+   // const [gender, setGender] = useState('male');
+   // const [age, setAge] = useState<any>(18);
+   // const [height, setHeight] = useState<any>(60);
+   // const [weight, setWeight] = useState<any>(200);
+   // const [goals, setGoals] = useState<Goals>({
+   //    total_carbohydrates: 0,
+   //    min_carbs_per_meal: 0,
+   //    max_carbs_per_meal: 0,
+   //    total_protein: 0,
+   //    min_protein_per_meal: 0,
+   //    max_protein_per_meal: 0,
+   //    total_fat: 0,
+   //    min_fat_per_meal: 0,
+   //    max_fat_per_meal: 0,
+   //    total_calories: 0,
+   //    min_calories_per_meal: 0,
+   //    max_calories_per_meal: 0,
+   // });
+
+   const {
+      mobileOpen,
+      handleDrawerToggle,
+      setNutritionSummary,
+      setAlertSeverity,
+      openAlert,
+      setOpenAlert,
+      handleAlert,
+      setValues,
+      setAlertMessage,
+      setSampleMealplanItems,
+      setMealplanItems,
+      isLoading,
+      mealplanItems,
+      setPopularRecipes,
+      popularRecipes,
+      alertSeverity,
+      showPopularRecipes,
+      alertMessage,
+      sampleMealplanItems,
+      goals,
+      setGoals,
+      setGender,
+      gender,
+      age,
+      setAge,
+      height,
+      setHeight,
+      weight,
+      setWeight,
+      activityLevel,
+      setActivityLevel,
+      handleSubmit,
+   } = useSampleFeaturesOutlet();
 
    const handleGenderChange = (
       event: React.MouseEvent<HTMLElement>,
@@ -52,17 +85,6 @@ const SampleCalculatorPage = () => {
       setActivityLevel(newActivityLevel);
    };
 
-   const handleSubmit = (event: React.SyntheticEvent) => {
-      event.preventDefault();
-      const currentGoals = getMetrics({
-         gender,
-         age,
-         height,
-         weight,
-         activityLevel,
-      });
-      setGoals(currentGoals);
-   };
    return (
       <>
          <Stack
@@ -72,7 +94,7 @@ const SampleCalculatorPage = () => {
             sx={{ pt: '2rem', pb: '2rem' }}
             spacing={2}
          >
-            {goals.total_calories !== 0 ? (
+            {/* {goals.total_calories !== 0 ? (
                <>
                   <Typography variant='h3'>Recommended Daily Goals</Typography>
                   <CaloriesCircularProgressWithoutGoals goals={goals} />
@@ -80,7 +102,7 @@ const SampleCalculatorPage = () => {
                      <GoalCardItemList goals={goals} page={'mealplan'} />
                   </div>
                </>
-            ) : null}
+            ) : null} */}
             <Typography variant='h2'>MacroCalculator</Typography>
             <Paper
                elevation={1}
