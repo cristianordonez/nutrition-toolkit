@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import LOGO from '../../../img/logo.svg';
+import LOGO from '../../img/logo.svg';
 import { useAuth } from '../../context/authContext';
 
 export const LogoIcon = () => {

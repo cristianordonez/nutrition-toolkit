@@ -10,14 +10,12 @@ import {
 } from '@mui/material';
 import { LandingPageCard } from './landing-page-card/LandingPageCard';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
-import NavBar from '../../components/navbar/NavBar';
 import './LandingPage.scss';
-import DietitianSvg from '../../../img/dietitian.svg';
-import MaleChefSvg from '../../../img/male-chef.svg';
-import ScheduleSvg from '../../../img/schedule.svg';
-import CalculateSvg from '../../../img/calculate.svg';
+import DietitianSvg from '../../img/dietitian.svg';
+import MaleChefSvg from '../../img/male-chef.svg';
+import ScheduleSvg from '../../img/schedule.svg';
+import CalculateSvg from '../../img/calculate.svg';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../../context/authContext';
 
 type LocationType = {
    pathname: string;
@@ -27,11 +25,11 @@ type LocationType = {
 };
 
 const LandingPage = () => {
-   const [isLoading, isLoggedIn] = useAuth();
    const [alertSeverity, setAlertSeverity] = useState<AlertColor>('success');
    const [openAlert, setOpenAlert] = useState(false);
    const [alertMessage, setAlertMessage] = useState(''); //message displayed on snackbar
    let navigate = useNavigate();
+   const location = useLocation() as unknown as LocationType;
 
    //handles showing snackbar if request to server to login is not successful
    const handleAlert = () => {
@@ -58,9 +56,16 @@ const LandingPage = () => {
       navigate(`/diabetes-calculator-features/${featureView}`);
    };
 
+   useEffect(() => {
+      if (location.state !== null && location.state.loggedOut) {
+         setAlertSeverity('success');
+         setAlertMessage('You have been logged out.');
+         setOpenAlert(true);
+         window.history.replaceState({}, document.title);
+      }
+   }, []);
    return (
       <>
-         <NavBar />
          <div className='home-page'>
             <Stack
                direction={{ xs: 'column', sm: 'row' }}

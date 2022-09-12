@@ -16,6 +16,47 @@ export type MenuItemNutrition = {
 export type RecipeItemNutrition = {
    nutrients: [];
 };
+
+export type ValuesType = {
+   query: string;
+   type: string;
+   intolerance: string;
+   minCalories: string;
+   maxCalories: string;
+   minProtein: string;
+   maxProtein: string;
+   minCarbs: string;
+   maxCarbs: string;
+   minFat: string;
+   maxFat: string;
+   number: number;
+   offset: number;
+};
+export interface Recipe {
+   aggregateLikes: number;
+   id: number;
+   image: string;
+   servings: number;
+   title: string;
+   sourceUrl: string;
+   spoonacularSourceUrl: string;
+   summary: string; //provides unnecessary information
+   readyInMinutes: number;
+   vegetarian: boolean;
+   dishTypes: string[];
+   vegan: boolean;
+   cheap: boolean;
+   instructions: string;
+   sustainable: boolean;
+   dairyFree: boolean;
+   veryHealthy: boolean;
+   veryPopular: boolean;
+   lowFodmap: boolean;
+   diets: string[];
+   restaurantChain?: string | undefined;
+   nutrition?: undefined;
+}
+
 export type GroceryItemNutrition = {
    calories: number;
    carbs: string;

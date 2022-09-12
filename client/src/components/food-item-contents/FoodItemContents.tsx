@@ -33,6 +33,7 @@ interface Props {
    handleOpeningDialog?: MouseEventHandler<HTMLButtonElement>;
    isMealPlanItem?: boolean;
    servings?: number;
+   isSampleFoodItem?: boolean | undefined;
 }
 
 type NutrientType = {
@@ -56,7 +57,7 @@ export const FoodItemContents = ({
 }: Props) => {
    //configure the nutrients here as different items contain different object structure
    let calories, carbs, fat, protein;
-   if (route === 'recipes' || route === 'RECIPE') {
+   if ((nutrition !== undefined && route === 'recipes') || route === 'RECIPE') {
       nutrition.nutrients.forEach((nutrient: NutrientType) => {
          if (nutrient.name === 'Calories') {
             calories = Math.floor(nutrition.nutrients[0].amount);
@@ -68,15 +69,13 @@ export const FoodItemContents = ({
             carbs = Math.floor(nutrition.nutrients[3].amount) + 'g';
          }
       });
-   } else {
+   } else if (nutrition !== undefined) {
       calories = nutrition.calories;
       protein = nutrition.protein;
       fat = nutrition.fat;
       carbs = nutrition.carbs;
    }
 
-   console.log('route:', route);
-   console.log('restaurantChain:', restaurantChain);
    return (
       <Paper elevation={1} className='food-search-paper'>
          <Card className='search-item' data-testid='food-search-item'>
@@ -106,7 +105,7 @@ export const FoodItemContents = ({
                <Typography align='center' noWrap variant='subtitle1'>
                   {title}
                </Typography>
-               {isMealPlanItem ? (
+               {isMealPlanItem && servings !== undefined ? (
                   <Stack direction='row'>
                      <Typography variant='subtitle2'>
                         Servings: {servings}

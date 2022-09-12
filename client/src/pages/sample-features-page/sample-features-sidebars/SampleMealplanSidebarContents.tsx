@@ -1,8 +1,8 @@
 import React from 'react';
 import { Typography, Stack } from '@mui/material';
-import { GoalCardItemLinearProgress } from '../../../../components/goal-card-item-linear-progress/GoalCardItemLinearProgress';
-import { CaloriesCircularProgress } from '../../../../components/calories-circular-progress/CaloriesCircularProgress';
-import { CurrentGoals } from '../../../../../../types/types';
+import { GoalCardItemLinearProgress } from '../../../components/goal-card-item-linear-progress/GoalCardItemLinearProgress';
+import { CaloriesCircularProgress } from '../../../components/calories-circular-progress/CaloriesCircularProgress';
+import { CurrentGoals } from '../../../../../types/types';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 
 interface Props {

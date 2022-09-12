@@ -48,20 +48,25 @@ const AuthProvider = ({ children }: Props) => {
          .then((response) => {
             //redirect user to macro calculator page if no daily goals are found
             //only change state if necessary
-            if (isLoggedIn === false) {
-               setUsername(response.data);
-               setIsLoggedIn(true);
-
-               axios
-                  .get('api/metrics')
-                  .then((response) => {
-                     if (response.data.length === 0) {
-                        navigate('/macrocalculator');
-                     }
-                  })
-                  .catch((err) => {
-                     console.log(err);
-                  });
+            if (response.status === 201) {
+               if (isLoggedIn === false) {
+                  setUsername(response.data);
+                  setIsLoggedIn(true);
+                  axios
+                     .get('api/metrics')
+                     .then((response) => {
+                        if (response.data.length === 0) {
+                           navigate('/home/macrocalculator');
+                        }
+                     })
+                     .catch((err) => {
+                        console.log(err);
+                     });
+               }
+            } else {
+               if (isLoggedIn === true) {
+                  setIsLoggedIn(false);
+               }
             }
             setIsLoading(false);
          })

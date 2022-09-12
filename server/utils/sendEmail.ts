@@ -7,6 +7,7 @@ import SMTPTransport from 'nodemailer';
 //function that automatically generates refresh tokens from google developer console
 // using access token and the google playground
 const createTransporter = async () => {
+   console.log('process.env.OAUTH_CLIENT_ID:', process.env.OAUTH_CLIENT_ID);
    const oauth2Client = new OAuth2(
       process.env.OAUTH_CLIENT_ID,
       process.env.OAUTH_CLIENT_SECRET,
@@ -23,6 +24,7 @@ const createTransporter = async () => {
          resolve(token);
       });
    });
+   console.log('accessToken:', accessToken);
    //set up nodemailer transport using OAuth2 to automatically send emails
    const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -40,17 +42,16 @@ const createTransporter = async () => {
 };
 
 export const sendEmail = async (email: string, link: string) => {
-   let mailOptions = {
-      from: process.env.EMAIL_USERNAME,
-      to: email, //receiving address
-      // to: 'cristianordonezrd@gmail.com',
-      subject: 'Account Recovery',
-      text: `Hi, \n You requested to reset your password. \n Please click this link to reset your password: \n${link}`,
-   };
-
    try {
+      let mailOptions = {
+         from: process.env.EMAIL_USERNAME,
+         to: email, //receiving address
+         subject: 'Account Recovery',
+         text: `Hi, \n You requested to reset your password. \n Please click this link to reset your password: \n${link}`,
+      };
       let emailTransporter = await createTransporter();
       let response = await emailTransporter.sendMail(mailOptions);
+      console.log('response after sending email:', response);
       return response;
    } catch (err) {
       return err;

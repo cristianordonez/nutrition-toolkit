@@ -1,62 +1,12 @@
 import React, { useState } from 'react';
 import './SampleCalculatorPage.scss';
 import { Calculator } from '../../../components/calculator-contents/Calculator';
-import { Goals } from '../../../helper-functions/get-metrics/getMetrics';
-import { GoalCardItemList } from '../../../components/goal-card-item-list/GoalCardItemList';
 import { CustomAlert } from '../../../components/custom-alert/CustomAlert';
 import { AlertColor, Paper, Button, Stack, Typography } from '@mui/material';
 import { useSampleFeaturesOutlet } from '../../../hooks/useSampleFeaturesOutlet';
-import { getMetrics } from '../../../helper-functions/get-metrics/getMetrics';
-import { CaloriesCircularProgressWithoutGoals } from '../../../components/calories-circular-progress/CaloriesCircularProgressWithoutGoals';
 
 const SampleCalculatorPage = () => {
-   // const [alertSeverity, setAlertSeverity] = useState<AlertColor>('success');
-   // const [openAlert, setOpenAlert] = useState(false);
-   // const [alertMessage, setAlertMessage] = useState(''); //message displayed on snackbar
-   // const handleAlert = () => {
-   //    setOpenAlert(!openAlert);
-   // };
-   // const [gender, setGender] = useState('male');
-   // const [age, setAge] = useState<any>(18);
-   // const [height, setHeight] = useState<any>(60);
-   // const [weight, setWeight] = useState<any>(200);
-   // const [goals, setGoals] = useState<Goals>({
-   //    total_carbohydrates: 0,
-   //    min_carbs_per_meal: 0,
-   //    max_carbs_per_meal: 0,
-   //    total_protein: 0,
-   //    min_protein_per_meal: 0,
-   //    max_protein_per_meal: 0,
-   //    total_fat: 0,
-   //    min_fat_per_meal: 0,
-   //    max_fat_per_meal: 0,
-   //    total_calories: 0,
-   //    min_calories_per_meal: 0,
-   //    max_calories_per_meal: 0,
-   // });
-
    const {
-      mobileOpen,
-      handleDrawerToggle,
-      setNutritionSummary,
-      setAlertSeverity,
-      openAlert,
-      setOpenAlert,
-      handleAlert,
-      setValues,
-      setAlertMessage,
-      setSampleMealplanItems,
-      setMealplanItems,
-      isLoading,
-      mealplanItems,
-      setPopularRecipes,
-      popularRecipes,
-      alertSeverity,
-      showPopularRecipes,
-      alertMessage,
-      sampleMealplanItems,
-      goals,
-      setGoals,
       setGender,
       gender,
       age,
@@ -91,18 +41,14 @@ const SampleCalculatorPage = () => {
             direction='column'
             alignItems='center'
             justifyContent={'center'}
-            sx={{ pt: '2rem', pb: '2rem' }}
+            sx={{
+               pt: '2rem',
+               pb: '2rem',
+               pl: { xs: 0, sm: '1rem' },
+               pr: { xs: 0, sm: '1rem' },
+            }}
             spacing={2}
          >
-            {/* {goals.total_calories !== 0 ? (
-               <>
-                  <Typography variant='h3'>Recommended Daily Goals</Typography>
-                  <CaloriesCircularProgressWithoutGoals goals={goals} />
-                  <div className='goal-card-items'>
-                     <GoalCardItemList goals={goals} page={'mealplan'} />
-                  </div>
-               </>
-            ) : null} */}
             <Typography variant='h2'>MacroCalculator</Typography>
             <Paper
                elevation={1}
@@ -130,12 +76,6 @@ const SampleCalculatorPage = () => {
                   Calculate
                </Button>
             </Paper>
-            <CustomAlert
-               openAlert={openAlert}
-               handleAlert={handleAlert}
-               alertSeverity={alertSeverity}
-               alertMessage={alertMessage}
-            />
          </Stack>
       </>
    );

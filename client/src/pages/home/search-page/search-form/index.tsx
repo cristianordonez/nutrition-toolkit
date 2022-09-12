@@ -1,36 +1,28 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import './index.scss';
 import ScreenSearchDesktopIcon from '@mui/icons-material/ScreenSearchDesktop';
-import { Stack, Tabs, Tab, Typography } from '@mui/material';
+import { Stack, Tabs, Tab, Typography, AlertColor } from '@mui/material';
 import { SearchFormSuggested } from '../../../../components/search-forms/SearchFormSuggested';
 import { SearchFormCustom } from '../../../../components/search-forms/SearchFormCustom';
 import { SelectChangeEvent } from '@mui/material/Select';
+import { CurrentGoals, MealplanItemType, ValuesType } from '../../../../../../types/types';
 
-type Goals = {
-   total_carbohydrates: number;
-   min_carbs_per_meal: number;
-   max_carbs_per_meal: number;
-   total_protein: number;
-   min_protein_per_meal: number;
-   max_protein_per_meal: number;
-   total_fat: number;
-   min_fat_per_meal: number;
-   max_fat_per_meal: number;
-   total_calories: number;
-   min_calories_per_meal: number;
-   max_calories_per_meal: number;
-};
 interface Props {
-   handleSubmit: any;
+   handleSubmit: (event: React.SyntheticEvent) => Promise<void>
    route: string;
-   setRoute: any;
-   setCurrentTab: any;
+   setRoute: Dispatch<SetStateAction<string>>;
+   setCurrentTab: Dispatch<SetStateAction<string>>;
    currentTab: string;
-   handleChange: any;
-   values: any;
-   setValues: any;
-   goals: Goals;
-   handleSuggestedSubmit: any;
+   handleChange: (event: React.SyntheticEvent, currentValue: string) => void
+   values:   ValuesType;
+   setValues: Dispatch<SetStateAction<ValuesType>>;
+   goals: CurrentGoals;
+   setAlertMessage: Dispatch<SetStateAction<string>>;
+   setLoading: Dispatch<SetStateAction<boolean>>;
+   setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
+   setOpenAlert: Dispatch<SetStateAction<boolean>>;
+   setShowLoadMoreBtn: Dispatch<SetStateAction<boolean>>;
+   setAPIData: Dispatch<SetStateAction<MealplanItemType[]>>;
 }
 
 export const SearchForm = ({
@@ -43,7 +35,12 @@ export const SearchForm = ({
    values,
    setValues,
    goals,
-   handleSuggestedSubmit,
+   setAlertMessage,
+   setAlertSeverity,
+   setLoading,
+   setOpenAlert,
+   setShowLoadMoreBtn,
+   setAPIData,
 }: Props) => {
    const handleRouteChange = (event: SelectChangeEvent) => {
       setRoute(event.target.value);
@@ -70,6 +67,8 @@ export const SearchForm = ({
             onChange={handleChange}
             aria-label='toggle suggested search'
             className='search-form-tabs'
+            indicatorColor='secondary'
+            textColor='secondary'
          >
             <Tab value='custom-search' label='Custom' />
             <Tab value='suggested-goals' label='Suggested' />
@@ -92,7 +91,13 @@ export const SearchForm = ({
                handleInputChange={handleInputChange}
                handleTypeSelect={handleTypeSelect}
                goals={goals}
-               handleSuggestedSubmit={handleSuggestedSubmit}
+               setValues={setValues}
+               setAlertMessage={setAlertMessage}
+               setAlertSeverity={setAlertSeverity}
+               setLoading={setLoading}
+               setOpenAlert={setOpenAlert}
+               setShowLoadMoreBtn={setShowLoadMoreBtn}
+               setAPIData={setAPIData}
             />
          )}
       </div>

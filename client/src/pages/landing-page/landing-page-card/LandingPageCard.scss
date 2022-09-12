@@ -8,6 +8,7 @@
       flex-direction: column;
       @include devices(desktop) {
          min-height: 330px;
+         max-height: 330px;
       }
       @include devices(mobile) {
          max-height: none;

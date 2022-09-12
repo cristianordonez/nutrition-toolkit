@@ -16,6 +16,7 @@ router.get('/', (req: Request, res: Response) => {
 
 //sends link to users email to change password
 router.post('/forgotPassword', (req: Request, res: Response) => {
+   console.log('1. req.body in forgot password:', req.body);
    userController.forgotPassword(req, res);
 });
 

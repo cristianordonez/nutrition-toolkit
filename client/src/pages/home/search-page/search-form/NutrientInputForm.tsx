@@ -11,8 +11,8 @@ interface Props {
    handleInputChange: any;
    measurement: string;
    nutrient: string;
-   minValue: string | number;
-   maxValue: string | number;
+   minValue: string | number | null;
+   maxValue: string | number | null;
 }
 export const NutrientInputForm = ({
    handleInputChange,

@@ -1,11 +1,10 @@
 import React from 'react';
 import './SearchPage.scss';
-import { CustomAlert } from '../../../components/custom-alert/CustomAlert';
 import { FoodSearchList } from './food-search-list';
 import { Box, Toolbar, IconButton, CircularProgress } from '@mui/material';
 import { useAuth } from '../../../context/authContext';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { useSearchOutlet } from '../../../hooks/useSearchOutlet';
+import { useHomeOutlet } from '../../../hooks/useHomeOutlet';
 
 const SearchPage = () => {
    const { isLoading, isLoggedIn, username } = useAuth(); //used to check if data is still being retrieved from database
@@ -16,15 +15,11 @@ const SearchPage = () => {
       route,
       handleLoadMore,
       setAlertMessage,
-      setOpenSnackbar,
+      setOpenAlert,
       setAlertSeverity,
       showLoadMoreBtn,
       SearchFormComponent,
-      openAlert,
-      handleAlert,
-      alertSeverity,
-      alertMessage,
-   } = useSearchOutlet();
+   } = useHomeOutlet();
 
    return (
       <>
@@ -53,7 +48,7 @@ const SearchPage = () => {
                            route={route}
                            handleLoadMore={handleLoadMore}
                            setAlertMessage={setAlertMessage}
-                           setOpenSnackbar={setOpenSnackbar}
+                           setOpenSnackbar={setOpenAlert}
                            setAlertSeverity={setAlertSeverity}
                            showLoadMoreBtn={showLoadMoreBtn}
                         />
@@ -61,13 +56,6 @@ const SearchPage = () => {
                   ) : (
                      <>{SearchFormComponent}</>
                   )}
-                  {/* ERROR SNACKBAR */}
-                  <CustomAlert
-                     openAlert={openAlert}
-                     handleAlert={handleAlert}
-                     alertSeverity={alertSeverity}
-                     alertMessage={alertMessage}
-                  />
                </Box>
             </>
          )}

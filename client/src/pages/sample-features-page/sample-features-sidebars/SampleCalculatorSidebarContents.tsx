@@ -12,7 +12,9 @@ export const SampleCalculatorSidebarContents = ({ goals }: Props) => {
    return (
       <>
          <>
-            <Typography variant='h3'>Recommended Daily Goals</Typography>
+            <Typography variant='h4' component='h1' align='center'>
+               Recommended Daily Goals
+            </Typography>
             <CaloriesCircularProgressWithoutGoals goals={goals} />
             <div className='goal-card-items'>
                <GoalCardItemList goals={goals} page={'mealplan'} />

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import './SignupForm.scss';
-import { Typography, Paper, Button } from '@mui/material';
+import { Typography, Paper, Button, AlertColor } from '@mui/material';
 import { MacroCalculatorForm } from '../../../components/macro-calculator-form';
 import { ConfirmPasswordTextField } from '../../../components/text-fields/confirm-password-textfield/ConfirmPasswordTextField';
 import { EmailTextField } from '../../../components/text-fields/email-textfield/EmailTextField';
@@ -8,6 +8,18 @@ import { PasswordTextField } from '../../../components/text-fields/password-text
 import { UsernameTextField } from '../../../components/text-fields/username-textfield/UsernameTextField';
 import GoogleIcon from '@mui/icons-material/Google';
 import axios from 'axios';
+
+interface Props {
+   showSignup: boolean;
+   setShowSignup: Dispatch<SetStateAction<boolean>>;
+   handleRedirectToSignup: () => void;
+   showTextFieldError: boolean;
+   setShowTextFieldError: Dispatch<SetStateAction<boolean>>;
+   errorMessage: string;
+   setErrorMessage: Dispatch<SetStateAction<string>>;
+   setOpenErrorAlert: Dispatch<SetStateAction<boolean>>;
+   setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
+}
 
 export const SignupForm = ({
    showSignup,
@@ -19,7 +31,7 @@ export const SignupForm = ({
    setErrorMessage,
    setOpenErrorAlert,
    setAlertSeverity,
-}: any) => {
+}: Props) => {
    const [showNextPage, setShowNextPage] = useState(false); //handles showing page 2 when creating account
 
    const [signupValues, setSignupValues] = useState({

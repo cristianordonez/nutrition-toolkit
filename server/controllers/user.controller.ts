@@ -73,17 +73,15 @@ export const checkAuthentication = async (req: Request, res: Response) => {
    if (session.passport || session.username) {
       res.status(201).send(session.username);
    } else {
-      res.status(403).send('User is not logged in.');
+      res.send('User is not logged in.');
    }
 };
 
 //# gets metrics from user from database
 export const getMetrics = async (req: any, res: Response) => {
    try {
-      console.log('here in get metrics');
       let user_id = req.session.user_id;
       let userGoals: any = await dailyGoalsModel.getGoals(user_id);
-      console.log('userGoals:', userGoals);
       res.status(201).send(userGoals[0]);
       // res.json(userGoals[0]);
    } catch (err) {
@@ -117,14 +115,11 @@ export const forgotPassword = async (req: Request, res: Response) => {
          );
       } else {
          //otherwise, check if token exists
-
          let currentToken = await tokensModel.findOne(user[0].id);
          //if token exists delete it first
-
          if (currentToken.length > 0) {
             await tokensModel.deleteOne(currentToken[0].token);
          }
-
          //add new token to database linked to current user
          let resetToken = crypto.randomBytes(32).toString('hex');
          const hash = await bcrypt.hash(resetToken, Number(saltRounds));
@@ -135,7 +130,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
          });
          //send email to user using sendEmail file that uses token to verify user, and sends to user w
          const link = `${process.env.CLIENT_URL}/passwordReset?token=${resetToken}&id=${user[0].id}`;
-         let response = await sendEmail(user[0].email, link);
+         await sendEmail(user[0].email, link);
          res.status(200).send(
             'Your account recovery link has been sent to your email.'
          );

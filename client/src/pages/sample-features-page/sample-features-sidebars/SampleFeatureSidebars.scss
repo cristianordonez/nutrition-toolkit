@@ -1,0 +1,7 @@
+@use '../../../index.scss' as *;
+
+.goal-card-items {
+   @include flex-center();
+   flex-wrap: wrap;
+   gap: 3rem;
+}

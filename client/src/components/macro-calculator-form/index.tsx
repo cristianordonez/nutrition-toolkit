@@ -14,7 +14,7 @@ import {
    DialogActions,
    Box,
 } from '@mui/material';
-import { getMetrics } from '../../helper-functions/get-metrics/getMetrics';
+import { getMetrics } from '../../utils/get-metrics/getMetrics';
 import { useNavigate } from 'react-router-dom';
 import { BsCalculatorFill } from 'react-icons/bs';
 interface Props {

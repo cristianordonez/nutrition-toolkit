@@ -5,7 +5,6 @@ import { DailyGoals } from '../../../components/daily-goals';
 import { CustomAlert } from '../../../components/custom-alert/CustomAlert';
 import {
    AlertColor,
-   Button,
    Typography,
    Stack,
    Paper,
@@ -17,22 +16,20 @@ import { CurrentGoals } from '../../../../../types/types';
 import { useAuth } from '../../../context/authContext';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { useHomeOutlet } from '../../../hooks/useHomeOutlet';
 
 const UserSettingsPage = () => {
+   const {
+      handleDrawerToggle,
+      setAlertMessage,
+      setOpenAlert,
+      setAlertSeverity,
+      setGoals,
+      goals,
+      mobileOpen,
+   } = useHomeOutlet();
+
    const { isLoading, isLoggedIn, username } = useAuth();
-   const [openAlert, setOpenAlert] = useState<boolean>(false);
-   const [alertSeverity, setAlertSeverity] = useState<AlertColor>('error');
-   const [alertMessage, setAlertMessage] = useState<string>('');
-   const [goals, setGoals] = useState({} as CurrentGoals);
-   const [mobileOpen, setMobileOpen] = React.useState(false);
-
-   const handleAlert = () => {
-      setOpenAlert(!openAlert);
-   };
-
-   const handleDrawerToggle = () => {
-      setMobileOpen(!mobileOpen);
-   };
 
    useEffect(() => {
       axios
@@ -120,12 +117,6 @@ const UserSettingsPage = () => {
                   page={'user-profile'}
                   setGoals={setGoals}
                   handleSubmitUpdatedGoals={handleSubmitUpdatedGoals}
-               />
-               <CustomAlert
-                  openAlert={openAlert}
-                  handleAlert={handleAlert}
-                  alertSeverity={alertSeverity}
-                  alertMessage={alertMessage}
                />
             </Paper>
          </div>

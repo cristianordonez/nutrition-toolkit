@@ -1,26 +1,26 @@
 import { PaletteMode } from '@mui/material';
 import { teal, grey } from '@mui/material/colors';
 
+console.log('teal:', teal);
 export const getDesignTokens = (mode: PaletteMode) => ({
    palette: {
       mode,
       primary: {
          ...teal,
          ...(mode === 'dark' && {
-            // main: '#BCCC9A',
-            main: '#a6b2eb',
+            main: '#6bb9f0',
+         }),
+         ...(mode === 'light' && {
+            main: '#336e7b'
          }),
       },
       secondary: {
          ...teal,
          ...(mode === 'dark' && {
-            main: '#3071e8',
+            main: '#dda0dd',
          }),
-      },
-      neutral: {
-         ...teal,
-         ...(mode === 'dark' && {
-            main: '#3071e8',
+         ...(mode === 'light' && {
+            main: '#8859b6',
          }),
       },
       ...(mode === 'dark' && {

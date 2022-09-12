@@ -2,7 +2,7 @@ import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { ConfirmDeleteDialog } from './ConfirmDeleteDialog';
 import { FoodItemContents } from '../../../../components/food-item-contents/FoodItemContents';
 import { AlertColor } from '@mui/material';
-import { FoodItemType } from '../../../../../../types/types';
+import { FoodItemType, MealplanItemType } from '../../../../../../types/types';
 import axios from 'axios';
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
    setOpenAlert: Dispatch<SetStateAction<boolean>>;
    setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    setAlertMessage: Dispatch<SetStateAction<string>>;
-   setMealPlanItems: Dispatch<SetStateAction<[]>>;
+   setMealPlanItems: Dispatch<SetStateAction<MealplanItemType[] | []>>;
    currentDay: string;
 }
 

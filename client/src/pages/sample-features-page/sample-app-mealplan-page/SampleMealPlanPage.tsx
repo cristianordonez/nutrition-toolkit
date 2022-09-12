@@ -1,19 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './SampleMealPlanPage.scss';
 import { SampleMealPlanDay } from './sample-mealplan-day/SampleMealplanDay';
-import { SampleMealplanSidebar } from './sample-mealplan-sidebar';
-import { CustomAlert } from '../../../components/custom-alert/CustomAlert';
+
 import { MealPlanWeekText } from '../../../components/mealplan-week-text/MealPlanWeekText';
-import {
-   AlertColor,
-   Tabs,
-   Tab,
-   Toolbar,
-   IconButton,
-   CircularProgress,
-} from '@mui/material';
+import { Tabs, Tab, CircularProgress } from '@mui/material';
 import { SampleMealplanItem, FoodItemType } from '../../../../../types/types';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import getDay from 'date-fns/getDay';
 import addDays from 'date-fns/addDays';
 import subDays from 'date-fns/subDays';
@@ -41,7 +32,7 @@ const SampleMealPlanPage = () => {
       setNutritionSummary,
       setAlertSeverity,
       setOpenAlert,
-      handleAlert,
+
       setValues,
       setSampleMealplanItems,
       setMealplanItems,
@@ -57,26 +48,8 @@ const SampleMealPlanPage = () => {
    } = useSampleFeaturesOutlet();
 
    const [dayIndex, setDayIndex] = useState<number>(getDay(Date.now())); //used for tab highlighting
-   // const [mealplanItems, setMealplanItems] = useState<FoodItemType[] | []>([]);
-   // const [sampleMealplanItems, setSampleMealplanItems] = useState<
-   //    SampleMealplanItem[] | []
-   // >([]);
-   // const [mobileOpen, setMobileOpen] = React.useState(false);
-   // const [openSnackbar, setOpenAlert] = useState<boolean>(false);
-   // const [alertSeverity, setAlertSeverity] = useState<AlertColor>('error');
-   // const [alertMessage, setAlertMessage] = useState<string>('');
 
    const [value, setValue] = React.useState<any>(new Date(Date.now()));
-   // const [nutritionSummary, setNutritionSummary] = useState({
-   //    calories: 0,
-   //    fat: 0,
-   //    carbohydrates: 0,
-   //    protein: 0,
-   // });
-
-   // const handleDrawerToggle = () => {
-   //    setMobileOpen(!mobileOpen);
-   // };
 
    const [currentDay, setCurrentDay] = useState(
       format(new Date(Date.now()), 'yyyy-MM-dd')
@@ -157,40 +130,8 @@ const SampleMealPlanPage = () => {
          });
    }, [currentDay]);
 
-   // const sampleGoals = {
-   //    total_carbohydrates: 135,
-   //    min_carbs_per_meal: 45,
-   //    max_carbs_per_meal: 55,
-   //    total_protein: 135,
-   //    min_protein_per_meal: 30,
-   //    max_protein_per_meal: 50,
-   //    total_fat: 100,
-   //    min_fat_per_meal: 25,
-   //    max_fat_per_meal: 45,
-   //    total_calories: 2000,
-   //    min_calories_per_meal: 450,
-   //    max_calories_per_meal: 650,
-   // };
-
    return (
       <>
-         {/* <SampleMealplanSidebar
-            handleDrawerToggle={handleDrawerToggle}
-            mobileOpen={mobileOpen}
-            nutritionSummary={nutritionSummary}
-            goals={sampleGoals}
-         /> */}
-         <Toolbar sx={{ display: { sm: 'none' } }}>
-            <IconButton
-               color='inherit'
-               aria-label='open drawer'
-               edge='start'
-               onClick={handleDrawerToggle}
-               sx={{ mr: 2, display: { sm: 'none' } }}
-            >
-               <ArrowForwardIosIcon />
-            </IconButton>
-         </Toolbar>
          <div className='sample-mealplan-page'>
             <MealPlanWeekText currentDay={currentDay} />
             <Box sx={{ maxWidth: { xs: 320, sm: 480 } }}>
@@ -215,12 +156,6 @@ const SampleMealPlanPage = () => {
                <CircularProgress size={100} />
             )}
          </div>
-         <CustomAlert
-            openAlert={openAlert}
-            handleAlert={handleClose}
-            alertSeverity={alertSeverity}
-            alertMessage={alertMessage}
-         />
       </>
    );
 };

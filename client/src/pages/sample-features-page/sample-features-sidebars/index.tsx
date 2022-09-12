@@ -1,11 +1,13 @@
 import React, { ReactElement, ReactNode } from 'react';
-import { Drawer, Toolbar, IconButton } from '@mui/material';
+import './SampleFeatureSidebars.scss';
+import { Drawer, Toolbar, IconButton, Box } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useLocation } from 'react-router-dom';
-import { SearchFormCustom } from '../../components/search-forms/SearchFormCustom';
-import { SampleMealplanSidebarContents } from './sample-app-mealplan-page/sample-mealplan-sidebar/SampleMealplanSidebarContents';
-import { SampleCalculatorSidebarContents } from './sample-app-calculator-page/SampleCalculatorSidebarContentx';
+import { SearchFormCustom } from '../../../components/search-forms/SearchFormCustom';
+import { SampleMealplanSidebarContents } from './SampleMealplanSidebarContents';
+import { SampleCalculatorSidebarContents } from './SampleCalculatorSidebarContents';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
+import { MainTitleLogo } from '../../../components/main-title-logo';
 
 const drawerWidth = '350px';
 
@@ -50,7 +52,9 @@ export const SampleFeaturesSidebar = ({
                '& .MuiDrawer-paper': {
                   boxSizing: 'border-box',
                   width: drawerWidth,
-                  pt: '100px',
+                  pt: '1rem',
+                  pl: '1rem',
+                  pr: '1rem',
                },
             }}
          >
@@ -65,6 +69,7 @@ export const SampleFeaturesSidebar = ({
                   <ArrowBackIosIcon />
                </IconButton>
             </Toolbar>
+            {/* <MainTitleLogo /> */}
 
             {location.pathname === '/diabetes-calculator-features/recipes' ? (
                <SearchFormCustom
@@ -97,10 +102,14 @@ export const SampleFeaturesSidebar = ({
                '& .MuiDrawer-paper': {
                   boxSizing: 'border-box',
                   width: drawerWidth,
-                  pt: '100px',
+                  pt: '1rem',
+                  pl: '1rem',
+                  pr: '1rem',
                },
             }}
          >
+            <MainTitleLogo />
+            <Box sx={{pt: '1rem'}}>
             {location.pathname === '/diabetes-calculator-features/recipes' ? (
                <SearchFormCustom
                   route={route}
@@ -121,6 +130,7 @@ export const SampleFeaturesSidebar = ({
             '/diabetes-calculator-features/calculator' ? (
                <SampleCalculatorSidebarContents goals={goals} />
             ) : null}
+            </Box>
          </Drawer>
       </>
    );

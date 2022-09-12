@@ -14,6 +14,7 @@ import {
    AlertColor,
 } from '@mui/material';
 import axios from 'axios';
+import { MealplanItemType } from '../../../../../../types/types';
 
 interface Props {
    shoppingListId: number;
@@ -23,7 +24,7 @@ interface Props {
    setOpenAlert: Dispatch<SetStateAction<boolean>>;
    setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    setAlertMessage: Dispatch<SetStateAction<string>>;
-   setMealPlanItems: Dispatch<SetStateAction<[]>>;
+   setMealPlanItems: Dispatch<SetStateAction<MealplanItemType[]>>;
    currentDay: string;
 }
 

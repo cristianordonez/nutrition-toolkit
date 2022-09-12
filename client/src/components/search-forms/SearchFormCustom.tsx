@@ -1,26 +1,14 @@
 import React, { FormEventHandler } from 'react';
-
 import { Button, Typography, Stack, SelectChangeEvent } from '@mui/material';
 import { NutrientInputForm } from '../../pages/home/search-page/search-form/NutrientInputForm';
 import { SearchInput } from '../../pages/home/search-page/search-form/SearchInput';
 import { QueryTextField } from '../../pages/home/search-page/search-form/QueryTextField';
 import { TypeDropDown } from '../../pages/home/search-page/search-form/TypeDropDown';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
-
+import {ValuesType} from '../../../../types/types'
 interface Props {
    route: string;
-   values: {
-      query: string;
-      type: string;
-      minCalories: string;
-      maxCalories: string;
-      minProtein: string;
-      maxProtein: string;
-      minCarbs: string;
-      maxCarbs: string;
-      minFat: string;
-      maxFat: string;
-   };
+   values: ValuesType;
    handleSubmit: FormEventHandler<HTMLFormElement>;
    handleRouteChange: (event: SelectChangeEvent) => void;
    handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;

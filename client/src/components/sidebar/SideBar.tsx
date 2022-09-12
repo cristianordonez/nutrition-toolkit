@@ -3,14 +3,14 @@ import React, { ReactNode } from 'react';
 import { DailyGoals } from '../daily-goals';
 import { IconButton, Toolbar, Drawer, Stack } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { CurrentGoals } from '../../../../types/types';
-import { MainTitleLogo } from '../main-title-logo/MainTitleLogo';
-import { LogoIcon } from '../logo-icon/LogoIcon';
+import { CurrentGoals, MealplanItemType } from '../../../../types/types';
+import { MainTitleLogo } from '../main-title-logo/index';
+
 interface Props {
    mobileOpen: boolean | undefined;
    handleDrawerToggle: any;
    SearchFormComponent?: ReactNode;
-   apiData?: never[];
+   apiData?: MealplanItemType[];
    goals?: CurrentGoals | any;
    page: string;
    nutritionSummary?: any;
@@ -67,7 +67,6 @@ export const SideBar = ({
                   justifyContent={'center'}
                   alignItems='center'
                >
-                  <LogoIcon />
                   <MainTitleLogo />
                </Stack>
                {page === 'search' && apiData !== undefined && apiData.length
@@ -105,7 +104,6 @@ export const SideBar = ({
                   justifyContent={'center'}
                   alignItems='center'
                >
-                  <LogoIcon />
                   <MainTitleLogo />
                </Stack>
                {page === 'search' && apiData !== undefined && apiData.length

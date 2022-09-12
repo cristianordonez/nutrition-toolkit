@@ -1,12 +1,12 @@
 import React, { ReactNode } from 'react';
 import { SideBar } from '../../../../components/sidebar/SideBar';
-import { CurrentGoals } from '../../../../../../types/types';
+import { CurrentGoals, MealplanItemType } from '../../../../../../types/types';
 
 interface SearchPageSidebarProps {
    mobileOpen: boolean | undefined;
    handleDrawerToggle: any;
    SearchFormComponent: ReactNode;
-   apiData: never[];
+   apiData: MealplanItemType[];
    goals: CurrentGoals;
 }
 

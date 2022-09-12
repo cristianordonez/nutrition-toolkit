@@ -1,6 +1,6 @@
 import React from 'react';
 import './404.scss';
-import NoPageFoundSvg from '../../../img/404-not-found.svg';
+import NoPageFoundSvg from '../../img/404-not-found.svg';
 import { Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 

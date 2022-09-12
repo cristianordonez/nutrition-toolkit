@@ -4,7 +4,7 @@ import { Typography, Stack, Paper, Button, AlertColor } from '@mui/material';
 import { PasswordTextField } from '../../../components/text-fields/password-textfield/PasswordTextField';
 import { UsernameTextField } from '../../../components/text-fields/username-textfield/UsernameTextField';
 import { useNavigate } from 'react-router-dom';
-import LoginSvg from '../../../../img/secure_login.svg';
+import LoginSvg from '../../../img/secure_login.svg';
 import GoogleIcon from '@mui/icons-material/Google';
 import axios from 'axios';
 
@@ -141,6 +141,8 @@ export const LoginForm = ({
                            data-testid='create-account-btn'
                            className='login-form-text'
                            variant='caption'
+                           color='textPrimary'
+                           sx={{textDecoration: 'underline'}}
                         >
                            Create Account
                         </Typography>

@@ -10,7 +10,7 @@ type LocationType = {
    pathname: string;
    key: string;
    search: string;
-   state: { resetPassword: boolean };
+   state: { resetPassword: boolean; sentRecoveryEmail: boolean };
 };
 
 const LoginPage = () => {
@@ -22,7 +22,7 @@ const LoginPage = () => {
 
    //handles showing snackbar if request to server to login is not successful
    const handleAlert = () => {
-      setOpenErrorAlert(true);
+      setOpenErrorAlert(!openErrorAlert);
    };
 
    //toggles showSignup state so user can either login or see the signup component
@@ -35,10 +35,18 @@ const LoginPage = () => {
    useEffect(() => {
       if (location.state && location.state.resetPassword) {
          setAlertSeverity('success');
-         setErrorMessage('Your password has been reset!');
+         setErrorMessage('Your password has been reset');
          setOpenErrorAlert(true);
+         window.history.replaceState({}, document.title);
+      } else if (location.state && location.state.sentRecoveryEmail) {
+         setAlertSeverity('success');
+         setErrorMessage(
+            'A link to reset your password has been successfully sent to your email address'
+         );
+         setOpenErrorAlert(true);
+         window.history.replaceState({}, document.title);
       }
-   }, [location]);
+   }, []);
 
    return (
       <>

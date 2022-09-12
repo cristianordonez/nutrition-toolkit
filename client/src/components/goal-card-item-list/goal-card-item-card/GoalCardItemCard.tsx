@@ -3,7 +3,7 @@ import './GoalCardItemCard.scss';
 import { useLocalStorageState } from '../../../hooks/useLocalStorage';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 import { CurrentGoals } from '../../../../../types/types';
-import { Card, CardContent, Typography, Stack, Input } from '@mui/material';
+import { Card, CardContent, Typography, Input } from '@mui/material';
 
 interface Props {
    type: 'Carbohydrates' | 'Protein' | 'Fat';
@@ -21,7 +21,6 @@ export const GoalCardItemCard = ({
    goals,
 }: Props): ReactJSXElement => {
    const [colorMode, setColorMode] = useLocalStorageState('mode', 'dark');
-   console.log('colorMode:', colorMode);
 
    //takes in total macronutrient amount entered and also changes associated min and max amounts
    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

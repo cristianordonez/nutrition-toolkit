@@ -4,8 +4,4 @@
    @include flex-center();
    flex-direction: column;
    @include set-size(100%);
-   @include devices(mobile) {
-      padding-left: 0;
-   }
-   padding-left: 350px;
 }

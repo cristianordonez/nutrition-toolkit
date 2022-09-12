@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './MealPlanPage.scss';
 import { DateSelectForm } from './date-select-form/DateSelectForm';
 import { MealplanDays } from './mealplan-days';
-import { CustomAlert } from '../../../components/custom-alert/CustomAlert';
 import { MealPlanWeekText } from '../../../components/mealplan-week-text/MealPlanWeekText';
 import {
    Typography,
@@ -13,13 +12,15 @@ import {
    IconButton,
 } from '@mui/material';
 import format from 'date-fns/format';
+import axios from 'axios';
 import getDay from 'date-fns/getDay';
 import addDays from 'date-fns/addDays';
+import { MealplanItemType } from '../../../../../types/types';
 import subDays from 'date-fns/subDays';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useAuth } from '../../../context/authContext';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import { useMealplanOutlet } from '../../../hooks/useMealplanOutlet';
+import { useHomeOutlet } from '../../../hooks/useHomeOutlet';
 
 const days = [
    'Sunday',
@@ -41,10 +42,6 @@ const MealPlanPage = () => {
       setAlertMessage,
       setOpenAlert,
       setAlertSeverity,
-      openAlert,
-      handleAlert,
-      alertSeverity,
-      alertMessage,
       setNutritionSummary,
       setMealplanItemsFound,
       setMealplanItems,
@@ -54,7 +51,48 @@ const MealPlanPage = () => {
       setBreakfastItems,
       setLunchItems,
       setDinnerItems,
-   } = useMealplanOutlet();
+      breakfastItems,
+      lunchItems,
+      dinnerItems,
+   } = useHomeOutlet();
+
+   //#check for active mealplan items only when navigating to the mealplan page
+   useEffect(() => {
+      handleDateChange();
+   }, [currentDay]);
+
+   const handleDateChange = async () => {
+      setMealplanItems([]); //when tab changes, reset the nutrition summary and the mealplan items
+      setNutritionSummary([]);
+      try {
+         let response = await axios.get('/api/mealplan/day', {
+            params: { date: currentDay },
+            withCredentials: true,
+         });
+         setNutritionSummary(response.data.nutritionSummary.nutrients);
+         setMealplanItems(response.data.items);
+         response.data.items.forEach((item: MealplanItemType) => {
+            if (item.slot === 1) {
+               let currentBreakfastItems = [...breakfastItems, item];
+               setBreakfastItems(currentBreakfastItems);
+            } else if (item.slot === 2) {
+               let currentLunchItems = [...lunchItems, item];
+               setLunchItems(currentLunchItems);
+            } else {
+               let currentDinnerItems = [...dinnerItems, item];
+               setDinnerItems(currentDinnerItems);
+            }
+         });
+      } catch (err) {
+         console.log(err);
+         setAlertSeverity('info');
+         setAlertMessage(
+            'You have no items saved on this day for your mealplan.'
+         );
+         setOpenAlert(true);
+         setMealplanItemsFound(false);
+      }
+   };
 
    //need to configure so that day is also changed when tab changes
    const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -154,12 +192,6 @@ const MealPlanPage = () => {
                      setAlertMessage={setAlertMessage}
                   />
                )}
-               <CustomAlert
-                  openAlert={openAlert}
-                  handleAlert={handleAlert}
-                  alertSeverity={alertSeverity}
-                  alertMessage={alertMessage}
-               />
             </div>
          </div>
       </>

@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
+import './SampleFeaturesPage.scss';
 import { Routes, Route, Outlet } from 'react-router-dom';
-import { SampleFeaturesSidebar } from './SampleFeaturesSidebar';
-import { SearchFormCustom } from '../../components/search-forms/SearchFormCustom';
-import { getMetrics } from '../../helper-functions/get-metrics/getMetrics';
-import { SampleMealplanSidebarContents } from './sample-app-mealplan-page/sample-mealplan-sidebar/SampleMealplanSidebarContents';
+import { SampleFeaturesSidebar } from './sample-features-sidebars';
+import { CustomAlert } from '../../components/custom-alert/CustomAlert';
+import { getMetrics } from '../../utils/get-metrics/getMetrics';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import {
    IconButton,
    Toolbar,
    AlertColor,
    SelectChangeEvent,
+   Tooltip,
 } from '@mui/material';
 import { RouteValues } from '../../../../types/types';
 import axios from 'axios';
@@ -33,21 +34,6 @@ const initialState = {
    offset: 0,
    number: 10,
 };
-
-// const sampleGoals = {
-//    total_carbohydrates: 135,
-//    min_carbs_per_meal: 45,
-//    max_carbs_per_meal: 55,
-//    total_protein: 135,
-//    min_protein_per_meal: 30,
-//    max_protein_per_meal: 50,
-//    total_fat: 100,
-//    min_fat_per_meal: 25,
-//    max_fat_per_meal: 45,
-//    total_calories: 2000,
-//    min_calories_per_meal: 450,
-//    max_calories_per_meal: 650,
-// };
 
 const initialGoals = {
    total_carbohydrates: 135,
@@ -76,7 +62,6 @@ const SampleFeaturesPage = () => {
    const [isLoading, setIsLoading] = useState<boolean>(false);
    const [popularRecipes, setPopularRecipes] = useState([]);
    const [goals, setGoals] = useState<CurrentGoals>(initialGoals);
-   const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
    const [alertSeverity, setAlertSeverity] = useState<AlertColor>('error');
    const [alertMessage, setAlertMessage] = useState<string>('');
    const [route, setRoute] = useState<string>('recipes');
@@ -160,24 +145,6 @@ const SampleFeaturesPage = () => {
       setValues({ ...values, [event.target.id]: event.target.value });
    };
 
-   // const SearchFormCustomComponent: any = (
-   //    <SearchFormCustom
-   //       route={route}
-   //       values={values}
-   //       handleSubmit={handleSearch}
-   //       handleRouteChange={handleRouteChange}
-   //       handleInputChange={handleInputChange}
-   //       handleTypeSelect={handleTypeSelect}
-   //    />
-   // );
-
-   // const SampleMealplanSidebar: any = (
-   //    <SampleMealplanSidebarContents
-   //       goals={sampleGoals}
-   //       nutritionSummary={nutritionSummary}
-   //    />
-   // );
-
    return (
       <>
          <SampleFeaturesSidebar
@@ -192,53 +159,63 @@ const SampleFeaturesPage = () => {
             goals={goals}
             nutritionSummary={nutritionSummary}
          />
-         <Toolbar sx={{ display: { sm: 'none' } }}>
-            <IconButton
-               color='inherit'
-               aria-label='open drawer'
-               edge='start'
-               onClick={handleDrawerToggle}
-               sx={{ mr: 2, display: { sm: 'none' } }}
-            >
-               <ArrowForwardIosIcon />
-            </IconButton>
-         </Toolbar>
-         <Outlet
-            context={{
-               mobileOpen,
-               handleDrawerToggle,
-               setNutritionSummary,
-               setAlertSeverity,
-               openAlert,
-               setOpenAlert,
-               handleAlert,
-               setValues,
-               setAlertMessage,
-               setSampleMealplanItems,
-               setMealplanItems,
-               isLoading,
-               mealplanItems,
-               setPopularRecipes,
-               popularRecipes,
-               alertSeverity,
-               showPopularRecipes,
-               alertMessage,
-               sampleMealplanItems,
-               goals,
-               setGoals,
-               setGender,
-               gender,
-               route,
-               age,
-               setAge,
-               height,
-               setHeight,
-               weight,
-               setWeight,
-               activityLevel,
-               setActivityLevel,
-               handleSubmit,
-            }}
+
+         <div className='main-page-container'>
+            <Tooltip title='Open Sidebar'>
+               <Toolbar sx={{ display: { sm: 'none' } }}>
+                  <IconButton
+                     color='inherit'
+                     aria-label='open drawer'
+                     edge='start'
+                     onClick={handleDrawerToggle}
+                     sx={{ mr: 2, display: { sm: 'none' } }}
+                  >
+                     <ArrowForwardIosIcon />
+                  </IconButton>
+               </Toolbar>
+            </Tooltip>
+            <Outlet
+               context={{
+                  mobileOpen,
+                  handleDrawerToggle,
+                  setNutritionSummary,
+                  setAlertSeverity,
+                  openAlert,
+                  route,
+                  setOpenAlert,
+                  setValues,
+                  setAlertMessage,
+                  setSampleMealplanItems,
+                  setMealplanItems,
+                  isLoading,
+                  mealplanItems,
+                  setPopularRecipes,
+                  popularRecipes,
+                  alertSeverity,
+                  showPopularRecipes,
+                  alertMessage,
+                  sampleMealplanItems,
+                  goals,
+                  setGoals,
+                  setGender,
+                  gender,
+                  age,
+                  setAge,
+                  height,
+                  setHeight,
+                  weight,
+                  setWeight,
+                  activityLevel,
+                  setActivityLevel,
+                  handleSubmit,
+               }}
+            />
+         </div>
+         <CustomAlert
+            openAlert={openAlert}
+            handleAlert={handleAlert}
+            alertSeverity={alertSeverity}
+            alertMessage={alertMessage}
          />
       </>
    );

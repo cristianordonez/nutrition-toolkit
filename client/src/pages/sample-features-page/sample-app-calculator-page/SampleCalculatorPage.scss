@@ -7,9 +7,3 @@
    padding: 1rem;
    gap: 1em;
 }
-
-.goal-card-items {
-   @include flex-center();
-   flex-wrap: wrap;
-   gap: 3rem;
-}

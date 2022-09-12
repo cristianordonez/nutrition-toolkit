@@ -36,7 +36,7 @@ export const LandingPageCard = ({
                fullWidth
                color='primary'
             >
-               <Typography align='center'>Try it out</Typography>
+               <Typography align='center' color='textPrimary' >Try it out</Typography>
             </Button>
          </Card>
       </Grid>

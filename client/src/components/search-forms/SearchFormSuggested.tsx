@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { Button, Typography, Stack } from '@mui/material';
 import { NutrientInputForm } from '../../pages/home/search-page/search-form/NutrientInputForm';
 import { SearchInput } from '../../pages/home/search-page/search-form/SearchInput';
 import { QueryTextField } from '../../pages/home/search-page/search-form/QueryTextField';
 import { TypeDropDown } from '../../pages/home/search-page/search-form/TypeDropDown';
+import axios from 'axios';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
+import { useHomeOutlet } from '../../hooks/useHomeOutlet';
 
 interface Props {
    route: any;
@@ -13,7 +15,13 @@ interface Props {
    handleInputChange: any;
    handleTypeSelect: any;
    goals: any;
-   handleSuggestedSubmit: any;
+   setValues: Dispatch<SetStateAction<any>>;
+   setAlertMessage: any;
+   setAlertSeverity: any;
+   setLoading: any;
+   setOpenAlert: any;
+   setShowLoadMoreBtn: any;
+   setAPIData: any;
 }
 
 export const SearchFormSuggested = ({
@@ -23,8 +31,60 @@ export const SearchFormSuggested = ({
    handleInputChange,
    handleTypeSelect,
    goals,
-   handleSuggestedSubmit,
+   setValues,
+   setAlertMessage,
+   setAlertSeverity,
+   setLoading,
+   setOpenAlert,
+   setShowLoadMoreBtn,
+   setAPIData,
 }: Props): ReactJSXElement => {
+   //# handles submission when it comes from suggested goals form, must be different because values are coming from goals state object
+   const handleSuggestedSubmit = async (event: React.SyntheticEvent) => {
+      let newValues = { ...values, offset: 0 }; //declare new values so that there are no async bugs, and reset offset to 0 in case user changed it
+      setValues(newValues);
+      try {
+         setLoading(true); //used to trigger the loading circle
+         event.preventDefault();
+         let suggestedValues: any = values;
+         suggestedValues.minCalories = goals.min_calories_per_meal;
+         suggestedValues.maxCalories = goals.max_calories_per_meal;
+         suggestedValues.minCarbs = goals.min_carbs_per_meal;
+         suggestedValues.maxCarbs = goals.max_carbs_per_meal;
+         suggestedValues.minProtein = goals.min_protein_per_meal;
+         suggestedValues.maxProtein = goals.max_protein_per_meal;
+         suggestedValues.minFat = goals.min_fat_per_meal;
+         suggestedValues.maxFat = goals.max_fat_per_meal;
+         let foodItems = await axios.get(`/api/${route}`, {
+            params: suggestedValues,
+         });
+         //if there are no items returned
+         if (foodItems.data.length === 0) {
+            setAlertMessage(
+               'No options matched your search. Try again with a broader search'
+            );
+            setAlertSeverity('warning');
+            setOpenAlert(true);
+            setShowLoadMoreBtn(false);
+         } else {
+            setAlertSeverity('success');
+            setAlertMessage('Success! Here are your matching items.');
+            setOpenAlert(true);
+            if (foodItems.data.length < 6) {
+               setShowLoadMoreBtn(false);
+            } else {
+               setShowLoadMoreBtn(true);
+            }
+         }
+         setValues(suggestedValues);
+         setAPIData(foodItems.data);
+         setLoading(false);
+      } catch (err) {
+         console.log(err);
+         setLoading(false); //used to trigger the loading circle
+      }
+   };
+
    return (
       <>
          <form onSubmit={handleSuggestedSubmit}>
