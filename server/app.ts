@@ -17,7 +17,6 @@ import { router as mealplanRoute } from './routes/mealplan.route';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { db } from './database/db';
 import bcrypt from 'bcrypt';
-import favicon from 'serve-favicon';
 
 const GoogleStrategy = require('passport-google-oidc');
 const generator = require('generate-password');
@@ -25,7 +24,6 @@ const pgSession = require('connect-pg-simple')(session);
 const app = express();
 
 //MIDDLEWARE
-app.use(favicon(path.join(__dirname, '../favicon_io', 'favicon.ico')));
 app.use(cors());
 app.use(compression());
 app.use(express.static(path.join(__dirname, '../client/dist')));
