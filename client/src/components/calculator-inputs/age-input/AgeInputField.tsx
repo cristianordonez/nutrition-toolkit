@@ -35,6 +35,7 @@ export const AgeInputField = ({ age, setAge }: Props) => {
                <Slider
                   value={typeof age === 'number' ? age : 0}
                   onChange={handleAgeSliderChange}
+                  data-testid='age-slider'
                   aria-labelledby='input-slider'
                   min={18}
                   max={100}

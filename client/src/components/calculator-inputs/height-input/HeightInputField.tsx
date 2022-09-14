@@ -37,6 +37,7 @@ export const HeightInputField = ({ height, setHeight }: Props) => {
                   value={typeof height === 'number' ? height : 0}
                   onChange={handleHeightSliderChange}
                   aria-labelledby='height-input-slider'
+                  data-testid='height-slider'
                   min={54}
                   max={84}
                   color='secondary'

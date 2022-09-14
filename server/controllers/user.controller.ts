@@ -73,7 +73,7 @@ export const checkAuthentication = async (req: Request, res: Response) => {
    if (session.passport || session.username) {
       res.status(201).send(session.username);
    } else {
-      res.send('User is not logged in.');
+      res.status(403).send('User is not logged in.');
    }
 };
 
@@ -83,7 +83,6 @@ export const getMetrics = async (req: any, res: Response) => {
       let user_id = req.session.user_id;
       let userGoals: any = await dailyGoalsModel.getGoals(user_id);
       res.status(201).send(userGoals[0]);
-      // res.json(userGoals[0]);
    } catch (err) {
       console.log(err);
       res.status(500).send('Unable to retrieve daily goals.');
@@ -136,6 +135,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
          );
       }
    } catch (err) {
+      console.log('err:', err);
       res.status(400).send('Unable to send an email. Please try again later.');
    }
 };

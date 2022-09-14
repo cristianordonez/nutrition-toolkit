@@ -37,6 +37,7 @@ export const WeightInputField = ({ weight, setWeight }: Props) => {
                <Slider
                   value={typeof weight === 'number' ? weight : 0}
                   onChange={handleWeightSliderChange}
+                  data-testid='weight-slider'
                   min={70}
                   max={400}
                   aria-labelledby='weight-input-slider'

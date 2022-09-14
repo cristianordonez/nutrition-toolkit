@@ -18,7 +18,7 @@ import {
    AlertColor,
 } from '@mui/material';
 import { DatePickerTextField } from './DatePickerTextField';
-import { addToMealPlanType } from '../../../../../../server/API/api.types'; //interface from api handler
+import { addToMealPlanType } from '../../../../../../types/types'; //interface from api handler
 import axios from 'axios';
 import getUnixTime from 'date-fns/getUnixTime';
 import startOfToday from 'date-fns/startOfToday';

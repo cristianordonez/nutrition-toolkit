@@ -1,11 +1,19 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
 import './LoginForm.scss';
-import { Typography, Stack, Paper, Button, AlertColor } from '@mui/material';
+import {
+   Box,
+   Typography,
+   Stack,
+   Paper,
+   Button,
+   AlertColor,
+} from '@mui/material';
 import { PasswordTextField } from '../../../components/text-fields/password-textfield/PasswordTextField';
 import { UsernameTextField } from '../../../components/text-fields/username-textfield/UsernameTextField';
 import { useNavigate } from 'react-router-dom';
 import LoginSvg from '../../../img/secure_login.svg';
 import GoogleIcon from '@mui/icons-material/Google';
+import { useAuth } from '../../../context/authContext';
 import axios from 'axios';
 
 interface Props {
@@ -30,6 +38,8 @@ export const LoginForm = ({
    handleErrorAlert,
 }: Props) => {
    const navigate = useNavigate();
+   const { isLoading, isLoggedIn, username, handleLogout, setIsLoggedIn } =
+      useAuth(); //used to check if data is still being retrieved from database
 
    const [loginValues, setLoginValues] = useState({
       username: '',
@@ -43,7 +53,6 @@ export const LoginForm = ({
       } else {
          currentValue = event.target.value;
       }
-
       setLoginValues({
          ...loginValues,
          [event.target.name]: currentValue,
@@ -56,9 +65,10 @@ export const LoginForm = ({
          let response = await axios.post(`/api/login`, loginValues, {
             withCredentials: true,
          });
-         if (response.status === 200) {
+         if (response.status === 201) {
+            setIsLoggedIn(true);
             setShowTextFieldError(false);
-            navigate(`/search`, { replace: true });
+            navigate(`/home/search`, { replace: true });
          }
       } catch (err: any) {
          setAlertSeverity('error');
@@ -111,15 +121,17 @@ export const LoginForm = ({
                      errorMessage={errorMessage}
                      handleLoginChange={handleLoginChange}
                   />
-                  <Typography
-                     align='right'
-                     className='login-form-text'
-                     sx={{ '&:hover': { cursor: 'pointer' }, width: '100%' }}
-                     onClick={handleRedirectToForgotPassword}
-                     variant='caption'
-                  >
-                     Forgot password?
-                  </Typography>
+                  <Stack alignItems='flex-end' sx={{ width: '100%' }}>
+                     <Typography
+                        align='center'
+                        className='login-form-text'
+                        sx={{ '&:hover': { cursor: 'pointer' } }}
+                        onClick={handleRedirectToForgotPassword}
+                        variant='caption'
+                     >
+                        Forgot password?
+                     </Typography>
+                  </Stack>
                   <Button
                      data-testid='login-btn'
                      type='submit'
@@ -142,7 +154,7 @@ export const LoginForm = ({
                            className='login-form-text'
                            variant='caption'
                            color='textPrimary'
-                           sx={{textDecoration: 'underline'}}
+                           sx={{ textDecoration: 'underline' }}
                         >
                            Create Account
                         </Typography>

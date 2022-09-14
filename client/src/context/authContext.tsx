@@ -1,7 +1,14 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, {
+   createContext,
+   useState,
+   useContext,
+   useEffect,
+   Dispatch,
+   SetStateAction,
+} from 'react';
 
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface Props {
    children: React.ReactNode;
@@ -10,12 +17,14 @@ interface Props {
 type Context = {
    isLoading: boolean;
    isLoggedIn: boolean;
+   setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
    username: string;
    handleLogout: any;
 };
 
 const AuthContext = createContext<any>({
    isLoggedIn: false,
+   setIsLoggedIn: null,
    username: '',
    handleLogout: null,
    isLoading: true,
@@ -23,6 +32,7 @@ const AuthContext = createContext<any>({
 
 //# sends request to server to see if user is still logged in or not, redirects if they are not
 const AuthProvider = ({ children }: Props) => {
+   const location = useLocation();
    const navigate = useNavigate();
    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
    const [isLoading, setIsLoading] = useState<Context | boolean>(true);
@@ -43,51 +53,50 @@ const AuthProvider = ({ children }: Props) => {
    };
 
    useEffect(() => {
+      setIsLoading(true);
       axios
          .get('/api/authentication')
          .then((response) => {
             //redirect user to macro calculator page if no daily goals are found
-            //only change state if necessary
             if (response.status === 201) {
-               if (isLoggedIn === false) {
-                  setUsername(response.data);
-                  setIsLoggedIn(true);
-                  axios
-                     .get('api/metrics')
-                     .then((response) => {
-                        if (response.data.length === 0) {
-                           navigate('/home/macrocalculator');
-                        }
-                     })
-                     .catch((err) => {
-                        console.log(err);
-                     });
-               }
+               setUsername(response.data);
+               setIsLoggedIn(true);
+               axios
+                  .get('/api/metrics')
+                  .then((response) => {
+                     if (response.data.length === 0) {
+                        navigate('/home/macrocalculator');
+                     }
+                  })
+                  .catch((err) => {
+                     console.log(err);
+                  });
             } else {
-               if (isLoggedIn === true) {
-                  setIsLoggedIn(false);
-               }
+               setIsLoggedIn(false);
             }
             setIsLoading(false);
          })
          .catch((err) => {
-            if (isLoggedIn === true) {
-               setIsLoggedIn(false);
-               navigate('/', {
-                  state: { showError: false },
-                  replace: true,
-               });
-            }
+            setIsLoggedIn(false);
+            navigate('/', {
+               state: { showError: false },
+               replace: true,
+            });
             setIsLoading(false);
          });
-      console.log('here in use effect auth');
    }, []);
 
    //pass down the booleans for isLoading and isLoggedIn
    return (
       <>
          <AuthContext.Provider
-            value={{ isLoading, isLoggedIn, username, handleLogout }}
+            value={{
+               isLoading,
+               isLoggedIn,
+               username,
+               handleLogout,
+               setIsLoggedIn,
+            }}
          >
             {children}
          </AuthContext.Provider>

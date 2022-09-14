@@ -4,10 +4,10 @@ let database = process.env.NODE_ENV === 'test' ? 'mealplans_test' : 'mealplans';
 const pgp = require('pg-promise')();
 
 const cn = {
-   user: process.env.USER,
-   host: process.env.HOST,
+   user: process.env.DATABASE_USER,
+   host: process.env.DATABASE_HOST,
    database: database,
-   password: process.env.PASSWORD,
+   password: process.env.DATABASE_PASSWORD,
    port: 5432,
 };
 

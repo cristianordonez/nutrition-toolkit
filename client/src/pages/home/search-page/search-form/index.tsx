@@ -5,16 +5,20 @@ import { Stack, Tabs, Tab, Typography, AlertColor } from '@mui/material';
 import { SearchFormSuggested } from '../../../../components/search-forms/SearchFormSuggested';
 import { SearchFormCustom } from '../../../../components/search-forms/SearchFormCustom';
 import { SelectChangeEvent } from '@mui/material/Select';
-import { CurrentGoals, MealplanItemType, ValuesType } from '../../../../../../types/types';
+import {
+   CurrentGoals,
+   MealplanItemType,
+   ValuesType,
+} from '../../../../../../types/types';
 
 interface Props {
-   handleSubmit: (event: React.SyntheticEvent) => Promise<void>
+   handleSubmit: (event: React.SyntheticEvent) => Promise<void>;
    route: string;
    setRoute: Dispatch<SetStateAction<string>>;
    setCurrentTab: Dispatch<SetStateAction<string>>;
    currentTab: string;
-   handleChange: (event: React.SyntheticEvent, currentValue: string) => void
-   values:   ValuesType;
+   handleChange: (event: React.SyntheticEvent, currentValue: string) => void;
+   values: ValuesType;
    setValues: Dispatch<SetStateAction<ValuesType>>;
    goals: CurrentGoals;
    setAlertMessage: Dispatch<SetStateAction<string>>;

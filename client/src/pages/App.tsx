@@ -136,7 +136,7 @@ export const App = () => {
                            element={<ResetPasswordPage />}
                         />
 
-                        <Route path='/home' element={<Home />}>
+                        <Route path='/home/*' element={<Home />}>
                            <Route path='search' element={<SearchPage />} />
                            <Route path='mealplan' element={<MealPlanPage />} />
                            <Route

@@ -1,8 +1,8 @@
 import React, { MouseEvent, Dispatch, SetStateAction } from 'react';
 import { ToggleButtonGroup, ToggleButton } from '@mui/material';
-import { AgeInputField } from '../calculator-inputs/AgeInputField';
-import { HeightInputField } from '../calculator-inputs/HeightInputField';
-import { WeightInputField } from '../calculator-inputs/WeightInputField';
+import { AgeInputField } from '../calculator-inputs/age-input/AgeInputField';
+import { HeightInputField } from '../calculator-inputs/height-input/HeightInputField';
+import { WeightInputField } from '../calculator-inputs/weight-input/WeightInputField';
 
 interface Props {
    handleGenderChange: (event: MouseEvent<HTMLElement>, value: any) => void;

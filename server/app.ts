@@ -34,9 +34,9 @@ const database =
    process.env.NODE_ENV === 'test' ? 'mealplans_test' : 'mealplans';
 
 const conObject = {
-   user: process.env.USER,
-   password: process.env.PASSWORD,
-   host: process.env.HOST, // or whatever it may be
+   user: process.env.DATABASE_USER,
+   password: process.env.DATABASE_PASSWORD,
+   host: process.env.DATABASE_HOST, // or whatever it may be
    port: 5432,
    database: database,
 };
@@ -96,8 +96,8 @@ passport.use(
 passport.use(
    new GoogleStrategy(
       {
-         clientID: process.env['GOOGLE_CLIENT_ID'],
-         clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
+         clientID: process.env['GOOGLE_SIGNIN_CLIENT_ID'],
+         clientSecret: process.env['GOOGLE_SIGNIN_CLIENT_SECRET'],
          callbackURL: '/api/oauth2/redirect/google',
          scope: ['profile', 'email'], //the data we are asking for from google
       },

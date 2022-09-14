@@ -4,7 +4,7 @@ import {
    UserType,
    AccountType,
    addToMealPlanType,
-} from './api.types';
+} from '../../types/types';
 
 const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/';
 const X_RAPIDAPI_KEY = process.env.X_RAPIDAPI_KEY;

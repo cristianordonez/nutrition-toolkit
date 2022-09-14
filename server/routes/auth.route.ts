@@ -59,7 +59,7 @@ router.post('/signup', (req: Request, res: Response) => {
 router.post(
    '/login',
    passport.authenticate('local', {
-      failureRedirect: `/error`,
+      failureRedirect: `/login`,
       failureMessage: true,
    }),
    (req: Request, res: Response) => {
@@ -70,7 +70,8 @@ router.post(
       session.username = user.username;
       session.save();
 
-      res.status(200).send('Successfully logged in.');
+      res.status(201).send('Successfully logged in.');
+      // res.status(201).redirect('/home/search');
    }
 );
 

@@ -1,14 +1,13 @@
 /**
  * @jest-environment jsdom
  */
-import React, { useState } from 'react';
+import React from 'react';
 import { expect } from '../../../../jestGlobals';
-import { render, waitFor, screen, fireEvent } from '@testing-library/react';
+import { render, waitFor, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import NavBar from './NavBar';
-import userEvent from '@testing-library/user-event';
 import 'regenerator-runtime/runtime';
-import { Route, MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 const mockedUsedNavigate = jest.fn();
 
 describe('NavBar Component ', () => {

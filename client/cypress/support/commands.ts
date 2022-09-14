@@ -80,7 +80,7 @@ Cypress.Commands.add('login', () => {
          password: 'password',
       },
    });
-   cy.visit(`/search`);
+   cy.visit(`/home/search`);
 });
 
 // custom command to logout user

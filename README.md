@@ -116,6 +116,20 @@ npm run cypress
 npm run test
 ```
 
+## Database
+
+-To connect to RDS instance hosting postgresql database:
+
+```bash
+bash rds-login.sh
+```
+
+-If having issues connecting to RDS from EC2 instance, make sure correct permissions are being sent, as the name of the user sending requests from the EC2 instance is called 'root'. Therefore give permissions to this user:
+
+```bash
+GRANT rds_superuser TO root;
+```
+
 ## Resources
 
 -  [React code-splitting](https://reactjs.org/docs/code-splitting.html)
@@ -124,3 +138,4 @@ npm run test
 -  [Set up tests with Jest and Supertest](https://www.rithmschool.com/courses/intermediate-node-express/api-tests-with-jest)
 -  [Set up users for PostgreSQL](https://stackoverflow.com/questions/42749033/fatal-password-authentication-failed-for-user-root-postgresql)
 -  [Fixing issues with setting up PostgreSQL on RDS](https://stackoverflow.com/questions/65877048/pgadmin-on-ubuntu-20-04-fatal-password-authentication-failed-for-user)
+-  [Getting correct permissions to tables for requests sent from EC2 instance](https://stackoverflow.com/questions/55080121/amazon-rds-postgresql-role-cannot-access-tables)

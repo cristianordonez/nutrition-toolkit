@@ -8,12 +8,12 @@ import SMTPTransport from 'nodemailer';
 // using access token and the google playground
 const createTransporter = async () => {
    const oauth2Client = new OAuth2(
-      process.env.OAUTH_CLIENT_ID,
-      process.env.OAUTH_CLIENT_SECRET,
+      process.env.GMAIL_OAUTH_CLIENT_ID,
+      process.env.GMAIL_OAUTH_CLIENT_SECRET,
       'https://developers.google.com/oauthplayground'
    );
    oauth2Client.setCredentials({
-      refresh_token: process.env.REFRESH_TOKEN,
+      refresh_token: process.env.GMAIL_REFRESH_TOKEN,
    });
    const accessToken = await new Promise((resolve, reject) => {
       oauth2Client.getAccessToken((err: any, token: any) => {
@@ -31,9 +31,9 @@ const createTransporter = async () => {
          user: process.env.EMAIL_USERNAME,
          accessToken,
          // pass: process.env.EMAIL_PASSWORD,
-         clientId: process.env.OAUTH_CLIENT_ID,
-         clientSecret: process.env.OAUTH_CLIENT_SECRET,
-         refreshToken: process.env.REFRESH_TOKEN,
+         clientId: process.env.GMAIL_OAUTH_CLIENT_ID,
+         clientSecret: process.env.GMAIL_OAUTH_CLIENT_SECRET,
+         refreshToken: process.env.GMAIL_REFRESH_TOKEN,
       },
    } as any);
    return transporter;

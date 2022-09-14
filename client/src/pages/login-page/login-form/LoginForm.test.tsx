@@ -25,7 +25,7 @@ describe('LoginForm Component ', () => {
          <LoginForm
             handleRedirectToSignup={handleRedirectToSignup}
             showSignup={true}
-            showTextFieldError={false}
+            showTextFieldError={true}
             errorMessage='this should display'
          />
       );

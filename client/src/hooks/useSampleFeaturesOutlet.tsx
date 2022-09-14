@@ -1,7 +1,13 @@
 import { Dispatch, SetStateAction } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { AlertColor } from '@mui/material';
-import { CurrentGoals, FoodItemType, RouteValues, SampleMealplanItem, Recipe } from '../../../types/types';
+import {
+   CurrentGoals,
+   FoodItemType,
+   RouteValues,
+   SampleMealplanItem,
+   Recipe,
+} from '../../../types/types';
 
 interface OutletContext {
    mobileOpen: boolean;
@@ -14,10 +20,10 @@ interface OutletContext {
    setAlertMessage: Dispatch<SetStateAction<string>>;
    setSampleMealplanItems: Dispatch<SetStateAction<SampleMealplanItem[] | []>>;
    setMealplanItems: Dispatch<SetStateAction<SampleMealplanItem[] | []>>;
-   isLoading: boolean
+   isLoading: boolean;
    mealplanItems: FoodItemType[];
    setPopularRecipes: Dispatch<SetStateAction<[]>>;
-   popularRecipes: Recipe[]
+   popularRecipes: Recipe[];
    alertSeverity: AlertColor;
    showPopularRecipes: boolean;
    alertMessage: string;
@@ -28,7 +34,7 @@ interface OutletContext {
    gender: string;
    age: number;
    setAge: Dispatch<SetStateAction<string | number | (string | number)[]>>;
-   height: string | number | (string | number)[]
+   height: string | number | (string | number)[];
    route: string;
    setHeight: Dispatch<SetStateAction<string | number | (string | number)[]>>;
    weight: number;

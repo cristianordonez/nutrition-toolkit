@@ -5,7 +5,7 @@ import { SearchInput } from '../../pages/home/search-page/search-form/SearchInpu
 import { QueryTextField } from '../../pages/home/search-page/search-form/QueryTextField';
 import { TypeDropDown } from '../../pages/home/search-page/search-form/TypeDropDown';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
-import {ValuesType} from '../../../../types/types'
+import { ValuesType } from '../../../../types/types';
 interface Props {
    route: string;
    values: ValuesType;

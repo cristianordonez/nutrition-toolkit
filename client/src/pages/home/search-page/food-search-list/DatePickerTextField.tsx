@@ -4,7 +4,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { TextField, Box } from '@mui/material';
-import { addToMealPlanType } from '../../../../../../server/API/api.types';
+import { addToMealPlanType } from '../../../../../../types/types';
 import { getFormattedDate } from '../../../../utils/getFormattedDateFunc';
 import getUnixTime from 'date-fns/getUnixTime';
 import { zonedTimeToUtc } from 'date-fns-tz';

@@ -82,14 +82,14 @@ describe('Authentication routes', () => {
             username: 'test_user',
             password: 'password',
          });
-      expect(loginResponse.statusCode).toBe(200);
+      expect(loginResponse.statusCode).toBe(201);
    });
 
    test('GET /metrics: should allow user to retrieve metrics from database', async () => {
       let metricsResponse = await request
          .get('/api/metrics')
          .set('Cookie', cookie);
-      expect(metricsResponse.statusCode).toBe(200);
+      expect(metricsResponse.statusCode).toBe(201);
       expect(metricsResponse.body.min_carbs_per_meal).toBe(45);
    });
 
