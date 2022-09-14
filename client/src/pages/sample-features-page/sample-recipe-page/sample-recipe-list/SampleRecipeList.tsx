@@ -15,7 +15,6 @@ export const SampleRecipeList = ({
    route,
    showPopularRecipes,
 }: Props) => {
-   console.log('popularRecipes:', popularRecipes);
    return (
       <>
          <Box sx={{ pt: '1rem' }}>

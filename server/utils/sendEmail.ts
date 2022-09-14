@@ -7,7 +7,6 @@ import SMTPTransport from 'nodemailer';
 //function that automatically generates refresh tokens from google developer console
 // using access token and the google playground
 const createTransporter = async () => {
-   console.log('process.env.OAUTH_CLIENT_ID:', process.env.OAUTH_CLIENT_ID);
    const oauth2Client = new OAuth2(
       process.env.OAUTH_CLIENT_ID,
       process.env.OAUTH_CLIENT_SECRET,
@@ -24,7 +23,6 @@ const createTransporter = async () => {
          resolve(token);
       });
    });
-   console.log('accessToken:', accessToken);
    //set up nodemailer transport using OAuth2 to automatically send emails
    const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -51,7 +49,6 @@ export const sendEmail = async (email: string, link: string) => {
       };
       let emailTransporter = await createTransporter();
       let response = await emailTransporter.sendMail(mailOptions);
-      console.log('response after sending email:', response);
       return response;
    } catch (err) {
       return err;

@@ -39,6 +39,7 @@ module.exports = {
       new HtmlWebpackPlugin({
          title: 'The Diabetes Calculator',
          template: 'template.html',
+         favicon: './favicon_io/favicon.ico',
       }),
       new MiniCssExtractPlugin(),
       new ForkTsCheckerWebpackPlugin(),

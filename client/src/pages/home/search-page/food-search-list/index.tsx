@@ -28,7 +28,6 @@ export const FoodSearchList = ({
    setAlertSeverity,
    showLoadMoreBtn,
 }: Props) => {
-   console.log('apiDatra:', apiData);
    return (
       <div className='food-search-list'>
          <Stack
