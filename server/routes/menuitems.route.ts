@@ -8,8 +8,7 @@ router.get('/', (req: Request, res: Response) => {
 });
 
 router.get('/:id', (req: Request, res: Response) => {
-   menuItemController.getMenuItemById(req,res);
-})
-
+   menuItemController.getMenuItemById(req, res);
+});
 
 export { router };

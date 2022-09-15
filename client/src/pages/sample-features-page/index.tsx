@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import './SampleFeaturesPage.scss';
-import { Routes, Route, Outlet } from 'react-router-dom';
-import { SampleFeaturesSidebar } from './sample-features-sidebars';
-import { CustomAlert } from '../../components/custom-alert/CustomAlert';
-import { getMetrics } from '../../utils/get-metrics/getMetrics';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import {
-   IconButton,
-   Toolbar,
    AlertColor,
+   IconButton,
    SelectChangeEvent,
+   Toolbar,
    Tooltip,
 } from '@mui/material';
-import { RouteValues } from '../../../../types/types';
 import axios from 'axios';
+import React, { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import {
-   SampleMealplanItem,
-   FoodItemType,
    CurrentGoals,
+   FoodItemType,
+   RouteValues,
+   SampleMealplanItem,
 } from '../../../../types/types';
+import { CustomAlert } from '../../components/custom-alert/CustomAlert';
+import { getMetrics } from '../../utils/get-metrics/getMetrics';
+import { SampleFeaturesSidebar } from './sample-features-sidebars';
+import './SampleFeaturesPage.scss';
 
 const initialState = {
    query: '',
@@ -127,6 +127,11 @@ const SampleFeaturesPage = () => {
          activityLevel,
       });
       setGoals(currentGoals);
+      setAlertSeverity('success');
+      setAlertMessage(
+         'Your custom macronutrient values have been calculated! View the sidebar to see your calculations'
+      );
+      setOpenAlert(true);
    };
 
    const handleRouteChange = (event: SelectChangeEvent) => {

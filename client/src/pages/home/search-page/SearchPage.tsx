@@ -1,10 +1,10 @@
-import React from 'react';
-import './SearchPage.scss';
-import { FoodSearchList } from './food-search-list';
-import { Box, Toolbar, IconButton, CircularProgress } from '@mui/material';
-import { useAuth } from '../../../context/authContext';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { Box, CircularProgress, IconButton, Toolbar } from '@mui/material';
+import React from 'react';
+import { useAuth } from '../../../context/authContext';
 import { useHomeOutlet } from '../../../hooks/useHomeOutlet';
+import { FoodSearchList } from './food-search-list';
+import './SearchPage.scss';
 
 const SearchPage = () => {
    const { isLoading, isLoggedIn, username } = useAuth(); //used to check if data is still being retrieved from database

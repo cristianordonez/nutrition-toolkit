@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { SearchForm } from './search-page/search-form';
+import { AlertColor } from '@mui/material';
+import axios from 'axios';
+import format from 'date-fns/format';
+import React, { useEffect, useState } from 'react';
+import { Outlet, Route, Routes } from 'react-router-dom';
+import {
+   CurrentGoals,
+   MealplanItemType,
+   ValuesType,
+} from '../../../../types/types';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
-import { SideBarSearchPage } from './search-page/sidebar-searchpage/SideBarSearchPage';
 import { SideBar } from '../../components/sidebar/SideBar';
 import { SidebarMealplan } from './meal-plan-page/sidebar-mealplan/SideBarMealPlan';
-import { Outlet } from 'react-router-dom';
-import { Routes, Route } from 'react-router-dom';
-import { CurrentGoals } from '../../../../types/types';
-import axios from 'axios';
-import { AlertColor } from '@mui/material';
-import format from 'date-fns/format';
-import { MealplanItemType, ValuesType } from '../../../../types/types';
+import { SearchForm } from './search-page/search-form';
+import { SideBarSearchPage } from './search-page/sidebar-searchpage/SideBarSearchPage';
 
 const Home = () => {
    const [goals, setGoals] = useState({} as CurrentGoals);

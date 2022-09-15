@@ -1,12 +1,12 @@
+import bcrypt from 'bcryptjs';
+import * as crypto from 'crypto';
+import format from 'date-fns/format';
 import { Request, Response } from 'express';
-import * as userModel from '../models/user.model';
+import { connectUser } from '../API/api';
 import * as dailyGoalsModel from '../models/dailyGoals.model';
 import * as tokensModel from '../models/tokens.model';
-import { connectUser } from '../API/api';
-import bcrypt from 'bcrypt';
-import * as crypto from 'crypto';
+import * as userModel from '../models/user.model';
 import { sendEmail } from '../utils/sendEmail';
-import format from 'date-fns/format';
 const saltRounds = 10;
 
 type Body = {

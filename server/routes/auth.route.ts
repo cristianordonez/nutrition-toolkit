@@ -1,15 +1,16 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import * as userController from '../controllers/user.controller';
-import { Session } from '../../types/types';
 import passport from 'passport';
+import { Session } from '../../types/types';
+import * as userController from '../controllers/user.controller';
 const router = Router();
 
+//ROUTES
 router.get('/', (req: Request, res: Response) => {
    res.status(200).json({
       status: 'success',
       data: {
          name: 'Diabetes Meal Plan',
-         version: '1.0.0',
+         version: '1.0.1',
       },
    });
 });
@@ -32,7 +33,7 @@ router.get('/login/federated/google', passport.authenticate('google'));
 router.get(
    '/oauth2/redirect/google',
    passport.authenticate('google', {
-      failureRedirect: '/login',
+      failureRedirect: `/login`,
       failureMessage: true,
    }), //fires second part of passport strategy
    (req: Request, res: Response) => {
@@ -41,7 +42,7 @@ router.get(
       session.user_id = session.passport.user;
       session.username = user.emails[0].value;
       //redirect user to the search page where session will be checked
-      res.redirect('/home/search');
+      res.redirect(`/home/search`);
    }
 );
 

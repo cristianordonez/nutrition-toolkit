@@ -5,7 +5,6 @@
 //? Supertest cannot be used to find req.user when using passport, so avoid these tests
 
 process.env.NODE_ENV = 'test'; //set NODE_ENV to 'test' so that test database is used
-import axios from 'axios';
 import supertest from 'supertest';
 import { expect } from '../jestGlobals';
 import app from './app';

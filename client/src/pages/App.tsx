@@ -1,16 +1,13 @@
-import React, { lazy, Suspense } from 'react';
-
-import { Routes, Route } from 'react-router-dom';
-
-import { CssBaseline } from '@mui/material'; //used to provide mui color theme to all components
-import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { ThemeProvider } from '@emotion/react';
-import { PaletteMode } from '@mui/material';
-import { getDesignTokens } from '../themes/theme';
+import { CssBaseline, PaletteMode } from '@mui/material'; //used to provide mui color theme to all components
+import { createTheme, responsiveFontSizes } from '@mui/material/styles';
+import React, { lazy, Suspense } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import NavBar from '../components/navbar/NavBar';
-import { useLocalStorageState } from '../hooks/useLocalStorage';
-import LandingPage from './landing-page/LandingPage';
 import AuthProvider from '../context/authContext';
+import { useLocalStorageState } from '../hooks/useLocalStorage';
+import { getDesignTokens } from '../themes/theme';
+import LandingPage from './landing-page/LandingPage';
 
 const Home = lazy(() => import(/* webpackChunkName: "Home" */ './home/Home'));
 

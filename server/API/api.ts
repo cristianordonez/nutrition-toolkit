@@ -1,9 +1,9 @@
 import axios from 'axios';
 import {
-   QueryType,
-   UserType,
    AccountType,
    addToMealPlanType,
+   QueryType,
+   UserType,
 } from '../../types/types';
 
 const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/';
