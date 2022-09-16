@@ -1,13 +1,14 @@
 import { Request, Response } from 'express';
-import { Query } from '../../types/types';
-import * as apiHelpers from '../API/api';
+import { Query, RequestParams } from '../../types/types';
+import {
+   getSpoonacularGroceryProducts,
+   getSpoonacularProductById,
+} from '../API/api.groceryProducts';
 
-export const getGroceryProducts = async function (req: Request, res: Response) {
+const getGroceryProducts = async function (req: Request, res: Response) {
    const query = req.query as unknown as Query;
    try {
-      let groceryProducts = await apiHelpers.getSpoonacularGroceryProducts(
-         query
-      );
+      let groceryProducts = await getSpoonacularGroceryProducts(query);
       res.send(groceryProducts);
    } catch (err) {
       console.log(err);
@@ -15,17 +16,15 @@ export const getGroceryProducts = async function (req: Request, res: Response) {
    }
 };
 
-type Params = {
-   id: number;
-};
-
-export const getProductById = async function (req: Request, res: Response) {
-   let params = req.params as unknown as Params;
+const getProductById = async function (req: Request, res: Response) {
+   let params = req.params as unknown as RequestParams;
    try {
-      let productInfo = await apiHelpers.getSpoonacularProductById(params.id);
+      let productInfo = await getSpoonacularProductById(params.id);
       res.status(200).send(productInfo);
    } catch (err) {
       console.log(err);
       res.status(400).send('Could not get product information');
    }
 };
+
+export { getGroceryProducts, getProductById };

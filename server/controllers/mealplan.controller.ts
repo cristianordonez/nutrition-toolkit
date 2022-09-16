@@ -1,20 +1,19 @@
-//#connects server to the models
 import { Request, Response } from 'express';
-import * as apiHelpers from '../API/api';
-import { getHashByUsername } from '../models/user.model';
+import { SelectedDate, User } from '../../types/types';
+import {
+   addToSpoonacularMealplan,
+   deleteFromSpoonacularMealplan,
+   generateMealplanDay,
+   getFromSpoonacularMealplanDay,
+   getFromSpoonacularMealplanWeek,
+} from '../API/api.mealplans';
+import { getHashByUsername } from '../models/auth.model';
 
-type User = {
-   id: number;
-   username: string;
-   email: string;
-   spoonacular_username: string;
-};
-
-export const addMealPlanItem = async function (req: Request, res: Response) {
+const addMealPlanItem = async function (req: Request, res: Response) {
    const user = req.user as User;
    let hash = await getHashByUsername(user.spoonacular_username);
    try {
-      const response = await apiHelpers.addToSpoonacularMealplan(
+      const response = await addToSpoonacularMealplan(
          req.body,
          user.spoonacular_username,
          hash[0].spoonacular_hash
@@ -26,19 +25,15 @@ export const addMealPlanItem = async function (req: Request, res: Response) {
    }
 };
 
-type selectedDay = {
-   date: string;
-};
-
 type Hash = [{ spoonacular_hash: string }];
 
 //gets all meals for certain day using date in form of string
-export const getMealPlanDay = async function (req: Request, res: Response) {
-   const mealplanDay = req.query as selectedDay;
+const getMealPlanDay = async function (req: Request, res: Response) {
+   const mealplanDay = req.query as SelectedDate;
    const user = req.user as User;
    try {
       let hash = await getHashByUsername(user.spoonacular_username); //returns Hash type
-      let mealplanDayItems = await apiHelpers.getFromSpoonacularMealplanDay(
+      let mealplanDayItems = await getFromSpoonacularMealplanDay(
          user.spoonacular_username,
          mealplanDay.date,
          hash[0].spoonacular_hash
@@ -53,17 +48,13 @@ export const getMealPlanDay = async function (req: Request, res: Response) {
    }
 };
 
-type selectedWeek = {
-   date: string;
-};
-
 //gets all meal plans for a selected week
-export const getMealPlanWeek = async function (req: Request, res: Response) {
-   const mealplanWeek = req.query as selectedWeek;
+const getMealPlanWeek = async function (req: Request, res: Response) {
+   const mealplanWeek = req.query as SelectedDate;
    const user = req.user as User;
    try {
       let hash = await getHashByUsername(user.spoonacular_username); //returns Hash type
-      let mealplanWeekItems = await apiHelpers.getFromSpoonacularMealplanWeek(
+      let mealplanWeekItems = await getFromSpoonacularMealplanWeek(
          user.spoonacular_username,
          mealplanWeek.date,
          hash[0].spoonacular_hash
@@ -76,12 +67,12 @@ export const getMealPlanWeek = async function (req: Request, res: Response) {
    }
 };
 
-export const deleteMealPlanItem = async function (req: Request, res: Response) {
+const deleteMealPlanItem = async function (req: Request, res: Response) {
    const id = req.params.id;
    const user = req.user as User;
    try {
       let hash = await getHashByUsername(user.spoonacular_username); //returns Hash type
-      let successResponse = await apiHelpers.deleteFromSpoonacularMealplan(
+      let successResponse = await deleteFromSpoonacularMealplan(
          user.spoonacular_username,
          id,
          hash[0].spoonacular_hash
@@ -93,15 +84,20 @@ export const deleteMealPlanItem = async function (req: Request, res: Response) {
    }
 };
 
-export const generateMealplanDay = async function (
-   req: Request,
-   res: Response
-) {
+const getRandomMealplanDay = async function (req: Request, res: Response) {
    try {
-      let mealplanItems = await apiHelpers.generateMealplanDay();
+      let mealplanItems = await generateMealplanDay();
       res.status(200).send(mealplanItems);
    } catch (err) {
       res.status(400).send('Unable to delete item.');
       console.log(err);
    }
+};
+
+export {
+   addMealPlanItem,
+   getMealPlanDay,
+   getMealPlanWeek,
+   deleteMealPlanItem,
+   getRandomMealplanDay,
 };

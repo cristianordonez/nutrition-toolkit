@@ -1,28 +1,22 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import passport from 'passport';
 import { Session } from '../../types/types';
-import * as userController from '../controllers/user.controller';
+import {
+   checkAuthentication,
+   createAccount,
+   forgotPassword,
+   resetPassword,
+} from '../controllers/auth.controller';
 const router = Router();
-
-//ROUTES
-router.get('/', (req: Request, res: Response) => {
-   res.status(200).json({
-      status: 'success',
-      data: {
-         name: 'Diabetes Meal Plan',
-         version: '1.0.1',
-      },
-   });
-});
 
 //sends link to users email to change password
 router.post('/forgotPassword', (req: Request, res: Response) => {
-   userController.forgotPassword(req, res);
+   forgotPassword(req, res);
 });
 
 //handles checking token and resetting password for user
 router.post('/resetPassword', (req: Request, res: Response) => {
-   userController.resetPassword(req, res);
+   resetPassword(req, res);
 });
 
 //GOOGLE AUTHENTICATION////////////////////////////
@@ -49,12 +43,12 @@ router.get(
 ////////////////////////////////////////////////////////
 //# handles checking if user is logged in for protected routes
 router.get('/authentication', (req: Request, res: Response) => {
-   userController.checkAuthentication(req, res);
+   checkAuthentication(req, res);
 });
 
 //# handles creating account
 router.post('/signup', (req: Request, res: Response) => {
-   userController.createAccount(req, res);
+   createAccount(req, res);
 });
 
 router.post(

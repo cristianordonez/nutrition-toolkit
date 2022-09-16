@@ -2,10 +2,9 @@ import bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
 import format from 'date-fns/format';
 import { Request, Response } from 'express';
-import { connectUser } from '../API/api';
-import * as dailyGoalsModel from '../models/dailyGoals.model';
+import { connectUser } from '../API/api.auth';
+import * as userModel from '../models/auth.model';
 import * as tokensModel from '../models/tokens.model';
-import * as userModel from '../models/user.model';
 import { sendEmail } from '../utils/sendEmail';
 const saltRounds = 10;
 
@@ -16,7 +15,7 @@ type Body = {
 };
 
 //# create initial account if not already exists
-export const createAccount = async (req: Request, res: Response) => {
+const createAccount = async (req: Request, res: Response) => {
    try {
       let checkForExistingEmail: any = await userModel.getByEmail(
          req.body.email
@@ -53,22 +52,8 @@ export const createAccount = async (req: Request, res: Response) => {
    }
 };
 
-//# handles initial setting of daily goals and intolerances
-export const createMetrics = async (req: Request, res: Response) => {
-   try {
-      let session: any = req.session;
-      let user_id: number = session.user_id;
-      let body = { ...req.body, user_id };
-      let initialResponse = await dailyGoalsModel.createGoals(body);
-      res.status(201).json(session.user_id);
-   } catch (err) {
-      console.log(err);
-      res.status(400).send(err);
-   }
-};
-
 //# checks if user is logged in
-export const checkAuthentication = async (req: Request, res: Response) => {
+const checkAuthentication = async (req: Request, res: Response) => {
    let session: any = req.session;
    if (session.passport || session.username) {
       res.status(201).send(session.username);
@@ -77,33 +62,8 @@ export const checkAuthentication = async (req: Request, res: Response) => {
    }
 };
 
-//# gets metrics from user from database
-export const getMetrics = async (req: any, res: Response) => {
-   try {
-      let user_id = req.session.user_id;
-      let userGoals: any = await dailyGoalsModel.getGoals(user_id);
-      res.status(201).send(userGoals[0]);
-   } catch (err) {
-      console.log(err);
-      res.status(500).send('Unable to retrieve daily goals.');
-   }
-};
-
-export const updateMetrics = async (req: Request, res: Response) => {
-   try {
-      let session: any = req.session;
-      let user_id: number = session.user_id;
-      let body = { ...req.body, user_id };
-      let initialResponse = await dailyGoalsModel.updateGoals(body);
-      res.status(201).send(initialResponse);
-   } catch (err) {
-      console.log(err);
-      res.status(400).send('Unable to update daily goals.');
-   }
-};
-
 //sends email to user to reset their email address
-export const forgotPassword = async (req: Request, res: Response) => {
+const forgotPassword = async (req: Request, res: Response) => {
    //first check if user email exists
    try {
       let user = await userModel.getByEmail(req.body.email);
@@ -146,7 +106,7 @@ type ResetPasswordBody = {
    password: string;
 };
 
-export const resetPassword = async (req: Request, res: Response) => {
+const resetPassword = async (req: Request, res: Response) => {
    let body: ResetPasswordBody = req.body;
    try {
       //grab reset token from database
@@ -173,3 +133,5 @@ export const resetPassword = async (req: Request, res: Response) => {
       res.status(403).send('Unable to change password');
    }
 };
+
+export { createAccount, checkAuthentication, forgotPassword, resetPassword };

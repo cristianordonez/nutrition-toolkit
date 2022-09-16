@@ -1,12 +1,12 @@
+import { AlertColor } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { AlertColor } from '@mui/material';
 import {
    CurrentGoals,
    FoodItemType,
-   RouteValues,
-   SampleMealplanItem,
+   Query,
    Recipe,
+   SampleMealplanItem,
 } from '../../../types/types';
 
 interface OutletContext {
@@ -16,7 +16,7 @@ interface OutletContext {
    setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    openAlert: boolean;
    setOpenAlert: Dispatch<SetStateAction<boolean>>;
-   setValues: Dispatch<SetStateAction<RouteValues>>;
+   setValues: Dispatch<SetStateAction<Query>>;
    setAlertMessage: Dispatch<SetStateAction<string>>;
    setSampleMealplanItems: Dispatch<SetStateAction<SampleMealplanItem[] | []>>;
    setMealplanItems: Dispatch<SetStateAction<SampleMealplanItem[] | []>>;

@@ -3,14 +3,14 @@ import bcrypt from 'bcryptjs';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import cors from 'cors';
-import express from 'express';
+import express, { Request, Response } from 'express';
 import session from 'express-session';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import path from 'path';
-import { connectUser } from './API/api';
+import { connectUser } from './API/api.auth';
 import { db } from './database/db';
-import { createGoogleUser, getById } from './models/user.model';
+import { createGoogleUser, getById } from './models/auth.model';
 import { router as authRoute } from './routes/auth.route';
 import { router as groceryProductsRoute } from './routes/groceryproducts.route';
 import { router as mealplanRoute } from './routes/mealplan.route';
@@ -162,6 +162,17 @@ passport.deserializeUser((id: string, cb) => {
       .catch(function (err: any) {
          return cb(err);
       });
+});
+
+//ROUTES
+app.get('/', (req: Request, res: Response) => {
+   res.status(200).json({
+      status: 'success',
+      data: {
+         name: 'Diabetes Calculator API',
+         version: '1.0.0',
+      },
+   });
 });
 
 app.use('/api', authRoute);

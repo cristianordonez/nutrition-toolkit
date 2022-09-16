@@ -12,7 +12,7 @@ import { Outlet } from 'react-router-dom';
 import {
    CurrentGoals,
    FoodItemType,
-   RouteValues,
+   Query,
    SampleMealplanItem,
 } from '../../../../types/types';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
@@ -66,7 +66,7 @@ const SampleFeaturesPage = () => {
    const [alertMessage, setAlertMessage] = useState<string>('');
    const [route, setRoute] = useState<string>('recipes');
    const [openAlert, setOpenAlert] = useState<boolean>(false);
-   const [values, setValues] = useState<RouteValues>(initialState);
+   const [values, setValues] = useState<Query>(initialState);
    const [showPopularRecipes, setShowPopularRecipes] = useState<boolean>(true);
    const [mealplanItems, setMealplanItems] = useState<FoodItemType[] | []>([]);
    const [age, setAge] = useState<number>(18);

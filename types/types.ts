@@ -1,4 +1,4 @@
-export type MenuItemNutrition = {
+type MenuItemNutrition = {
    calories: number;
    carbs: string;
    fat: string;
@@ -13,11 +13,11 @@ export type MenuItemNutrition = {
    ];
 };
 
-export type RecipeItemNutrition = {
+type RecipeItemNutrition = {
    nutrients: [];
 };
 
-export type ValuesType = {
+type ValuesType = {
    query: string;
    type: string;
    intolerance: string;
@@ -32,7 +32,7 @@ export type ValuesType = {
    number: number;
    offset: number;
 };
-export interface Recipe {
+interface Recipe {
    aggregateLikes: number;
    id: number;
    image: string;
@@ -57,14 +57,14 @@ export interface Recipe {
    nutrition?: undefined;
 }
 
-export type GroceryItemNutrition = {
+type GroceryItemNutrition = {
    calories: number;
    carbs: string;
    fat: string;
    protein: string;
 };
 
-export interface GroceryItemType {
+interface GroceryItemType {
    id: number;
    image: string;
    imageType: string;
@@ -72,20 +72,20 @@ export interface GroceryItemType {
    nutrition: RecipeItemNutrition | GroceryItemNutrition | MenuItemNutrition;
 }
 
-export interface RecipeItemType extends GroceryItemType {
+interface RecipeItemType extends GroceryItemType {
    sourceUrl: string;
    spoonacularSourceUrl: string;
    servings: number;
 }
 
-export interface MenuItemType extends RecipeItemType {
+interface MenuItemType extends RecipeItemType {
    restaurantChain: string;
    servingSize: string;
 }
 
-export interface FoodItemType extends MenuItemType {}
+interface FoodItemType extends MenuItemType {}
 
-export type CurrentGoals = {
+type CurrentGoals = {
    user_id?: number;
    total_carbohydrates: number;
    min_carbs_per_meal: number;
@@ -101,29 +101,29 @@ export type CurrentGoals = {
    max_calories_per_meal: number;
 };
 
-export type Session = {
+type Session = {
    user_id: string;
    passport: { user: string };
    username: string;
 };
 
-export type Query = {
+type Query = {
    query: string;
    type: string;
-   intolerance: string;
-   minCalories: number;
-   maxCalories: number;
-   minCarbs: number;
-   maxCarbs: number;
-   minProtein: number;
-   maxProtein: number;
-   minFat: number;
-   maxFat: number;
+   intolerance?: string | undefined;
+   minCalories: number | string;
+   maxCalories: number | string;
+   minCarbs: number | string;
+   maxCarbs: number | string;
+   minProtein: number | string;
+   maxProtein: number | string;
+   minFat: number | string;
+   maxFat: number | string;
    number: number; //number of items to return
    offset: number; //number of results to skip, useful for lazy loading
 };
 
-export type SampleMealplanItem = {
+type SampleMealplanItem = {
    id: number;
    imageTtype: string;
    readyInMinutes: number;
@@ -132,7 +132,7 @@ export type SampleMealplanItem = {
    title: string;
 };
 
-export type MealplanItemType = {
+type MealplanItemType = {
    id: number;
    position: number;
    slot: number;
@@ -145,51 +145,51 @@ export type MealplanItemType = {
    };
 };
 
-export type RouteValues = {
-   query: string;
-   type: string;
-   minCalories: string;
-   maxCalories: string;
-   minProtein: string;
-   maxProtein: string;
-   minCarbs: string;
-   maxCarbs: string;
-   minFat: string;
-   maxFat: string;
-   offset: number;
-   number: number;
-};
+// type RouteValues = {
+//    query: string;
+//    type: string;
+//    minCalories: string;
+//    maxCalories: string;
+//    minProtein: string;
+//    maxProtein: string;
+//    minCarbs: string;
+//    maxCarbs: string;
+//    minFat: string;
+//    maxFat: string;
+//    offset: number;
+//    number: number;
+// };
 
-export type UserType = {
+type UserType = {
    username: string;
    email: string;
    password: string;
 };
 
-export type AccountType = {
+type AccountType = {
    status: string;
    username: string;
    spoonacularPassword: string;
    hash: string;
 };
 
-export type QueryType = {
-   query: string;
-   type: string;
-   intolerance: string;
-   minCalories: number;
-   maxCalories: number;
-   minCarbs: number;
-   maxCarbs: number;
-   minProtein: number;
-   maxProtein: number;
-   minFat: number;
-   maxFat: number;
-   number: number; //number of items to return
-   offset: number; //number of results to skip, useful for lazy loading
-};
+// type QueryType = {
+//    query: string;
+//    type: string;
+//    intolerance: string;
+//    minCalories: number;
+//    maxCalories: number;
+//    minCarbs: number;
+//    maxCarbs: number;
+//    minProtein: number;
+//    maxProtein: number;
+//    minFat: number;
+//    maxFat: number;
+//    number: number; //number of items to return
+//    offset: number; //number of results to skip, useful for lazy loading
+// };
 
-export type addToMealPlanType = {
+type addToMealPlanType = {
    date?: number | undefined;
    slot?: number | undefined;
    position?: number | undefined;
@@ -200,4 +200,57 @@ export type addToMealPlanType = {
       title: string | undefined;
       imageType: string | undefined;
    };
+};
+
+type RecipeQuery = {
+   offset: string;
+   number: string;
+   query: string;
+};
+
+type User = {
+   username: string;
+   email: string;
+   spoonacular_username: string;
+   spoonacular_password: string;
+   spoonacular_hash: string;
+   hash: string;
+};
+
+type Intolerances = {
+   user_id: number;
+   intolerances: string;
+};
+
+type SelectedDate = {
+   date: string;
+};
+
+type RequestParams = {
+   id: number;
+};
+
+export {
+   MenuItemNutrition,
+   RecipeItemNutrition,
+   ValuesType,
+   Recipe,
+   GroceryItemNutrition,
+   GroceryItemType,
+   RecipeItemType,
+   MenuItemType,
+   FoodItemType,
+   CurrentGoals,
+   Session,
+   Query,
+   SampleMealplanItem,
+   MealplanItemType,
+   UserType,
+   AccountType,
+   addToMealPlanType,
+   User,
+   Intolerances,
+   SelectedDate,
+   RequestParams,
+   RecipeQuery,
 };

@@ -1,22 +1,9 @@
+import { Intolerances, User } from '../../types/types';
 import { db } from '../database/db';
 const generator = require('generate-password');
 
-type User = {
-   username: string;
-   email: string;
-   spoonacular_username: string;
-   spoonacular_password: string;
-   spoonacular_hash: string;
-   hash: string;
-};
-
-type Intolerances = {
-   user_id: number;
-   intolerances: string;
-};
-
 //# creates a new user and stores in database;
-export const create = async function (user: User) {
+const create = async function (user: User) {
    let currentId = generator.generate({ length: 8, numbers: true });
    let createQuery = `INSERT INTO users (id, username, email,
       spoonacular_username, spoonacular_password, spoonacular_hash, hash)
@@ -28,14 +15,14 @@ export const create = async function (user: User) {
 };
 
 //# updates the hashed password in db for user given the userId
-export const updatePassword = async (userId: string, password: string) => {
+const updatePassword = async (userId: string, password: string) => {
    const passwordQuery = `UPDATE users SET hash='${password}' WHERE id='${userId}'`;
    let dbResponse = await db.query(passwordQuery);
    return dbResponse;
 };
 
 //# same as creating user except id is already provided by google
-export const createGoogleUser = async function (user: any) {
+const createGoogleUser = async function (user: any) {
    let createQuery = `INSERT INTO users (id, username, email,
       spoonacular_username, spoonacular_password, spoonacular_hash, hash)
       VALUES ('${user.id}', '${user.username}', '${user.email}',
@@ -46,7 +33,7 @@ export const createGoogleUser = async function (user: any) {
 };
 
 //# creates a new user and stores in database;
-export const createUserIntolerances = function (intolerances: Intolerances) {
+const createUserIntolerances = function (intolerances: Intolerances) {
    let dbQuery = `UPDATE users SET intolerances = '{${intolerances.intolerances}}'
    `;
    let result = db.query(dbQuery);
@@ -55,28 +42,39 @@ export const createUserIntolerances = function (intolerances: Intolerances) {
 };
 
 //# check if user already exists by their email address
-export const getByEmail = async function (email: string) {
+const getByEmail = async function (email: string) {
    let getQuery = `SELECT * FROM users WHERE email='${email}'`;
    let user = await db.query(getQuery);
    return user;
 };
 
-export const getById = async function (id: string) {
+const getById = async function (id: string) {
    let getQuery = `SELECT * FROM users WHERE id='${id}'`;
    let user = await db.query(getQuery);
    return user;
 };
 
 //# retrieves user based on username
-export const getByUsername = async function (username: string) {
+const getByUsername = async function (username: string) {
    let getQuery = `SELECT * FROM users WHERE username='${username}'`;
    let user = await db.query(getQuery);
    return user;
 };
 
 //# retrieves spoonacular hash based on username
-export const getHashByUsername = async (username: string) => {
+const getHashByUsername = async (username: string) => {
    let getQuery = `SELECT spoonacular_hash FROM users WHERE users.spoonacular_username='${username}'`;
    let hash = await db.query(getQuery);
    return hash;
+};
+
+export {
+   create,
+   updatePassword,
+   createGoogleUser,
+   createUserIntolerances,
+   getByEmail,
+   getById,
+   getByUsername,
+   getHashByUsername,
 };

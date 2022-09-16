@@ -1,22 +1,7 @@
+import { CurrentGoals } from '../../types/types';
 import { db } from '../database/db';
 
-type Goals = {
-   user_id: number;
-   total_carbohydrates: number;
-   min_carbs_per_meal: number;
-   max_carbs_per_meal: number;
-   total_protein: number;
-   min_protein_per_meal: number;
-   max_protein_per_meal: number;
-   total_fat: number;
-   min_fat_per_meal: number;
-   max_fat_per_meal: number;
-   total_calories: number;
-   min_calories_per_meal: number;
-   max_calories_per_meal: number;
-};
-
-export const createGoals = (goals: Goals) => {
+export const createGoals = (goals: CurrentGoals) => {
    //get id from req.session then update all goals
    let dbQuery = `INSERT INTO daily_goals (total_carbohydrates, min_carbs_per_meal,
       max_carbs_per_meal, total_protein, min_protein_per_meal, max_protein_per_meal,
@@ -45,7 +30,7 @@ export const getGoals = (user_id: string) => {
    return response;
 };
 
-export const updateGoals = (goals: Goals) => {
+export const updateGoals = (goals: CurrentGoals) => {
    let dbQuery = `
    UPDATE daily_goals
    SET total_carbohydrates = ${goals.total_carbohydrates},
