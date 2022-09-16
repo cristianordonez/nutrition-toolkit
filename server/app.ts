@@ -26,7 +26,7 @@ const app = express();
 //MIDDLEWARE
 app.use(cors());
 app.use(compression());
-// app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
