@@ -1,15 +1,15 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
-import './index.scss';
 import ScreenSearchDesktopIcon from '@mui/icons-material/ScreenSearchDesktop';
-import { Stack, Tabs, Tab, Typography, AlertColor } from '@mui/material';
-import { SearchFormSuggested } from '../../../../components/search-forms/SearchFormSuggested';
-import { SearchFormCustom } from '../../../../components/search-forms/SearchFormCustom';
+import { AlertColor, Stack, Tab, Tabs, Typography } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
+import React, { Dispatch, SetStateAction } from 'react';
 import {
    CurrentGoals,
    MealplanItemType,
    ValuesType,
 } from '../../../../../../types/types';
+import { SearchFormCustom } from '../../../../components/search-forms/SearchFormCustom';
+import { SearchFormSuggested } from '../../../../components/search-forms/SearchFormSuggested';
+import './index.scss';
 
 interface Props {
    handleSubmit: (event: React.SyntheticEvent) => Promise<void>;

@@ -8,11 +8,12 @@ import session from 'express-session';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import path from 'path';
-import { connectUser } from './API/api.auth';
+import { connectUser } from './API/auth.api';
 import { db } from './database/db';
 import { createGoogleUser, getById } from './models/auth.model';
 import { router as authRoute } from './routes/auth.route';
 import { router as groceryProductsRoute } from './routes/groceryproducts.route';
+import { router as ingredientsRoute } from './routes/ingredients.route';
 import { router as mealplanRoute } from './routes/mealplan.route';
 import { router as menuItemsRoute } from './routes/menuitems.route';
 import { router as metricsRoute } from './routes/metrics.route';
@@ -181,6 +182,7 @@ app.use('/api/menuItems', menuItemsRoute);
 app.use('/api/groceryProducts', groceryProductsRoute);
 app.use('/api/mealplan', mealplanRoute);
 app.use('/api/metrics', metricsRoute);
+app.use('/api/ingredients', ingredientsRoute);
 
 app.get('/*', (req, res) => {
    res.sendFile(path.join(__dirname, '../client/dist/index.html'));

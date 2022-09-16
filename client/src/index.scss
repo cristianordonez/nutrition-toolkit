@@ -35,10 +35,14 @@ html {
    margin: 0;
    overscroll-behavior: contain;
    #root {
-      padding-top: 64px;
       @include devices(mobile) {
          margin: 1vw;
+         padding-top: 48px;
       }
+      @include devices(tablet) {
+         padding-top: 56;
+      }
+      padding-top: 64px;
       min-height: 100vh;
       display: flex;
       flex-direction: column;

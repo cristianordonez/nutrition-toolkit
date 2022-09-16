@@ -145,21 +145,6 @@ type MealplanItemType = {
    };
 };
 
-// type RouteValues = {
-//    query: string;
-//    type: string;
-//    minCalories: string;
-//    maxCalories: string;
-//    minProtein: string;
-//    maxProtein: string;
-//    minCarbs: string;
-//    maxCarbs: string;
-//    minFat: string;
-//    maxFat: string;
-//    offset: number;
-//    number: number;
-// };
-
 type UserType = {
    username: string;
    email: string;
@@ -173,23 +158,7 @@ type AccountType = {
    hash: string;
 };
 
-// type QueryType = {
-//    query: string;
-//    type: string;
-//    intolerance: string;
-//    minCalories: number;
-//    maxCalories: number;
-//    minCarbs: number;
-//    maxCarbs: number;
-//    minProtein: number;
-//    maxProtein: number;
-//    minFat: number;
-//    maxFat: number;
-//    number: number; //number of items to return
-//    offset: number; //number of results to skip, useful for lazy loading
-// };
-
-type addToMealPlanType = {
+type AddToMealPlanType = {
    date?: number | undefined;
    slot?: number | undefined;
    position?: number | undefined;
@@ -199,6 +168,22 @@ type addToMealPlanType = {
       servings: number | undefined;
       title: string | undefined;
       imageType: string | undefined;
+   };
+};
+
+type Ingredient = {
+   name: string;
+   unit: string;
+   amount: string;
+};
+
+type AddIngredientsToMealPlan = {
+   date?: number | undefined;
+   slot?: number | undefined;
+   position?: number | undefined;
+   type?: string | undefined;
+   value?: {
+      ingredients: Ingredient[];
    };
 };
 
@@ -230,6 +215,18 @@ type RequestParams = {
    id: number;
 };
 
+type IngredientsQuery = {
+   query: string;
+   minProteinPercent: number;
+   maxProteinPercent: number;
+   minFatPercent: number;
+   maxFatPercent: number;
+   minCarbsPercent: number;
+   maxCarbsPercent: number;
+   offset: number;
+   number: number;
+};
+
 export {
    MenuItemNutrition,
    RecipeItemNutrition,
@@ -247,10 +244,12 @@ export {
    MealplanItemType,
    UserType,
    AccountType,
-   addToMealPlanType,
+   AddToMealPlanType,
    User,
    Intolerances,
    SelectedDate,
    RequestParams,
    RecipeQuery,
+   IngredientsQuery,
+   AddIngredientsToMealPlan,
 };

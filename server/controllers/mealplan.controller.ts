@@ -6,7 +6,7 @@ import {
    generateMealplanDay,
    getFromSpoonacularMealplanDay,
    getFromSpoonacularMealplanWeek,
-} from '../API/api.mealplans';
+} from '../API/mealplans.api';
 import { getHashByUsername } from '../models/auth.model';
 
 const addMealPlanItem = async function (req: Request, res: Response) {

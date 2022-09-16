@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import './MacroCalculatorPage.scss';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { IconButton, Toolbar } from '@mui/material';
 import axios from 'axios';
-import { Toolbar, IconButton } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { MacroCalculatorForm } from '../../../components/macro-calculator-form';
 import { useAuth } from '../../../context/authContext';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useHomeOutlet } from '../../../hooks/useHomeOutlet';
+import './MacroCalculatorPage.scss';
 
 const MacroCalculatorPage = () => {
    const {
@@ -34,7 +34,7 @@ const MacroCalculatorPage = () => {
       }
    };
    return isLoading ? null : (
-      <div className='macro-calc-page'>
+      <>
          <Toolbar sx={{ display: { sm: 'none' }, alignSelf: 'flex-start' }}>
             <IconButton
                color='inherit'
@@ -46,17 +46,18 @@ const MacroCalculatorPage = () => {
                <ArrowForwardIosIcon />
             </IconButton>
          </Toolbar>
-
-         <MacroCalculatorForm
-            setOpenErrorAlert={setOpenAlert}
-            setErrorMessage={setAlertMessage}
-            setShowNextPage={setShowNextPage}
-            setShowSignup={setShowSignup}
-            setAlertSeverity={setAlertSeverity}
-            page={'macrocalculator'}
-            showNextPage={showNextPage}
-         />
-      </div>
+         <div className='macro-calc-page'>
+            <MacroCalculatorForm
+               setOpenErrorAlert={setOpenAlert}
+               setErrorMessage={setAlertMessage}
+               setShowNextPage={setShowNextPage}
+               setShowSignup={setShowSignup}
+               setAlertSeverity={setAlertSeverity}
+               page={'macrocalculator'}
+               showNextPage={showNextPage}
+            />
+         </div>
+      </>
    );
 };
 

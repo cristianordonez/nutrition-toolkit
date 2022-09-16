@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
 import format from 'date-fns/format';
 import { Request, Response } from 'express';
-import { connectUser } from '../API/api.auth';
+import { connectUser } from '../API/auth.api';
 import * as userModel from '../models/auth.model';
 import * as tokensModel from '../models/tokens.model';
 import { sendEmail } from '../utils/sendEmail';

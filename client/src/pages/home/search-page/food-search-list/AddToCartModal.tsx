@@ -1,28 +1,27 @@
+import {
+   AlertColor,
+   Box,
+   Button,
+   Dialog,
+   DialogActions,
+   DialogContent,
+   DialogTitle,
+} from '@mui/material';
+import { SelectChangeEvent } from '@mui/material/Select';
+import axios from 'axios';
+import getUnixTime from 'date-fns/getUnixTime';
+import startOfToday from 'date-fns/startOfToday';
 import React, {
-   MouseEventHandler,
    Dispatch,
+   MouseEventHandler,
    SetStateAction,
    SyntheticEvent,
    useState,
 } from 'react';
+import { AddToMealPlanType } from '../../../../../../types/types';
+import { DatePickerTextField } from './DatePickerTextField';
 import { DialogSelectServings } from './DialogSelectServings';
 import { DialogSelectSlot } from './DialogSelectSlot';
-import { SelectChangeEvent } from '@mui/material/Select';
-import {
-   Dialog,
-   DialogTitle,
-   DialogContent,
-   Box,
-   DialogActions,
-   Button,
-   AlertColor,
-} from '@mui/material';
-import { DatePickerTextField } from './DatePickerTextField';
-import { addToMealPlanType } from '../../../../../../types/types'; //interface from api handler
-import axios from 'axios';
-import getUnixTime from 'date-fns/getUnixTime';
-import startOfToday from 'date-fns/startOfToday';
-
 interface Props {
    openDialog: boolean;
    handleOpeningDialog: MouseEventHandler<HTMLButtonElement>;
@@ -57,7 +56,7 @@ export const AddToCartModal = ({
       currentType = 'MENU_ITEM';
    }
 
-   const [data, setData] = useState<addToMealPlanType | any>({
+   const [data, setData] = useState<AddToMealPlanType | any>({
       date: getUnixTime(startOfToday()),
       slot: 1,
       position: 0, // the order in the slot
@@ -77,7 +76,7 @@ export const AddToCartModal = ({
 
    //#handles updating state when changing the servings select field
    const handleSelectServings = (event: SelectChangeEvent) => {
-      setData((data: addToMealPlanType) => {
+      setData((data: AddToMealPlanType) => {
          return {
             ...data,
             value: {

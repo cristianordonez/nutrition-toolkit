@@ -5,7 +5,7 @@
    @include devices(mobile) {
       padding-left: 0;
    }
-   @include flex-center-horiz();
+   @include flex-center();
    padding-left: 350px;
    align-items: center;
 }

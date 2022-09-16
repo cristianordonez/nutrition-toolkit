@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { addToMealPlanType } from '../../types/types';
+import { AddIngredientsToMealPlan, AddToMealPlanType } from '../../types/types';
 
 const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/';
 const X_RAPIDAPI_KEY = process.env.X_RAPIDAPI_KEY;
@@ -7,7 +7,7 @@ const X_RAPIDAPI_HOST = process.env.X_RAPIDAPI_HOST;
 
 //adds a specific item to mealplan of user
 const addToSpoonacularMealplan = async (
-   data: addToMealPlanType,
+   data: AddToMealPlanType | AddIngredientsToMealPlan,
    spoonacularUsername: string,
    hash: string
 ) => {

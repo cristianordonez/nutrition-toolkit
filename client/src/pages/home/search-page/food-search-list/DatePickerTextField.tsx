@@ -1,19 +1,19 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import { Box, TextField } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
-import { TextField, Box } from '@mui/material';
-import { addToMealPlanType } from '../../../../../../types/types';
-import { getFormattedDate } from '../../../../utils/getFormattedDateFunc';
-import getUnixTime from 'date-fns/getUnixTime';
 import { zonedTimeToUtc } from 'date-fns-tz';
+import getUnixTime from 'date-fns/getUnixTime';
 import startOfDay from 'date-fns/startOfDay';
 import startOfToday from 'date-fns/startOfToday';
+import React, { Dispatch, SetStateAction } from 'react';
+import { AddToMealPlanType } from '../../../../../../types/types';
+import { getFormattedDate } from '../../../../utils/getFormattedDateFunc';
 
 interface Props {
-   setData: Dispatch<SetStateAction<addToMealPlanType>>;
-   data: addToMealPlanType;
+   setData: Dispatch<SetStateAction<AddToMealPlanType>>;
+   data: AddToMealPlanType;
 }
 
 //material ui returns a date in string format Jan 12 2022 for example, but spoonacular requires Unix time

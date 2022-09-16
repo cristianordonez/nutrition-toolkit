@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import './MealPlanPage.scss';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import {
+   IconButton,
+   Stack,
+   Tab,
+   Tabs,
+   Toolbar,
+   Typography,
+} from '@mui/material';
+import axios from 'axios';
+import addDays from 'date-fns/addDays';
+import format from 'date-fns/format';
+import getDay from 'date-fns/getDay';
+import subDays from 'date-fns/subDays';
+import React, { useEffect, useState } from 'react';
+import { MealplanItemType } from '../../../../../types/types';
+import { MealPlanWeekText } from '../../../components/mealplan-week-text/MealPlanWeekText';
+import { useAuth } from '../../../context/authContext';
+import { useHomeOutlet } from '../../../hooks/useHomeOutlet';
 import { DateSelectForm } from './date-select-form/DateSelectForm';
 import { MealplanDays } from './mealplan-days';
-import { MealPlanWeekText } from '../../../components/mealplan-week-text/MealPlanWeekText';
-import {
-   Typography,
-   Tabs,
-   Tab,
-   Stack,
-   Toolbar,
-   IconButton,
-} from '@mui/material';
-import format from 'date-fns/format';
-import axios from 'axios';
-import getDay from 'date-fns/getDay';
-import addDays from 'date-fns/addDays';
-import { MealplanItemType } from '../../../../../types/types';
-import subDays from 'date-fns/subDays';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { useAuth } from '../../../context/authContext';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import { useHomeOutlet } from '../../../hooks/useHomeOutlet';
+import './MealPlanPage.scss';
 
 const days = [
    'Sunday',

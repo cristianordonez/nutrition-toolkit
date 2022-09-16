@@ -3,7 +3,7 @@ import { Query, RequestParams } from '../../types/types';
 import {
    getSpoonacularGroceryProducts,
    getSpoonacularProductById,
-} from '../API/api.groceryProducts';
+} from '../API/groceryProducts.api';
 
 const getGroceryProducts = async function (req: Request, res: Response) {
    const query = req.query as unknown as Query;

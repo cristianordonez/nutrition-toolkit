@@ -5,7 +5,7 @@ import {
    getSpoonacularRecipeById,
    getSpoonacularRecipes,
    getSpoonacularRecipesByQuery,
-} from '../API/api.recipes';
+} from '../API/recipes.api';
 
 const getRecipes = async (req: Request, res: Response) => {
    const query = req.query as unknown as Query;

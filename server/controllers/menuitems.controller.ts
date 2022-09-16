@@ -4,7 +4,7 @@ import { Query, RequestParams } from '../../types/types';
 import {
    getSpoonacularMenuItemById,
    getSpoonacularMenuItems,
-} from '../API/api.menuItems';
+} from '../API/menuItems.api';
 
 const getMenuItems = async function (req: Request, res: Response) {
    const query = req.query as unknown as Query;
