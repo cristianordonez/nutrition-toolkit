@@ -135,7 +135,6 @@ export const App = () => {
 
                         <Route path='/home/*' element={<Home />}>
                            <Route path='search' element={<SearchPage />} />
-                           {/* <Route path='mealplan' element={<MealPlanPage />} /> */}
                            <Route
                               path='macrocalculator'
                               element={<MacroCalculatorPage />}
@@ -147,20 +146,16 @@ export const App = () => {
                         </Route>
 
                         <Route
-                           path='/diabetes-calculator-features'
+                           path='/diabetes-calculator-features/*'
                            element={<SampleFeaturesPage />}
                         >
                            <Route
-                              path='recipes'
+                              path='search'
                               element={<SampleRecipePage />}
                            />
                            <Route
                               path='calculator'
                               element={<SampleCalculatorPage />}
-                           />
-                           <Route
-                              path='mealplan'
-                              element={<SampleMealPlanPage />}
                            />
                         </Route>
 

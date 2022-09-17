@@ -1,5 +1,4 @@
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Box, CircularProgress, IconButton, Toolbar } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import React from 'react';
 import { useAuth } from '../../../context/authContext';
 import { useHomeOutlet } from '../../../hooks/useHomeOutlet';
@@ -28,19 +27,6 @@ const SearchPage = () => {
                <Box className='search-page' sx={{ width: '100vw' }}>
                   {/* PROGRESS BAR */}
                   {loading ? <CircularProgress size={68} /> : null}
-                  <Toolbar
-                     sx={{ display: { sm: 'none' }, alignSelf: 'flex-start' }}
-                  >
-                     <IconButton
-                        color='inherit'
-                        aria-label='open drawer'
-                        edge='start'
-                        onClick={handleDrawerToggle}
-                        sx={{ mr: 2, display: { sm: 'none' } }}
-                     >
-                        <ArrowForwardIosIcon />
-                     </IconButton>
-                  </Toolbar>
                   {apiData.length ? (
                      <>
                         <FoodSearchList

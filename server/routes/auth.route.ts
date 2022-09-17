@@ -36,7 +36,7 @@ router.get(
       session.user_id = session.passport.user;
       session.username = user.emails[0].value;
       //redirect user to the search page where session will be checked
-      res.redirect(`/home/search`);
+      res.redirect(`/home`);
    }
 );
 
@@ -66,7 +66,6 @@ router.post(
       session.save();
 
       res.status(201).send('Successfully logged in.');
-      // res.status(201).redirect('/home/search');
    }
 );
 

@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import './SampleMealPlanPage.scss';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { SampleMealPlanDay } from './sample-mealplan-day/SampleMealplanDay';
+import './SampleMealPlanPage.scss';
 
-import { MealPlanWeekText } from '../../../components/mealplan-week-text/MealPlanWeekText';
-import { Tabs, Tab, CircularProgress } from '@mui/material';
-import { SampleMealplanItem, FoodItemType } from '../../../../../types/types';
-import getDay from 'date-fns/getDay';
-import addDays from 'date-fns/addDays';
-import subDays from 'date-fns/subDays';
-import format from 'date-fns/format';
-import axios from 'axios';
+import { AlertColor, CircularProgress, Tab, Tabs } from '@mui/material';
 import { Box } from '@mui/system';
-import { useSampleFeaturesOutlet } from '../../../hooks/useSampleFeaturesOutlet';
+import axios from 'axios';
+import addDays from 'date-fns/addDays';
+import format from 'date-fns/format';
+import getDay from 'date-fns/getDay';
+import subDays from 'date-fns/subDays';
+import { FoodItemType, SampleMealplanItem } from '../../../../../types/types';
+import { MealPlanWeekText } from '../../../components/mealplan-week-text/MealPlanWeekText';
 
 const days = [
    'Sunday',
@@ -25,28 +24,27 @@ const days = [
 
 const daysMobile = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
 
-const SampleMealPlanPage = () => {
-   const {
-      mobileOpen,
-      handleDrawerToggle,
-      setNutritionSummary,
-      setAlertSeverity,
-      setOpenAlert,
+interface Props {
+   setNutritionSummary: Dispatch<SetStateAction<any>>;
+   setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
+   setOpenAlert: Dispatch<SetStateAction<boolean>>;
+   setSampleMealplanItems: Dispatch<SetStateAction<SampleMealplanItem[] | []>>;
+   setMealplanItems: Dispatch<SetStateAction<FoodItemType[]>>;
+   setAlertMessage: Dispatch<SetStateAction<string>>;
+   mealplanItems: FoodItemType[];
+   sampleMealplanItems: SampleMealplanItem[];
+}
 
-      setValues,
-      setSampleMealplanItems,
-      setMealplanItems,
-      isLoading,
-      setAlertMessage,
-      mealplanItems,
-      setPopularRecipes,
-      alertSeverity,
-      alertMessage,
-      openAlert,
-      sampleMealplanItems,
-      popularRecipes,
-   } = useSampleFeaturesOutlet();
-
+const SampleMealPlanPage = ({
+   setNutritionSummary,
+   setAlertSeverity,
+   setOpenAlert,
+   setSampleMealplanItems,
+   setMealplanItems,
+   setAlertMessage,
+   mealplanItems,
+   sampleMealplanItems,
+}: Props) => {
    const [dayIndex, setDayIndex] = useState<number>(getDay(Date.now())); //used for tab highlighting
 
    const [value, setValue] = React.useState<any>(new Date(Date.now()));

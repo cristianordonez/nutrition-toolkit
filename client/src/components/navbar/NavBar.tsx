@@ -144,6 +144,7 @@ const NavBar = () => {
                      >
                         <Stack direction='column' sx={{ padding: '0.5rem' }}>
                            <Link
+                              onClick={handleCloseNavMenu}
                               component={NavLink}
                               sx={{
                                  '&.active': {

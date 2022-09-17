@@ -1,5 +1,3 @@
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { IconButton, Toolbar } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { MacroCalculatorForm } from '../../../components/macro-calculator-form';
@@ -35,17 +33,6 @@ const MacroCalculatorPage = () => {
    };
    return isLoading ? null : (
       <>
-         <Toolbar sx={{ display: { sm: 'none' }, alignSelf: 'flex-start' }}>
-            <IconButton
-               color='inherit'
-               aria-label='open drawer'
-               edge='start'
-               onClick={handleDrawerToggle}
-               sx={{ mr: 2, display: { sm: 'none' } }}
-            >
-               <ArrowForwardIosIcon />
-            </IconButton>
-         </Toolbar>
          <div className='macro-calc-page'>
             <MacroCalculatorForm
                setOpenErrorAlert={setOpenAlert}

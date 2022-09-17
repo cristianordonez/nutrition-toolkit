@@ -1,13 +1,13 @@
-import React, { ReactElement, ReactNode } from 'react';
-import './SampleFeatureSidebars.scss';
-import { Drawer, Toolbar, IconButton, Box } from '@mui/material';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { useLocation } from 'react-router-dom';
-import { SearchFormCustom } from '../../../components/search-forms/SearchFormCustom';
-import { SampleMealplanSidebarContents } from './SampleMealplanSidebarContents';
-import { SampleCalculatorSidebarContents } from './SampleCalculatorSidebarContents';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { Box, Drawer, IconButton, Toolbar } from '@mui/material';
+import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { MainTitleLogo } from '../../../components/main-title-logo';
+import { SearchFormCustom } from '../../../components/search-forms/SearchFormCustom';
+import { SampleCalculatorSidebarContents } from './SampleCalculatorSidebarContents';
+import './SampleFeatureSidebars.scss';
+import { SampleMealplanSidebarContents } from './SampleMealplanSidebarContents';
 
 const drawerWidth = '350px';
 
@@ -22,6 +22,7 @@ interface Props {
    handleTypeSelect: any;
    goals: any;
    nutritionSummary: any;
+   view: 'mealplan' | 'search' | 'calculator';
 }
 
 export const SampleFeaturesSidebar = ({
@@ -35,9 +36,9 @@ export const SampleFeaturesSidebar = ({
    handleTypeSelect,
    goals,
    nutritionSummary,
+   view,
 }: Props): ReactJSXElement => {
    const location = useLocation();
-
    return (
       <>
          <Drawer
@@ -69,9 +70,8 @@ export const SampleFeaturesSidebar = ({
                   <ArrowBackIosIcon />
                </IconButton>
             </Toolbar>
-            {/* <MainTitleLogo /> */}
 
-            {location.pathname === '/diabetes-calculator-features/recipes' ? (
+            {view === 'search' ? (
                <SearchFormCustom
                   route={route}
                   values={values}
@@ -81,14 +81,13 @@ export const SampleFeaturesSidebar = ({
                   handleTypeSelect={handleTypeSelect}
                />
             ) : null}
-            {location.pathname === '/diabetes-calculator-features/mealplan' ? (
+            {view === 'mealplan' ? (
                <SampleMealplanSidebarContents
                   goals={goals}
                   nutritionSummary={nutritionSummary}
                />
             ) : null}
-            {location.pathname ===
-            '/diabetes-calculator-features/calculator' ? (
+            {view === 'calculator' ? (
                <SampleCalculatorSidebarContents goals={goals} />
             ) : null}
          </Drawer>
@@ -109,27 +108,26 @@ export const SampleFeaturesSidebar = ({
             }}
          >
             <MainTitleLogo />
-            <Box sx={{pt: '1rem'}}>
-            {location.pathname === '/diabetes-calculator-features/recipes' ? (
-               <SearchFormCustom
-                  route={route}
-                  values={values}
-                  handleSubmit={handleSearch}
-                  handleRouteChange={handleRouteChange}
-                  handleInputChange={handleInputChange}
-                  handleTypeSelect={handleTypeSelect}
-               />
-            ) : null}
-            {location.pathname === '/diabetes-calculator-features/mealplan' ? (
-               <SampleMealplanSidebarContents
-                  goals={goals}
-                  nutritionSummary={nutritionSummary}
-               />
-            ) : null}
-            {location.pathname ===
-            '/diabetes-calculator-features/calculator' ? (
-               <SampleCalculatorSidebarContents goals={goals} />
-            ) : null}
+            <Box sx={{ pt: '1rem' }}>
+               {view === 'search' ? (
+                  <SearchFormCustom
+                     route={route}
+                     values={values}
+                     handleSubmit={handleSearch}
+                     handleRouteChange={handleRouteChange}
+                     handleInputChange={handleInputChange}
+                     handleTypeSelect={handleTypeSelect}
+                  />
+               ) : null}
+               {view === 'mealplan' ? (
+                  <SampleMealplanSidebarContents
+                     goals={goals}
+                     nutritionSummary={nutritionSummary}
+                  />
+               ) : null}
+               {view === 'calculator' ? (
+                  <SampleCalculatorSidebarContents goals={goals} />
+               ) : null}
             </Box>
          </Drawer>
       </>

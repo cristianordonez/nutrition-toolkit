@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, Route, Routes } from 'react-router-dom';
 import {
    CurrentGoals,
    FoodItemType,
@@ -17,6 +17,7 @@ import {
 } from '../../../../types/types';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
 import { getMetrics } from '../../utils/get-metrics/getMetrics';
+import SampleMealPlanPage from './sample-app-mealplan-page/SampleMealPlanPage';
 import { SampleFeaturesSidebar } from './sample-features-sidebars';
 import './SampleFeaturesPage.scss';
 
@@ -152,19 +153,6 @@ const SampleFeaturesPage = () => {
 
    return (
       <>
-         <SampleFeaturesSidebar
-            mobileOpen={mobileOpen}
-            handleDrawerToggle={handleDrawerToggle}
-            route={route}
-            values={values}
-            handleSearch={handleSearch}
-            handleRouteChange={handleRouteChange}
-            handleInputChange={handleInputChange}
-            handleTypeSelect={handleTypeSelect}
-            goals={goals}
-            nutritionSummary={nutritionSummary}
-         />
-
          <div className='main-page-container'>
             <Tooltip title='Open Sidebar'>
                <Toolbar sx={{ display: { sm: 'none' } }}>
@@ -179,6 +167,75 @@ const SampleFeaturesPage = () => {
                   </IconButton>
                </Toolbar>
             </Tooltip>
+
+            <Routes>
+               <Route
+                  path=''
+                  element={
+                     <>
+                        <SampleFeaturesSidebar
+                           mobileOpen={mobileOpen}
+                           handleDrawerToggle={handleDrawerToggle}
+                           route={route}
+                           values={values}
+                           handleSearch={handleSearch}
+                           handleRouteChange={handleRouteChange}
+                           handleInputChange={handleInputChange}
+                           handleTypeSelect={handleTypeSelect}
+                           goals={goals}
+                           nutritionSummary={nutritionSummary}
+                           view={'mealplan'}
+                        />
+                        <SampleMealPlanPage
+                           setNutritionSummary={setNutritionSummary}
+                           setAlertSeverity={setAlertSeverity}
+                           setOpenAlert={setOpenAlert}
+                           setSampleMealplanItems={setSampleMealplanItems}
+                           setMealplanItems={setMealplanItems}
+                           setAlertMessage={setAlertMessage}
+                           mealplanItems={mealplanItems}
+                           sampleMealplanItems={sampleMealplanItems}
+                        />
+                     </>
+                  }
+               />
+               <Route
+                  path='search'
+                  element={
+                     <SampleFeaturesSidebar
+                        mobileOpen={mobileOpen}
+                        handleDrawerToggle={handleDrawerToggle}
+                        route={route}
+                        values={values}
+                        handleSearch={handleSearch}
+                        handleRouteChange={handleRouteChange}
+                        handleInputChange={handleInputChange}
+                        handleTypeSelect={handleTypeSelect}
+                        goals={goals}
+                        nutritionSummary={nutritionSummary}
+                        view={'search'}
+                     />
+                  }
+               />
+               <Route
+                  path='calculator'
+                  element={
+                     <SampleFeaturesSidebar
+                        mobileOpen={mobileOpen}
+                        handleDrawerToggle={handleDrawerToggle}
+                        route={route}
+                        values={values}
+                        handleSearch={handleSearch}
+                        handleRouteChange={handleRouteChange}
+                        handleInputChange={handleInputChange}
+                        handleTypeSelect={handleTypeSelect}
+                        goals={goals}
+                        nutritionSummary={nutritionSummary}
+                        view={'calculator'}
+                     />
+                  }
+               />
+            </Routes>
             <Outlet
                context={{
                   mobileOpen,

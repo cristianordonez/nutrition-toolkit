@@ -49,11 +49,15 @@ const LandingPage = () => {
    const cardImages = [ScheduleSvg, MaleChefSvg, CalculateSvg];
 
    //pass down the feature view to cards so that they can be used to call the handleNavigatingToFeatures function
-   const featureView = ['mealplan', 'recipes', 'calculator'];
+   const featureView = ['mealplan', 'search', 'calculator'];
 
    //used to navigate to the SampleAppFeaturesPage with the correction variable passed down in location state
    const handleNavigatingToFeatures = (featureView: string) => {
-      navigate(`/diabetes-calculator-features/${featureView}`);
+      if (featureView === 'mealplan') {
+         navigate(`/diabetes-calculator-features`);
+      } else {
+         navigate(`/diabetes-calculator-features/${featureView}`);
+      }
    };
 
    useEffect(() => {

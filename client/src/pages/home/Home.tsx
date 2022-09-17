@@ -1,4 +1,5 @@
-import { AlertColor } from '@mui/material';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { AlertColor, IconButton, Toolbar, Tooltip } from '@mui/material';
 import axios from 'axios';
 import format from 'date-fns/format';
 import React, { useEffect, useState } from 'react';
@@ -159,6 +160,19 @@ const Home = () => {
 
    return (
       <>
+         <Tooltip title='Open Sidebar'>
+            <Toolbar sx={{ display: { sm: 'none' } }}>
+               <IconButton
+                  color='inherit'
+                  aria-label='open drawer'
+                  edge='start'
+                  onClick={handleDrawerToggle}
+                  sx={{ mr: 2, display: { sm: 'none' } }}
+               >
+                  <ArrowForwardIosIcon />
+               </IconButton>
+            </Toolbar>
+         </Tooltip>
          <Routes>
             <Route
                path=''

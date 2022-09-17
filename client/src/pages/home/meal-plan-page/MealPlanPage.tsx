@@ -157,17 +157,6 @@ const MealPlanPage = ({
    return (
       <>
          <div className='mealplan-page'>
-            <Toolbar sx={{ display: { sm: 'none' }, alignSelf: 'flex-start' }}>
-               <IconButton
-                  color='inherit'
-                  aria-label='open drawer'
-                  edge='start'
-                  onClick={handleDrawerToggle}
-                  sx={{ mr: 2, display: { sm: 'none' } }}
-               >
-                  <ArrowForwardIosIcon />
-               </IconButton>
-            </Toolbar>
             <MealPlanWeekText currentDay={currentDay} />
             <div className='mealplan-page-main-content'>
                <Stack

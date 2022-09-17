@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
-import { SideBar } from '../../../../components/sidebar/SideBar';
 import { CurrentGoals, MealplanItemType } from '../../../../../../types/types';
+import { SideBar } from '../../../../components/sidebar/SideBar';
 
 interface SearchPageSidebarProps {
    mobileOpen: boolean | undefined;

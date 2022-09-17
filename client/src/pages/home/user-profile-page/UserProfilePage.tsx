@@ -77,17 +77,17 @@ const UserSettingsPage = () => {
 
    return isLoading ? null : (
       <>
-         {goals !== undefined && Object.keys(goals).length > 0 ? (
+         {/* {goals !== undefined && Object.keys(goals).length > 0 ? (
             <SideBar
                mobileOpen={mobileOpen}
                handleDrawerToggle={handleDrawerToggle}
                page='user-profile'
                goals={goals}
             />
-         ) : null}
+         ) : null} */}
          <div className='user-profile-page'>
             <Paper className='user-profile-container'>
-               <Toolbar
+               {/* <Toolbar
                   sx={{ display: { sm: 'none' }, alignSelf: 'flex-start' }}
                >
                   <IconButton
@@ -99,7 +99,7 @@ const UserSettingsPage = () => {
                   >
                      <ArrowForwardIosIcon />
                   </IconButton>
-               </Toolbar>
+               </Toolbar> */}
                <Stack
                   direction='row'
                   spacing={2}
