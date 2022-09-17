@@ -60,7 +60,7 @@ const LoginPage = lazy(
 const SampleFeaturesPage = lazy(
    () =>
       import(
-         /* webpackChunkName: "SampleFeaturesPage" */ './sample-features-page'
+         /* webpackChunkName: "SampleFeaturesPage" */ './sample-features-page/SampleFeaturesPage'
       )
 );
 

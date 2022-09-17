@@ -1,9 +1,9 @@
 //shared sidebar
-import React, { ReactNode } from 'react';
-import { DailyGoals } from '../daily-goals';
-import { IconButton, Toolbar, Drawer, Stack } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { Drawer, IconButton, Stack, Toolbar } from '@mui/material';
+import React, { ReactNode } from 'react';
 import { CurrentGoals, MealplanItemType } from '../../../../types/types';
+import { DailyGoals } from '../daily-goals';
 import { MainTitleLogo } from '../main-title-logo/index';
 
 interface Props {
@@ -46,6 +46,7 @@ export const SideBar = ({
                      boxSizing: 'border-box',
                      width: drawerWidth,
                      pt: '1rem',
+                     pb: '1rem',
                   },
                }}
             >
