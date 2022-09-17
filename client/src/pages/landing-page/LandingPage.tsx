@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { Footer } from '../../components/footer/Footer';
 import {
+   AlertColor,
    Button,
    Grid,
-   Typography,
-   Stack,
    Slide,
-   AlertColor,
+   Stack,
+   Typography,
 } from '@mui/material';
-import { LandingPageCard } from './landing-page-card/LandingPageCard';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
-import './LandingPage.scss';
+import { Footer } from '../../components/footer/Footer';
+import CalculateSvg from '../../img/calculate.svg';
 import DietitianSvg from '../../img/dietitian.svg';
 import MaleChefSvg from '../../img/male-chef.svg';
 import ScheduleSvg from '../../img/schedule.svg';
-import CalculateSvg from '../../img/calculate.svg';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { LandingPageCard } from './landing-page-card/LandingPageCard';
+import './LandingPage.scss';
 
 type LocationType = {
    pathname: string;
@@ -37,19 +37,19 @@ const LandingPage = () => {
    };
 
    const cardMessages = [
-      'Use our Macronutrient Calculator to find your estimated daily carbohydrate needs',
-      'Search for recipes, grocery products or menu items that match your nutrient needs',
       'Save your favorite items to your meal plan and view how many carbs you have left',
+      'Search for recipes, grocery products or menu items that match your nutrient needs',
+      'Use our Macronutrient Calculator to find your estimated daily carbohydrate needs',
    ];
    const cardTitles = [
-      'Calculate Your Macronutrient Needs',
-      'Search For Matching Food Items',
       'Create Your Own Custom Mealplan',
+      'Search For Matching Food Items',
+      'Calculate Your Macronutrient Needs',
    ];
-   const cardImages = [CalculateSvg, MaleChefSvg, ScheduleSvg];
+   const cardImages = [ScheduleSvg, MaleChefSvg, CalculateSvg];
 
    //pass down the feature view to cards so that they can be used to call the handleNavigatingToFeatures function
-   const featureView = ['calculator', 'recipes', 'mealplan'];
+   const featureView = ['mealplan', 'recipes', 'calculator'];
 
    //used to navigate to the SampleAppFeaturesPage with the correction variable passed down in location state
    const handleNavigatingToFeatures = (featureView: string) => {

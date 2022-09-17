@@ -1,33 +1,31 @@
-import React, { useContext } from 'react';
-import './Navbar.scss';
-import { ColorModeContext } from '../../pages/App';
-import { useNavigate } from 'react-router-dom';
-import DefaultAvatar from '../../img/default-avatar.svg';
-import {
-   AppBar,
-   Box,
-   Toolbar,
-   IconButton,
-   Typography,
-   Menu,
-   Avatar,
-   Button,
-   Tooltip,
-   MenuItem,
-   Stack,
-   Link,
-} from '@mui/material';
-import { useAuth } from '../../context/authContext';
-import { useTheme } from '@mui/material/styles';
-import MenuIcon from '@mui/icons-material/Menu';
-import { NavLink } from 'react-router-dom';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import { useLocation } from 'react-router-dom';
-import { LogoIcon } from '../main-title-logo/LogoIcon';
+import MenuIcon from '@mui/icons-material/Menu';
+import {
+   AppBar,
+   Avatar,
+   Box,
+   Button,
+   IconButton,
+   Link,
+   Menu,
+   MenuItem,
+   Stack,
+   Toolbar,
+   Tooltip,
+   Typography,
+} from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import React, { useContext } from 'react';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/authContext';
+import DefaultAvatar from '../../img/default-avatar.svg';
+import { ColorModeContext } from '../../pages/App';
 import { MainTitleLogo } from '../main-title-logo';
+import { LogoIcon } from '../main-title-logo/LogoIcon';
+import './Navbar.scss';
 
-const pages = ['Search', 'Macro Calculator', 'Meal Plan'];
+const pages = ['Meal Plan', 'Search', 'Macro Calculator'];
 
 const NavBar = () => {
    const location = useLocation();

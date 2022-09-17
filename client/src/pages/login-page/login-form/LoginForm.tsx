@@ -1,20 +1,13 @@
-import React, { useState, Dispatch, SetStateAction } from 'react';
-import './LoginForm.scss';
-import {
-   Box,
-   Typography,
-   Stack,
-   Paper,
-   Button,
-   AlertColor,
-} from '@mui/material';
+import GoogleIcon from '@mui/icons-material/Google';
+import { AlertColor, Button, Paper, Stack, Typography } from '@mui/material';
+import axios from 'axios';
+import React, { Dispatch, SetStateAction, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PasswordTextField } from '../../../components/text-fields/password-textfield/PasswordTextField';
 import { UsernameTextField } from '../../../components/text-fields/username-textfield/UsernameTextField';
-import { useNavigate } from 'react-router-dom';
-import LoginSvg from '../../../img/secure_login.svg';
-import GoogleIcon from '@mui/icons-material/Google';
 import { useAuth } from '../../../context/authContext';
-import axios from 'axios';
+import LoginSvg from '../../../img/secure_login.svg';
+import './LoginForm.scss';
 
 interface Props {
    showSignup: boolean;
@@ -68,7 +61,7 @@ export const LoginForm = ({
          if (response.status === 201) {
             setIsLoggedIn(true);
             setShowTextFieldError(false);
-            navigate(`/home/search`, { replace: true });
+            navigate(`/home/mealplan`, { replace: true });
          }
       } catch (err: any) {
          setAlertSeverity('error');
