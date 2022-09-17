@@ -1,6 +1,7 @@
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import {
+   AlertColor,
    IconButton,
    Stack,
    Tab,
@@ -13,11 +14,16 @@ import addDays from 'date-fns/addDays';
 import format from 'date-fns/format';
 import getDay from 'date-fns/getDay';
 import subDays from 'date-fns/subDays';
-import React, { useEffect, useState } from 'react';
+import React, {
+   Dispatch,
+   ReactNode,
+   SetStateAction,
+   useEffect,
+   useState,
+} from 'react';
 import { MealplanItemType } from '../../../../../types/types';
 import { MealPlanWeekText } from '../../../components/mealplan-week-text/MealPlanWeekText';
 import { useAuth } from '../../../context/authContext';
-import { useHomeOutlet } from '../../../hooks/useHomeOutlet';
 import { DateSelectForm } from './date-select-form/DateSelectForm';
 import { MealplanDays } from './mealplan-days';
 import './MealPlanPage.scss';
@@ -32,29 +38,47 @@ const days = [
    'Saturday',
 ];
 
-const MealPlanPage = () => {
+interface Props {
+   handleDrawerToggle: () => void;
+   setAlertMessage: Dispatch<SetStateAction<string>>;
+   setOpenAlert: Dispatch<SetStateAction<boolean>>;
+   setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
+   SearchFormComponent: ReactNode;
+   setNutritionSummary: Dispatch<SetStateAction<any[]>>;
+   setMealplanItemsFound: Dispatch<SetStateAction<boolean>>;
+   setMealplanItems: Dispatch<SetStateAction<MealplanItemType[] | []>>;
+   currentDay: string;
+   setCurrentDay: Dispatch<SetStateAction<string>>;
+   mealplanItems: MealplanItemType[];
+   breakfastItems: MealplanItemType[];
+   setBreakfastItems: Dispatch<SetStateAction<MealplanItemType[]>>;
+   lunchItems: MealplanItemType[];
+   setLunchItems: Dispatch<SetStateAction<MealplanItemType[]>>;
+   dinnerItems: MealplanItemType[];
+   setDinnerItems: Dispatch<SetStateAction<MealplanItemType[]>>;
+}
+
+const MealPlanPage = ({
+   handleDrawerToggle,
+   setAlertMessage,
+   setOpenAlert,
+   setAlertSeverity,
+   setNutritionSummary,
+   setMealplanItemsFound,
+   setMealplanItems,
+   currentDay,
+   setCurrentDay,
+   mealplanItems,
+   breakfastItems,
+   setBreakfastItems,
+   lunchItems,
+   setLunchItems,
+   dinnerItems,
+   setDinnerItems,
+}: Props) => {
    const { isLoading, isLoggedin } = useAuth();
    const [dayIndex, setDayIndex] = useState<number>(getDay(Date.now())); //used for tab highlighting
    const [value, setValue] = React.useState<any>(new Date(Date.now()));
-
-   const {
-      handleDrawerToggle,
-      setAlertMessage,
-      setOpenAlert,
-      setAlertSeverity,
-      setNutritionSummary,
-      setMealplanItemsFound,
-      setMealplanItems,
-      currentDay,
-      setCurrentDay,
-      mealplanItems,
-      setBreakfastItems,
-      setLunchItems,
-      setDinnerItems,
-      breakfastItems,
-      lunchItems,
-      dinnerItems,
-   } = useHomeOutlet();
 
    //#check for active mealplan items only when navigating to the mealplan page
    useEffect(() => {

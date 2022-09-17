@@ -25,7 +25,7 @@ import { MainTitleLogo } from '../main-title-logo';
 import { LogoIcon } from '../main-title-logo/LogoIcon';
 import './Navbar.scss';
 
-const pages = ['Meal Plan', 'Search', 'Macro Calculator'];
+const pages = ['Search', 'Macro Calculator'];
 
 const NavBar = () => {
    const location = useLocation();
@@ -143,6 +143,20 @@ const NavBar = () => {
                         }}
                      >
                         <Stack direction='column' sx={{ padding: '0.5rem' }}>
+                           <Link
+                              component={NavLink}
+                              sx={{
+                                 '&.active': {
+                                    color: 'inherit',
+                                    textDecoration: 'underline',
+                                 },
+                              }}
+                              underline='none'
+                              to={`/home`}
+                              end
+                           >
+                              Meal Plan
+                           </Link>
                            {pages.map((page) => (
                               <Link
                                  onClick={handleCloseNavMenu}
@@ -194,10 +208,9 @@ const NavBar = () => {
                         </Button>
                      ) : (
                         // SHOW ON ALL PAGES WHEN ON DESKTOP AND LOGGED IN
-                        pages.map((page) => (
+                        <>
                            <Link
                               component={NavLink}
-                              key={page}
                               sx={{
                                  '&.active': {
                                     color: 'inherit',
@@ -205,14 +218,31 @@ const NavBar = () => {
                                  },
                               }}
                               underline='none'
-                              to={`/home/${page
-                                 .toLowerCase()
-                                 .replace(/ /g, '')}`}
+                              to={`/home`}
                               end
                            >
-                              {page}
+                              Meal Plan
                            </Link>
-                        ))
+                           {pages.map((page) => (
+                              <Link
+                                 component={NavLink}
+                                 key={page}
+                                 sx={{
+                                    '&.active': {
+                                       color: 'inherit',
+                                       textDecoration: 'underline',
+                                    },
+                                 }}
+                                 underline='none'
+                                 to={`/home/${page
+                                    .toLowerCase()
+                                    .replace(/ /g, '')}`}
+                                 end
+                              >
+                                 {page}
+                              </Link>
+                           ))}
+                        </>
                      )}
                   </Box>
                   {/* SHOW THIS ON ALL PAGES WHEN LOGGED IN */}

@@ -10,11 +10,15 @@ import {
 } from '../../../../types/types';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
 import { SideBar } from '../../components/sidebar/SideBar';
+import { useAuth } from '../../context/authContext';
+import MealPlanPage from './meal-plan-page/MealPlanPage';
 import { SidebarMealplan } from './meal-plan-page/sidebar-mealplan/SideBarMealPlan';
 import { SearchForm } from './search-page/search-form';
 import { SideBarSearchPage } from './search-page/sidebar-searchpage/SideBarSearchPage';
 
 const Home = () => {
+   const { isLoading, isLoggedIn, username } = useAuth(); //used to check if data is still being retrieved from database
+
    const [goals, setGoals] = useState({} as CurrentGoals);
    const [mealplanItemsFound, setMealplanItemsFound] = useState<boolean>(true); //use this to display different page if no items are found
    const [mobileOpen, setMobileOpen] = useState(false);
@@ -157,6 +161,39 @@ const Home = () => {
       <>
          <Routes>
             <Route
+               path=''
+               element={
+                  <>
+                     <SidebarMealplan
+                        mobileOpen={mobileOpen}
+                        handleDrawerToggle={handleDrawerToggle}
+                        nutritionSummary={nutritionSummary}
+                        mealplanItemsFound={mealplanItemsFound}
+                        goals={goals}
+                     />
+                     <MealPlanPage
+                        handleDrawerToggle={handleDrawerToggle}
+                        setAlertMessage={setAlertMessage}
+                        setOpenAlert={setOpenAlert}
+                        setAlertSeverity={setAlertSeverity}
+                        setNutritionSummary={setNutritionSummary}
+                        setMealplanItemsFound={setMealplanItemsFound}
+                        setMealplanItems={setMealplanItems}
+                        currentDay={currentDay}
+                        setCurrentDay={setCurrentDay}
+                        mealplanItems={mealplanItems}
+                        setBreakfastItems={setBreakfastItems}
+                        setLunchItems={setLunchItems}
+                        setDinnerItems={setDinnerItems}
+                        breakfastItems={breakfastItems}
+                        lunchItems={lunchItems}
+                        dinnerItems={dinnerItems}
+                        SearchFormComponent={SearchFormComponent}
+                     />
+                  </>
+               }
+            />
+            <Route
                path='search'
                element={
                   <SideBarSearchPage
@@ -165,18 +202,6 @@ const Home = () => {
                      handleDrawerToggle={handleDrawerToggle}
                      SearchFormComponent={SearchFormComponent}
                      apiData={apiData}
-                  />
-               }
-            />
-            <Route
-               path='mealplan'
-               element={
-                  <SidebarMealplan
-                     mobileOpen={mobileOpen}
-                     handleDrawerToggle={handleDrawerToggle}
-                     nutritionSummary={nutritionSummary}
-                     mealplanItemsFound={mealplanItemsFound}
-                     goals={goals}
                   />
                }
             />

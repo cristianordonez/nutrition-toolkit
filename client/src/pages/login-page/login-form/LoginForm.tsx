@@ -61,7 +61,7 @@ export const LoginForm = ({
          if (response.status === 201) {
             setIsLoggedIn(true);
             setShowTextFieldError(false);
-            navigate(`/home/mealplan`, { replace: true });
+            navigate(`/home`, { replace: true });
          }
       } catch (err: any) {
          setAlertSeverity('error');

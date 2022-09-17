@@ -135,7 +135,7 @@ export const App = () => {
 
                         <Route path='/home/*' element={<Home />}>
                            <Route path='search' element={<SearchPage />} />
-                           <Route path='mealplan' element={<MealPlanPage />} />
+                           {/* <Route path='mealplan' element={<MealPlanPage />} /> */}
                            <Route
                               path='macrocalculator'
                               element={<MacroCalculatorPage />}
