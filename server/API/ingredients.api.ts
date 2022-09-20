@@ -29,21 +29,20 @@ const getSpoonacularIngredients = async (ingredientsQuery: Query) => {
          'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
       },
    });
-   console.log('ingredients.data:', ingredients.data);
    return ingredients.data.results;
 };
 
 const getSpoonacularIngredientById = async (
    id: number,
-   amount?: string | undefined,
+   amount?: string | undefined | number,
    unit?: string | undefined
 ) => {
    const currentUrl = `${url}/${id}/information`;
    let ingredientInfo = await axios.get(currentUrl, {
-      // params: {
-      //    amount: `${amount}`,
-      //    unit: `${unit}`,
-      // },
+      params: {
+         amount: `${amount}`,
+         unit: `${unit}`,
+      },
       headers: {
          'X-RapidAPI-Key': `${X_RAPIDAPI_KEY}`,
          'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,

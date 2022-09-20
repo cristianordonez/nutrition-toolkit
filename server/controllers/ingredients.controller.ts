@@ -1,30 +1,25 @@
 import axios from 'axios';
 import { Request, Response } from 'express';
-import { Query } from '../../types/types';
+import { Query, IngredientType } from '../../types/types';
 import {
    getSpoonacularIngredientById,
    getSpoonacularIngredients,
 } from '../API/ingredients.api';
 
-type IngredientResponse = {
-   id: number;
-   name: string;
-   image: string;
-   children: [];
-};
-
 const getIngredients = async function (req: Request, res: Response) {
    const query = req.query as unknown as Query;
    try {
       const returnedIngredients = await getSpoonacularIngredients(query);
-
-      let url = 'https://spoonacular.com/cdn/ingredients_';
-
       const updatedIngredients = await Promise.all(
-         returnedIngredients.map(async (ingredient: IngredientResponse) => {
-            let imageUrl = `${url}250x250/${ingredient.image}`;
-            ingredient.image = imageUrl;
-            return ingredient;
+         returnedIngredients.map(async (ingredient: IngredientType) => {
+            let imageUrl = `https://spoonacular.com/cdn/ingredients_250x250/${ingredient.image}`;
+            const response = await getSpoonacularIngredientById(
+               ingredient.id,
+               1,
+               ingredient.possibleUnits[ingredient.possibleUnits.length - 1]
+            );
+            response.image = imageUrl;
+            return response;
          })
       );
       console.log('updatedIngredient:', updatedIngredients);

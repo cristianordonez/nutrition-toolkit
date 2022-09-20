@@ -30,7 +30,9 @@ describe('The Login Page', () => {
       cy.findByPlaceholderText('Username or Email').type('TEST_USERNAME01');
       cy.findByPlaceholderText('Password').type('password');
       cy.findByTestId('login-btn').click();
-      cy.get('.daily-goals').contains('1614').should('be.visible');
+      cy.findByText(
+         'View your daily meal plan items or begin to add items to your meal plan'
+      ).should('be.visible');
       cy.logout();
    });
 });

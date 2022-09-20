@@ -90,8 +90,26 @@ interface IngredientType {
    id: number;
    image: string;
    name: string;
+   nutrition: IngredientNutrition;
    possibleUnits: string[];
 }
+
+type IngredientNutrition = {
+   caloricBreakdown: {
+      percentCarbs: number;
+      percentFat: number;
+      percentProtein: number;
+   };
+   weightPerServing: { amoun: number; unit: string };
+   nutrients: SingleNutrient[];
+};
+
+type SingleNutrient = {
+   name: string;
+   amount: number;
+   percentOfDailyNeeds: number;
+   unit: string;
+};
 
 type CurrentGoals = {
    user_id?: number;

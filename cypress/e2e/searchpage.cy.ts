@@ -37,8 +37,6 @@ describe('The Search Page', () => {
       cy.findByTestId('select-search-input').click();
       cy.contains('Grocery Products').click();
       cy.findByTestId('query-text-field').type('yogurt');
-      cy.findByTestId('select-type-dropdown').click();
-      cy.contains('Main Course').click();
       cy.findAllByTestId('textfield-min-nutrient').first().type('50');
       cy.findAllByTestId('textfield-max-nutrient').first().type('400');
       cy.findAllByTestId('textfield-min-nutrient').eq(1).type('20'); //eq searches the index for correct item
@@ -55,8 +53,6 @@ describe('The Search Page', () => {
       cy.findByTestId('select-search-input').click();
       cy.contains('Menu items').click();
       cy.findByTestId('query-text-field').type('hamburger');
-      cy.findByTestId('select-type-dropdown').click();
-      cy.contains('Main Course').click();
       cy.findAllByTestId('textfield-min-nutrient').first().type('50');
       cy.findAllByTestId('textfield-max-nutrient').first().type('400');
       cy.findAllByTestId('textfield-min-nutrient').eq(1).type('20'); //eq searches the index for correct item
