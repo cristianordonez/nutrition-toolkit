@@ -2,6 +2,7 @@ import { AlertColor, Button, Paper, Typography } from '@mui/material';
 import React, { Dispatch, SetStateAction } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MealplanItemType } from '../../../../../../../types/types';
+import { FoodItemContents } from '../../../../../components/food-item-contents/FoodItemContents';
 import { MealplanItem } from './meal-plan-item/MealplanItem';
 import './MealplanDay.scss';
 
@@ -27,6 +28,7 @@ export const MealplanDay = ({
 }: Props) => {
    const navigate = useNavigate();
    console.log('meals:', meals);
+   console.log('type:', type);
    return (
       <>
          <Paper
@@ -45,22 +47,26 @@ export const MealplanDay = ({
             <div className='outer-container'>
                <div className='slider-container'>
                   <div id='slider'>
-                     {meals.map((meal, index) => (
-                        <div className='slider-card' key={index}>
-                           <MealplanItem
-                              type={meal.type}
-                              id={meal.value.id}
-                              shoppingListId={meal.id}
-                              servings={meal.value.servings}
-                              title={meal.value.title}
-                              setOpenAlert={setOpenAlert}
-                              setAlertSeverity={setAlertSeverity}
-                              setAlertMessage={setAlertMessage}
-                              setMealPlanItems={setMealPlanItems}
-                              currentDay={currentDay}
-                           />
-                        </div>
-                     ))}
+                     {meals.length > 0
+                        ? meals.map((meal, index) => (
+                             <div className='slider-card' key={index}>
+                                <MealplanItem
+                                   type={meal.type}
+                                   id={meal.value.id || meal.id}
+                                   shoppingListId={meal.id}
+                                   servings={meal.value.servings}
+                                   title={meal.value.name}
+                                   setOpenAlert={setOpenAlert}
+                                   setAlertSeverity={setAlertSeverity}
+                                   setAlertMessage={setAlertMessage}
+                                   setMealPlanItems={setMealPlanItems}
+                                   currentDay={currentDay}
+                                   amount={meal.value.amount}
+                                   unit={meal.value.unit}
+                                />
+                             </div>
+                          ))
+                        : null}
                   </div>
                </div>
             </div>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Request, Response } from 'express';
-import { Query, IngredientType } from '../../types/types';
+import { Query, IngredientType, RequestParams } from '../../types/types';
 import {
    getSpoonacularIngredientById,
    getSpoonacularIngredients,
@@ -30,4 +30,23 @@ const getIngredients = async function (req: Request, res: Response) {
    }
 };
 
-export { getIngredients };
+const getIngredientById = async function (req: Request, res: Response) {
+   let params = req.params as unknown as RequestParams;
+   const query = req.query as unknown as any;
+
+   console.log('params:', params);
+   console.log('query:', query);
+   try {
+      let ingredientInfo = await getSpoonacularIngredientById(
+         params.id,
+         query.amount,
+         query.unit
+      );
+      res.status(200).send(ingredientInfo);
+   } catch (err) {
+      // console.log(err);
+      res.status(400).send('Could not get product information');
+   }
+};
+
+export { getIngredients, getIngredientById };

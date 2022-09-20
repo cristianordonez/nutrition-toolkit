@@ -38,6 +38,7 @@ const getSpoonacularIngredientById = async (
    unit?: string | undefined
 ) => {
    const currentUrl = `${url}/${id}/information`;
+   console.log('currentUrl:', currentUrl);
    let ingredientInfo = await axios.get(currentUrl, {
       params: {
          amount: `${amount}`,

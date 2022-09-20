@@ -1,5 +1,6 @@
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { AlertColor } from '@mui/material';
+import { AddIngredientToCartModal } from './AddIngredientToCartModal';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -37,6 +38,20 @@ export const FoodSearchList = ({
    const [currentImage, setCurrentImage] = useState('');
    const [currentId, setCurrentId] = useState<number>(0);
    const [currentTitle, setCurrentTitle] = useState('');
+   const [units, setUnits] = useState<string[]>(['']);
+
+   const handleOpeningAddIngredientModal = (
+      img: string,
+      title: string,
+      units: string[],
+      id: number
+   ) => {
+      setCurrentImage(img);
+      setCurrentTitle(title);
+      setUnits(units);
+      setCurrentId(id);
+      setOpenDialog(!openDialog);
+   };
 
    const handleOpeningAddToMealplanDialog = (
       imageType: string,
@@ -45,7 +60,6 @@ export const FoodSearchList = ({
    ) => {
       setCurrentImage(imageType);
       setCurrentTitle(title);
-      console.log('id:', id);
       setCurrentId(id);
       setOpenDialog(!openDialog);
    };
@@ -54,10 +68,7 @@ export const FoodSearchList = ({
       setOpenDialog(!openDialog);
    };
 
-   //todo make a new component for the ingredient (place in shared components folder)
-
    //todo make a new add to cart modal for the ingredients (include a section to put in the amount and the serving type)
-
    return (
       <>
          <div className='food-search-list'>
@@ -74,7 +85,27 @@ export const FoodSearchList = ({
             </Stack>
             <div className='food-search-main-container'>
                {route === 'ingredients'
-                  ? null
+                  ? apiData.map((item: IngredientType, index: number) => (
+                       <React.Fragment key={index}>
+                          <div data-testid='food-search-item'>
+                             <FoodItemContents
+                                route={route}
+                                image={item.image}
+                                id={item.id}
+                                title={item.name}
+                                nutrition={item.nutrition}
+                                imageType={'jpg'}
+                                handleOpeningAddIngredientModal={
+                                   handleOpeningAddIngredientModal
+                                }
+                                amount={item.amount}
+                                possibleUnits={item.possibleUnits}
+                                unit={item.unit}
+                                isMealPlanItem={false} //used to add a X icon to delete mealplans
+                             />
+                          </div>
+                       </React.Fragment>
+                    ))
                   : apiData.map((item: FoodItemType, index: number) => (
                        <React.Fragment key={index}>
                           <div data-testid='food-search-item'>
@@ -102,18 +133,34 @@ export const FoodSearchList = ({
                </Button>
             ) : null}
          </div>
-         <AddToCartModal
-            openDialog={openDialog}
-            handleOpeningDialog={handleOpeningDialog}
-            route={route}
-            imageType={currentImage}
-            title={currentTitle}
-            id={currentId}
-            setOpenDialog={setOpenDialog}
-            setAlertMessage={setAlertMessage}
-            setOpenSnackbar={setOpenSnackbar}
-            setAlertSeverity={setAlertSeverity}
-         />
+
+         {route === 'ingredients' ? (
+            <AddIngredientToCartModal
+               openDialog={openDialog}
+               title={currentTitle}
+               handleOpeningDialog={handleOpeningDialog}
+               possibleUnits={units}
+               image={currentImage}
+               id={currentId}
+               setOpenDialog={setOpenDialog}
+               setAlertMessage={setAlertMessage}
+               setOpenSnackbar={setOpenSnackbar}
+               setAlertSeverity={setAlertSeverity}
+            />
+         ) : (
+            <AddToCartModal
+               openDialog={openDialog}
+               handleOpeningDialog={handleOpeningDialog}
+               route={route}
+               imageType={currentImage}
+               title={currentTitle}
+               id={currentId}
+               setOpenDialog={setOpenDialog}
+               setAlertMessage={setAlertMessage}
+               setOpenSnackbar={setOpenSnackbar}
+               setAlertSeverity={setAlertSeverity}
+            />
+         )}
       </>
    );
 };

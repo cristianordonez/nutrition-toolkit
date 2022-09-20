@@ -41,6 +41,15 @@ interface Props {
       title: string,
       id: number
    ) => void;
+   handleOpeningAddIngredientModal?: (
+      img: string,
+      title: string,
+      popularUnits: string[],
+      id: number
+   ) => void;
+   amount?: number | undefined;
+   unit?: string | undefined;
+   possibleUnits?: string[] | undefined;
 }
 
 type NutrientType = {
@@ -63,20 +72,32 @@ export const FoodItemContents = ({
    servings,
    id,
    handleOpeningAddToMealplanDialog,
+   handleOpeningAddIngredientModal,
    imageType,
+   amount,
+   possibleUnits,
+   unit,
 }: Props) => {
    //configure the nutrients here as different items contain different object structure
    let calories, carbs, fat, protein;
-   if ((nutrition !== undefined && route === 'recipes') || route === 'RECIPE') {
+   if (
+      (nutrition !== undefined && route === 'recipes') ||
+      route === 'RECIPE' ||
+      route === 'ingredients'
+   ) {
       nutrition.nutrients.forEach((nutrient: NutrientType) => {
          if (nutrient.name === 'Calories') {
-            calories = Math.floor(nutrition.nutrients[0].amount);
+            // calories = Math.floor(nutrition.nutrients[0].amount);
+            calories = Math.floor(nutrient.amount);
          } else if (nutrient.name === 'Protein') {
-            protein = Math.floor(nutrition.nutrients[1].amount) + 'g';
+            // protein = Math.floor(nutrition.nutrients[1].amount) + 'g';
+            protein = Math.floor(nutrient.amount);
          } else if (nutrient.name === 'Fat') {
-            fat = Math.floor(nutrition.nutrients[1].amount);
+            // fat = Math.floor(nutrition.nutrients[1].amount);
+            fat = Math.floor(nutrient.amount);
          } else if (nutrient.name === 'Carbohydrates') {
-            carbs = Math.floor(nutrition.nutrients[3].amount) + 'g';
+            // carbs = Math.floor(nutrition.nutrients[3].amount) + 'g';
+            carbs = Math.floor(nutrient.amount);
          }
       });
    } else if (nutrition !== undefined) {
@@ -115,6 +136,11 @@ export const FoodItemContents = ({
                <Typography align='center' noWrap variant='subtitle1'>
                   {title}
                </Typography>
+               {route === 'ingredients' ? (
+                  <Typography align='center' variant='subtitle2'>
+                     per {amount} {unit}
+                  </Typography>
+               ) : null}
                {isMealPlanItem && servings !== undefined ? (
                   <Stack direction='row'>
                      <Typography variant='subtitle2'>
@@ -186,6 +212,30 @@ export const FoodItemContents = ({
                      className='card-button'
                      onClick={() =>
                         handleOpeningAddToMealplanDialog(imageType, title, id)
+                     }
+                     variant='outlined'
+                     size='small'
+                     data-testid='open-addtomealplan-dialog'
+                  >
+                     Add to Mealplan
+                  </Button>
+               ) : null}
+               {!isMealPlanItem &&
+               handleOpeningAddIngredientModal &&
+               image &&
+               possibleUnits &&
+               route === 'ingredients' &&
+               title ? (
+                  <Button
+                     fullWidth
+                     className='card-button'
+                     onClick={() =>
+                        handleOpeningAddIngredientModal(
+                           image,
+                           title,
+                           possibleUnits,
+                           id
+                        )
                      }
                      variant='outlined'
                      size='small'

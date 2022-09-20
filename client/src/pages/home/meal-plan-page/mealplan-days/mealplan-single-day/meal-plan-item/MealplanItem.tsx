@@ -19,6 +19,8 @@ interface Props {
    setAlertMessage: Dispatch<SetStateAction<string>>;
    setMealPlanItems: Dispatch<SetStateAction<MealplanItemType[] | []>>;
    currentDay: string;
+   amount?: number | undefined;
+   unit?: string | undefined;
 }
 
 export const MealplanItem = ({
@@ -32,6 +34,8 @@ export const MealplanItem = ({
    setOpenAlert,
    setAlertSeverity,
    setAlertMessage,
+   amount,
+   unit,
 }: Props) => {
    const [itemData, setItemData] = useState<null | FoodItemType>(null); //will hold value of the items data after calling endpoint
    const [openDialog, setOpenDialog] = useState<boolean>(false);
@@ -40,6 +44,7 @@ export const MealplanItem = ({
       setOpenDialog(!openDialog);
    };
 
+   //have to make another call to api here because nutrition is not included in mealplan items;
    useEffect(() => {
       let url: string = `/api/recipes/${id}`; //set initial value for url to avoid typescript error
       if (type === 'RECIPE') {
@@ -48,12 +53,18 @@ export const MealplanItem = ({
          url = `/api/groceryProducts/${id}`;
       } else if (type === 'MENU_ITEM') {
          url = `/api/menuItems/${id}`;
+      } else if (type === 'INGREDIENTS') {
+         console.log('amount:', amount);
+         console.log('unit:', unit);
+         url = `/api/ingredients/${id}?amount=${amount}&unit=${unit}`;
       }
 
+      console.log('itemData:', itemData);
       //call endpoint to get the rest of the itemData information
       axios
          .get(url)
          .then((itemInfo) => {
+            console.log('itemInfo.data:', itemInfo.data);
             setItemData(itemInfo.data);
          })
          .catch((err) => {
