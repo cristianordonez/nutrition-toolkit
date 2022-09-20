@@ -1,22 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import './UserProfilePage.scss';
-import { SideBar } from '../../../components/sidebar/SideBar';
-import { DailyGoals } from '../../../components/daily-goals';
-import { CustomAlert } from '../../../components/custom-alert/CustomAlert';
-import {
-   AlertColor,
-   Typography,
-   Stack,
-   Paper,
-   Toolbar,
-   IconButton,
-} from '@mui/material';
-import axios from 'axios';
-import { CurrentGoals } from '../../../../../types/types';
-import { useAuth } from '../../../context/authContext';
 import SettingsIcon from '@mui/icons-material/Settings';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { Paper, Stack, Typography } from '@mui/material';
+import axios from 'axios';
+import React, { useEffect } from 'react';
+import { DailyGoals } from '../../../components/daily-goals';
+import { useAuth } from '../../../context/authContext';
 import { useHomeOutlet } from '../../../hooks/useHomeOutlet';
+import './UserProfilePage.scss';
 
 const UserSettingsPage = () => {
    const {
@@ -77,29 +66,8 @@ const UserSettingsPage = () => {
 
    return isLoading ? null : (
       <>
-         {/* {goals !== undefined && Object.keys(goals).length > 0 ? (
-            <SideBar
-               mobileOpen={mobileOpen}
-               handleDrawerToggle={handleDrawerToggle}
-               page='user-profile'
-               goals={goals}
-            />
-         ) : null} */}
          <div className='user-profile-page'>
             <Paper className='user-profile-container'>
-               {/* <Toolbar
-                  sx={{ display: { sm: 'none' }, alignSelf: 'flex-start' }}
-               >
-                  <IconButton
-                     color='inherit'
-                     aria-label='open drawer'
-                     edge='start'
-                     onClick={handleDrawerToggle}
-                     sx={{ mr: 2, display: { sm: 'none' } }}
-                  >
-                     <ArrowForwardIosIcon />
-                  </IconButton>
-               </Toolbar> */}
                <Stack
                   direction='row'
                   spacing={2}

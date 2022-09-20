@@ -67,7 +67,7 @@ const SampleFeaturesPage = lazy(
 const SampleRecipePage = lazy(
    () =>
       import(
-         /* webpackChunkName: "SampleRecipePage" */ './sample-features-page/sample-recipe-page/SampleRecipePage'
+         /* webpackChunkName: "SampleRecipePage" */ './sample-features-page/sample-search-page/SampleSearchPage'
       )
 );
 
@@ -133,12 +133,17 @@ export const App = () => {
                            element={<ResetPasswordPage />}
                         />
 
+                        {/* renders the home component only */}
                         <Route path='/home/*' element={<Home />}>
+                           {' '}
+                           {/* renders the Home component AND the SearchPage component*/}
                            <Route path='search' element={<SearchPage />} />
+                           {/* renders the Home component AND the MacroCalculatorPage components */}
                            <Route
                               path='macrocalculator'
                               element={<MacroCalculatorPage />}
                            />
+                           {/* renders the Home component AND the UserSettingsPage components */}
                            <Route
                               path='settings'
                               element={<UserSettingsPage />}

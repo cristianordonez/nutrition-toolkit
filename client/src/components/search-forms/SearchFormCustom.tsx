@@ -1,9 +1,9 @@
 import React, { FormEventHandler } from 'react';
 import { Button, Typography, Stack, SelectChangeEvent } from '@mui/material';
-import { NutrientInputForm } from '../../pages/home/search-page/search-form/NutrientInputForm';
-import { SearchInput } from '../../pages/home/search-page/search-form/SearchInput';
-import { QueryTextField } from '../../pages/home/search-page/search-form/QueryTextField';
-import { TypeDropDown } from '../../pages/home/search-page/search-form/TypeDropDown';
+import { NutrientInputForm } from './search-form-components/NutrientInputForm';
+import { SearchInput } from './search-form-components/SearchInput';
+import { QueryTextField } from './search-form-components/QueryTextField';
+import { TypeDropDown } from './search-form-components/TypeDropDown';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 import { ValuesType } from '../../../../types/types';
 interface Props {
@@ -28,59 +28,66 @@ export const SearchFormCustom = ({
          <form onSubmit={handleSubmit}>
             <Stack spacing={3}>
                {/* ROUTES */}
-
                <SearchInput
                   route={route}
                   handleRouteChange={handleRouteChange}
                />
                {/* QUERY */}
-
                <QueryTextField
                   query={values.query}
                   handleInputChange={handleInputChange}
                />
                {/* TYPE */}
-
-               <TypeDropDown
-                  type={values.type}
-                  handleTypeSelect={handleTypeSelect}
-               />
+               {route === 'recipes' ? (
+                  <TypeDropDown
+                     type={values.type}
+                     handleTypeSelect={handleTypeSelect}
+                  />
+               ) : null}
                {/* CALORIES */}
-               <Typography variant='h6'>Choose Calorie Range</Typography>
-               <NutrientInputForm
-                  handleInputChange={handleInputChange}
-                  measurement={'kcal'}
-                  nutrient={'Calories'}
-                  minValue={values.minCalories}
-                  maxValue={values.maxCalories}
-               />
+               {route !== 'ingredients' ? (
+                  <>
+                     <NutrientInputForm
+                        handleInputChange={handleInputChange}
+                        measurement={'kcal'}
+                        nutrient={'Calories'}
+                        minValue={values.minCalories}
+                        maxValue={values.maxCalories}
+                        route={route}
+                     />
+                  </>
+               ) : (
+                  <Typography sx={{ pt: '1rem' }} variant='subtitle1'>
+                     All ranges must be between 0 and 100%
+                  </Typography>
+               )}
+
                {/* CARBS */}
-               <Typography variant='h6'>Choose Carb Range</Typography>
                <NutrientInputForm
                   handleInputChange={handleInputChange}
                   measurement={'g'}
                   nutrient={'Carbs'}
                   minValue={values.minCarbs}
                   maxValue={values.maxCarbs}
+                  route={route}
                />
-
                {/* PROTEIN */}
-               <Typography variant='h6'>Choose Protein Range</Typography>
                <NutrientInputForm
                   handleInputChange={handleInputChange}
                   measurement={'g'}
                   nutrient={'Protein'}
                   minValue={values.minProtein}
                   maxValue={values.maxProtein}
+                  route={route}
                />
                {/* FAT */}
-               <Typography variant='h6'>Choose Fat Range</Typography>
                <NutrientInputForm
                   handleInputChange={handleInputChange}
                   measurement={'g'}
                   nutrient={'Fat'}
                   minValue={values.minFat}
                   maxValue={values.maxFat}
+                  route={route}
                />
                <Button type='submit' variant='contained'>
                   Submit

@@ -16,6 +16,7 @@ import React, {
    MouseEventHandler,
    SetStateAction,
    SyntheticEvent,
+   useEffect,
    useState,
 } from 'react';
 import { AddToMealPlanType } from '../../../../../../types/types';
@@ -69,6 +70,7 @@ export const AddToCartModal = ({
       },
    });
 
+   console.log('id in add to card modal:', id);
    //# handles updating state when changing the slot select field
    const handleSelectSlot = (event: SelectChangeEvent) => {
       setData({ ...data, slot: parseInt(event.target.value) });
@@ -90,6 +92,7 @@ export const AddToCartModal = ({
    //# handles adding the item to the mealplan
    const handleSubmit = async (event: SyntheticEvent) => {
       event.preventDefault();
+      console.log('data:', data);
       try {
          let response = await axios.post('/api/mealplan', data);
          setAlertSeverity('success');
@@ -101,10 +104,25 @@ export const AddToCartModal = ({
       }
    };
 
+   //listens to id so that it can update the data object when item is clicked
+   useEffect(() => {
+      setData((data: AddToMealPlanType) => {
+         return {
+            ...data,
+            value: {
+               ...data.value,
+               id,
+               title,
+               imageType,
+            },
+         };
+      });
+   }, [id]);
+
    return (
       <Dialog open={openDialog}>
          <DialogTitle align='left'>
-            Select preferred day, slot and number of servings to add to Meaplan
+            Select preferred day, slot and number of servings
          </DialogTitle>
          <form onSubmit={handleSubmit}>
             <DialogContent>

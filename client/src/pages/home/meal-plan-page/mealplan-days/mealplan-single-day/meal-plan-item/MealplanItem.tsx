@@ -1,8 +1,11 @@
 import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
-import { ConfirmDeleteDialog } from './ConfirmDeleteDialog';
-import { FoodItemContents } from '../../../../components/food-item-contents/FoodItemContents';
+import { ConfirmDeleteDialog } from '../../ConfirmDeleteDialog';
+import { FoodItemContents } from '../../../../../../components/food-item-contents/FoodItemContents';
 import { AlertColor } from '@mui/material';
-import { FoodItemType, MealplanItemType } from '../../../../../../types/types';
+import {
+   FoodItemType,
+   MealplanItemType,
+} from '../../../../../../../../types/types';
 import axios from 'axios';
 
 interface Props {
@@ -64,6 +67,7 @@ export const MealplanItem = ({
             <FoodItemContents
                servings={servings}
                route={type}
+               id={id}
                image={itemData?.image}
                title={title}
                restaurantChain={itemData?.restaurantChain || undefined}

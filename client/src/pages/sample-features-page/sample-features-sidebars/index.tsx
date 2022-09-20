@@ -1,26 +1,32 @@
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { Box, Drawer, IconButton, Toolbar } from '@mui/material';
-import React from 'react';
+import {
+   SelectChangeEvent,
+   Box,
+   Drawer,
+   IconButton,
+   Toolbar,
+} from '@mui/material';
+import React, { FormEventHandler } from 'react';
 import { useLocation } from 'react-router-dom';
 import { MainTitleLogo } from '../../../components/main-title-logo';
 import { SearchFormCustom } from '../../../components/search-forms/SearchFormCustom';
 import { SampleCalculatorSidebarContents } from './SampleCalculatorSidebarContents';
 import './SampleFeatureSidebars.scss';
 import { SampleMealplanSidebarContents } from './SampleMealplanSidebarContents';
-
+import { CurrentGoals, ValuesType } from '../../../../../types/types';
 const drawerWidth = '350px';
 
 interface Props {
    handleDrawerToggle: () => void;
    mobileOpen: boolean;
-   route: any;
-   values: any;
-   handleSearch: any;
-   handleRouteChange: any;
-   handleInputChange: any;
-   handleTypeSelect: any;
-   goals: any;
+   route: string;
+   values: ValuesType;
+   handleSearch: FormEventHandler<HTMLFormElement>;
+   handleRouteChange: (event: SelectChangeEvent) => void;
+   handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+   handleTypeSelect: (event: SelectChangeEvent) => void;
+   goals: CurrentGoals;
    nutritionSummary: any;
    view: 'mealplan' | 'search' | 'calculator';
 }

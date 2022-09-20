@@ -1,7 +1,7 @@
 import ScreenSearchDesktopIcon from '@mui/icons-material/ScreenSearchDesktop';
 import { AlertColor, Stack, Tab, Tabs, Typography } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { useState, Dispatch, SetStateAction } from 'react';
 import {
    CurrentGoals,
    MealplanItemType,
@@ -46,6 +46,8 @@ export const SearchForm = ({
    setShowLoadMoreBtn,
    setAPIData,
 }: Props) => {
+   const [error, setError] = useState<boolean>(false); //used to show input field error when route is set to ingredients
+
    const handleRouteChange = (event: SelectChangeEvent) => {
       setRoute(event.target.value);
    };

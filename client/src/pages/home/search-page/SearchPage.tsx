@@ -6,10 +6,9 @@ import { FoodSearchList } from './food-search-list';
 import './SearchPage.scss';
 
 const SearchPage = () => {
-   const { isLoading, isLoggedIn, username } = useAuth(); //used to check if data is still being retrieved from database
+   const { isLoading } = useAuth(); //used to check if data is still being retrieved from database
    const {
       loading,
-      handleDrawerToggle,
       apiData,
       route,
       handleLoadMore,

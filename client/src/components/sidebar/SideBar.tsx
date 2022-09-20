@@ -62,7 +62,7 @@ export const SideBar = ({
                   </IconButton>
                </Toolbar>
                <Stack
-                  sx={{ width: '100%', pb: '5rem' }}
+                  sx={{ width: '100%', pb: '3rem' }}
                   direction='row'
                   spacing={2}
                   justifyContent={'center'}
@@ -99,7 +99,7 @@ export const SideBar = ({
                }}
             >
                <Stack
-                  sx={{ width: '100%', pb: '5rem' }}
+                  sx={{ width: '100%', pb: '3rem' }}
                   direction='row'
                   spacing={2}
                   justifyContent={'center'}

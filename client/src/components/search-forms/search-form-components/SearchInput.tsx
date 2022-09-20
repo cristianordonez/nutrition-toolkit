@@ -25,6 +25,7 @@ export const SearchInput = ({ route, handleRouteChange }: Props) => {
             <MenuItem value={'recipes'}>Recipes</MenuItem>
             <MenuItem value={'groceryProducts'}>Grocery Products</MenuItem>
             <MenuItem value={'menuItems'}>Menu items</MenuItem>
+            <MenuItem value={'ingredients'}>Ingredients</MenuItem>
          </Select>
          <FormHelperText>
             Choose the type of item you are searching for.

@@ -85,6 +85,14 @@ interface MenuItemType extends RecipeItemType {
 
 interface FoodItemType extends MenuItemType {}
 
+interface IngredientType {
+   aisle: string;
+   id: number;
+   image: string;
+   name: string;
+   possibleUnits: string[];
+}
+
 type CurrentGoals = {
    user_id?: number;
    total_carbohydrates: number;
@@ -215,18 +223,6 @@ type RequestParams = {
    id: number;
 };
 
-type IngredientsQuery = {
-   query: string;
-   minProteinPercent: number;
-   maxProteinPercent: number;
-   minFatPercent: number;
-   maxFatPercent: number;
-   minCarbsPercent: number;
-   maxCarbsPercent: number;
-   offset: number;
-   number: number;
-};
-
 export {
    MenuItemNutrition,
    RecipeItemNutrition,
@@ -250,6 +246,6 @@ export {
    SelectedDate,
    RequestParams,
    RecipeQuery,
-   IngredientsQuery,
    AddIngredientsToMealPlan,
+   IngredientType,
 };

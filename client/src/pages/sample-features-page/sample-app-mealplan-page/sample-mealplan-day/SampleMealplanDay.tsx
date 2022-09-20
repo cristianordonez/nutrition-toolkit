@@ -39,6 +39,7 @@ export const SampleMealPlanDay = ({
                      {/* <div className='mealplan-item-card'> */}
                      <FoodItemContents
                         route={'recipes'}
+                        id={mealplanItem.id}
                         image={mealplanItem.image}
                         title={mealplanItem.title}
                         nutrition={mealplanItem.nutrition}

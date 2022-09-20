@@ -1,29 +1,26 @@
 import axios from 'axios';
-import { IngredientsQuery } from '../../types/types';
+import { Query } from '../../types/types';
 
 const url =
    'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/ingredients';
 const X_RAPIDAPI_KEY = process.env.X_RAPIDAPI_KEY;
 const X_RAPIDAPI_HOST = process.env.X_RAPIDAPI_HOST;
 
-const getSpoonacularIngredients = async (
-   ingredientsQuery: IngredientsQuery
-) => {
+const getSpoonacularIngredients = async (ingredientsQuery: Query) => {
    //does not use type, intolerance or diet since API does not accept those values for this request
    const ingredients = await axios.get(`${url}/search`, {
       params: {
          query: `${ingredientsQuery.query}`,
          addChildren: 'true',
-         sort: 'carbohhydrates',
+         sort: 'calories',
          sortDirection: 'asc',
-         maxCarbs: `${ingredientsQuery.maxCarbsPercent}`,
-         minCarbs: `${ingredientsQuery.minCarbsPercent}`,
-         minProtein: `${ingredientsQuery.minProteinPercent}`,
-         maxProtein: ` ${ingredientsQuery.maxProteinPercent}`,
-         minCalories: `${ingredientsQuery.minCarbsPercent}`,
-         maxCalories: `${ingredientsQuery.maxCarbsPercent}`,
-         minFat: `${ingredientsQuery.minFatPercent}`,
-         maxFat: `${ingredientsQuery.maxFatPercent}`,
+         metaInformation: true,
+         minCarbsPercent: `${ingredientsQuery.minCarbs}`,
+         maxCarbsPercent: `${ingredientsQuery.maxCarbs}`,
+         minProteinPercent: `${ingredientsQuery.minProtein}`,
+         maxProteinPercent: ` ${ingredientsQuery.maxProtein}`,
+         minFatPercent: `${ingredientsQuery.minFat}`,
+         maxFatPercent: `${ingredientsQuery.maxFat}`,
          offset: `${ingredientsQuery.offset}`,
          number: `${ingredientsQuery.number}`,
       },
@@ -32,20 +29,21 @@ const getSpoonacularIngredients = async (
          'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
       },
    });
-   return ingredients.data.products;
+   console.log('ingredients.data:', ingredients.data);
+   return ingredients.data.results;
 };
 
 const getSpoonacularIngredientById = async (
    id: number,
-   amount: string,
-   unit: string
+   amount?: string | undefined,
+   unit?: string | undefined
 ) => {
    const currentUrl = `${url}/${id}/information`;
    let ingredientInfo = await axios.get(currentUrl, {
-      params: {
-         amount: `${amount}`,
-         unit: `${unit}`,
-      },
+      // params: {
+      //    amount: `${amount}`,
+      //    unit: `${unit}`,
+      // },
       headers: {
          'X-RapidAPI-Key': `${X_RAPIDAPI_KEY}`,
          'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,

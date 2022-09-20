@@ -19,7 +19,6 @@ import { SideBarSearchPage } from './search-page/sidebar-searchpage/SideBarSearc
 
 const Home = () => {
    const { isLoading, isLoggedIn, username } = useAuth(); //used to check if data is still being retrieved from database
-
    const [goals, setGoals] = useState({} as CurrentGoals);
    const [mealplanItemsFound, setMealplanItemsFound] = useState<boolean>(true); //use this to display different page if no items are found
    const [mobileOpen, setMobileOpen] = useState(false);
@@ -102,6 +101,7 @@ const Home = () => {
             params: newValues,
             withCredentials: true,
          });
+         console.log('foodItems:', foodItems);
          if (foodItems.data.length === 0) {
             setAlertMessage(
                'No options matched your search. Try again with a broader search'

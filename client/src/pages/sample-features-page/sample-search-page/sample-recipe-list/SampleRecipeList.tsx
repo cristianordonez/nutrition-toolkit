@@ -33,6 +33,7 @@ export const SampleRecipeList = ({
                        <FoodItemContents
                           key={recipe.id}
                           image={recipe.image}
+                          id={recipe.id}
                           url={recipe.sourceUrl}
                           title={recipe.title}
                           restaurantChain={recipe.restaurantChain}
@@ -45,6 +46,7 @@ export const SampleRecipeList = ({
                           key={recipe.id}
                           isMealPlanItem={true}
                           route={route}
+                          id={recipe.id}
                           url={recipe.sourceUrl}
                           title={recipe.title}
                           image={recipe.image}

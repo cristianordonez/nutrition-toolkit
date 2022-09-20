@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useSampleFeaturesOutlet } from '../../../hooks/useSampleFeaturesOutlet';
 
 //todo provide a go back button somewhere on page that user can user to go back to home page
-const SampleAppRecipePage = () => {
+const SampleSearchPage = () => {
    const {
       setAlertSeverity,
       openAlert,
@@ -59,4 +59,4 @@ const SampleAppRecipePage = () => {
    );
 };
 
-export default SampleAppRecipePage;
+export default SampleSearchPage;

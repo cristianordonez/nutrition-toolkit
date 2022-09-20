@@ -34,6 +34,13 @@ interface Props {
    isMealPlanItem?: boolean;
    servings?: number;
    isSampleFoodItem?: boolean | undefined;
+   imageType?: string;
+   id: number;
+   handleOpeningAddToMealplanDialog?: (
+      imageType: string,
+      title: string,
+      id: number
+   ) => void;
 }
 
 type NutrientType = {
@@ -54,6 +61,9 @@ export const FoodItemContents = ({
    handleOpeningDialog,
    isMealPlanItem,
    servings,
+   id,
+   handleOpeningAddToMealplanDialog,
+   imageType,
 }: Props) => {
    //configure the nutrients here as different items contain different object structure
    let calories, carbs, fat, protein;
@@ -167,11 +177,16 @@ export const FoodItemContents = ({
                ) : // </a>
                null}
                {/* Configure the bottom button depending on if it is mealplan item or search item */}
-               {!isMealPlanItem ? (
+               {!isMealPlanItem &&
+               handleOpeningAddToMealplanDialog &&
+               imageType &&
+               title ? (
                   <Button
                      fullWidth
                      className='card-button'
-                     onClick={handleOpeningDialog}
+                     onClick={() =>
+                        handleOpeningAddToMealplanDialog(imageType, title, id)
+                     }
                      variant='outlined'
                      size='small'
                      data-testid='open-addtomealplan-dialog'

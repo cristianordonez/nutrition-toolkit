@@ -1,27 +1,38 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { Button, Typography, Stack } from '@mui/material';
-import { NutrientInputForm } from '../../pages/home/search-page/search-form/NutrientInputForm';
-import { SearchInput } from '../../pages/home/search-page/search-form/SearchInput';
-import { QueryTextField } from '../../pages/home/search-page/search-form/QueryTextField';
-import { TypeDropDown } from '../../pages/home/search-page/search-form/TypeDropDown';
+import {
+   Button,
+   Typography,
+   Stack,
+   AlertColor,
+   SelectChangeEvent,
+} from '@mui/material';
+import { NutrientInputForm } from './search-form-components/NutrientInputForm';
+import { SearchInput } from './search-form-components/SearchInput';
+import { QueryTextField } from './search-form-components/QueryTextField';
+import { TypeDropDown } from './search-form-components/TypeDropDown';
 import axios from 'axios';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 import { useHomeOutlet } from '../../hooks/useHomeOutlet';
+import {
+   ValuesType,
+   CurrentGoals,
+   MealplanItemType,
+} from '../../../../types/types';
 
 interface Props {
-   route: any;
-   values: any;
-   handleRouteChange: any;
-   handleInputChange: any;
-   handleTypeSelect: any;
-   goals: any;
+   route: string;
+   values: ValuesType;
+   handleRouteChange: (event: SelectChangeEvent) => void;
+   handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+   handleTypeSelect: (event: SelectChangeEvent) => void;
+   goals: CurrentGoals;
    setValues: Dispatch<SetStateAction<any>>;
-   setAlertMessage: any;
-   setAlertSeverity: any;
-   setLoading: any;
-   setOpenAlert: any;
-   setShowLoadMoreBtn: any;
-   setAPIData: any;
+   setAlertMessage: Dispatch<SetStateAction<string>>;
+   setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
+   setLoading: Dispatch<SetStateAction<boolean>>;
+   setOpenAlert: Dispatch<SetStateAction<boolean>>;
+   setShowLoadMoreBtn: Dispatch<SetStateAction<boolean>>;
+   setAPIData: Dispatch<SetStateAction<MealplanItemType[]>>;
 }
 
 export const SearchFormSuggested = ({
@@ -92,61 +103,67 @@ export const SearchFormSuggested = ({
                {/* ROUTES */}
                <Typography variant='subtitle2'>
                   {' '}
-                  Suggested goals are calculated based on recommend amounts per
-                  meal, considering 3 meals are had per day.
+                  Suggested goals are calculated based on recommended amounts
+                  per meal, for a total of 3 meals per day.
                </Typography>
-
                <SearchInput
                   route={route}
                   handleRouteChange={handleRouteChange}
                />
                {/* QUERY */}
-
                <QueryTextField
                   query={values.query}
                   handleInputChange={handleInputChange}
                />
                {/* TYPE */}
-
-               <TypeDropDown
-                  type={values.type}
-                  handleTypeSelect={handleTypeSelect}
-               />
+               {route === 'recipes' ? (
+                  <TypeDropDown
+                     type={values.type}
+                     handleTypeSelect={handleTypeSelect}
+                  />
+               ) : null}
                {/* CALORIES */}
-               <Typography variant='h6'>Choose Calorie Range</Typography>
-               <NutrientInputForm
-                  handleInputChange={handleInputChange}
-                  measurement={'kcal'}
-                  nutrient={'Calories'}
-                  minValue={goals.min_calories_per_meal}
-                  maxValue={goals.max_calories_per_meal}
-               />
+               {route !== 'ingredients' ? (
+                  <>
+                     <NutrientInputForm
+                        handleInputChange={handleInputChange}
+                        measurement={'kcal'}
+                        nutrient={'Calories'}
+                        minValue={goals.min_calories_per_meal}
+                        maxValue={goals.max_calories_per_meal}
+                        route={route}
+                     />
+                  </>
+               ) : (
+                  <Typography sx={{ pt: '1rem' }} variant='subtitle1'>
+                     All ranges must be between 0 and 100%
+                  </Typography>
+               )}
                {/* CARBS */}
-               <Typography variant='h6'>Choose Carb Range</Typography>
                <NutrientInputForm
                   handleInputChange={handleInputChange}
                   measurement={'g'}
                   nutrient={'Carbs'}
                   minValue={goals.min_carbs_per_meal}
+                  route={route}
                   maxValue={goals.max_carbs_per_meal}
                />
-
                {/* PROTEIN */}
-               <Typography variant='h6'>Choose Protein Range</Typography>
                <NutrientInputForm
                   handleInputChange={handleInputChange}
                   measurement={'g'}
                   nutrient={'Protein'}
                   minValue={goals.min_protein_per_meal}
+                  route={route}
                   maxValue={goals.max_protein_per_meal}
                />
                {/* FAT */}
-               <Typography variant='h6'>Choose Fat Range</Typography>
                <NutrientInputForm
                   handleInputChange={handleInputChange}
                   measurement={'g'}
                   nutrient={'Fat'}
                   minValue={goals.min_fat_per_meal}
+                  route={route}
                   maxValue={goals.max_fat_per_meal}
                />
                <Button type='submit' variant='contained'>

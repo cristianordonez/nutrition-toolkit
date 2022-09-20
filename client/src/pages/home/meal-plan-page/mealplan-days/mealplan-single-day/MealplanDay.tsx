@@ -2,7 +2,7 @@ import { AlertColor, Button, Paper, Typography } from '@mui/material';
 import React, { Dispatch, SetStateAction } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MealplanItemType } from '../../../../../../../types/types';
-import { MealplanItem } from '../MealplanItem';
+import { MealplanItem } from './meal-plan-item/MealplanItem';
 import './MealplanDay.scss';
 
 interface Props {
@@ -26,6 +26,7 @@ export const MealplanDay = ({
    type,
 }: Props) => {
    const navigate = useNavigate();
+   console.log('meals:', meals);
    return (
       <>
          <Paper
