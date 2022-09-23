@@ -18,6 +18,7 @@ const addMealPlanItem = async function (req: Request, res: Response) {
          user.spoonacular_username,
          hash[0].spoonacular_hash
       );
+      console.log('response.data in add mealplan item:', response.data);
       res.status(201).send(response.data.status);
    } catch (err) {
       console.log(err);
@@ -33,12 +34,13 @@ const getMealPlanDay = async function (req: Request, res: Response) {
    const user = req.user as User;
    try {
       let hash = await getHashByUsername(user.spoonacular_username); //returns Hash type
+      console.log('here in getmealplanday controller');
       let mealplanDayItems = await getFromSpoonacularMealplanDay(
          user.spoonacular_username,
          mealplanDay.date,
          hash[0].spoonacular_hash
       );
-      res.status(200).send(mealplanDayItems.data);
+      res.status(200).send(mealplanDayItems);
    } catch (err: any) {
       if (err.response.data.message === 'No meals planned for that day') {
          res.status(400).send(err.response.data.message);

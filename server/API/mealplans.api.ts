@@ -24,6 +24,7 @@ const addToSpoonacularMealplan = async (
          },
       }
    );
+   console.log('response in add to spoonacular mealplan api:', response);
    return response;
 };
 
@@ -42,8 +43,10 @@ const getFromSpoonacularMealplanDay = async (
          'X-RapidAPI-Host': `${X_RAPIDAPI_HOST}`,
       },
    };
+   console.log('options in get from spoonacular mealplanday:', options);
    let response = await axios.request(options);
-   return response;
+   console.log('response.data:', response.data);
+   return response.data;
 };
 
 const getFromSpoonacularMealplanWeek = async (

@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import React, { ReactNode } from 'react';
 import { CurrentGoals, MealplanItemType } from '../../../../../../types/types';
 import { SideBar } from '../../../../components/sidebar/SideBar';
@@ -8,6 +9,7 @@ interface SearchPageSidebarProps {
    SearchFormComponent: ReactNode;
    apiData: MealplanItemType[];
    goals: CurrentGoals;
+   route: string;
 }
 
 export const SideBarSearchPage = ({
@@ -16,6 +18,7 @@ export const SideBarSearchPage = ({
    SearchFormComponent,
    apiData,
    goals,
+   route,
 }: SearchPageSidebarProps) => {
    return (
       <>

@@ -1,12 +1,10 @@
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import {
    AlertColor,
-   IconButton,
+   Button,
    Stack,
    Tab,
    Tabs,
-   Toolbar,
    Typography,
 } from '@mui/material';
 import axios from 'axios';
@@ -93,6 +91,7 @@ const MealPlanPage = ({
             params: { date: currentDay },
             withCredentials: true,
          });
+         console.log('response:', response);
          setNutritionSummary(response.data.nutritionSummary.nutrients);
          setMealplanItems(response.data.items);
          response.data.items.forEach((item: MealplanItemType) => {
@@ -154,9 +153,17 @@ const MealPlanPage = ({
       return { year, month, day };
    };
 
+   const generateMealplan = async () => {
+      console.log('currentDay:', currentDay);
+      const response = await axios.post('/api/shoppingList/generate', {
+         currentDay,
+      });
+   };
+
    return (
       <>
          <div className='mealplan-page'>
+            <Button onClick={generateMealplan}>generate mealplan</Button>
             <MealPlanWeekText currentDay={currentDay} />
             <div className='mealplan-page-main-content'>
                <Stack

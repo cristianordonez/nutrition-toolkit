@@ -68,7 +68,6 @@ export const FoodSearchList = ({
       setOpenDialog(!openDialog);
    };
 
-   //todo make a new add to cart modal for the ingredients (include a section to put in the amount and the serving type)
    return (
       <>
          <div className='food-search-list'>
@@ -83,6 +82,11 @@ export const FoodSearchList = ({
                   and slot (morning, afternoon, or evening) to save any item
                </Typography>
             </Stack>
+            {route === 'ingredients' ? (
+               <Typography>
+                  * Note that ingredients cannot currently be added to mealplan.{' '}
+               </Typography>
+            ) : null}
             <div className='food-search-main-container'>
                {route === 'ingredients'
                   ? apiData.map((item: IngredientType, index: number) => (
@@ -134,20 +138,7 @@ export const FoodSearchList = ({
             ) : null}
          </div>
 
-         {route === 'ingredients' ? (
-            <AddIngredientToCartModal
-               openDialog={openDialog}
-               title={currentTitle}
-               handleOpeningDialog={handleOpeningDialog}
-               possibleUnits={units}
-               image={currentImage}
-               id={currentId}
-               setOpenDialog={setOpenDialog}
-               setAlertMessage={setAlertMessage}
-               setOpenSnackbar={setOpenSnackbar}
-               setAlertSeverity={setAlertSeverity}
-            />
-         ) : (
+         {route === 'ingredients' ? null : (
             <AddToCartModal
                openDialog={openDialog}
                handleOpeningDialog={handleOpeningDialog}

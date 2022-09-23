@@ -64,8 +64,8 @@ export const SearchForm = ({
          <Stack direction='row' spacing={1}>
             <ScreenSearchDesktopIcon />
             <Typography variant='body1'>
-               Find recipes, grocery products, or menu items from over 800+
-               restaurants that match your nutrient goals
+               Find recipes, grocery products, menu items, or ingredients from
+               over 800+ restaurants that match your nutrient goals
             </Typography>
          </Stack>
          <Tabs

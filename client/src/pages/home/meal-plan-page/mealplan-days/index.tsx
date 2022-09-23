@@ -37,8 +37,6 @@ export const MealplanDays = ({
    }
    const mealTypes = ['Morning', 'Afternoon', 'Evening'];
    const mealItems = [breakfastItems, lunchItems, dinnerItems];
-
-   console.log('mealplanItems:', mealplanItems);
    return (
       <>
          {mealItems.map((meals, index) => (

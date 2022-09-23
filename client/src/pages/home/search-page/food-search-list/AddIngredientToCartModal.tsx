@@ -102,7 +102,8 @@ export const AddIngredientToCartModal = ({
    const handleSubmit = async (event: SyntheticEvent) => {
       event.preventDefault();
       try {
-         await axios.post('/api/mealplan', data);
+         let response = await axios.post('/api/mealplan', data);
+         console.log('response in add ingredient to cart modal:', response);
          setAlertSeverity('success');
          setAlertMessage('Item has been added to your mealplan!');
          setOpenSnackbar(true);
@@ -114,8 +115,6 @@ export const AddIngredientToCartModal = ({
 
    //listens to id so that it can update the data object when item is clicked
    useEffect(() => {
-      console.log('title:', title);
-      console.log('possibleUnits:', possibleUnits);
       setData((data: AddToMealPlanType) => {
          return {
             ...data,
@@ -138,12 +137,7 @@ export const AddIngredientToCartModal = ({
          </DialogTitle>
          <form onSubmit={handleSubmit}>
             <DialogContent>
-               <Box
-                  display='flex'
-                  flexDirection='column'
-                  gap='1rem'
-                  // alignItems='flex-start'
-               >
+               <Box display='flex' flexDirection='column' gap='1rem'>
                   <DatePickerTextField setData={setData} data={data} />
                   <DialogSelectSlot
                      handleSelectSlot={handleSelectSlot}

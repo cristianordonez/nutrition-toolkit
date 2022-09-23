@@ -56,14 +56,14 @@ const getById = async function (id: string) {
 
 //# retrieves user based on username
 const getByUsername = async function (username: string) {
-   let getQuery = `SELECT * FROM users WHERE username='${username}'`;
+   let getQuery = `SELECT * FROM users WHERE username='${username}' OR email='${username}'`;
    let user = await db.query(getQuery);
    return user;
 };
 
 //# retrieves spoonacular hash based on username
 const getHashByUsername = async (username: string) => {
-   let getQuery = `SELECT spoonacular_hash FROM users WHERE users.spoonacular_username='${username}'`;
+   let getQuery = `SELECT spoonacular_hash FROM users WHERE users.spoonacular_username='${username}' OR (users.username = '${username}') OR (users.email = '${username}')`;
    let hash = await db.query(getQuery);
    return hash;
 };

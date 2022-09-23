@@ -22,7 +22,6 @@ const getIngredients = async function (req: Request, res: Response) {
             return response;
          })
       );
-      console.log('updatedIngredient:', updatedIngredients);
       res.send(updatedIngredients);
    } catch (err) {
       console.log(err);
@@ -34,8 +33,6 @@ const getIngredientById = async function (req: Request, res: Response) {
    let params = req.params as unknown as RequestParams;
    const query = req.query as unknown as any;
 
-   console.log('params:', params);
-   console.log('query:', query);
    try {
       let ingredientInfo = await getSpoonacularIngredientById(
          params.id,
@@ -44,7 +41,6 @@ const getIngredientById = async function (req: Request, res: Response) {
       );
       res.status(200).send(ingredientInfo);
    } catch (err) {
-      // console.log(err);
       res.status(400).send('Could not get product information');
    }
 };

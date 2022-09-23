@@ -248,6 +248,10 @@ type RequestParams = {
    id: number;
 };
 
+type ShoppingListBody = {
+   currentDay: string;
+};
+
 export {
    MenuItemNutrition,
    RecipeItemNutrition,
@@ -273,4 +277,5 @@ export {
    RecipeQuery,
    AddIngredientsToMealPlan,
    IngredientType,
+   ShoppingListBody,
 };

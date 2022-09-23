@@ -206,36 +206,13 @@ export const FoodItemContents = ({
                {!isMealPlanItem &&
                handleOpeningAddToMealplanDialog &&
                imageType &&
+               route !== 'ingredients' &&
                title ? (
                   <Button
                      fullWidth
                      className='card-button'
                      onClick={() =>
                         handleOpeningAddToMealplanDialog(imageType, title, id)
-                     }
-                     variant='outlined'
-                     size='small'
-                     data-testid='open-addtomealplan-dialog'
-                  >
-                     Add to Mealplan
-                  </Button>
-               ) : null}
-               {!isMealPlanItem &&
-               handleOpeningAddIngredientModal &&
-               image &&
-               possibleUnits &&
-               route === 'ingredients' &&
-               title ? (
-                  <Button
-                     fullWidth
-                     className='card-button'
-                     onClick={() =>
-                        handleOpeningAddIngredientModal(
-                           image,
-                           title,
-                           possibleUnits,
-                           id
-                        )
                      }
                      variant='outlined'
                      size='small'

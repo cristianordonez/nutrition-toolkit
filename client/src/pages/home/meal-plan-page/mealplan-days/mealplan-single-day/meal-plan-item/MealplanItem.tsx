@@ -21,6 +21,7 @@ interface Props {
    currentDay: string;
    amount?: number | undefined;
    unit?: string | undefined;
+   image: string | undefined;
 }
 
 export const MealplanItem = ({
@@ -35,9 +36,10 @@ export const MealplanItem = ({
    setAlertSeverity,
    setAlertMessage,
    amount,
+   image,
    unit,
 }: Props) => {
-   const [itemData, setItemData] = useState<null | FoodItemType>(null); //will hold value of the items data after calling endpoint
+   const [itemData, setItemData] = useState<null | FoodItemType | any>(null); //will hold value of the items data after calling endpoint
    const [openDialog, setOpenDialog] = useState<boolean>(false);
 
    const handleOpeningDialog = () => {
@@ -53,23 +55,23 @@ export const MealplanItem = ({
          url = `/api/groceryProducts/${id}`;
       } else if (type === 'MENU_ITEM') {
          url = `/api/menuItems/${id}`;
-      } else if (type === 'INGREDIENTS') {
-         console.log('amount:', amount);
-         console.log('unit:', unit);
-         url = `/api/ingredients/${id}?amount=${amount}&unit=${unit}`;
       }
+      // url = `/api/ingredients/${id}?amount=${amount}&unit=${unit}`;
 
-      console.log('itemData:', itemData);
       //call endpoint to get the rest of the itemData information
-      axios
-         .get(url)
-         .then((itemInfo) => {
-            console.log('itemInfo.data:', itemInfo.data);
-            setItemData(itemInfo.data);
-         })
-         .catch((err) => {
-            console.log(err);
-         });
+      if (type !== 'INGREDIENTS') {
+         axios
+            .get(url)
+            .then((itemInfo) => {
+               setItemData(itemInfo.data);
+            })
+            .catch((err) => {
+               console.log(err);
+            });
+      } else if (type === 'INGREDIENTS') {
+         let data = { image };
+         setItemData(data);
+      }
    }, [id]);
 
    if (itemData) {

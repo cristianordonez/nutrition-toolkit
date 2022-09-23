@@ -27,8 +27,6 @@ export const MealplanDay = ({
    type,
 }: Props) => {
    const navigate = useNavigate();
-   console.log('meals:', meals);
-   console.log('type:', type);
    return (
       <>
          <Paper
@@ -52,11 +50,12 @@ export const MealplanDay = ({
                              <div className='slider-card' key={index}>
                                 <MealplanItem
                                    type={meal.type}
-                                   id={meal.value.id || meal.id}
+                                   id={meal.value.id}
                                    shoppingListId={meal.id}
                                    servings={meal.value.servings}
-                                   title={meal.value.name}
+                                   title={meal.value.title || meal.value.name}
                                    setOpenAlert={setOpenAlert}
+                                   image={meal.value.image}
                                    setAlertSeverity={setAlertSeverity}
                                    setAlertMessage={setAlertMessage}
                                    setMealPlanItems={setMealPlanItems}

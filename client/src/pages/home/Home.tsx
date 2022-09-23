@@ -101,7 +101,6 @@ const Home = () => {
             params: newValues,
             withCredentials: true,
          });
-         console.log('foodItems:', foodItems);
          if (foodItems.data.length === 0) {
             setAlertMessage(
                'No options matched your search. Try again with a broader search'
@@ -216,6 +215,7 @@ const Home = () => {
                      handleDrawerToggle={handleDrawerToggle}
                      SearchFormComponent={SearchFormComponent}
                      apiData={apiData}
+                     route={route}
                   />
                }
             />

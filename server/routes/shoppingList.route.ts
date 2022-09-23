@@ -1,7 +1,10 @@
 import { Request, Response, Router } from 'express';
+import { generateShoppingList } from '../controllers/shoppingList.controller';
 
 const router = Router();
 
-router.get('/', (req: Request, res: Response) => {});
+router.post('/generate', (req: Request, res: Response) => {
+   generateShoppingList(req, res);
+});
 
 export { router };
