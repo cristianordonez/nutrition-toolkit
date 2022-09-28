@@ -139,3 +139,5 @@ GRANT rds_superuser TO root;
 -  [Set up users for PostgreSQL](https://stackoverflow.com/questions/42749033/fatal-password-authentication-failed-for-user-root-postgresql)
 -  [Fixing issues with setting up PostgreSQL on RDS](https://stackoverflow.com/questions/65877048/pgadmin-on-ubuntu-20-04-fatal-password-authentication-failed-for-user)
 -  [Getting correct permissions to tables for requests sent from EC2 instance](https://stackoverflow.com/questions/55080121/amazon-rds-postgresql-role-cannot-access-tables)
+
+-  https://stackoverflow.com/questions/6256610/updating-table-rows-in-postgres-using-subquery

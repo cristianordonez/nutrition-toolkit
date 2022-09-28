@@ -90,13 +90,13 @@ const Home = () => {
       setMobileOpen(!mobileOpen);
    };
 
-   //# handles submission to search for food items
+   //todo handles submission to search for food items
    const handleSubmit = async (event: React.SyntheticEvent) => {
+      event.preventDefault();
       let newValues = { ...values, offset: 0 }; //declare new values so that there are no async bugs, and reset offset to 0 in case user changed it
       setValues(newValues);
       try {
          setLoading(true);
-         event.preventDefault();
          let foodItems = await axios.get(`/api/${route}`, {
             params: newValues,
             withCredentials: true,

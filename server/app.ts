@@ -18,7 +18,7 @@ import { router as mealplanRoute } from './routes/mealplan.route';
 import { router as menuItemsRoute } from './routes/menuitems.route';
 import { router as metricsRoute } from './routes/metrics.route';
 import { router as recipesRoute } from './routes/recipe.route';
-import { router as shoppingListRoute } from './routes/shoppingList.route';
+import { router as foodRoute } from './routes/food.route';
 
 const GoogleStrategy = require('passport-google-oidc');
 const generator = require('generate-password');
@@ -184,7 +184,7 @@ app.use('/api/groceryProducts', groceryProductsRoute);
 app.use('/api/mealplan', mealplanRoute);
 app.use('/api/metrics', metricsRoute);
 app.use('/api/ingredients', ingredientsRoute);
-app.use('/api/shoppingList', shoppingListRoute);
+app.use('/api/food', foodRoute);
 
 app.get('/*', (req, res) => {
    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
