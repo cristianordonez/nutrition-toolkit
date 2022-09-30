@@ -1,13 +1,13 @@
+import GoogleIcon from '@mui/icons-material/Google';
+import { AlertColor, Button, Paper, Typography } from '@mui/material';
+import axios from 'axios';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import './SignupForm.scss';
-import { Typography, Paper, Button, AlertColor } from '@mui/material';
 import { MacroCalculatorForm } from '../../../components/macro-calculator-form';
 import { ConfirmPasswordTextField } from '../../../components/text-fields/confirm-password-textfield/ConfirmPasswordTextField';
 import { EmailTextField } from '../../../components/text-fields/email-textfield/EmailTextField';
 import { PasswordTextField } from '../../../components/text-fields/password-textfield/PasswordTextField';
 import { UsernameTextField } from '../../../components/text-fields/username-textfield/UsernameTextField';
-import GoogleIcon from '@mui/icons-material/Google';
-import axios from 'axios';
+import './SignupForm.scss';
 
 interface Props {
    showSignup: boolean;
@@ -70,7 +70,11 @@ export const SignupForm = ({
       } else {
          try {
             let response: any = await axios.post(`/api/signup`, signupValues);
-            setOpenErrorAlert(false);
+            setAlertSeverity('success');
+            setErrorMessage(
+               'Your account has been created! Now enter your metrics to get customized macronutrient recommendations.'
+            );
+            setOpenErrorAlert(true);
             setShowNextPage(true);
          } catch (err: any) {
             console.log('err:', err);

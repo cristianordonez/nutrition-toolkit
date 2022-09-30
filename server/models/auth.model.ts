@@ -1,80 +1,66 @@
-import { Intolerances, User } from '../../types/types';
+import { Intolerances, UserType } from '../../types/types';
 import { db } from '../database/db';
-const generator = require('generate-password');
 
-//# creates a new user and stores in database;
-const create = async function (user: User) {
-   let currentId = generator.generate({ length: 8, numbers: true });
-   let createQuery = `INSERT INTO users (id, username, email,
-      spoonacular_username, spoonacular_password, spoonacular_hash, hash)
-      VALUES ('${currentId}', '${user.username}', '${user.email}',
-       '${user.spoonacular_username}', '${user.spoonacular_password}', '${user.spoonacular_hash}',
-        '${user.hash}') RETURNING id`;
-   let dbResponse = await db.query(createQuery);
+const createUser = (user: UserType) => {
+   const createQuery = `WITH getId AS 
+                        (INSERT INTO users (username, email) 
+                        VALUES ('${user.username}', '${user.email}') 
+                        RETURNING id)
+                        INSERT into user_hash (user_id, hash)
+                        VALUES ((SELECT id from getId), '${user.password}') RETURNING id`;
+   let dbResponse = db.query(createQuery);
    return dbResponse;
 };
 
-//# updates the hashed password in db for user given the userId
-const updatePassword = async (userId: string, password: string) => {
-   const passwordQuery = `UPDATE users SET hash='${password}' WHERE id='${userId}'`;
-   let dbResponse = await db.query(passwordQuery);
+type GoogleUser = {
+   username: string;
+   email: string;
+};
+
+const createGoogleUser = (user: GoogleUser) => {
+   console.log('user:', user);
+   const createGoogleUserQuery = `INSERT INTO users (username, email) 
+                        VALUES ('${user.username}', '${user.email}') 
+                        RETURNING id`;
+   const createGoogleUserResponse = db.query(createGoogleUserQuery);
+   return createGoogleUserResponse;
+};
+
+const updatePassword = (userId: string, password: string) => {
+   const passwordQuery = `UPDATE user_hash SET hash='${password}' WHERE id='${userId}'`;
+   let dbResponse = db.query(passwordQuery);
    return dbResponse;
 };
 
-//# same as creating user except id is already provided by google
-const createGoogleUser = async function (user: any) {
-   let createQuery = `INSERT INTO users (id, username, email,
-      spoonacular_username, spoonacular_password, spoonacular_hash, hash)
-      VALUES ('${user.id}', '${user.username}', '${user.email}',
-       '${user.spoonacular_username}', '${user.spoonacular_password}', '${user.spoonacular_hash}',
-        '${user.hash}') `;
-   let dbResponse = await db.query(createQuery);
-   return dbResponse;
-};
-
-//# creates a new user and stores in database;
 const createUserIntolerances = function (intolerances: Intolerances) {
    let dbQuery = `UPDATE users SET intolerances = '{${intolerances.intolerances}}'
    `;
    let result = db.query(dbQuery);
-
    return result;
 };
 
-//# check if user already exists by their email address
-const getByEmail = async function (email: string) {
-   let getQuery = `SELECT * FROM users WHERE email='${email}'`;
-   let user = await db.query(getQuery);
+const getGoogleUser = (email: string) => {
+   console.log('email:', email);
+   const getGoogleUserQuery = `SELECT username, email, id FROM users WHERE email='${email}'`;
+   const user = db.query(getGoogleUserQuery);
    return user;
 };
 
-const getById = async function (id: string) {
-   let getQuery = `SELECT * FROM users WHERE id='${id}'`;
-   let user = await db.query(getQuery);
-   return user;
-};
-
-//# retrieves user based on username
-const getByUsername = async function (username: string) {
-   let getQuery = `SELECT * FROM users WHERE username='${username}' OR email='${username}'`;
-   let user = await db.query(getQuery);
-   return user;
-};
-
-//# retrieves spoonacular hash based on username
-const getHashByUsername = async (username: string) => {
-   let getQuery = `SELECT spoonacular_hash FROM users WHERE users.spoonacular_username='${username}' OR (users.username = '${username}') OR (users.email = '${username}')`;
-   let hash = await db.query(getQuery);
+const getHash = (usernameOrEmail: string) => {
+   const getHashQuery = `SELECT hash FROM user_hash
+                         INNER JOIN users 
+                         ON user_hash.user_id = users.id
+                         WHERE username = '${usernameOrEmail}' 
+                         OR email = '${usernameOrEmail}' `;
+   const hash = db.query(getHashQuery);
    return hash;
 };
 
 export {
-   create,
+   createUser,
    updatePassword,
-   createGoogleUser,
    createUserIntolerances,
-   getByEmail,
-   getById,
-   getByUsername,
-   getHashByUsername,
+   getHash,
+   getGoogleUser,
+   createGoogleUser,
 };

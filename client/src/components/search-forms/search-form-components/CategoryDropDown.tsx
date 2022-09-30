@@ -1,20 +1,20 @@
-import React from 'react';
 import {
    FormControl,
-   Select,
+   FormHelperText,
    InputLabel,
    MenuItem,
-   FormHelperText,
+   Select,
 } from '@mui/material';
+import React from 'react';
 
 interface Props {
    type: string;
    handleTypeSelect: any;
 }
-export const TypeDropDown = ({ type, handleTypeSelect }: Props) => {
+export const CategoryDropDown = ({ type, handleTypeSelect }: Props) => {
    return (
       <FormControl>
-         <InputLabel>Type</InputLabel>
+         <InputLabel>Category</InputLabel>
          <Select
             value={type}
             onChange={handleTypeSelect}
@@ -39,7 +39,7 @@ export const TypeDropDown = ({ type, handleTypeSelect }: Props) => {
             <MenuItem value={'drink'}>Drink</MenuItem>
          </Select>
          <FormHelperText>
-            Choose the type of item you are searching for.
+            Narrow down your search by choosing a food category.
          </FormHelperText>
       </FormControl>
    );

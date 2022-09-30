@@ -19,7 +19,7 @@ type RecipeItemNutrition = {
 
 type ValuesType = {
    query: string;
-   type: string;
+   category: string;
    intolerance: string;
    minCalories: string;
    maxCalories: string;
@@ -183,6 +183,12 @@ type UserType = {
    password: string;
 };
 
+type PassportGoogleUser = {
+   username: string;
+   email: string;
+   id: number;
+};
+
 type AccountType = {
    status: string;
    username: string;
@@ -278,4 +284,5 @@ export {
    AddIngredientsToMealPlan,
    IngredientType,
    ShoppingListBody,
+   PassportGoogleUser,
 };

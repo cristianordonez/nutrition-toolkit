@@ -24,7 +24,7 @@ const Home = () => {
    const [mobileOpen, setMobileOpen] = useState(false);
    const [apiData, setAPIData] = useState<MealplanItemType[]>([]);
    const [currentTab, setCurrentTab] = useState<string>('custom-search');
-   const [route, setRoute] = useState<string>('recipes');
+   const [route, setRoute] = useState<string>('food');
    const [openAlert, setOpenAlert] = useState<boolean>(false);
    const [loading, setLoading] = useState<boolean>(false);
    const [breakfastItems, setBreakfastItems] = useState<MealplanItemType[]>([]);
@@ -38,9 +38,10 @@ const Home = () => {
       format(new Date(Date.now()), 'yyyy-MM-dd')
    ); //spoonacular api needs date in format '2022-07-13'
    const [alertSeverity, setAlertSeverity] = useState<AlertColor>('error');
+   //TODO remove intolerance from this type and state
    const [values, setValues] = useState<ValuesType>({
       query: '',
-      type: '',
+      category: '',
       intolerance: '',
       minCalories: '',
       maxCalories: '',
@@ -90,14 +91,14 @@ const Home = () => {
       setMobileOpen(!mobileOpen);
    };
 
-   //todo handles submission to search for food items
+   //TODO handles submission to search for food items
    const handleSubmit = async (event: React.SyntheticEvent) => {
       event.preventDefault();
       let newValues = { ...values, offset: 0 }; //declare new values so that there are no async bugs, and reset offset to 0 in case user changed it
       setValues(newValues);
       try {
          setLoading(true);
-         let foodItems = await axios.get(`/api/${route}`, {
+         let foodItems = await axios.get(`/api/food`, {
             params: newValues,
             withCredentials: true,
          });

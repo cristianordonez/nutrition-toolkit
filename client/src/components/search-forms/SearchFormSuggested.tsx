@@ -1,23 +1,15 @@
+import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
+import { AlertColor, Button, SelectChangeEvent, Stack } from '@mui/material';
+import axios from 'axios';
 import React, { Dispatch, SetStateAction } from 'react';
 import {
-   Button,
-   Typography,
-   Stack,
-   AlertColor,
-   SelectChangeEvent,
-} from '@mui/material';
-import { NutrientInputForm } from './search-form-components/NutrientInputForm';
-import { SearchInput } from './search-form-components/SearchInput';
-import { QueryTextField } from './search-form-components/QueryTextField';
-import { TypeDropDown } from './search-form-components/TypeDropDown';
-import axios from 'axios';
-import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
-import { useHomeOutlet } from '../../hooks/useHomeOutlet';
-import {
-   ValuesType,
    CurrentGoals,
    MealplanItemType,
+   ValuesType,
 } from '../../../../types/types';
+import { CategoryDropDown } from './search-form-components/CategoryDropDown';
+import { NutrientInputForm } from './search-form-components/NutrientInputForm';
+import { QueryTextField } from './search-form-components/QueryTextField';
 
 interface Props {
    route: string;
@@ -100,45 +92,36 @@ export const SearchFormSuggested = ({
       <>
          <form onSubmit={handleSuggestedSubmit}>
             <Stack spacing={3}>
-               {/* ROUTES */}
-               <Typography variant='subtitle2'>
+               {/* <Typography variant='subtitle2'>
                   {' '}
                   Suggested goals are calculated based on recommended amounts
                   per meal, for a total of 3 meals per day.
-               </Typography>
-               <SearchInput
+               </Typography> */}
+               {/* <SearchInput
                   route={route}
                   handleRouteChange={handleRouteChange}
-               />
-               {/* QUERY */}
+               /> */}
                <QueryTextField
                   query={values.query}
                   handleInputChange={handleInputChange}
                />
-               {/* TYPE */}
-               {route === 'recipes' ? (
-                  <TypeDropDown
-                     type={values.type}
-                     handleTypeSelect={handleTypeSelect}
+
+               <CategoryDropDown
+                  type={values.category}
+                  handleTypeSelect={handleTypeSelect}
+               />
+
+               <>
+                  <NutrientInputForm
+                     handleInputChange={handleInputChange}
+                     measurement={'kcal'}
+                     nutrient={'Calories'}
+                     minValue={goals.min_calories_per_meal}
+                     maxValue={goals.max_calories_per_meal}
+                     route={route}
                   />
-               ) : null}
-               {/* CALORIES */}
-               {route !== 'ingredients' ? (
-                  <>
-                     <NutrientInputForm
-                        handleInputChange={handleInputChange}
-                        measurement={'kcal'}
-                        nutrient={'Calories'}
-                        minValue={goals.min_calories_per_meal}
-                        maxValue={goals.max_calories_per_meal}
-                        route={route}
-                     />
-                  </>
-               ) : (
-                  <Typography sx={{ pt: '1rem' }} variant='subtitle1'>
-                     All ranges must be between 0 and 100%
-                  </Typography>
-               )}
+               </>
+
                {/* CARBS */}
                <NutrientInputForm
                   handleInputChange={handleInputChange}

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import passport from 'passport';
-import { Session } from '../../types/types';
+import { PassportGoogleUser, Session } from '../../types/types';
 import {
    checkAuthentication,
    createAccount,
@@ -9,16 +9,15 @@ import {
 } from '../controllers/auth.controller';
 const router = Router();
 
-//sends link to users email to change password
 router.post('/forgotPassword', (req: Request, res: Response) => {
    forgotPassword(req, res);
 });
 
-//handles checking token and resetting password for user
 router.post('/resetPassword', (req: Request, res: Response) => {
    resetPassword(req, res);
 });
 
+type PassportUser = {};
 //GOOGLE AUTHENTICATION////////////////////////////
 //handles initial redirect of user to google
 router.get('/login/federated/google', passport.authenticate('google'));
@@ -32,21 +31,20 @@ router.get(
    }), //fires second part of passport strategy
    (req: Request, res: Response) => {
       let session = req.session as unknown as Session;
-      let user = req.user as any;
+      let user = req.user as PassportGoogleUser;
       session.user_id = session.passport.user;
-      session.username = user.emails[0].value;
+      session.username = user.username;
       //redirect user to the search page where session will be checked
       res.redirect(`/home`);
    }
 );
 
 ////////////////////////////////////////////////////////
-//# handles checking if user is logged in for protected routes
+
 router.get('/authentication', (req: Request, res: Response) => {
    checkAuthentication(req, res);
 });
 
-//# handles creating account
 router.post('/signup', (req: Request, res: Response) => {
    createAccount(req, res);
 });
@@ -59,12 +57,10 @@ router.post(
    }),
    (req: Request, res: Response) => {
       let user: any = req.user;
-
       let session = req.session as any;
       session.user_id = user.id;
       session.username = user.username;
       session.save();
-
       res.status(201).send('Successfully logged in.');
    }
 );
@@ -79,10 +75,8 @@ router.post('/logout', (req: any, res: Response, next: NextFunction) => {
    });
 });
 
-//#endpoint that gets redirect to when there is error logging in,
-// used so that client can be sent error message from server
+//endpoint that gets redirect to when there is error logging in, used so that client can be sent error message from server
 router.get('/error', (req: Request, res: Response) => {
-   let session = req.session as unknown as Session;
    res.status(500).send('Incorrect username or password.');
 });
 

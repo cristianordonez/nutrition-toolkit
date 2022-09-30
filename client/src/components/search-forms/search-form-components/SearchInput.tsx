@@ -11,7 +11,7 @@ interface Props {
    route: string;
    handleRouteChange: any;
 }
-//todo change menu items to be only recipes and food products
+//TODO change menu items to be only recipes and food products
 export const SearchInput = ({ route, handleRouteChange }: Props) => {
    return (
       <FormControl>

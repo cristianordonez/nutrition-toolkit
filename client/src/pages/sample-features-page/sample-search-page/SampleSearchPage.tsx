@@ -4,7 +4,7 @@ import { CircularProgress, Stack } from '@mui/material';
 import axios from 'axios';
 import { useSampleFeaturesOutlet } from '../../../hooks/useSampleFeaturesOutlet';
 
-//todo provide a go back button somewhere on page that user can user to go back to home page
+//TODO provide a go back button somewhere on page that user can user to go back to home page
 const SampleSearchPage = () => {
    const {
       setAlertSeverity,

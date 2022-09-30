@@ -1,11 +1,10 @@
-import React, { FormEventHandler } from 'react';
-import { Button, Typography, Stack, SelectChangeEvent } from '@mui/material';
-import { NutrientInputForm } from './search-form-components/NutrientInputForm';
-import { SearchInput } from './search-form-components/SearchInput';
-import { QueryTextField } from './search-form-components/QueryTextField';
-import { TypeDropDown } from './search-form-components/TypeDropDown';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
+import { Button, SelectChangeEvent, Stack } from '@mui/material';
+import React, { FormEventHandler } from 'react';
 import { ValuesType } from '../../../../types/types';
+import { CategoryDropDown } from './search-form-components/CategoryDropDown';
+import { NutrientInputForm } from './search-form-components/NutrientInputForm';
+import { QueryTextField } from './search-form-components/QueryTextField';
 interface Props {
    route: string;
    values: ValuesType;
@@ -28,39 +27,34 @@ export const SearchFormCustom = ({
          <form onSubmit={handleSubmit}>
             <Stack spacing={3}>
                {/* ROUTES */}
-               <SearchInput
+               {/* <SearchInput
                   route={route}
                   handleRouteChange={handleRouteChange}
-               />
+               /> */}
                {/* QUERY */}
                <QueryTextField
                   query={values.query}
                   handleInputChange={handleInputChange}
                />
                {/* TYPE */}
-               {route === 'recipes' ? (
-                  <TypeDropDown
-                     type={values.type}
-                     handleTypeSelect={handleTypeSelect}
-                  />
-               ) : null}
+
+               <CategoryDropDown
+                  type={values.category}
+                  handleTypeSelect={handleTypeSelect}
+               />
+
                {/* CALORIES */}
-               {route !== 'ingredients' ? (
-                  <>
-                     <NutrientInputForm
-                        handleInputChange={handleInputChange}
-                        measurement={'kcal'}
-                        nutrient={'Calories'}
-                        minValue={values.minCalories}
-                        maxValue={values.maxCalories}
-                        route={route}
-                     />
-                  </>
-               ) : (
-                  <Typography sx={{ pt: '1rem' }} variant='subtitle1'>
-                     All ranges must be between 0 and 100%
-                  </Typography>
-               )}
+
+               <>
+                  <NutrientInputForm
+                     handleInputChange={handleInputChange}
+                     measurement={'kcal'}
+                     nutrient={'Calories'}
+                     minValue={values.minCalories}
+                     maxValue={values.maxCalories}
+                     route={route}
+                  />
+               </>
 
                {/* CARBS */}
                <NutrientInputForm

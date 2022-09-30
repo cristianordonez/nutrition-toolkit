@@ -12,7 +12,6 @@ import { Outlet, Route, Routes } from 'react-router-dom';
 import {
    CurrentGoals,
    FoodItemType,
-   Query,
    SampleMealplanItem,
    ValuesType,
 } from '../../../../types/types';
@@ -24,7 +23,7 @@ import './SampleFeaturesPage.scss';
 
 const initialState = {
    query: '',
-   type: '',
+   category: 'All',
    intolerance: '',
    minCalories: '',
    maxCalories: '',
@@ -146,7 +145,7 @@ const SampleFeaturesPage = () => {
    };
 
    const handleTypeSelect = (event: SelectChangeEvent) => {
-      setValues({ ...values, type: event.target.value });
+      setValues({ ...values, category: event.target.value });
    };
 
    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

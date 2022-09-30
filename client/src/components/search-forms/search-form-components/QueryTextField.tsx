@@ -1,6 +1,6 @@
-import React from 'react';
-import { TextField, InputProps, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { InputAdornment, TextField } from '@mui/material';
+import React from 'react';
 
 interface Props {
    query: string;
@@ -21,7 +21,7 @@ export const QueryTextField = ({ query, handleInputChange }: Props) => {
             ),
          }}
          label='Item'
-         helperText='Enter an ingredient or item you want your search to contain (i.e. chicken, greek yogurt, etc.)'
+         helperText='Enter a food or brand name'
          value={query}
          onChange={handleInputChange}
       />

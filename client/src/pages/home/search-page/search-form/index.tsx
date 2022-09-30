@@ -1,7 +1,7 @@
 import ScreenSearchDesktopIcon from '@mui/icons-material/ScreenSearchDesktop';
 import { AlertColor, Stack, Tab, Tabs, Typography } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
-import React, { useState, Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import {
    CurrentGoals,
    MealplanItemType,
@@ -57,15 +57,15 @@ export const SearchForm = ({
    };
 
    const handleTypeSelect = (event: SelectChangeEvent) => {
-      setValues({ ...values, type: event.target.value });
+      setValues({ ...values, category: event.target.value });
    };
    return (
       <div className='search-form'>
          <Stack direction='row' spacing={1}>
             <ScreenSearchDesktopIcon />
             <Typography variant='body1'>
-               Find recipes, grocery products, menu items, or ingredients from
-               over 800+ restaurants that match your nutrient goals
+               Search from a list of over 350,000 foods to find the ones that
+               match your nutrient goals
             </Typography>
          </Stack>
          <Tabs

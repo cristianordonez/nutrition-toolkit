@@ -1,5 +1,7 @@
 require('dotenv').config();
-let database = process.env.NODE_ENV === 'test' ? 'mealplans_test' : 'mealplans';
+//TODO change back to co
+let database =
+   process.env.NODE_ENV === 'test' ? 'mealplans_test' : 'mealplans_test';
 
 const pgp = require('pg-promise')();
 

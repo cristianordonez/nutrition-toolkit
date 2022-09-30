@@ -8,20 +8,19 @@ import session from 'express-session';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import path from 'path';
-import { connectUser } from './API/auth.api';
+import { PassportGoogleUser } from '../types/types';
 import { db } from './database/db';
-import { createGoogleUser, getById } from './models/auth.model';
+import { createGoogleUser, getGoogleUser } from './models/auth.model';
 import { router as authRoute } from './routes/auth.route';
+import { router as foodRoute } from './routes/food.route';
 import { router as groceryProductsRoute } from './routes/groceryproducts.route';
 import { router as ingredientsRoute } from './routes/ingredients.route';
 import { router as mealplanRoute } from './routes/mealplan.route';
 import { router as menuItemsRoute } from './routes/menuitems.route';
 import { router as metricsRoute } from './routes/metrics.route';
 import { router as recipesRoute } from './routes/recipe.route';
-import { router as foodRoute } from './routes/food.route';
 
 const GoogleStrategy = require('passport-google-oidc');
-const generator = require('generate-password');
 const pgSession = require('connect-pg-simple')(session);
 const app = express();
 
@@ -32,8 +31,9 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+//TODO change database back after testing
 const database =
-   process.env.NODE_ENV === 'test' ? 'mealplans_test' : 'mealplans';
+   process.env.NODE_ENV === 'test' ? 'mealplans_test' : 'mealplans_test';
 
 const conObject = {
    user: process.env.DATABASE_USER,
@@ -67,13 +67,20 @@ app.use(passport.session());
 passport.use(
    new LocalStrategy((usernameOrEmail, password, cb) => {
       db.query(
-         `SELECT id, username, hash, email FROM users WHERE username='${usernameOrEmail}' OR email='${usernameOrEmail}'`
+         `SELECT hash, users.id FROM user_hash 
+         INNER JOIN users
+         ON user_id=users.id
+         WHERE username='${usernameOrEmail}' 
+         OR email = '${usernameOrEmail}'`
       )
          .then(function (result: any) {
+            console.log('result in local strat:', result);
             if (result.length) {
                const first = result[0];
                bcrypt.compare(password, first.hash, function (err, res) {
                   if (res) {
+                     console.log('res in bcrypt compare:', res);
+                     console.log('first:', first);
                      cb(null, {
                         id: first.id,
                         username: first.username,
@@ -104,60 +111,63 @@ passport.use(
          scope: ['profile', 'email'], //the data we are asking for from google
       },
       (issuer: any, profile: any, done: any) => {
-         getById(profile.id)
-            .then((response) => {
+         console.log('here in passport google strat');
+         getGoogleUser(profile.emails[0].value)
+            .then((response: PassportGoogleUser[]) => {
+               console.log('response in get google user:', response);
                //if user exists, redirect
                if (response.length > 0) {
-                  //other wise create account
-                  done(null, profile);
+                  done(null, response[0]);
                } else {
-                  let password = generator.generate({
-                     length: 8,
-                     numbers: true,
+                  // let password = generator.generate({
+                  //    length: 8,
+                  //    numbers: true,
+                  // });
+                  console.log('here in else block google strat');
+                  let user = {} as PassportGoogleUser;
+                  user.username = profile.displayName;
+                  user.email = profile.emails[0].value;
+                  createGoogleUser(user).then((userId: number) => {
+                     console.log(
+                        'profile after creating google user:',
+                        profile
+                     );
+                     user.id = userId;
+                     console.log('profile:', profile);
+                     done(null, user);
                   });
-                  let spoonacularAccountPromise = connectUser({
-                     username: profile.displayName,
-                     email: profile.emails[0].value,
-                     password: password,
-                  }).then((spoonacularAccount) => {
-                     let currentHash: Promise<string | void> = bcrypt //get hashed password to insert into database
-                        .hash(password, 10)
-                        .then((hash) => {
-                           let user = {} as any;
-                           user.spoonacular_username =
-                              spoonacularAccount.data.username;
-                           user.spoonacular_password =
-                              spoonacularAccount.data.spoonacularPassword;
-                           user.spoonacular_hash = spoonacularAccount.data.hash;
-                           user.hash = hash;
-                           user.username = profile.displayName;
-                           user.email = profile.emails[0].value;
-                           user.id = profile.id;
-                           createGoogleUser(user).then((userId) => {
-                              done(null, profile);
-                           }); // then, send data to model to store all info in db
-                        });
-                  });
+                  // let currentHash: Promise<string | void> = bcrypt
+                  // .hash(password, 10)
+                  // .then((hash) => {
+                  // let user = {} as UserType;
+                  // user.username = profile.displayName;
+                  // user.email = profile.emails[0].value;
+                  // user.password = hash;
+                  // createUser(user).then((userId: number) => {
+                  //    done(null, profile);
+                  // });
+                  // });
                }
             })
-            .catch((err) => {
-               console.log(err);
+            .catch((err: any) => {
+               console.log('error authenticating with Google: ', err);
                done(err);
             });
       }
    )
 );
 
-//determines which data of user object should be stored in session to be accessed
-// below in the deserializeUser function
+//determines which data of user object should be stored in session to be accessed below in the deserializeUser function
 passport.serializeUser((user: any, done) => {
+   console.log('serializing user');
+   console.log('user:', user);
    done(null, user.id);
 });
 
 passport.deserializeUser((id: string, cb) => {
-   db.query(
-      `SELECT id, username, email, spoonacular_username FROM users WHERE id='${id}'`
-   )
+   console.log('deserializing user');
+   console.log('id in deserialize user:', id);
+   db.query(`SELECT id, username, email FROM users WHERE id='${id}'`)
       .then(function (results: any) {
          cb(null, results[0]);
       })
