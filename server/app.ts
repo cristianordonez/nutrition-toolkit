@@ -13,6 +13,7 @@ import { db } from './database/db';
 import { createGoogleUser, getGoogleUser } from './models/auth.model';
 import { router as authRoute } from './routes/auth.route';
 import { router as foodRoute } from './routes/food.route';
+import { router as goalsRoute } from './routes/goals.route';
 import { router as mealplanRoute } from './routes/mealplan.route';
 
 const GoogleStrategy = require('passport-google-oidc');
@@ -138,14 +139,10 @@ passport.use(
 
 //determines which data of user object should be stored in session to be accessed below in the deserializeUser function
 passport.serializeUser((user: any, done) => {
-   console.log('serializing user');
-   console.log('user:', user);
    done(null, user.id);
 });
 
 passport.deserializeUser((id: string, cb) => {
-   console.log('deserializing user');
-   console.log('id in deserialize user:', id);
    db.query(`SELECT id, username, email FROM users WHERE id='${id}'`)
       .then(function (results: any) {
          cb(null, results[0]);
@@ -167,6 +164,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.use('/api', authRoute);
+app.use('/api/goals', goalsRoute);
 app.use('/api/mealplan', mealplanRoute);
 app.use('/api/food', foodRoute);
 

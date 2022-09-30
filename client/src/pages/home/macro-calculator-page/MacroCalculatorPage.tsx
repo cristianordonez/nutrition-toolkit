@@ -25,7 +25,7 @@ const MacroCalculatorPage = () => {
 
    const getGoals = async () => {
       try {
-         let currentGoals = await axios.get('/api/metrics');
+         let currentGoals = await axios.get('/api/goals');
          setGoals(currentGoals.data);
       } catch (err) {
          console.log(err);

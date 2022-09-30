@@ -1,8 +1,8 @@
 type CurrentGoals = {
    user_id?: number;
    total_carbohydrates: number;
-   min_carbs_per_meal: number;
-   max_carbs_per_meal: number;
+   min_carbohydrates_per_meal: number;
+   max_carbohydrates_per_meal: number;
    total_protein: number;
    min_protein_per_meal: number;
    max_protein_per_meal: number;

@@ -1,9 +1,9 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import './GoalCardItemCard.scss';
-import { useLocalStorageState } from '../../../hooks/useLocalStorage';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
+import { Card, CardContent, Input, Typography } from '@mui/material';
+import React, { Dispatch, SetStateAction } from 'react';
 import { CurrentGoals } from '../../../../../types/types';
-import { Card, CardContent, Typography, Input } from '@mui/material';
+import { useLocalStorageState } from '../../../hooks/useLocalStorage';
+import './GoalCardItemCard.scss';
 
 interface Props {
    type: 'Carbohydrates' | 'Protein' | 'Fat';
@@ -32,8 +32,8 @@ export const GoalCardItemCard = ({
             setGoals({
                ...goals,
                total_carbohydrates: totalCarbs,
-               min_carbs_per_meal: Math.floor(minCarbsPerMeal),
-               max_carbs_per_meal: Math.floor(totalCarbs / 3 + 5),
+               min_carbohydrates_per_meal: Math.floor(minCarbsPerMeal),
+               max_carbohydrates_per_meal: Math.floor(totalCarbs / 3 + 5),
             });
          } else if (event.target.id == 'Protein') {
             let totalProtein = parseInt(event.target.value);
@@ -104,8 +104,8 @@ export const GoalCardItemCard = ({
                      className='range-text'
                      variant='subtitle2'
                   >
-                     Per meal: {goals.min_carbs_per_meal} -{' '}
-                     {goals.max_carbs_per_meal}g
+                     Per meal: {goals.min_carbohydrates_per_meal} -{' '}
+                     {goals.max_carbohydrates_per_meal}g
                   </Typography>
                )}
                {type === 'Protein' && (

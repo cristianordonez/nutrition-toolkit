@@ -18,8 +18,8 @@ const create = (goals: CurrentGoals) => {
       max_carbohydrates_per_meal, total_protein, min_protein_per_meal, max_protein_per_meal,
       total_fat, min_fat_per_meal, max_fat_per_meal, total_calories, min_calories_per_meal,
       max_calories_per_meal, user_id)
-   VALUES (${goals.total_carbohydrates}, ${goals.min_carbs_per_meal},
-      ${goals.max_carbs_per_meal}, ${goals.total_protein}, ${goals.min_protein_per_meal}, ${goals.max_protein_per_meal},
+   VALUES (${goals.total_carbohydrates}, ${goals.min_carbohydrates_per_meal},
+      ${goals.max_carbohydrates_per_meal}, ${goals.total_protein}, ${goals.min_protein_per_meal}, ${goals.max_protein_per_meal},
       ${goals.total_fat}, ${goals.min_fat_per_meal}, ${goals.max_fat_per_meal},
       ${goals.total_calories}, ${goals.min_calories_per_meal}, ${goals.max_calories_per_meal}, '${goals.user_id}')
    `;
@@ -31,8 +31,8 @@ const update = (goals: CurrentGoals) => {
    const dbQuery = `
    UPDATE user_daily_goals
    SET total_carbohydrates = ${goals.total_carbohydrates},
-   min_carbohydrates_per_meal = ${goals.min_carbs_per_meal},
-   max_carbohydrates_per_meal = ${goals.max_carbs_per_meal},
+   min_carbohydrates_per_meal = ${goals.min_carbohydrates_per_meal},
+   max_carbohydrates_per_meal = ${goals.max_carbohydrates_per_meal},
    total_protein = ${goals.total_protein},
    min_protein_per_meal = ${goals.min_protein_per_meal},
    max_protein_per_meal = ${goals.max_protein_per_meal},

@@ -79,6 +79,7 @@ export const SampleFeaturesSidebar = ({
                   handleSubmit={handleSearch}
                   handleInputChange={handleInputChange}
                   handleTypeSelect={handleTypeSelect}
+                  goals={goals}
                />
             ) : null}
             {view === 'mealplan' ? (
@@ -115,6 +116,7 @@ export const SampleFeaturesSidebar = ({
                      handleSubmit={handleSearch}
                      handleInputChange={handleInputChange}
                      handleTypeSelect={handleTypeSelect}
+                     goals={goals}
                   />
                ) : null}
                {view === 'mealplan' ? (

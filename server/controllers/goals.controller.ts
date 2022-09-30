@@ -1,10 +1,14 @@
 import { Request, Response } from 'express';
-import { create, get, update } from '../models/metrics.model';
+import { CurrentGoals } from '../../types/types';
+import { create, get, update } from '../models/goals.model';
 
-const getMetrics = async (req: any, res: Response) => {
+const getGoals = async (req: any, res: Response) => {
    try {
       let user_id = req.session.user_id;
-      let userGoals: any = await get(user_id);
+      console.log('user_id:', user_id);
+      console.log('req.session:', req.session);
+      let userGoals: CurrentGoals[] = await get(user_id);
+      console.log('userGoals:', userGoals);
       res.status(201).send(userGoals[0]);
    } catch (err) {
       console.log(err);
@@ -12,7 +16,7 @@ const getMetrics = async (req: any, res: Response) => {
    }
 };
 
-const createMetrics = async (req: Request, res: Response) => {
+const createGoals = async (req: Request, res: Response) => {
    try {
       let session: any = req.session;
       let user_id: number = session.user_id;
@@ -25,7 +29,7 @@ const createMetrics = async (req: Request, res: Response) => {
    }
 };
 
-const updateMetrics = async (req: Request, res: Response) => {
+const updateGoals = async (req: Request, res: Response) => {
    try {
       let session: any = req.session;
       let user_id: number = session.user_id;
@@ -38,4 +42,4 @@ const updateMetrics = async (req: Request, res: Response) => {
    }
 };
 
-export { getMetrics, createMetrics, updateMetrics };
+export { getGoals, createGoals, updateGoals };

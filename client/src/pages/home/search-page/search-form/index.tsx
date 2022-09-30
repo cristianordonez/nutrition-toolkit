@@ -1,14 +1,13 @@
 import ScreenSearchDesktopIcon from '@mui/icons-material/ScreenSearchDesktop';
-import { AlertColor, Stack, Tab, Tabs, Typography } from '@mui/material';
+import { AlertColor, Stack, Typography } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import {
    CurrentGoals,
    Query,
    SearchResults,
 } from '../../../../../../types/types';
 import { SearchFormCustom } from '../../../../components/search-forms/SearchFormCustom';
-import { SearchFormSuggested } from '../../../../components/search-forms/SearchFormSuggested';
 import './index.scss';
 
 interface Props {
@@ -42,8 +41,6 @@ export const SearchForm = ({
    setShowLoadMoreBtn,
    setSearchResults,
 }: Props) => {
-   const [error, setError] = useState<boolean>(false); //used to show input field error when route is set to ingredients
-
    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setValues({ ...values, [event.target.id]: event.target.value });
    };
@@ -53,14 +50,14 @@ export const SearchForm = ({
    };
    return (
       <div className='search-form'>
-         <Stack direction='row' spacing={1}>
+         <Stack direction='row' spacing={1} pb='2rem'>
             <ScreenSearchDesktopIcon />
             <Typography variant='body1'>
                Search from a list of over 350,000 foods to find the ones that
                match your nutrient goals
             </Typography>
          </Stack>
-         <Tabs
+         {/* <Tabs
             value={currentTab}
             onChange={handleChange}
             aria-label='toggle suggested search'
@@ -70,17 +67,17 @@ export const SearchForm = ({
          >
             <Tab value='custom-search' label='Custom' />
             <Tab value='suggested-goals' label='Suggested' />
-         </Tabs>
+         </Tabs> */}
 
-         {currentTab === 'custom-search' ? (
-            <SearchFormCustom
-               values={values}
-               handleSubmit={handleSubmit}
-               handleInputChange={handleInputChange}
-               handleTypeSelect={handleTypeSelect}
-            />
-         ) : (
-            <SearchFormSuggested
+         <SearchFormCustom
+            values={values}
+            handleSubmit={handleSubmit}
+            handleInputChange={handleInputChange}
+            handleTypeSelect={handleTypeSelect}
+            goals={goals}
+         />
+
+         {/* <SearchFormSuggested
                values={values}
                handleInputChange={handleInputChange}
                handleTypeSelect={handleTypeSelect}
@@ -92,8 +89,7 @@ export const SearchForm = ({
                setOpenAlert={setOpenAlert}
                setShowLoadMoreBtn={setShowLoadMoreBtn}
                setSearchResults={setSearchResults}
-            />
-         )}
+            /> */}
       </div>
    );
 };

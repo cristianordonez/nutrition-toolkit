@@ -135,7 +135,7 @@ const Home = () => {
 
    //# at first render grabs the users metrics from db, no need to send userId as
    useEffect(() => {
-      let promise = axios.get('/api/metrics', { withCredentials: true });
+      let promise = axios.get('/api/goals', { withCredentials: true });
       promise.then((results) => {
          setGoals(results.data);
       });

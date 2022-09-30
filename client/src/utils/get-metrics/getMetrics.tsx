@@ -2,8 +2,8 @@ import { MetricsType } from './getMetrics.types';
 
 export type Goals = {
    total_carbohydrates: number;
-   min_carbs_per_meal: number;
-   max_carbs_per_meal: number;
+   min_carbohydrates_per_meal: number;
+   max_carbohydrates_per_meal: number;
    total_protein: number;
    min_protein_per_meal: number;
    max_protein_per_meal: number;
@@ -32,8 +32,12 @@ export const getMetrics = ({
    result.min_calories_per_meal = Math.floor(result.total_calories / 3 - 150);
    result.max_calories_per_meal = Math.floor(result.total_calories / 3 + 150);
    result.total_carbohydrates = Math.floor((rmr * 0.45) / 4); //divide by 4 to get grams from kcal
-   result.min_carbs_per_meal = Math.floor(result.total_carbohydrates / 3 - 5); //carbs are searched for in range of +/- 5 grams, to focus on diabetes
-   result.max_carbs_per_meal = Math.floor(result.total_carbohydrates / 3 + 5);
+   result.min_carbohydrates_per_meal = Math.floor(
+      result.total_carbohydrates / 3 - 5
+   ); //carbs are searched for in range of +/- 5 grams, to focus on diabetes
+   result.max_carbohydrates_per_meal = Math.floor(
+      result.total_carbohydrates / 3 + 5
+   );
    result.total_protein = Math.floor(weightInKg);
    result.min_protein_per_meal = Math.floor(result.total_protein / 3 - 10); //protein is searched for in range of +/- 10 grams
    result.max_protein_per_meal = Math.floor(result.total_protein / 3 + 10);

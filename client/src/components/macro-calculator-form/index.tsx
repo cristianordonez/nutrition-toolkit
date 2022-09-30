@@ -1,22 +1,22 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import './index.scss';
-import axios from 'axios';
-import { Calculator } from '../calculator-contents/Calculator';
 import {
+   AlertColor,
+   Box,
+   Button,
+   Dialog,
+   DialogActions,
+   DialogContent,
+   DialogTitle,
    Paper,
    Stack,
    Typography,
-   Button,
-   AlertColor,
-   Dialog,
-   DialogTitle,
-   DialogContent,
-   DialogActions,
-   Box,
 } from '@mui/material';
-import { getMetrics } from '../../utils/get-metrics/getMetrics';
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import React, { Dispatch, SetStateAction } from 'react';
 import { BsCalculatorFill } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
+import { getMetrics } from '../../utils/get-metrics/getMetrics';
+import { Calculator } from '../calculator-contents/Calculator';
+import './index.scss';
 interface Props {
    setOpenErrorAlert: Dispatch<SetStateAction<boolean>>;
    setErrorMessage: Dispatch<SetStateAction<string>>;
@@ -69,7 +69,7 @@ export const MacroCalculatorForm = ({
          activityLevel,
       });
       try {
-         let response = await axios.post(`/api/metrics`, metrics);
+         let response = await axios.post(`/api/goals`, metrics);
          if (page === 'macrocalculator') {
             setErrorMessage(
                'You have updated your macronutrient needs. Go to search page to begin searching for recipes, menu items, or grocery products within this range.'

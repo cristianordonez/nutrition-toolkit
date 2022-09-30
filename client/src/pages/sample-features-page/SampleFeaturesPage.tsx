@@ -33,8 +33,8 @@ const initialState = {
 
 const initialGoals = {
    total_carbohydrates: 135,
-   min_carbs_per_meal: 45,
-   max_carbs_per_meal: 55,
+   min_carbohydrates_per_meal: 45,
+   max_carbohydrates_per_meal: 55,
    total_protein: 135,
    min_protein_per_meal: 30,
    max_protein_per_meal: 50,
@@ -86,7 +86,7 @@ const SampleFeaturesPage = () => {
       // try {
       //    setIsLoading(true);
       //    event.preventDefault();
-      //    // let foodItems = await axios.get(`/api/${route}`, {
+      //    // let foodItems = await axios.get(`/api/${route}`, {G
       //    //    params: newValues,
       //    //    withCredentials: true,
       //    // });

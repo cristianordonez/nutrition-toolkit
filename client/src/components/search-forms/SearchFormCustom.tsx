@@ -1,7 +1,7 @@
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 import { Button, SelectChangeEvent, Stack } from '@mui/material';
 import React, { FormEventHandler } from 'react';
-import { Query } from '../../../../types/types';
+import { CurrentGoals, Query } from '../../../../types/types';
 import { CategoryDropDown } from './search-form-components/CategoryDropDown';
 import { NutrientInputForm } from './search-form-components/NutrientInputForm';
 import { QueryTextField } from './search-form-components/QueryTextField';
@@ -10,6 +10,7 @@ interface Props {
    handleSubmit: FormEventHandler<HTMLFormElement>;
    handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
    handleTypeSelect: (event: SelectChangeEvent) => void;
+   goals: CurrentGoals;
 }
 
 export const SearchFormCustom = ({
@@ -17,6 +18,7 @@ export const SearchFormCustom = ({
    handleSubmit,
    handleInputChange,
    handleTypeSelect,
+   goals,
 }: Props): ReactJSXElement => {
    return (
       <>
@@ -34,6 +36,7 @@ export const SearchFormCustom = ({
                   handleInputChange={handleInputChange}
                   measurement={'kcal'}
                   nutrient={'Calories'}
+                  goals={goals}
                   minValue={values.minCalories}
                   maxValue={values.maxCalories}
                />
@@ -41,6 +44,7 @@ export const SearchFormCustom = ({
                   handleInputChange={handleInputChange}
                   measurement={'g'}
                   nutrient={'Carbs'}
+                  goals={goals}
                   minValue={values.minCarbs}
                   maxValue={values.maxCarbs}
                />
@@ -48,6 +52,7 @@ export const SearchFormCustom = ({
                   handleInputChange={handleInputChange}
                   measurement={'g'}
                   nutrient={'Protein'}
+                  goals={goals}
                   minValue={values.minProtein}
                   maxValue={values.maxProtein}
                />
@@ -55,6 +60,7 @@ export const SearchFormCustom = ({
                   handleInputChange={handleInputChange}
                   measurement={'g'}
                   nutrient={'Fat'}
+                  goals={goals}
                   minValue={values.minFat}
                   maxValue={values.maxFat}
                />
