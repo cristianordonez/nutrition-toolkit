@@ -21,7 +21,6 @@ const SearchPage = () => {
       <>
          <>
             <Box className='search-page' sx={{ width: '100vw' }}>
-               {/* PROGRESS BAR */}
                {loading ? <CircularProgress size={68} /> : null}
                {searchResults.length ? (
                   <>

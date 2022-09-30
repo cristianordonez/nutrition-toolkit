@@ -1,9 +1,9 @@
-//#connects server to the models
 import { Request, Response } from 'express';
 import { Query } from '../../types/types';
 
-const getMenuItems = async function (req: Request, res: Response) {
+const getFoodItems = async function (req: Request, res: Response) {
    const query = req.query as unknown as Query;
+   console.log('query:', query);
    try {
    } catch (err) {
       console.log(err);
@@ -11,4 +11,4 @@ const getMenuItems = async function (req: Request, res: Response) {
    }
 };
 
-export { getMenuItems };
+export { getFoodItems };

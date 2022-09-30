@@ -18,7 +18,16 @@ import './SampleFeaturesPage.scss';
 const initialState = {
    query: '',
    category: 'All',
-   intolerance: '',
+   allergies: {
+      dairy: false,
+      eggs: false,
+      soy: false,
+      tree_nuts: false,
+      peanuts: false,
+      shellfish: false,
+      fish: false,
+      wheat: false,
+   },
    minCalories: '',
    maxCalories: '',
    minProtein: '',
@@ -138,6 +147,17 @@ const SampleFeaturesPage = () => {
       setValues({ ...values, [event.target.id]: event.target.value });
    };
 
+   const handleCheckboxChange = (
+      event: React.ChangeEvent<HTMLInputElement>
+   ) => {
+      setValues({
+         ...values,
+         allergies: {
+            ...values.allergies,
+            [event.target.name]: event.target.checked,
+         },
+      });
+   };
    return (
       <>
          <div className='main-page-container'>
@@ -170,6 +190,7 @@ const SampleFeaturesPage = () => {
                            goals={goals}
                            nutritionSummary={nutritionSummary}
                            view={'mealplan'}
+                           handleCheckboxChange={handleCheckboxChange}
                         />
                         <SampleMealPlanPage
                            setNutritionSummary={setNutritionSummary}
@@ -197,6 +218,7 @@ const SampleFeaturesPage = () => {
                         goals={goals}
                         nutritionSummary={nutritionSummary}
                         view={'search'}
+                        handleCheckboxChange={handleCheckboxChange}
                      />
                   }
                />
@@ -213,6 +235,7 @@ const SampleFeaturesPage = () => {
                         goals={goals}
                         nutritionSummary={nutritionSummary}
                         view={'calculator'}
+                        handleCheckboxChange={handleCheckboxChange}
                      />
                   }
                />

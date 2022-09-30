@@ -11,7 +11,7 @@ import React, { FormEventHandler } from 'react';
 import { useLocation } from 'react-router-dom';
 import { CurrentGoals, Query } from '../../../../../types/types';
 import { MainTitleLogo } from '../../../components/main-title-logo';
-import { SearchFormCustom } from '../../../components/search-forms/SearchFormCustom';
+import { AdvancedSearchForm } from '../../../components/search-forms/AdvancedSearchForm';
 import { SampleCalculatorSidebarContents } from './SampleCalculatorSidebarContents';
 import './SampleFeatureSidebars.scss';
 import { SampleMealplanSidebarContents } from './SampleMealplanSidebarContents';
@@ -27,6 +27,7 @@ interface Props {
    goals: CurrentGoals;
    nutritionSummary: any;
    view: 'mealplan' | 'search' | 'calculator';
+   handleCheckboxChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const SampleFeaturesSidebar = ({
@@ -39,6 +40,7 @@ export const SampleFeaturesSidebar = ({
    goals,
    nutritionSummary,
    view,
+   handleCheckboxChange,
 }: Props): ReactJSXElement => {
    const location = useLocation();
    return (
@@ -74,12 +76,13 @@ export const SampleFeaturesSidebar = ({
             </Toolbar>
 
             {view === 'search' ? (
-               <SearchFormCustom
+               <AdvancedSearchForm
                   values={values}
                   handleSubmit={handleSearch}
                   handleInputChange={handleInputChange}
                   handleTypeSelect={handleTypeSelect}
                   goals={goals}
+                  handleCheckboxChange={handleCheckboxChange}
                />
             ) : null}
             {view === 'mealplan' ? (
@@ -111,12 +114,13 @@ export const SampleFeaturesSidebar = ({
             <MainTitleLogo />
             <Box sx={{ pt: '1rem' }}>
                {view === 'search' ? (
-                  <SearchFormCustom
+                  <AdvancedSearchForm
                      values={values}
                      handleSubmit={handleSearch}
                      handleInputChange={handleInputChange}
                      handleTypeSelect={handleTypeSelect}
                      goals={goals}
+                     handleCheckboxChange={handleCheckboxChange}
                   />
                ) : null}
                {view === 'mealplan' ? (

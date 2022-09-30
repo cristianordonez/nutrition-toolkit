@@ -1,5 +1,5 @@
 import ScreenSearchDesktopIcon from '@mui/icons-material/ScreenSearchDesktop';
-import { AlertColor, Stack, Typography } from '@mui/material';
+import { AlertColor, Stack, Tab, Tabs, Typography } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import React, { Dispatch, SetStateAction } from 'react';
 import {
@@ -7,7 +7,8 @@ import {
    Query,
    SearchResults,
 } from '../../../../../../types/types';
-import { SearchFormCustom } from '../../../../components/search-forms/SearchFormCustom';
+import { AdvancedSearchForm } from '../../../../components/search-forms/AdvancedSearchForm';
+import { SimpleSearchForm } from '../../../../components/search-forms/SimpleSearchForm';
 import './index.scss';
 
 interface Props {
@@ -48,6 +49,18 @@ export const SearchForm = ({
    const handleTypeSelect = (event: SelectChangeEvent) => {
       setValues({ ...values, category: event.target.value });
    };
+
+   const handleCheckboxChange = (
+      event: React.ChangeEvent<HTMLInputElement>
+   ) => {
+      setValues({
+         ...values,
+         allergies: {
+            ...values.allergies,
+            [event.target.name]: event.target.checked,
+         },
+      });
+   };
    return (
       <div className='search-form'>
          <Stack direction='row' spacing={1} pb='2rem'>
@@ -57,7 +70,7 @@ export const SearchForm = ({
                match your nutrient goals
             </Typography>
          </Stack>
-         {/* <Tabs
+         <Tabs
             value={currentTab}
             onChange={handleChange}
             aria-label='toggle suggested search'
@@ -65,23 +78,24 @@ export const SearchForm = ({
             indicatorColor='secondary'
             textColor='secondary'
          >
-            <Tab value='custom-search' label='Custom' />
-            <Tab value='suggested-goals' label='Suggested' />
-         </Tabs> */}
+            <Tab value='advanced-search' label='Advanced Search' />
+            <Tab value='simple-search' label='Simple Search' />
+         </Tabs>
 
-         <SearchFormCustom
-            values={values}
-            handleSubmit={handleSubmit}
-            handleInputChange={handleInputChange}
-            handleTypeSelect={handleTypeSelect}
-            goals={goals}
-         />
-
-         {/* <SearchFormSuggested
+         {currentTab === 'advanced-search' ? (
+            <AdvancedSearchForm
                values={values}
+               handleSubmit={handleSubmit}
                handleInputChange={handleInputChange}
                handleTypeSelect={handleTypeSelect}
                goals={goals}
+               handleCheckboxChange={handleCheckboxChange}
+            />
+         ) : (
+            <SimpleSearchForm
+               values={values}
+               handleInputChange={handleInputChange}
+               handleTypeSelect={handleTypeSelect}
                setValues={setValues}
                setAlertMessage={setAlertMessage}
                setAlertSeverity={setAlertSeverity}
@@ -89,7 +103,8 @@ export const SearchForm = ({
                setOpenAlert={setOpenAlert}
                setShowLoadMoreBtn={setShowLoadMoreBtn}
                setSearchResults={setSearchResults}
-            /> */}
+            />
+         )}
       </div>
    );
 };

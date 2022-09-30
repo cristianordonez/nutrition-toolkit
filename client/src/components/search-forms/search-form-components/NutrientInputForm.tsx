@@ -47,7 +47,6 @@ export const NutrientInputForm = ({
       currentNutrient = nutrient;
    }
 
-   console.log('goals:', goals);
    return (
       <>
          <Stack direction='column'>

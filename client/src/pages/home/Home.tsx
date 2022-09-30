@@ -17,7 +17,7 @@ const Home = () => {
    const [mealplanItemsFound, setMealplanItemsFound] = useState<boolean>(true); //use this to display different page if no items are found
    const [mobileOpen, setMobileOpen] = useState(false);
    const [searchResults, setSearchResults] = useState<SearchResults[]>([]);
-   const [currentTab, setCurrentTab] = useState<string>('custom-search');
+   const [currentTab, setCurrentTab] = useState<string>('advanced-search');
    const [route, setRoute] = useState<string>('food');
    const [openAlert, setOpenAlert] = useState<boolean>(false);
    const [loading, setLoading] = useState<boolean>(false);
@@ -32,7 +32,16 @@ const Home = () => {
    const [values, setValues] = useState<Query>({
       query: '',
       category: '',
-      intolerance: '',
+      allergies: {
+         dairy: false,
+         eggs: false,
+         soy: false,
+         tree_nuts: false,
+         peanuts: false,
+         shellfish: false,
+         fish: false,
+         wheat: false,
+      },
       minCalories: '',
       maxCalories: '',
       minCarbs: '',

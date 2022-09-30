@@ -3,22 +3,26 @@ import { Button, SelectChangeEvent, Stack } from '@mui/material';
 import React, { FormEventHandler } from 'react';
 import { CurrentGoals, Query } from '../../../../types/types';
 import { CategoryDropDown } from './search-form-components/CategoryDropDown';
+import { CheckBoxGroup } from './search-form-components/checkbox-group/CheckBoxGroup';
 import { NutrientInputForm } from './search-form-components/NutrientInputForm';
 import { QueryTextField } from './search-form-components/QueryTextField';
+
 interface Props {
    values: Query;
    handleSubmit: FormEventHandler<HTMLFormElement>;
    handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
    handleTypeSelect: (event: SelectChangeEvent) => void;
    goals: CurrentGoals;
+   handleCheckboxChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const SearchFormCustom = ({
+export const AdvancedSearchForm = ({
    values,
    handleSubmit,
    handleInputChange,
    handleTypeSelect,
    goals,
+   handleCheckboxChange,
 }: Props): ReactJSXElement => {
    return (
       <>
@@ -31,6 +35,11 @@ export const SearchFormCustom = ({
                <CategoryDropDown
                   type={values.category}
                   handleTypeSelect={handleTypeSelect}
+               />
+
+               <CheckBoxGroup
+                  allergies={values.allergies}
+                  handleCheckboxChange={handleCheckboxChange}
                />
                <NutrientInputForm
                   handleInputChange={handleInputChange}

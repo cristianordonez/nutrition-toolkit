@@ -23,23 +23,15 @@ export const CategoryDropDown = ({ type, handleTypeSelect }: Props) => {
             id='type'
             data-testid='select-type-dropdown'
          >
-            <MenuItem value={'maincourse'}>Main Course</MenuItem>
-            <MenuItem value={'sidedish'}>Side Dish</MenuItem>
-            <MenuItem value={'dessert'}>Dessert</MenuItem>
-            <MenuItem value={'appetizer'}>Appetizer</MenuItem>
-            <MenuItem value={'salad'}>Salad</MenuItem>
-            <MenuItem value={'bread'}>Bread</MenuItem>
-            <MenuItem value={'breakfast'}>Breakfast</MenuItem>
-            <MenuItem value={'soup'}>Soup</MenuItem>
+            <MenuItem value={'all'}>All</MenuItem>
             <MenuItem value={'beverage'}>Beverage</MenuItem>
-            <MenuItem value={'sauce'}>Sauce</MenuItem>
-            <MenuItem value={'marinade'}>Marinade</MenuItem>
-            <MenuItem value={'fingerfood'}>Fingerfood</MenuItem>
+            <MenuItem value={'dessert'}>Dessert</MenuItem>
+            <MenuItem value={'breakfast'}>Breakfast</MenuItem>
             <MenuItem value={'snack'}>Snack</MenuItem>
-            <MenuItem value={'drink'}>Drink</MenuItem>
+            <MenuItem value={'maincourse'}>Main Course</MenuItem>
          </Select>
          <FormHelperText>
-            Narrow down your search by choosing a food category.
+            Narrow down your search by choosing a food category
          </FormHelperText>
       </FormControl>
    );
