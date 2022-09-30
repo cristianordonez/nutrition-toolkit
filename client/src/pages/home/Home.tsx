@@ -4,42 +4,32 @@ import axios from 'axios';
 import format from 'date-fns/format';
 import React, { useEffect, useState } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
-import {
-   CurrentGoals,
-   MealplanItemType,
-   ValuesType,
-} from '../../../../types/types';
+import { CurrentGoals, Query, SearchResults } from '../../../../types/types';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
 import { SideBar } from '../../components/sidebar/SideBar';
-import { useAuth } from '../../context/authContext';
 import MealPlanPage from './meal-plan-page/MealPlanPage';
 import { SidebarMealplan } from './meal-plan-page/sidebar-mealplan/SideBarMealPlan';
 import { SearchForm } from './search-page/search-form';
 import { SideBarSearchPage } from './search-page/sidebar-searchpage/SideBarSearchPage';
 
 const Home = () => {
-   const { isLoading, isLoggedIn, username } = useAuth(); //used to check if data is still being retrieved from database
    const [goals, setGoals] = useState({} as CurrentGoals);
    const [mealplanItemsFound, setMealplanItemsFound] = useState<boolean>(true); //use this to display different page if no items are found
    const [mobileOpen, setMobileOpen] = useState(false);
-   const [apiData, setAPIData] = useState<MealplanItemType[]>([]);
+   const [searchResults, setSearchResults] = useState<SearchResults[]>([]);
    const [currentTab, setCurrentTab] = useState<string>('custom-search');
    const [route, setRoute] = useState<string>('food');
    const [openAlert, setOpenAlert] = useState<boolean>(false);
    const [loading, setLoading] = useState<boolean>(false);
-   const [breakfastItems, setBreakfastItems] = useState<MealplanItemType[]>([]);
-   const [lunchItems, setLunchItems] = useState<MealplanItemType[]>([]);
-   const [dinnerItems, setDinnerItems] = useState<MealplanItemType[]>([]);
    const [alertMessage, setAlertMessage] = useState<string>('');
-   const [mealplanItems, setMealplanItems] = useState<MealplanItemType[]>([]);
+   // const [mealplanItems, setMealplanItems] = useState<[]>([]);
    const [showLoadMoreBtn, setShowLoadMoreBtn] = useState<boolean>(false);
    const [nutritionSummary, setNutritionSummary] = useState<any[]>([]);
    const [currentDay, setCurrentDay] = useState(
       format(new Date(Date.now()), 'yyyy-MM-dd')
-   ); //spoonacular api needs date in format '2022-07-13'
+   ); //database stores date in format 'YYYY-MM-DD'
    const [alertSeverity, setAlertSeverity] = useState<AlertColor>('error');
-   //TODO remove intolerance from this type and state
-   const [values, setValues] = useState<ValuesType>({
+   const [values, setValues] = useState<Query>({
       query: '',
       category: '',
       intolerance: '',
@@ -55,7 +45,7 @@ const Home = () => {
       offset: 0, //number of results to skip, useful for lazy loading
    });
 
-   //# handles showing more items from api
+   //TODO uncomment the set mealplan item line
    const handleLoadMore = async (event: React.SyntheticEvent) => {
       try {
          setLoading(true);
@@ -69,7 +59,7 @@ const Home = () => {
          } else {
             setShowLoadMoreBtn(true);
          }
-         setAPIData(apiData.concat(newItems.data));
+         setSearchResults(searchResults.concat(newItems.data));
          setLoading(false);
       } catch (err) {
          setLoading(false);
@@ -77,12 +67,10 @@ const Home = () => {
       }
    };
 
-   //# handles closing the snackbar when there is data present
    const handleAlert = (event: React.SyntheticEvent | Event) => {
       setOpenAlert(false);
    };
 
-   //# handles changing between tab views to display the suggested goals page
    const handleChange = (event: React.SyntheticEvent, currentValue: string) => {
       setCurrentTab(currentValue);
    };
@@ -91,7 +79,7 @@ const Home = () => {
       setMobileOpen(!mobileOpen);
    };
 
-   //TODO handles submission to search for food items
+   //TODO uncomment the setSearchResults line call it something else
    const handleSubmit = async (event: React.SyntheticEvent) => {
       event.preventDefault();
       let newValues = { ...values, offset: 0 }; //declare new values so that there are no async bugs, and reset offset to 0 in case user changed it
@@ -119,7 +107,7 @@ const Home = () => {
                setShowLoadMoreBtn(true);
             }
          }
-         setAPIData(foodItems.data);
+         setSearchResults(foodItems.data);
          setLoading(false); //used to trigger the loading circle
       } catch (err) {
          setLoading(false); //used to trigger the loading circle
@@ -130,8 +118,6 @@ const Home = () => {
    const SearchFormComponent: JSX.Element = (
       <SearchForm
          handleSubmit={handleSubmit}
-         route={route}
-         setRoute={setRoute}
          handleChange={handleChange}
          currentTab={currentTab}
          setCurrentTab={setCurrentTab}
@@ -143,7 +129,7 @@ const Home = () => {
          setLoading={setLoading}
          setOpenAlert={setOpenAlert}
          setShowLoadMoreBtn={setShowLoadMoreBtn}
-         setAPIData={setAPIData}
+         setSearchResults={setSearchResults}
       />
    );
 
@@ -192,16 +178,10 @@ const Home = () => {
                         setAlertSeverity={setAlertSeverity}
                         setNutritionSummary={setNutritionSummary}
                         setMealplanItemsFound={setMealplanItemsFound}
-                        setMealplanItems={setMealplanItems}
+                        // setMealplanItems={setMealplanItems}
                         currentDay={currentDay}
                         setCurrentDay={setCurrentDay}
-                        mealplanItems={mealplanItems}
-                        setBreakfastItems={setBreakfastItems}
-                        setLunchItems={setLunchItems}
-                        setDinnerItems={setDinnerItems}
-                        breakfastItems={breakfastItems}
-                        lunchItems={lunchItems}
-                        dinnerItems={dinnerItems}
+                        // mealplanItems={mealplanItems}
                         SearchFormComponent={SearchFormComponent}
                      />
                   </>
@@ -215,7 +195,7 @@ const Home = () => {
                      mobileOpen={mobileOpen}
                      handleDrawerToggle={handleDrawerToggle}
                      SearchFormComponent={SearchFormComponent}
-                     apiData={apiData}
+                     // searchResults={searchResults}
                      route={route}
                   />
                }
@@ -237,7 +217,6 @@ const Home = () => {
                loading,
                setGoals,
                handleDrawerToggle,
-               apiData,
                route,
                handleLoadMore,
                setAlertMessage,
@@ -247,17 +226,12 @@ const Home = () => {
                SearchFormComponent,
                setNutritionSummary,
                setMealplanItemsFound,
-               setMealplanItems,
+               // setMealplanItems,
                currentDay,
                setCurrentDay,
-               mealplanItems,
-               breakfastItems,
-               setBreakfastItems,
-               lunchItems,
-               setLunchItems,
-               dinnerItems,
+               searchResults,
+               // mealplanItems,
                goals,
-               setDinnerItems,
                mobileOpen,
             }}
          />

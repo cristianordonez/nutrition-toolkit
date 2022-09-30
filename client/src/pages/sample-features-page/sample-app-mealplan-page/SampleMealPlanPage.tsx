@@ -1,15 +1,12 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { SampleMealPlanDay } from './sample-mealplan-day/SampleMealplanDay';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import './SampleMealPlanPage.scss';
 
-import { AlertColor, CircularProgress, Tab, Tabs } from '@mui/material';
+import { AlertColor, Tab, Tabs } from '@mui/material';
 import { Box } from '@mui/system';
-import axios from 'axios';
 import addDays from 'date-fns/addDays';
 import format from 'date-fns/format';
 import getDay from 'date-fns/getDay';
 import subDays from 'date-fns/subDays';
-import { FoodItemType, SampleMealplanItem } from '../../../../../types/types';
 import { MealPlanWeekText } from '../../../components/mealplan-week-text/MealPlanWeekText';
 
 const days = [
@@ -28,23 +25,19 @@ interface Props {
    setNutritionSummary: Dispatch<SetStateAction<any>>;
    setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    setOpenAlert: Dispatch<SetStateAction<boolean>>;
-   setSampleMealplanItems: Dispatch<SetStateAction<SampleMealplanItem[] | []>>;
-   setMealplanItems: Dispatch<SetStateAction<FoodItemType[]>>;
+   // setMealplanItems: Dispatch<SetStateAction<FoodItemType[]>>;
    setAlertMessage: Dispatch<SetStateAction<string>>;
-   mealplanItems: FoodItemType[];
-   sampleMealplanItems: SampleMealplanItem[];
+   // mealplanItems: FoodItemType[];
 }
 
 const SampleMealPlanPage = ({
    setNutritionSummary,
    setAlertSeverity,
    setOpenAlert,
-   setSampleMealplanItems,
-   setMealplanItems,
+   // setMealplanItems,
    setAlertMessage,
-   mealplanItems,
-   sampleMealplanItems,
-}: Props) => {
+}: // mealplanItems,
+Props) => {
    const [dayIndex, setDayIndex] = useState<number>(getDay(Date.now())); //used for tab highlighting
 
    const [value, setValue] = React.useState<any>(new Date(Date.now()));
@@ -59,7 +52,8 @@ const SampleMealPlanPage = ({
 
    //need to configure so that day is also changed when tab changes
    const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-      setMealplanItems([]); //when tab changes, reset the nutrition summary and the mealplan items
+      //TODO uncomment this line when set meal plan items is fixed
+      // setMealplanItems([]); //when tab changes, reset the nutrition summary and the mealplan items
       setNutritionSummary({
          calories: 0,
          protein: 0,
@@ -99,34 +93,35 @@ const SampleMealPlanPage = ({
       return { year, month, day };
    };
 
-   useEffect(() => {
-      axios
-         .get('/api/mealplan/sample')
-         .then((response) => {
-            setNutritionSummary(response.data.nutrients);
-            const currentMealplanItems = response.data.meals;
-            setSampleMealplanItems(currentMealplanItems);
-            const promises = currentMealplanItems.map(
-               (item: SampleMealplanItem) => {
-                  return axios
-                     .get(`/api/recipes/${item.id}`)
-                     .then((response) => {
-                        return response.data;
-                     });
-               }
-            );
-            Promise.all(promises).then((mealItems) => {
-               setMealplanItems(mealItems);
-            });
-         })
-         .catch((err) => {
-            setAlertMessage(
-               'Unable to retrieve meal plan items. Please try again later.'
-            );
-            setAlertSeverity('error');
-            setOpenAlert(true);
-         });
-   }, [currentDay]);
+   // TODO fix useeffect with correct types and data
+   // useEffect(() => {
+   //    axios
+   //       .get('/api/mealplan/sample')
+   //       .then((response) => {
+   //          setNutritionSummary(response.data.nutrients);
+   //          const currentMealplanItems = response.data.meals;
+   //          setSampleMealplanItems(currentMealplanItems);
+   //          const promises = currentMealplanItems.map(
+   //             (item: SampleMealplanItem) => {
+   //                return axios
+   //                   .get(`/api/recipes/${item.id}`)
+   //                   .then((response) => {
+   //                      return response.data;
+   //                   });
+   //             }
+   //          );
+   //          Promise.all(promises).then((mealItems) => {
+   //             setMealplanItems(mealItems);
+   //          });
+   //       })
+   //       .catch((err) => {
+   //          setAlertMessage(
+   //             'Unable to retrieve meal plan items. Please try again later.'
+   //          );
+   //          setAlertSeverity('error');
+   //          setOpenAlert(true);
+   //       });
+   // }, [currentDay]);
 
    return (
       <>
@@ -145,14 +140,15 @@ const SampleMealPlanPage = ({
                   ))}
                </Tabs>
             </Box>
-            {mealplanItems.length > 0 && sampleMealplanItems.length > 0 ? (
+            {/* TODO fix this page as well */}
+            {/* {mealplanItems.length > 0 && sampleMealplanItems.length > 0 ? (
                <SampleMealPlanDay
                   mealplanItems={mealplanItems}
                   sampleMealplanItems={sampleMealplanItems}
                />
             ) : (
                <CircularProgress size={100} />
-            )}
+            )} */}
          </div>
       </>
    );

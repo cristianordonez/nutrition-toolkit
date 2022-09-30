@@ -6,15 +6,9 @@ import {
    Toolbar,
    Tooltip,
 } from '@mui/material';
-import axios from 'axios';
 import React, { useState } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
-import {
-   CurrentGoals,
-   FoodItemType,
-   SampleMealplanItem,
-   ValuesType,
-} from '../../../../types/types';
+import { CurrentGoals, Query } from '../../../../types/types';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
 import { getMetrics } from '../../utils/get-metrics/getMetrics';
 import SampleMealPlanPage from './sample-app-mealplan-page/SampleMealPlanPage';
@@ -62,24 +56,21 @@ const initialNutritionSummary = {
 const SampleFeaturesPage = () => {
    const [mobileOpen, setMobileOpen] = React.useState(false);
    const [isLoading, setIsLoading] = useState<boolean>(false);
-   const [popularRecipes, setPopularRecipes] = useState([]);
    const [goals, setGoals] = useState<CurrentGoals>(initialGoals);
    const [alertSeverity, setAlertSeverity] = useState<AlertColor>('error');
    const [alertMessage, setAlertMessage] = useState<string>('');
-   const [route, setRoute] = useState<string>('recipes');
+   const [values, setValues] = useState<Query>(initialState);
    const [openAlert, setOpenAlert] = useState<boolean>(false);
-   const [values, setValues] = useState<ValuesType>(initialState);
-   const [showPopularRecipes, setShowPopularRecipes] = useState<boolean>(true);
-   const [mealplanItems, setMealplanItems] = useState<FoodItemType[] | []>([]);
+   // const [mealplanItems, setMealplanItems] = useState<FoodItemType[] | []>([]);
    const [age, setAge] = useState<number>(18);
    const [height, setHeight] = useState<number>(60);
    const [weight, setWeight] = useState<number>(200);
    const [activityLevel, setActivityLevel] = useState<number>(1);
 
    const [gender, setGender] = useState('male');
-   const [sampleMealplanItems, setSampleMealplanItems] = useState<
-      SampleMealplanItem[] | []
-   >([]);
+   // const [sampleMealplanItems, setSampleMealplanItems] = useState<
+   //    SampleMealplanItem[] | []
+   // >([]);
    const [nutritionSummary, setNutritionSummary] = useState(
       initialNutritionSummary
    );
@@ -88,35 +79,34 @@ const SampleFeaturesPage = () => {
       setMobileOpen(!mobileOpen);
    };
 
+   //TODO fix the handleSearch function below
    const handleSearch = async (event: React.SyntheticEvent) => {
-      let newValues = { ...values, offset: 0 }; //declare new values so that there are no async bugs, and reset offset to 0 in case user changed it
-      setValues(newValues);
-      try {
-         setIsLoading(true);
-         event.preventDefault();
-         let foodItems = await axios.get(`/api/${route}`, {
-            params: newValues,
-            withCredentials: true,
-         });
-         if (foodItems.data.length === 0) {
-            setIsLoading(false);
-            setAlertMessage(
-               'No options matched your search. Try again with a broader search'
-            );
-            setAlertSeverity('warning');
-            setOpenAlert(true);
-         } else {
-            setValues(initialState);
-            setAlertSeverity('success');
-            setAlertMessage('Success! Here are your matching items.');
-            setOpenAlert(true);
-            setShowPopularRecipes(false);
-            setPopularRecipes(foodItems.data);
-         }
-         setIsLoading(false); //used to trigger the loading circle
-      } catch (err) {
-         setIsLoading(false); //used to trigger the loading circle
-      }
+      // let newValues = { ...values, offset: 0 }; //declare new values so that there are no async bugs, and reset offset to 0 in case user changed it
+      // setValues(newValues);
+      // try {
+      //    setIsLoading(true);
+      //    event.preventDefault();
+      //    // let foodItems = await axios.get(`/api/${route}`, {
+      //    //    params: newValues,
+      //    //    withCredentials: true,
+      //    // });
+      //    if (foodItems.data.length === 0) {
+      //       setIsLoading(false);
+      //       setAlertMessage(
+      //          'No options matched your search. Try again with a broader search'
+      //       );
+      //       setAlertSeverity('warning');
+      //       setOpenAlert(true);
+      //    } else {
+      //       setValues(initialState);
+      //       setAlertSeverity('success');
+      //       setAlertMessage('Success! Here are your matching items.');
+      //       setOpenAlert(true);
+      //    }
+      //    setIsLoading(false); //used to trigger the loading circle
+      // } catch (err) {
+      //    setIsLoading(false); //used to trigger the loading circle
+      // }
    };
 
    const handleSubmit = (event: React.SyntheticEvent) => {
@@ -134,10 +124,6 @@ const SampleFeaturesPage = () => {
          'Your custom macronutrient values have been calculated! View the sidebar to see your calculations'
       );
       setOpenAlert(true);
-   };
-
-   const handleRouteChange = (event: SelectChangeEvent) => {
-      setRoute(event.target.value);
    };
 
    const handleAlert = () => {
@@ -177,10 +163,8 @@ const SampleFeaturesPage = () => {
                         <SampleFeaturesSidebar
                            mobileOpen={mobileOpen}
                            handleDrawerToggle={handleDrawerToggle}
-                           route={route}
                            values={values}
                            handleSearch={handleSearch}
-                           handleRouteChange={handleRouteChange}
                            handleInputChange={handleInputChange}
                            handleTypeSelect={handleTypeSelect}
                            goals={goals}
@@ -191,11 +175,11 @@ const SampleFeaturesPage = () => {
                            setNutritionSummary={setNutritionSummary}
                            setAlertSeverity={setAlertSeverity}
                            setOpenAlert={setOpenAlert}
-                           setSampleMealplanItems={setSampleMealplanItems}
-                           setMealplanItems={setMealplanItems}
+                           // setSampleMealplanItems={setSampleMealplanItems}
+                           // setMealplanItems={setMealplanItems}
                            setAlertMessage={setAlertMessage}
-                           mealplanItems={mealplanItems}
-                           sampleMealplanItems={sampleMealplanItems}
+                           // mealplanItems={mealplanItems}
+                           // sampleMealplanItems={sampleMealplanItems}
                         />
                      </>
                   }
@@ -206,10 +190,8 @@ const SampleFeaturesPage = () => {
                      <SampleFeaturesSidebar
                         mobileOpen={mobileOpen}
                         handleDrawerToggle={handleDrawerToggle}
-                        route={route}
                         values={values}
                         handleSearch={handleSearch}
-                        handleRouteChange={handleRouteChange}
                         handleInputChange={handleInputChange}
                         handleTypeSelect={handleTypeSelect}
                         goals={goals}
@@ -224,10 +206,8 @@ const SampleFeaturesPage = () => {
                      <SampleFeaturesSidebar
                         mobileOpen={mobileOpen}
                         handleDrawerToggle={handleDrawerToggle}
-                        route={route}
                         values={values}
                         handleSearch={handleSearch}
-                        handleRouteChange={handleRouteChange}
                         handleInputChange={handleInputChange}
                         handleTypeSelect={handleTypeSelect}
                         goals={goals}
@@ -244,20 +224,16 @@ const SampleFeaturesPage = () => {
                   setNutritionSummary,
                   setAlertSeverity,
                   openAlert,
-                  route,
                   setOpenAlert,
                   setValues,
                   setAlertMessage,
-                  setSampleMealplanItems,
-                  setMealplanItems,
+                  // setSampleMealplanItems,
+                  // setMealplanItems,
                   isLoading,
-                  mealplanItems,
-                  setPopularRecipes,
-                  popularRecipes,
+                  // mealplanItems,
                   alertSeverity,
-                  showPopularRecipes,
                   alertMessage,
-                  sampleMealplanItems,
+                  // sampleMealplanItems,
                   goals,
                   setGoals,
                   setGender,

@@ -13,18 +13,12 @@ import { db } from './database/db';
 import { createGoogleUser, getGoogleUser } from './models/auth.model';
 import { router as authRoute } from './routes/auth.route';
 import { router as foodRoute } from './routes/food.route';
-import { router as groceryProductsRoute } from './routes/groceryproducts.route';
-import { router as ingredientsRoute } from './routes/ingredients.route';
 import { router as mealplanRoute } from './routes/mealplan.route';
-import { router as menuItemsRoute } from './routes/menuitems.route';
-import { router as metricsRoute } from './routes/metrics.route';
-import { router as recipesRoute } from './routes/recipe.route';
 
 const GoogleStrategy = require('passport-google-oidc');
 const pgSession = require('connect-pg-simple')(session);
 const app = express();
 
-//MIDDLEWARE
 app.use(cors());
 app.use(compression());
 app.use(express.static(path.join(__dirname, '../client/dist')));
@@ -38,7 +32,7 @@ const database =
 const conObject = {
    user: process.env.DATABASE_USER,
    password: process.env.DATABASE_PASSWORD,
-   host: process.env.DATABASE_HOST, // or whatever it may be
+   host: process.env.DATABASE_HOST,
    port: 5432,
    database: database,
 };
@@ -119,10 +113,6 @@ passport.use(
                if (response.length > 0) {
                   done(null, response[0]);
                } else {
-                  // let password = generator.generate({
-                  //    length: 8,
-                  //    numbers: true,
-                  // });
                   console.log('here in else block google strat');
                   let user = {} as PassportGoogleUser;
                   user.username = profile.displayName;
@@ -136,17 +126,6 @@ passport.use(
                      console.log('profile:', profile);
                      done(null, user);
                   });
-                  // let currentHash: Promise<string | void> = bcrypt
-                  // .hash(password, 10)
-                  // .then((hash) => {
-                  // let user = {} as UserType;
-                  // user.username = profile.displayName;
-                  // user.email = profile.emails[0].value;
-                  // user.password = hash;
-                  // createUser(user).then((userId: number) => {
-                  //    done(null, profile);
-                  // });
-                  // });
                }
             })
             .catch((err: any) => {
@@ -188,12 +167,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.use('/api', authRoute);
-app.use('/api/recipes', recipesRoute);
-app.use('/api/menuItems', menuItemsRoute);
-app.use('/api/groceryProducts', groceryProductsRoute);
 app.use('/api/mealplan', mealplanRoute);
-app.use('/api/metrics', metricsRoute);
-app.use('/api/ingredients', ingredientsRoute);
 app.use('/api/food', foodRoute);
 
 app.get('/*', (req, res) => {

@@ -1,20 +1,19 @@
-import React, {
-   MouseEventHandler,
-   SyntheticEvent,
-   Dispatch,
-   SetStateAction,
-} from 'react';
 import {
-   Dialog,
-   DialogTitle,
-   DialogContent,
-   Box,
-   DialogActions,
-   Button,
    AlertColor,
+   Box,
+   Button,
+   Dialog,
+   DialogActions,
+   DialogContent,
+   DialogTitle,
 } from '@mui/material';
 import axios from 'axios';
-import { MealplanItemType } from '../../../../../../types/types';
+import React, {
+   Dispatch,
+   MouseEventHandler,
+   SetStateAction,
+   SyntheticEvent,
+} from 'react';
 
 interface Props {
    shoppingListId: number;
@@ -24,14 +23,14 @@ interface Props {
    setOpenAlert: Dispatch<SetStateAction<boolean>>;
    setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    setAlertMessage: Dispatch<SetStateAction<string>>;
-   setMealPlanItems: Dispatch<SetStateAction<MealplanItemType[]>>;
+   // setMealPlanItems: Dispatch<SetStateAction<MealplanItemType[]>>;
    currentDay: string;
 }
 
 export const ConfirmDeleteDialog = ({
    shoppingListId,
    openDialog,
-   setMealPlanItems,
+   // setMealPlanItems,
    currentDay,
    setOpenDialog,
    handleOpeningDialog,
@@ -56,10 +55,11 @@ export const ConfirmDeleteDialog = ({
                params: { date: currentDay },
                withCredentials: true,
             });
-            setMealPlanItems(updatedItems.data.items);
+            //TODO uncomment the lines below
+            // setMealPlanItems(updatedItems.data.items);
          } catch (err) {
             console.log(err);
-            setMealPlanItems([]);
+            // setMealPlanItems([]);
          }
       } catch (err) {
          setAlertSeverity('error');

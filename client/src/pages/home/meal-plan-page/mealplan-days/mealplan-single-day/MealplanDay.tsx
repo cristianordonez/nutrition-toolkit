@@ -1,32 +1,32 @@
 import { AlertColor, Button, Paper, Typography } from '@mui/material';
 import React, { Dispatch, SetStateAction } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MealplanItemType } from '../../../../../../../types/types';
-import { FoodItemContents } from '../../../../../components/food-item-contents/FoodItemContents';
-import { MealplanItem } from './meal-plan-item/MealplanItem';
+// import { MealplanItemType } from '../../../../../../../types/types';
 import './MealplanDay.scss';
 
 interface Props {
-   meals: MealplanItemType[];
+   // meals: MealplanItemType[];
    setOpenAlert: Dispatch<SetStateAction<boolean>>;
    setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    setAlertMessage: Dispatch<SetStateAction<string>>;
    currentDay: string;
-   setMealPlanItems: Dispatch<SetStateAction<MealplanItemType[] | []>>;
+   // setMealPlanItems: Dispatch<SetStateAction<MealplanItemType[] | []>>;
    type: string;
    key: number;
 }
 
 export const MealplanDay = ({
-   meals,
+   // meals,
    setOpenAlert,
    setAlertSeverity,
    setAlertMessage,
-   setMealPlanItems,
+   // setMealPlanItems,
    currentDay,
    type,
 }: Props) => {
    const navigate = useNavigate();
+
+   //TODO fix this page with seperate file
    return (
       <>
          <Paper
@@ -45,7 +45,7 @@ export const MealplanDay = ({
             <div className='outer-container'>
                <div className='slider-container'>
                   <div id='slider'>
-                     {meals.length > 0
+                     {/* {meals.length > 0
                         ? meals.map((meal, index) => (
                              <div className='slider-card' key={index}>
                                 <MealplanItem
@@ -65,7 +65,7 @@ export const MealplanDay = ({
                                 />
                              </div>
                           ))
-                        : null}
+                        : null} */}
                   </div>
                </div>
             </div>

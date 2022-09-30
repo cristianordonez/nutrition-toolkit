@@ -1,34 +1,25 @@
-import React, { MouseEventHandler } from 'react';
-import './FoodSearchItemContents.scss';
-import {
-   Paper,
-   Card,
-   CardMedia,
-   Tooltip,
-   CardContent,
-   Typography,
-   CardActions,
-   Button,
-   IconButton,
-   Stack,
-} from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import {
-   GroceryItemNutrition,
-   RecipeItemNutrition,
-   MenuItemNutrition,
-} from '../../../../types/types';
+   Button,
+   Card,
+   CardActions,
+   CardContent,
+   CardMedia,
+   IconButton,
+   Paper,
+   Stack,
+   Tooltip,
+   Typography,
+} from '@mui/material';
+import React, { MouseEventHandler } from 'react';
+import './FoodSearchItemContents.scss';
 
 interface Props {
    route: string;
    image: string | undefined;
    title: string | undefined;
    restaurantChain?: string | undefined;
-   nutrition?:
-      | GroceryItemNutrition
-      | RecipeItemNutrition
-      | MenuItemNutrition
-      | any;
+   nutrition?: any;
    url?: string | undefined;
    handleOpeningDialog?: MouseEventHandler<HTMLButtonElement>;
    isMealPlanItem?: boolean;

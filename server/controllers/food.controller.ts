@@ -1,10 +1,6 @@
 //#connects server to the models
 import { Request, Response } from 'express';
-import { Query, RequestParams } from '../../types/types';
-import {
-   getSpoonacularMenuItemById,
-   getSpoonacularMenuItems,
-} from '../API/menuItems.api';
+import { Query } from '../../types/types';
 
 const getMenuItems = async function (req: Request, res: Response) {
    const query = req.query as unknown as Query;

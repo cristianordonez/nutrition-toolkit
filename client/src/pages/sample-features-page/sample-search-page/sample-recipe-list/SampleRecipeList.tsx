@@ -1,20 +1,13 @@
+import { Box, Typography } from '@mui/material';
 import React from 'react';
 import './SampleRecipeList.scss';
-import { Box, Grid, Typography } from '@mui/material';
-import { FoodItemType, Recipe } from '../../../../../../types/types';
-import { FoodItemContents } from '../../../../components/food-item-contents/FoodItemContents';
 
 interface Props {
-   popularRecipes: Recipe[] | FoodItemType[];
-   route: string;
    showPopularRecipes: boolean;
 }
 
-export const SampleRecipeList = ({
-   popularRecipes,
-   route,
-   showPopularRecipes,
-}: Props) => {
+// TODO consider deleting this file since i am not showing popular recipes anymore
+export const SampleRecipeList = ({ showPopularRecipes }: Props) => {
    return (
       <>
          <Box sx={{ pt: '1rem' }}>
@@ -28,7 +21,7 @@ export const SampleRecipeList = ({
                </Typography>
             )}
             <div className='sample-recipes-list'>
-               {showPopularRecipes
+               {/* {showPopularRecipes
                   ? popularRecipes.map((recipe: Recipe | FoodItemType) => (
                        <FoodItemContents
                           key={recipe.id}
@@ -53,7 +46,7 @@ export const SampleRecipeList = ({
                           restaurantChain={recipe.restaurantChain}
                           nutrition={recipe.nutrition}
                        />
-                    ))}
+                    ))} */}
             </div>
          </Box>
       </>

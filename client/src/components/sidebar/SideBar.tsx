@@ -2,7 +2,7 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Drawer, IconButton, Stack, Toolbar } from '@mui/material';
 import React, { ReactNode } from 'react';
-import { CurrentGoals, MealplanItemType } from '../../../../types/types';
+import { CurrentGoals } from '../../../../types/types';
 import { DailyGoals } from '../daily-goals';
 import { MainTitleLogo } from '../main-title-logo/index';
 
@@ -10,7 +10,7 @@ interface Props {
    mobileOpen: boolean | undefined;
    handleDrawerToggle: any;
    SearchFormComponent?: ReactNode;
-   apiData?: MealplanItemType[];
+   // apiData?: MealplanItemType[];
    goals?: CurrentGoals | any;
    page: string;
    nutritionSummary?: any;
@@ -23,7 +23,7 @@ export const SideBar = ({
    mobileOpen,
    handleDrawerToggle,
    SearchFormComponent,
-   apiData,
+   // apiData,
    goals,
    page,
    nutritionSummary,
@@ -70,11 +70,12 @@ export const SideBar = ({
                >
                   <MainTitleLogo />
                </Stack>
-               {page === 'search' && apiData !== undefined && apiData.length
+               {/* TODO fix this search form component */}
+               {/* {page === 'search' && apiData !== undefined && apiData.length
                   ? SearchFormComponent
-                  : null}
-               {page === 'search' && apiData === undefined}{' '}
-               {<DailyGoals goals={goals} page={'search'} />}
+                  : null} */}
+               {/* {page === 'search' && apiData === undefined}{' '}
+               {<DailyGoals goals={goals} page={'search'} />} */}
                {page === 'mealplan' && nutritionSummary === true ? (
                   <DailyGoals
                      goals={goals}
@@ -107,14 +108,15 @@ export const SideBar = ({
                >
                   <MainTitleLogo />
                </Stack>
-               {page === 'search' && apiData !== undefined && apiData.length
+               {/* TODO fix this search form component */}
+               {/* {page === 'search' && apiData !== undefined && apiData.length
                   ? SearchFormComponent
-                  : null}
-               {page === 'search' &&
+                  : null} */}
+               {/* {page === 'search' &&
                apiData !== undefined &&
                apiData.length === 0 ? (
                   <DailyGoals goals={goals} page={'search'} />
-               ) : null}
+               ) : null} */}
 
                {page === 'mealplan' &&
                nutritionSummary !== undefined &&

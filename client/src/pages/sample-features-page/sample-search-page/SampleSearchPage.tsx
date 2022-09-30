@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { SampleRecipeList } from './sample-recipe-list/SampleRecipeList';
 import { CircularProgress, Stack } from '@mui/material';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { useSampleFeaturesOutlet } from '../../../hooks/useSampleFeaturesOutlet';
 
 //TODO provide a go back button somewhere on page that user can user to go back to home page
@@ -12,8 +10,6 @@ const SampleSearchPage = () => {
       setOpenAlert,
       setAlertMessage,
       isLoading,
-      setPopularRecipes,
-      popularRecipes,
       alertSeverity,
       showPopularRecipes,
       alertMessage,
@@ -23,20 +19,6 @@ const SampleSearchPage = () => {
    const [showLoadMoreBtn, setShowLoadMoreBtn] = useState<boolean>(false);
    const [searchedRecipes, setSearchedRecipes] = useState([]);
 
-   useEffect(() => {
-      axios
-         .get('/api/recipes/popular')
-         .then((results) => {
-            setPopularRecipes(results.data.recipes);
-         })
-         .catch((err) => {
-            console.log('err: ', err);
-            setAlertSeverity('error');
-            setAlertMessage('An error has occurred. Please try again later.');
-            setOpenAlert(true);
-         });
-   }, []);
-
    return (
       <>
          {isLoading ? (
@@ -44,7 +26,7 @@ const SampleSearchPage = () => {
                <CircularProgress size={100} />
             </Stack>
          ) : null}
-         {popularRecipes.length ? (
+         {/* {popularRecipes.length ? (
             <SampleRecipeList
                showPopularRecipes={showPopularRecipes}
                popularRecipes={popularRecipes}
@@ -54,7 +36,7 @@ const SampleSearchPage = () => {
             <Stack alignItems='center'>
                <CircularProgress size={100} />
             </Stack>
-         )}
+         )} */}
       </>
    );
 };

@@ -1,6 +1,5 @@
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { AlertColor } from '@mui/material';
-import { AddIngredientToCartModal } from './AddIngredientToCartModal';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -10,13 +9,11 @@ import React, {
    SetStateAction,
    useState,
 } from 'react';
-import { FoodItemType, IngredientType } from '../../../../../../types/types';
-import { FoodItemContents } from '../../../../components/food-item-contents/FoodItemContents';
+import { SearchResults } from '../../../../../../types/types';
 import { AddToCartModal } from './AddToCartModal';
 import './index.scss';
-
 interface Props {
-   apiData: never[];
+   searchResults: SearchResults[];
    route: string;
    handleLoadMore: MouseEventHandler<HTMLButtonElement>;
    setAlertMessage: Dispatch<SetStateAction<string>>;
@@ -26,7 +23,7 @@ interface Props {
 }
 
 export const FoodSearchList = ({
-   apiData,
+   searchResults,
    route,
    handleLoadMore,
    setAlertMessage,
@@ -88,8 +85,9 @@ export const FoodSearchList = ({
                </Typography>
             ) : null}
             <div className='food-search-main-container'>
-               {route === 'ingredients'
-                  ? apiData.map((item: IngredientType, index: number) => (
+               {/* TODO fix this part with own component */}
+               {/* {route === 'ingredients'
+                  ? searchResults.map((item: IngredientType, index: number) => (
                        <React.Fragment key={index}>
                           <div data-testid='food-search-item'>
                              <FoodItemContents
@@ -110,7 +108,7 @@ export const FoodSearchList = ({
                           </div>
                        </React.Fragment>
                     ))
-                  : apiData.map((item: FoodItemType, index: number) => (
+                  : searchResults.map((item: FoodItemType, index: number) => (
                        <React.Fragment key={index}>
                           <div data-testid='food-search-item'>
                              <FoodItemContents
@@ -129,7 +127,7 @@ export const FoodSearchList = ({
                              />
                           </div>
                        </React.Fragment>
-                    ))}
+                    ))} */}
             </div>
             {showLoadMoreBtn ? (
                <Button fullWidth onClick={handleLoadMore} variant='contained'>

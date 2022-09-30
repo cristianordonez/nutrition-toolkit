@@ -1,15 +1,12 @@
 import { Box, CircularProgress } from '@mui/material';
 import React from 'react';
-import { useAuth } from '../../../context/authContext';
 import { useHomeOutlet } from '../../../hooks/useHomeOutlet';
 import { FoodSearchList } from './food-search-list';
 import './SearchPage.scss';
 
 const SearchPage = () => {
-   const { isLoading } = useAuth(); //used to check if data is still being retrieved from database
    const {
       loading,
-      apiData,
       route,
       handleLoadMore,
       setAlertMessage,
@@ -17,33 +14,32 @@ const SearchPage = () => {
       setAlertSeverity,
       showLoadMoreBtn,
       SearchFormComponent,
+      searchResults,
    } = useHomeOutlet();
 
    return (
       <>
-         {isLoading ? null : (
-            <>
-               <Box className='search-page' sx={{ width: '100vw' }}>
-                  {/* PROGRESS BAR */}
-                  {loading ? <CircularProgress size={68} /> : null}
-                  {apiData.length ? (
-                     <>
-                        <FoodSearchList
-                           apiData={apiData}
-                           route={route}
-                           handleLoadMore={handleLoadMore}
-                           setAlertMessage={setAlertMessage}
-                           setOpenSnackbar={setOpenAlert}
-                           setAlertSeverity={setAlertSeverity}
-                           showLoadMoreBtn={showLoadMoreBtn}
-                        />
-                     </>
-                  ) : (
-                     <>{SearchFormComponent}</>
-                  )}
-               </Box>
-            </>
-         )}
+         <>
+            <Box className='search-page' sx={{ width: '100vw' }}>
+               {/* PROGRESS BAR */}
+               {loading ? <CircularProgress size={68} /> : null}
+               {searchResults.length ? (
+                  <>
+                     <FoodSearchList
+                        searchResults={searchResults}
+                        route={route}
+                        handleLoadMore={handleLoadMore}
+                        setAlertMessage={setAlertMessage}
+                        setOpenSnackbar={setOpenAlert}
+                        setAlertSeverity={setAlertSeverity}
+                        showLoadMoreBtn={showLoadMoreBtn}
+                     />
+                  </>
+               ) : (
+                  <>{SearchFormComponent}</>
+               )}
+            </Box>
+         </>
       </>
    );
 };

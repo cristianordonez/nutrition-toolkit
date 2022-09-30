@@ -1,13 +1,7 @@
 import { AlertColor } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import {
-   CurrentGoals,
-   FoodItemType,
-   Query,
-   Recipe,
-   SampleMealplanItem,
-} from '../../../types/types';
+import { CurrentGoals, Query } from '../../../types/types';
 
 interface OutletContext {
    mobileOpen: boolean;
@@ -18,16 +12,11 @@ interface OutletContext {
    setOpenAlert: Dispatch<SetStateAction<boolean>>;
    setValues: Dispatch<SetStateAction<Query>>;
    setAlertMessage: Dispatch<SetStateAction<string>>;
-   setSampleMealplanItems: Dispatch<SetStateAction<SampleMealplanItem[] | []>>;
-   setMealplanItems: Dispatch<SetStateAction<SampleMealplanItem[] | []>>;
    isLoading: boolean;
-   mealplanItems: FoodItemType[];
-   setPopularRecipes: Dispatch<SetStateAction<[]>>;
-   popularRecipes: Recipe[];
+   // mealplanItems: FoodItemType[];
    alertSeverity: AlertColor;
    showPopularRecipes: boolean;
    alertMessage: string;
-   sampleMealplanItems: SampleMealplanItem[];
    goals: CurrentGoals;
    setGoals: Dispatch<SetStateAction<CurrentGoals>>;
    setGender: Dispatch<SetStateAction<string>>;

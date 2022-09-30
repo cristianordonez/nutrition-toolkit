@@ -1,12 +1,5 @@
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import {
-   AlertColor,
-   Button,
-   Stack,
-   Tab,
-   Tabs,
-   Typography,
-} from '@mui/material';
+import { AlertColor, Stack, Tab, Tabs, Typography } from '@mui/material';
 import axios from 'axios';
 import addDays from 'date-fns/addDays';
 import format from 'date-fns/format';
@@ -19,7 +12,6 @@ import React, {
    useEffect,
    useState,
 } from 'react';
-import { MealplanItemType } from '../../../../../types/types';
 import { MealPlanWeekText } from '../../../components/mealplan-week-text/MealPlanWeekText';
 import { useAuth } from '../../../context/authContext';
 import { DateSelectForm } from './date-select-form/DateSelectForm';
@@ -44,16 +36,10 @@ interface Props {
    SearchFormComponent: ReactNode;
    setNutritionSummary: Dispatch<SetStateAction<any[]>>;
    setMealplanItemsFound: Dispatch<SetStateAction<boolean>>;
-   setMealplanItems: Dispatch<SetStateAction<MealplanItemType[] | []>>;
+   // setMealplanItems: Dispatch<SetStateAction<MealplanItemType[] | []>>;
    currentDay: string;
    setCurrentDay: Dispatch<SetStateAction<string>>;
-   mealplanItems: MealplanItemType[];
-   breakfastItems: MealplanItemType[];
-   setBreakfastItems: Dispatch<SetStateAction<MealplanItemType[]>>;
-   lunchItems: MealplanItemType[];
-   setLunchItems: Dispatch<SetStateAction<MealplanItemType[]>>;
-   dinnerItems: MealplanItemType[];
-   setDinnerItems: Dispatch<SetStateAction<MealplanItemType[]>>;
+   // mealplanItems: MealplanItemType[];
 }
 
 const MealPlanPage = ({
@@ -63,17 +49,11 @@ const MealPlanPage = ({
    setAlertSeverity,
    setNutritionSummary,
    setMealplanItemsFound,
-   setMealplanItems,
+   // setMealplanItems,
    currentDay,
    setCurrentDay,
-   mealplanItems,
-   breakfastItems,
-   setBreakfastItems,
-   lunchItems,
-   setLunchItems,
-   dinnerItems,
-   setDinnerItems,
-}: Props) => {
+}: // mealplanItems,
+Props) => {
    const { isLoading, isLoggedin } = useAuth();
    const [dayIndex, setDayIndex] = useState<number>(getDay(Date.now())); //used for tab highlighting
    const [value, setValue] = React.useState<any>(new Date(Date.now()));
@@ -83,8 +63,9 @@ const MealPlanPage = ({
       handleDateChange();
    }, [currentDay]);
 
+   //TODO fix this function
    const handleDateChange = async () => {
-      setMealplanItems([]); //when tab changes, reset the nutrition summary and the mealplan items
+      // setMealplanItems([]); //when tab changes, reset the nutrition summary and the mealplan items
       setNutritionSummary([]);
       try {
          let response = await axios.get('/api/mealplan/day', {
@@ -92,19 +73,20 @@ const MealPlanPage = ({
             withCredentials: true,
          });
          setNutritionSummary(response.data.nutritionSummary.nutrients);
-         setMealplanItems(response.data.items);
-         response.data.items.forEach((item: MealplanItemType) => {
-            if (item.slot === 1) {
-               let currentBreakfastItems = [...breakfastItems, item];
-               setBreakfastItems(currentBreakfastItems);
-            } else if (item.slot === 2) {
-               let currentLunchItems = [...lunchItems, item];
-               setLunchItems(currentLunchItems);
-            } else {
-               let currentDinnerItems = [...dinnerItems, item];
-               setDinnerItems(currentDinnerItems);
-            }
-         });
+         //   setMealplanItems(response.data.items);
+         //TODO fix this part, make sure to not create additional state for breakfast, lunch, dinner arrays
+         // response.data.items.forEach((item: MealplanItemType) => {
+         //    if (item.slot === 1) {
+         //       let currentBreakfastItems = [...breakfastItems, item];
+         //       setBreakfastItems(currentBreakfastItems);
+         //    } else if (item.slot === 2) {
+         //       let currentLunchItems = [...lunchItems, item];
+         //       setLunchItems(currentLunchItems);
+         //    } else {
+         //       let currentDinnerItems = [...dinnerItems, item];
+         //       setDinnerItems(currentDinnerItems);
+         //    }
+         // });
       } catch (err) {
          console.log(err);
          setAlertSeverity('info');
@@ -116,9 +98,9 @@ const MealPlanPage = ({
       }
    };
 
-   //need to configure so that day is also changed when tab changes
+   //TODO uncomment the set meal plan items line
    const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-      setMealplanItems([]); //when tab changes, reset the nutrition summary and the mealplan items
+      // setMealplanItems([]); //when tab changes, reset the nutrition summary and the mealplan items
       setNutritionSummary([]);
       const prevDate = currentDay; //create variable to store the previous date and previous tab index
       const prevDayIndex = dayIndex;
@@ -169,10 +151,8 @@ const MealPlanPage = ({
                         your meal plan
                      </Typography>
                   </Stack>
+                  {/* TODO provide a setmealplans function instead  */}
                   <DateSelectForm
-                     setBreakfastItems={setBreakfastItems}
-                     setLunchItems={setLunchItems}
-                     setDinnerItems={setDinnerItems}
                      currentDay={currentDay}
                      setCurrentDay={setCurrentDay}
                      setDayIndex={setDayIndex}
@@ -195,9 +175,9 @@ const MealPlanPage = ({
                </div>
                {isLoading ? null : (
                   <MealplanDays
-                     setMealPlanItems={setMealplanItems}
+                     // setMealPlanItems={setMealplanItems}
                      currentDay={currentDay}
-                     mealplanItems={mealplanItems}
+                     // mealplanItems={mealplanItems}
                      setOpenAlert={setOpenAlert}
                      setAlertSeverity={setAlertSeverity}
                      setAlertMessage={setAlertMessage}

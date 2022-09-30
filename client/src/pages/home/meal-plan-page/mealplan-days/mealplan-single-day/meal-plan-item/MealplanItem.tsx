@@ -1,12 +1,7 @@
-import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
-import { ConfirmDeleteDialog } from '../../ConfirmDeleteDialog';
-import { FoodItemContents } from '../../../../../../components/food-item-contents/FoodItemContents';
 import { AlertColor } from '@mui/material';
-import {
-   FoodItemType,
-   MealplanItemType,
-} from '../../../../../../../../types/types';
-import axios from 'axios';
+import React, { Dispatch, SetStateAction, useState } from 'react';
+import {} from '../../../../../../../../types/types';
+import { ConfirmDeleteDialog } from '../../ConfirmDeleteDialog';
 
 interface Props {
    type: string;
@@ -17,7 +12,7 @@ interface Props {
    setOpenAlert: Dispatch<SetStateAction<boolean>>;
    setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    setAlertMessage: Dispatch<SetStateAction<string>>;
-   setMealPlanItems: Dispatch<SetStateAction<MealplanItemType[] | []>>;
+   // setMealPlanItems: Dispatch<SetStateAction<MealplanItemType[] | []>>;
    currentDay: string;
    amount?: number | undefined;
    unit?: string | undefined;
@@ -28,7 +23,7 @@ export const MealplanItem = ({
    type,
    id,
    shoppingListId,
-   setMealPlanItems,
+   // setMealPlanItems,
    currentDay,
    servings,
    title,
@@ -39,45 +34,17 @@ export const MealplanItem = ({
    image,
    unit,
 }: Props) => {
-   const [itemData, setItemData] = useState<null | FoodItemType | any>(null); //will hold value of the items data after calling endpoint
+   // const [itemData, setItemData] = useState<null | FoodItemType | any>(null); //will hold value of the items data after calling endpoint
    const [openDialog, setOpenDialog] = useState<boolean>(false);
 
    const handleOpeningDialog = () => {
       setOpenDialog(!openDialog);
    };
 
-   //have to make another call to api here because nutrition is not included in mealplan items;
-   useEffect(() => {
-      let url: string = `/api/recipes/${id}`; //set initial value for url to avoid typescript error
-      if (type === 'RECIPE') {
-         url = `/api/recipes/${id}`;
-      } else if (type === 'PRODUCT') {
-         url = `/api/groceryProducts/${id}`;
-      } else if (type === 'MENU_ITEM') {
-         url = `/api/menuItems/${id}`;
-      }
-      // url = `/api/ingredients/${id}?amount=${amount}&unit=${unit}`;
-
-      //call endpoint to get the rest of the itemData information
-      if (type !== 'INGREDIENTS') {
-         axios
-            .get(url)
-            .then((itemInfo) => {
-               setItemData(itemInfo.data);
-            })
-            .catch((err) => {
-               console.log(err);
-            });
-      } else if (type === 'INGREDIENTS') {
-         let data = { image };
-         setItemData(data);
-      }
-   }, [id]);
-
-   if (itemData) {
-      return (
-         <>
-            <FoodItemContents
+   //TODO create new meal plan item, and move confirm delete dialog to seperate file
+   return (
+      <>
+         {/* <FoodItemContents
                servings={servings}
                route={type}
                id={id}
@@ -88,21 +55,18 @@ export const MealplanItem = ({
                url={itemData?.sourceUrl || undefined}
                handleOpeningDialog={handleOpeningDialog}
                isMealPlanItem={true} //used to add a X icon to delete mealplans
-            />
-            <ConfirmDeleteDialog
-               setMealPlanItems={setMealPlanItems}
-               currentDay={currentDay}
-               setOpenAlert={setOpenAlert}
-               setAlertSeverity={setAlertSeverity}
-               setAlertMessage={setAlertMessage}
-               shoppingListId={shoppingListId}
-               openDialog={openDialog}
-               setOpenDialog={setOpenDialog}
-               handleOpeningDialog={handleOpeningDialog}
-            />
-         </>
-      );
-   } else {
-      return <div>Loading...</div>;
-   }
+            /> */}
+         <ConfirmDeleteDialog
+            // setMealPlanItems={setMealPlanItems}
+            currentDay={currentDay}
+            setOpenAlert={setOpenAlert}
+            setAlertSeverity={setAlertSeverity}
+            setAlertMessage={setAlertMessage}
+            shoppingListId={shoppingListId}
+            openDialog={openDialog}
+            setOpenDialog={setOpenDialog}
+            handleOpeningDialog={handleOpeningDialog}
+         />
+      </>
+   );
 };

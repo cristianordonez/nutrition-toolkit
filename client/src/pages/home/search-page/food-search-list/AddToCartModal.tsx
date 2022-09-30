@@ -80,10 +80,7 @@ export const AddToCartModal = ({
       setData((data: AddToMealPlanType) => {
          return {
             ...data,
-            value: {
-               ...data.value,
-               servings: parseInt(event.target.value),
-            },
+            servings: parseInt(event.target.value),
          };
       });
    };
@@ -107,12 +104,9 @@ export const AddToCartModal = ({
       setData((data: AddToMealPlanType) => {
          return {
             ...data,
-            value: {
-               ...data.value,
-               id,
-               title,
-               imageType,
-            },
+            id,
+            title,
+            imageType,
          };
       });
    }, [id]);

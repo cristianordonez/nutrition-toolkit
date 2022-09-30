@@ -1,19 +1,16 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import { Box, TextField } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
-import { TextField, Box } from '@mui/material';
-import { MealplanItemType } from '../../../../../../types/types';
-import getDay from 'date-fns/getDay';
+import React, { Dispatch, SetStateAction } from 'react';
+// import { MealplanItemType } from '../../../../../../types/types';
 import format from 'date-fns/format';
+import getDay from 'date-fns/getDay';
 
 interface Props {
    currentDay: string;
    setCurrentDay: Dispatch<SetStateAction<string>>;
-   setBreakfastItems: Dispatch<SetStateAction<MealplanItemType[]>>;
-   setLunchItems: Dispatch<SetStateAction<MealplanItemType[]>>;
-   setDinnerItems: Dispatch<SetStateAction<MealplanItemType[]>>;
    setDayIndex: Dispatch<SetStateAction<number>>;
    value: Date | string;
    setValue: Dispatch<SetStateAction<Date | string>>;
@@ -22,9 +19,6 @@ interface Props {
 export const DateSelectForm = ({
    currentDay,
    setCurrentDay,
-   setBreakfastItems,
-   setLunchItems,
-   setDinnerItems,
    setDayIndex,
    value,
    setValue,
@@ -32,11 +26,9 @@ export const DateSelectForm = ({
    //must use seperate value for initital state to prevent date being off by 1 day due to different expected format
    //material ui returns a date in string format Jan 12 2022 for example, but spoonacular requires Unix time
 
+   // TODO pass in setmealplanitems and call it here in handle change
    const handleChange = async (newValue: any) => {
       setDayIndex(getDay(newValue));
-      setBreakfastItems([]);
-      setLunchItems([]);
-      setDinnerItems([]);
       setValue(newValue); //update the state for date text field
       setCurrentDay(format(newValue, 'yyyy-MM-dd'));
    };

@@ -1,13 +1,12 @@
-import { Typography } from '@mui/material';
 import React, { ReactNode } from 'react';
-import { CurrentGoals, MealplanItemType } from '../../../../../../types/types';
+import { CurrentGoals } from '../../../../../../types/types';
 import { SideBar } from '../../../../components/sidebar/SideBar';
 
 interface SearchPageSidebarProps {
    mobileOpen: boolean | undefined;
    handleDrawerToggle: any;
    SearchFormComponent: ReactNode;
-   apiData: MealplanItemType[];
+   // apiData: MealplanItemType[];
    goals: CurrentGoals;
    route: string;
 }
@@ -16,7 +15,7 @@ export const SideBarSearchPage = ({
    mobileOpen,
    handleDrawerToggle,
    SearchFormComponent,
-   apiData,
+   // apiData,
    goals,
    route,
 }: SearchPageSidebarProps) => {
@@ -26,7 +25,7 @@ export const SideBarSearchPage = ({
             mobileOpen={mobileOpen}
             handleDrawerToggle={handleDrawerToggle}
             SearchFormComponent={SearchFormComponent}
-            apiData={apiData}
+            // apiData={apiData}
             goals={goals}
             page={'search'}
          />

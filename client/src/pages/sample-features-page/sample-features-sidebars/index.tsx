@@ -1,29 +1,27 @@
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import {
-   SelectChangeEvent,
    Box,
    Drawer,
    IconButton,
+   SelectChangeEvent,
    Toolbar,
 } from '@mui/material';
 import React, { FormEventHandler } from 'react';
 import { useLocation } from 'react-router-dom';
+import { CurrentGoals, Query } from '../../../../../types/types';
 import { MainTitleLogo } from '../../../components/main-title-logo';
 import { SearchFormCustom } from '../../../components/search-forms/SearchFormCustom';
 import { SampleCalculatorSidebarContents } from './SampleCalculatorSidebarContents';
 import './SampleFeatureSidebars.scss';
 import { SampleMealplanSidebarContents } from './SampleMealplanSidebarContents';
-import { CurrentGoals, ValuesType } from '../../../../../types/types';
 const drawerWidth = '350px';
 
 interface Props {
    handleDrawerToggle: () => void;
    mobileOpen: boolean;
-   route: string;
-   values: ValuesType;
+   values: Query;
    handleSearch: FormEventHandler<HTMLFormElement>;
-   handleRouteChange: (event: SelectChangeEvent) => void;
    handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
    handleTypeSelect: (event: SelectChangeEvent) => void;
    goals: CurrentGoals;
@@ -34,10 +32,8 @@ interface Props {
 export const SampleFeaturesSidebar = ({
    mobileOpen,
    handleDrawerToggle,
-   route,
    values,
    handleSearch,
-   handleRouteChange,
    handleInputChange,
    handleTypeSelect,
    goals,
@@ -79,10 +75,8 @@ export const SampleFeaturesSidebar = ({
 
             {view === 'search' ? (
                <SearchFormCustom
-                  route={route}
                   values={values}
                   handleSubmit={handleSearch}
-                  handleRouteChange={handleRouteChange}
                   handleInputChange={handleInputChange}
                   handleTypeSelect={handleTypeSelect}
                />
@@ -117,10 +111,8 @@ export const SampleFeaturesSidebar = ({
             <Box sx={{ pt: '1rem' }}>
                {view === 'search' ? (
                   <SearchFormCustom
-                     route={route}
                      values={values}
                      handleSubmit={handleSearch}
-                     handleRouteChange={handleRouteChange}
                      handleInputChange={handleInputChange}
                      handleTypeSelect={handleTypeSelect}
                   />

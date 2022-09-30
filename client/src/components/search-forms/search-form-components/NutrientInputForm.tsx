@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
 import {
    FormControl,
-   Input,
    FormHelperText,
-   Typography,
+   Input,
    InputAdornment,
    Stack,
+   Typography,
 } from '@mui/material';
+import React from 'react';
 
 interface Props {
    handleInputChange: any;
@@ -14,7 +14,6 @@ interface Props {
    nutrient: 'Calories' | 'Carbs' | 'Protein' | 'Fat';
    minValue: string | number | null;
    maxValue: string | number | null;
-   route: string;
 }
 export const NutrientInputForm = ({
    handleInputChange,
@@ -22,7 +21,6 @@ export const NutrientInputForm = ({
    nutrient,
    minValue,
    maxValue,
-   route,
 }: Props) => {
    let currentNutrient;
    if (nutrient === 'Carbs') {
@@ -33,29 +31,13 @@ export const NutrientInputForm = ({
       currentNutrient = nutrient;
    }
 
-   let currentMeasurement = route === 'ingredients' ? '%' : measurement;
-   let minError;
-   let maxError;
-   if (route === 'ingredients' && minValue && minValue < 0) {
-      minError = true;
-   } else {
-      minError = false;
-   }
-   if (route === 'ingredients' && maxValue && maxValue > 100) {
-      maxError = true;
-   } else {
-      maxError = false;
-   }
+   let currentMeasurement = measurement;
+   let minError = false;
+   let maxError = false;
 
    return (
       <>
-         {route === 'ingredients' ? (
-            <Typography variant='h6'>
-               Choose {currentNutrient} Range (percentage)
-            </Typography>
-         ) : (
-            <Typography variant='h6'>Choose {currentNutrient} Range</Typography>
-         )}
+         <Typography variant='h6'>Choose {currentNutrient} Range</Typography>
          <Stack direction='row'>
             <FormControl fullWidth variant='standard' sx={{ m: 1, mt: 3 }}>
                <Input

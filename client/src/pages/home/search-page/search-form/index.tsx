@@ -4,8 +4,8 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import {
    CurrentGoals,
-   MealplanItemType,
-   ValuesType,
+   Query,
+   SearchResults,
 } from '../../../../../../types/types';
 import { SearchFormCustom } from '../../../../components/search-forms/SearchFormCustom';
 import { SearchFormSuggested } from '../../../../components/search-forms/SearchFormSuggested';
@@ -13,26 +13,22 @@ import './index.scss';
 
 interface Props {
    handleSubmit: (event: React.SyntheticEvent) => Promise<void>;
-   route: string;
-   setRoute: Dispatch<SetStateAction<string>>;
    setCurrentTab: Dispatch<SetStateAction<string>>;
    currentTab: string;
    handleChange: (event: React.SyntheticEvent, currentValue: string) => void;
-   values: ValuesType;
-   setValues: Dispatch<SetStateAction<ValuesType>>;
+   values: Query;
+   setValues: Dispatch<SetStateAction<Query>>;
    goals: CurrentGoals;
    setAlertMessage: Dispatch<SetStateAction<string>>;
    setLoading: Dispatch<SetStateAction<boolean>>;
    setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    setOpenAlert: Dispatch<SetStateAction<boolean>>;
    setShowLoadMoreBtn: Dispatch<SetStateAction<boolean>>;
-   setAPIData: Dispatch<SetStateAction<MealplanItemType[]>>;
+   setSearchResults: Dispatch<SetStateAction<SearchResults[]>>;
 }
 
 export const SearchForm = ({
    handleSubmit,
-   route,
-   setRoute,
    setCurrentTab,
    currentTab,
    handleChange,
@@ -44,13 +40,9 @@ export const SearchForm = ({
    setLoading,
    setOpenAlert,
    setShowLoadMoreBtn,
-   setAPIData,
+   setSearchResults,
 }: Props) => {
    const [error, setError] = useState<boolean>(false); //used to show input field error when route is set to ingredients
-
-   const handleRouteChange = (event: SelectChangeEvent) => {
-      setRoute(event.target.value);
-   };
 
    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setValues({ ...values, [event.target.id]: event.target.value });
@@ -82,18 +74,14 @@ export const SearchForm = ({
 
          {currentTab === 'custom-search' ? (
             <SearchFormCustom
-               route={route}
                values={values}
                handleSubmit={handleSubmit}
-               handleRouteChange={handleRouteChange}
                handleInputChange={handleInputChange}
                handleTypeSelect={handleTypeSelect}
             />
          ) : (
             <SearchFormSuggested
-               route={route}
                values={values}
-               handleRouteChange={handleRouteChange}
                handleInputChange={handleInputChange}
                handleTypeSelect={handleTypeSelect}
                goals={goals}
@@ -103,7 +91,7 @@ export const SearchForm = ({
                setLoading={setLoading}
                setOpenAlert={setOpenAlert}
                setShowLoadMoreBtn={setShowLoadMoreBtn}
-               setAPIData={setAPIData}
+               setSearchResults={setSearchResults}
             />
          )}
       </div>
