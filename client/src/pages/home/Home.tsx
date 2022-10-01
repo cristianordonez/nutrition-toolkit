@@ -51,9 +51,10 @@ const Home = () => {
          setLoading(true);
          let newValues = { ...values, offset: values.offset + 10 }; //update new offset so that we only receive the correct items from API
          setValues(newValues);
-         let newItems: any = await axios.get(`/api/${route}`, {
+         let newItems: any = await axios.get(`/api/food`, {
             params: newValues,
          });
+         console.log('newItems:', newItems);
          if (newItems.data.length < 10) {
             setShowLoadMoreBtn(false);
          } else {

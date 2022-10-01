@@ -18,13 +18,30 @@ import { db } from '../database/db';
 // };
 
 //TODO
+
+interface CategoryMap {
+   beverage: string;
+   dessert: string;
+   breakfast: string;
+   snack: string;
+   main_course: string;
+}
+
 const categoryMap = {
-   beverage: [],
-   dessert: [],
-   breakfast: [],
-   snack: [],
-   main_course: [],
+   beverage: ` AND branded_food_category IN (
+      'Soda',
+      'Water',
+      'Milk',
+      'Other Drinks',
+      'Iced & Bottle Tea', 'Energy, Protein, & Muscle Recovery Drinks',
+      'Non Alcoholic Beverages Ready to Drinks'
+      )`,
+   dessert: '',
+   breakfast: '',
+   snack: '',
+   main_course: '',
 };
+
 interface AllergyMap {
    dairy: string;
    eggs: string;
@@ -114,34 +131,12 @@ const allergyMap = {
    `,
 };
 
+//# created view called food_nutrition_info which gets all essential data
+
 const get = () => {};
 
 const getAdvanced = (query: Query) => {
-   const selectContentsQuery = `SELECT food.fdc_id, description, brand_name, brand_owner, 
-   serving_size, serving_size_unit, ingredients, data_type, branded_food_category,
-   coalesce(calories, 0) as calories,
-   coalesce(total_fat, 0) as total_fat,
-   coalesce(saturated_fat, 0) as saturated_fat, 
-   coalesce(trans_fat, 0) as trans_fat, 
-   coalesce(polyunsaturated_fat, 0) as polyunsaturated_fat, 
-   coalesce(monounsaturated_fat, 0) as monounsaturated_fat, 
-   coalesce(cholesterol, 0) as cholesterol, 
-   coalesce(sodium, 0) as sodium, 
-   coalesce(total_carbohydrates, 0) as total_carbohydrates, 
-   coalesce(dietary_fiber, 0) as dietary_fiber, 
-   coalesce(sugar, 0) as sugar, 
-   coalesce(protein, 0) as protein, 
-   coalesce(vitamin_d, 0) as vitamin_d, 
-   coalesce(calcium, 0) as calcium, 
-   coalesce(iron, 0) as iron, 
-   coalesce(potassium, 0) as potassium, 
-   coalesce(vitamin_a, 0) as vitamin_a, 
-   coalesce(vitamin_c, 0) as vitamin_c
-   FROM food 
-   INNER JOIN food_nutrition 
-   ON food.fdc_id = food_nutrition.fdc_id 
-   LEFT JOIN branded_food 
-   ON food.fdc_id = branded_food.fdc_id
+   const selectContentsQuery = `SELECT * FROM food_nutrition_info
    WHERE description ILIKE '%${query.query}%' 
    AND calories BETWEEN ${query.minCalories} AND ${query.maxCalories}
    AND total_fat BETWEEN ${query.minFat} AND ${query.maxFat}
@@ -151,9 +146,10 @@ const getAdvanced = (query: Query) => {
    const allergyQuery =
       query.allergy === '' ? '' : allergyMap[query.allergy as keyof AllergyMap];
 
-   const limitQuery = ` LIMIT ${query.number}`;
+   const limitQuery = ` LIMIT ${query.number} OFFSET ${query.offset}`;
+
    const currentQuery = selectContentsQuery + allergyQuery + limitQuery;
-   console.log('currentQuery:', currentQuery);
+
    const matchingItems = db.query(
       selectContentsQuery + allergyQuery + limitQuery
    );
@@ -163,20 +159,31 @@ const getAdvanced = (query: Query) => {
 
 const getByCategory = (query: Query) => {
    const findAdvancedQueryWithAllergy = `
-   SELECT food.fdc_id, description, calories, ingredients, data_type
-   FROM food 
-   INNER JOIN food_nutrition 
-   ON food.fdc_id = food_nutrition.fdc_id 
-   LEFT JOIN branded_food 
-   ON food.fdc_id = branded_food.fdc_id
-   WHERE description ILIKE '%pizza%'  
-   AND calories BETWEEN 10 AND 400
-   AND total_fat BETWEEN 20 AND 40
-   AND protein BETWEEN 25 AND 55 
-   AND total_carbohydrates BETWEEN 25 AND 60
-   AND ingredients NOT ILIKE '%dairy%'`;
-   const matchingItemsWithAllergy = db.query(findAdvancedQueryWithAllergy);
-   return matchingItemsWithAllergy;
+   SELECT * FROM food_nutrition_info
+   WHERE description ILIKE '%${query.query}%' 
+   AND calories BETWEEN ${query.minCalories} AND ${query.maxCalories}
+   AND total_fat BETWEEN ${query.minFat} AND ${query.maxFat}
+   AND protein BETWEEN ${query.minProtein} AND ${query.maxProtein} 
+   AND total_carbohydrates BETWEEN ${query.minCarbs} AND ${query.maxCarbs}`;
+
+   const allergyQueryCategory =
+      query.allergy === '' ? '' : allergyMap[query.allergy as keyof AllergyMap];
+
+   const categoryQuery =
+      query.category === ''
+         ? ''
+         : categoryMap[query.category as keyof CategoryMap];
+
+   const currentLimitQuery = ` LIMIT ${query.number} OFFSET ${query.offset}`;
+
+   console.log('categoryQuery:', categoryQuery);
+   const matchingItemsWithCategory = db.query(
+      findAdvancedQueryWithAllergy +
+         allergyQueryCategory +
+         categoryQuery +
+         currentLimitQuery
+   );
+   return matchingItemsWithCategory;
 };
 
 export { get, getAdvanced, getByCategory };
