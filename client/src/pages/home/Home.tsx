@@ -10,7 +10,6 @@ import { SideBar } from '../../components/sidebar/SideBar';
 import MealPlanPage from './meal-plan-page/MealPlanPage';
 import { SidebarMealplan } from './meal-plan-page/sidebar-mealplan/SideBarMealPlan';
 import { SearchForm } from './search-page/search-form';
-import { SideBarSearchPage } from './search-page/sidebar-searchpage/SideBarSearchPage';
 
 const Home = () => {
    const [goals, setGoals] = useState({} as CurrentGoals);
@@ -18,7 +17,6 @@ const Home = () => {
    const [mobileOpen, setMobileOpen] = useState(false);
    const [searchResults, setSearchResults] = useState<SearchResults[]>([]);
    const [currentTab, setCurrentTab] = useState<string>('advanced-search');
-   const [route, setRoute] = useState<string>('food');
    const [openAlert, setOpenAlert] = useState<boolean>(false);
    const [loading, setLoading] = useState<boolean>(false);
    const [alertMessage, setAlertMessage] = useState<string>('');
@@ -45,22 +43,21 @@ const Home = () => {
       offset: 0, //number of results to skip, useful for lazy loading
    });
 
-   //TODO uncomment the set mealplan item line
    const handleLoadMore = async (event: React.SyntheticEvent) => {
       try {
          setLoading(true);
          let newValues = { ...values, offset: values.offset + 10 }; //update new offset so that we only receive the correct items from API
          setValues(newValues);
-         let newItems: any = await axios.get(`/api/food`, {
+         let searchResultItems: any = await axios.get(`/api/food`, {
             params: newValues,
          });
-         console.log('newItems:', newItems);
-         if (newItems.data.length < 10) {
+         console.log('searchResultItems:', searchResultItems);
+         if (searchResultItems.data.length < 10) {
             setShowLoadMoreBtn(false);
          } else {
             setShowLoadMoreBtn(true);
          }
-         setSearchResults(searchResults.concat(newItems.data));
+         setSearchResults(searchResults.concat(searchResultItems.data));
          setLoading(false);
       } catch (err) {
          setLoading(false);
@@ -80,19 +77,18 @@ const Home = () => {
       setMobileOpen(!mobileOpen);
    };
 
-   //TODO uncomment the setSearchResults line call it something else
    const handleSubmit = async (event: React.SyntheticEvent) => {
       event.preventDefault();
       let newValues = { ...values, offset: 0 }; //declare new values so that there are no async bugs, and reset offset to 0 in case user changed it
       setValues(newValues);
       try {
          setLoading(true);
-         let foodItems = await axios.get(`/api/food`, {
+         let searchResultItems = await axios.get(`/api/food`, {
             params: newValues,
             withCredentials: true,
          });
-         console.log('foodItems:', foodItems);
-         if (foodItems.data.length === 0) {
+         console.log('searchResultItems:', searchResultItems);
+         if (searchResultItems.data.length === 0) {
             setAlertMessage(
                'No options matched your search. Try again with a broader search'
             );
@@ -103,16 +99,22 @@ const Home = () => {
             setAlertSeverity('success');
             setAlertMessage('Success! Here are your matching items.');
             setOpenAlert(true);
-            if (foodItems.data.length < 10) {
+            if (searchResultItems.data.length < 10) {
                setShowLoadMoreBtn(false);
             } else {
                setShowLoadMoreBtn(true);
             }
          }
-         setSearchResults(foodItems.data);
+         setSearchResults(searchResultItems.data);
          setLoading(false); //used to trigger the loading circle
       } catch (err) {
          setLoading(false); //used to trigger the loading circle
+         setAlertSeverity('error');
+         setAlertMessage(
+            'Unable to get search results. Please try again later.'
+         );
+         setOpenAlert(true);
+         console.log(err);
       }
    };
 
@@ -192,13 +194,13 @@ const Home = () => {
             <Route
                path='search'
                element={
-                  <SideBarSearchPage
-                     goals={goals}
+                  <SideBar
                      mobileOpen={mobileOpen}
                      handleDrawerToggle={handleDrawerToggle}
                      SearchFormComponent={SearchFormComponent}
-                     // searchResults={searchResults}
-                     route={route}
+                     goals={goals}
+                     page={'search'}
+                     searchResults={searchResults}
                   />
                }
             />
@@ -219,7 +221,6 @@ const Home = () => {
                loading,
                setGoals,
                handleDrawerToggle,
-               route,
                handleLoadMore,
                setAlertMessage,
                setOpenAlert,

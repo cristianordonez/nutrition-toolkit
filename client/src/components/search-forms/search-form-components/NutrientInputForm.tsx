@@ -52,7 +52,7 @@ export const NutrientInputForm = ({
          <Stack direction='column'>
             <Typography variant='h6'>Choose {currentNutrient} Range</Typography>
             <Typography color='textSecondary' variant='subtitle2'>
-               Recommended range: {minGoal} - {maxGoal} {measurement} per meal
+               Goal: {minGoal} - {maxGoal} {measurement} per meal
             </Typography>
             <Stack direction='row'>
                <FormControl fullWidth variant='standard' sx={{ m: 1, mt: 3 }}>

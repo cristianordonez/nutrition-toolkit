@@ -1,6 +1,6 @@
 import React from 'react';
-import { SideBar } from '../../../../components/sidebar/SideBar';
 import { CurrentGoals } from '../../../../../../types/types';
+import { SideBar } from '../../../../components/sidebar/SideBar';
 
 interface Props {
    mobileOpen: boolean | undefined;

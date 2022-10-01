@@ -21,7 +21,7 @@ export const QueryTextField = ({ query, handleInputChange }: Props) => {
             ),
          }}
          label='Item'
-         helperText='Enter a food'
+         helperText='Enter a food or brand name'
          value={query}
          onChange={handleInputChange}
       />

@@ -29,7 +29,6 @@ export const SimpleSearchForm = ({
    setShowLoadMoreBtn,
    setSearchResults,
 }: Props): ReactJSXElement => {
-   //TODO update this route using new values
    const handleSuggestedSubmit = async (event: React.SyntheticEvent) => {
       event.preventDefault();
       let newValues = { ...values, offset: 0 }; //declare new values so that there are no async bugs, and reset offset to 0 in case user changed it
@@ -59,8 +58,13 @@ export const SimpleSearchForm = ({
          setSearchResults(foodItems.data);
          setLoading(false);
       } catch (err) {
-         console.log(err);
          setLoading(false); //used to trigger the loading circle
+         setAlertSeverity('error');
+         setAlertMessage(
+            'Unable to get search results. Please try again later.'
+         );
+         setOpenAlert(true);
+         console.log(err);
       }
    };
 

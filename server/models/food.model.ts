@@ -1,47 +1,6 @@
 import { Query } from '../../types/types';
 import { db } from '../database/db';
 
-// type Query = {
-//    query: string;
-//    type: string;
-//    intolerance?: string | undefined;
-//    minCalories: number | string;
-//    maxCalories: number | string;
-//    minCarbs: number | string;
-//    maxCarbs: number | string;
-//    minProtein: number | string;
-//    maxProtein: number | string;
-//    minFat: number | string;
-//    maxFat: number | string;
-//    number: number; //number of items to return
-//    offset: number; //number of results to skip, useful for lazy loading
-// };
-
-//TODO
-
-interface CategoryMap {
-   beverage: string;
-   dessert: string;
-   breakfast: string;
-   snack: string;
-   main_course: string;
-}
-
-const categoryMap = {
-   beverage: ` AND branded_food_category IN (
-      'Soda',
-      'Water',
-      'Milk',
-      'Other Drinks',
-      'Iced & Bottle Tea', 'Energy, Protein, & Muscle Recovery Drinks',
-      'Non Alcoholic Beverages Ready to Drinks'
-      )`,
-   dessert: '',
-   breakfast: '',
-   snack: '',
-   main_course: '',
-};
-
 interface AllergyMap {
    dairy: string;
    eggs: string;
@@ -133,11 +92,20 @@ const allergyMap = {
 
 //# created view called food_nutrition_info which gets all essential data
 
-const get = () => {};
+const get = (query: Query) => {
+   const selectQuery = `SELECT * FROM food_nutrition_info
+      WHERE (description ILIKE '%${query.query}%' 
+      OR brand_name ILIKE '%${query.query}%')
+      LIMIT ${query.number} OFFSET ${query.offset}
+      `;
+   const matchingItems = db.query(selectQuery);
+   return matchingItems;
+};
 
 const getAdvanced = (query: Query) => {
    const selectContentsQuery = `SELECT * FROM food_nutrition_info
-   WHERE description ILIKE '%${query.query}%' 
+   WHERE (description ILIKE '%${query.query}%' 
+   OR brand_name ILIKE '%${query.query}%')
    AND calories BETWEEN ${query.minCalories} AND ${query.maxCalories}
    AND total_fat BETWEEN ${query.minFat} AND ${query.maxFat}
    AND protein BETWEEN ${query.minProtein} AND ${query.maxProtein} 
@@ -145,45 +113,12 @@ const getAdvanced = (query: Query) => {
    `;
    const allergyQuery =
       query.allergy === '' ? '' : allergyMap[query.allergy as keyof AllergyMap];
-
    const limitQuery = ` LIMIT ${query.number} OFFSET ${query.offset}`;
-
    const currentQuery = selectContentsQuery + allergyQuery + limitQuery;
-
    const matchingItems = db.query(
       selectContentsQuery + allergyQuery + limitQuery
    );
-
    return matchingItems;
 };
 
-const getByCategory = (query: Query) => {
-   const findAdvancedQueryWithAllergy = `
-   SELECT * FROM food_nutrition_info
-   WHERE description ILIKE '%${query.query}%' 
-   AND calories BETWEEN ${query.minCalories} AND ${query.maxCalories}
-   AND total_fat BETWEEN ${query.minFat} AND ${query.maxFat}
-   AND protein BETWEEN ${query.minProtein} AND ${query.maxProtein} 
-   AND total_carbohydrates BETWEEN ${query.minCarbs} AND ${query.maxCarbs}`;
-
-   const allergyQueryCategory =
-      query.allergy === '' ? '' : allergyMap[query.allergy as keyof AllergyMap];
-
-   const categoryQuery =
-      query.category === ''
-         ? ''
-         : categoryMap[query.category as keyof CategoryMap];
-
-   const currentLimitQuery = ` LIMIT ${query.number} OFFSET ${query.offset}`;
-
-   console.log('categoryQuery:', categoryQuery);
-   const matchingItemsWithCategory = db.query(
-      findAdvancedQueryWithAllergy +
-         allergyQueryCategory +
-         categoryQuery +
-         currentLimitQuery
-   );
-   return matchingItemsWithCategory;
-};
-
-export { get, getAdvanced, getByCategory };
+export { get, getAdvanced };

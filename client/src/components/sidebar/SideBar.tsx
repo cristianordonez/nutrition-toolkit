@@ -2,7 +2,7 @@
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Drawer, IconButton, Stack, Toolbar } from '@mui/material';
 import React, { ReactNode } from 'react';
-import { CurrentGoals } from '../../../../types/types';
+import { CurrentGoals, SearchResults } from '../../../../types/types';
 import { DailyGoals } from '../daily-goals';
 import { MainTitleLogo } from '../main-title-logo/index';
 
@@ -10,7 +10,7 @@ interface Props {
    mobileOpen: boolean | undefined;
    handleDrawerToggle: any;
    SearchFormComponent?: ReactNode;
-   // apiData?: MealplanItemType[];
+   searchResults?: SearchResults[];
    goals?: CurrentGoals | any;
    page: string;
    nutritionSummary?: any;
@@ -23,7 +23,7 @@ export const SideBar = ({
    mobileOpen,
    handleDrawerToggle,
    SearchFormComponent,
-   // apiData,
+   searchResults,
    goals,
    page,
    nutritionSummary,
@@ -71,10 +71,10 @@ export const SideBar = ({
                   <MainTitleLogo />
                </Stack>
                {/* TODO fix this search form component */}
-               {/* {page === 'search' && apiData !== undefined && apiData.length
+               {/* {page === 'search' && searchResults !== undefined && searchResults.length
                   ? SearchFormComponent
                   : null} */}
-               {/* {page === 'search' && apiData === undefined}{' '}
+               {/* {page === 'search' && searchResults === undefined}{' '}
                {<DailyGoals goals={goals} page={'search'} />} */}
                {page === 'mealplan' && nutritionSummary === true ? (
                   <DailyGoals
@@ -109,15 +109,16 @@ export const SideBar = ({
                   <MainTitleLogo />
                </Stack>
                {/* TODO fix this search form component */}
-               {/* {page === 'search' && apiData !== undefined && apiData.length
+               {page === 'search' &&
+               searchResults !== undefined &&
+               searchResults.length
                   ? SearchFormComponent
-                  : null} */}
-               {/* {page === 'search' &&
-               apiData !== undefined &&
-               apiData.length === 0 ? (
+                  : null}{' '}
+               {page === 'search' &&
+               searchResults !== undefined &&
+               searchResults.length === 0 ? (
                   <DailyGoals goals={goals} page={'search'} />
-               ) : null} */}
-
+               ) : null}
                {page === 'mealplan' &&
                nutritionSummary !== undefined &&
                nutritionSummary.length > 0 ? (

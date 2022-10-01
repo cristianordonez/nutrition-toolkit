@@ -4,11 +4,8 @@ import { create, get, update } from '../models/goals.model';
 
 const getGoals = async (req: any, res: Response) => {
    try {
-      let user_id = req.session.user_id;
-      console.log('user_id:', user_id);
-      console.log('req.session:', req.session);
-      let userGoals: CurrentGoals[] = await get(user_id);
-      console.log('userGoals:', userGoals);
+      const user_id = req.session.user_id;
+      const userGoals: CurrentGoals[] = await get(user_id);
       res.status(201).send(userGoals[0]);
    } catch (err) {
       console.log(err);
@@ -18,10 +15,10 @@ const getGoals = async (req: any, res: Response) => {
 
 const createGoals = async (req: Request, res: Response) => {
    try {
-      let session: any = req.session;
-      let user_id: number = session.user_id;
-      let body = { ...req.body, user_id };
-      let initialResponse = await create(body);
+      const session: any = req.session;
+      const user_id: number = session.user_id;
+      const body = { ...req.body, user_id };
+      const initialResponse = await create(body);
       res.status(201).json(session.user_id);
    } catch (err) {
       console.log(err);
@@ -31,10 +28,10 @@ const createGoals = async (req: Request, res: Response) => {
 
 const updateGoals = async (req: Request, res: Response) => {
    try {
-      let session: any = req.session;
-      let user_id: number = session.user_id;
-      let body = { ...req.body, user_id };
-      let initialResponse = await update(body);
+      const session: any = req.session;
+      const user_id: number = session.user_id;
+      const body = { ...req.body, user_id };
+      const initialResponse = await update(body);
       res.status(201).send(initialResponse);
    } catch (err) {
       console.log(err);

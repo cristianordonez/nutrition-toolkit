@@ -2,10 +2,9 @@ import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 import { Button, SelectChangeEvent, Stack } from '@mui/material';
 import React, { FormEventHandler, MouseEventHandler } from 'react';
 import { CurrentGoals, Query } from '../../../../types/types';
-import { CategoryDropDown } from './search-form-components/CategoryDropDown';
-import { RadioAllergyGroup } from './search-form-components/checkbox-group/RadioAllergyGroup';
 import { NutrientInputForm } from './search-form-components/NutrientInputForm';
 import { QueryTextField } from './search-form-components/QueryTextField';
+import { RadioAllergyGroup } from './search-form-components/radio-group/RadioAllergyGroup';
 
 interface Props {
    values: Query;
@@ -31,10 +30,6 @@ export const AdvancedSearchForm = ({
                <QueryTextField
                   query={values.query}
                   handleInputChange={handleInputChange}
-               />
-               <CategoryDropDown
-                  type={values.category}
-                  handleTypeSelect={handleTypeSelect}
                />
 
                <RadioAllergyGroup

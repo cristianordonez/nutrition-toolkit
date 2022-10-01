@@ -81,8 +81,8 @@ export const SearchForm = ({
             indicatorColor='secondary'
             textColor='secondary'
          >
-            <Tab value='advanced-search' label='Advanced Search' />
-            <Tab value='simple-search' label='Simple Search' />
+            <Tab value='advanced-search' label='Advanced' />
+            <Tab value='simple-search' label='Simple' />
          </Tabs>
 
          {currentTab === 'advanced-search' ? (
