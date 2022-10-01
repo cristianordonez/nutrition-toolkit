@@ -39,6 +39,9 @@ export const MacroCalculatorForm = ({
    let navigate = useNavigate();
    const [activityLevel, setActivityLevel] = React.useState<number>(1);
    const [gender, setGender] = React.useState('male');
+   const [goal, setGoal] = React.useState<
+      'weight_loss' | 'maintain' | 'gain_muscle'
+   >('weight_loss');
    const [age, setAge] = React.useState<any>(18);
    const [height, setHeight] = React.useState<any>(60);
    const [weight, setWeight] = React.useState<any>(200);
@@ -48,6 +51,13 @@ export const MacroCalculatorForm = ({
       newAlignment: string
    ) => {
       setGender(newAlignment);
+   };
+
+   const handleGoalChange = (
+      event: React.MouseEvent<HTMLElement>,
+      newAlignment: 'weight_loss' | 'maintain' | 'gain_muscle'
+   ) => {
+      setGoal(newAlignment);
    };
 
    //ACTIVITY LEVEL HANDLERS
@@ -67,9 +77,11 @@ export const MacroCalculatorForm = ({
          height,
          weight,
          activityLevel,
+         goal,
       });
+      console.log('metrics:', metrics);
       try {
-         let response = await axios.post(`/api/goals`, metrics);
+         const response = await axios.post(`/api/goals`, metrics);
          if (page === 'macrocalculator') {
             setErrorMessage(
                'You have updated your macronutrient needs. Go to search page to begin searching for recipes, menu items, or grocery products within this range.'
@@ -107,8 +119,7 @@ export const MacroCalculatorForm = ({
                   </Stack>
                   <Typography variant='subtitle1'>
                      Fill out the form below to calculate your recommended
-                     nutrient needs (note that all recommendations are made for
-                     individuals with Type 2 Diabetes).
+                     nutrient needs
                   </Typography>
                </>
             ) : (
@@ -118,8 +129,7 @@ export const MacroCalculatorForm = ({
                   </Typography>
                   <Typography variant='subtitle1'>
                      Fill out the form below so we can calculate your
-                     recommended nutrient needs (note that all recommendations
-                     are made for individuals with Type 2 Diabetes).
+                     recommended nutrient needs
                   </Typography>
                </>
             )}
@@ -134,6 +144,8 @@ export const MacroCalculatorForm = ({
                setHeight={setHeight}
                weight={weight}
                setWeight={setWeight}
+               goal={goal}
+               handleGoalChange={handleGoalChange}
             />
 
             {page !== undefined && page === 'macrocalculator' ? (

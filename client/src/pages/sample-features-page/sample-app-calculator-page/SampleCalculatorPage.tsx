@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import './SampleCalculatorPage.scss';
+import { Button, Paper, Stack, Typography } from '@mui/material';
+import React from 'react';
 import { Calculator } from '../../../components/calculator-contents/Calculator';
-import { CustomAlert } from '../../../components/custom-alert/CustomAlert';
-import { AlertColor, Paper, Button, Stack, Typography } from '@mui/material';
 import { useSampleFeaturesOutlet } from '../../../hooks/useSampleFeaturesOutlet';
+import './SampleCalculatorPage.scss';
 
 const SampleCalculatorPage = () => {
    const {
@@ -15,6 +14,8 @@ const SampleCalculatorPage = () => {
       setHeight,
       weight,
       setWeight,
+      goal,
+      setGoal,
       activityLevel,
       setActivityLevel,
       handleSubmit,
@@ -27,7 +28,13 @@ const SampleCalculatorPage = () => {
       setGender(newAlignment);
    };
 
-   //ACTIVITY LEVEL HANDLERS
+   const handleGoalChange = (
+      event: React.MouseEvent<HTMLElement>,
+      newAlignment: 'weight_loss' | 'maintain' | 'gain_muscle'
+   ) => {
+      setGoal(newAlignment);
+   };
+
    const handleActivityLevelChange = (
       event: React.MouseEvent<HTMLElement>,
       newActivityLevel: number
@@ -68,6 +75,8 @@ const SampleCalculatorPage = () => {
                   age={age}
                   setAge={setAge}
                   height={height}
+                  goal={goal}
+                  handleGoalChange={handleGoalChange}
                   setHeight={setHeight}
                   weight={weight}
                   setWeight={setWeight}

@@ -1,5 +1,5 @@
-import React, { MouseEvent, Dispatch, SetStateAction } from 'react';
-import { ToggleButtonGroup, ToggleButton } from '@mui/material';
+import { ToggleButton, ToggleButtonGroup } from '@mui/material';
+import React, { Dispatch, MouseEvent, SetStateAction } from 'react';
 import { AgeInputField } from '../calculator-inputs/age-input/AgeInputField';
 import { HeightInputField } from '../calculator-inputs/height-input/HeightInputField';
 import { WeightInputField } from '../calculator-inputs/weight-input/WeightInputField';
@@ -19,6 +19,9 @@ interface Props {
 
    weight: string | number | (string | number)[];
    setWeight: Dispatch<SetStateAction<string | number | (string | number)[]>>;
+
+   goal: string;
+   handleGoalChange: (event: MouseEvent<HTMLElement>, value: any) => void;
 }
 
 export const Calculator = ({
@@ -32,21 +35,23 @@ export const Calculator = ({
    setHeight,
    weight,
    setWeight,
+   goal,
+   handleGoalChange,
 }: Props) => {
    return (
       <>
+         {/* ACTIVITY LEVEL */}
          <ToggleButtonGroup
             color='primary'
             fullWidth={true}
-            value={gender}
+            value={goal}
             exclusive
-            onChange={handleGenderChange}
+            onChange={handleGoalChange}
          >
-            <ToggleButton value='male'>Male</ToggleButton>
-            <ToggleButton value='female'>Female</ToggleButton>
-            <ToggleButton value='other'>Other</ToggleButton>
+            <ToggleButton value='weight_loss'>Weight loss</ToggleButton>
+            <ToggleButton value='maintain'>Maintain</ToggleButton>
+            <ToggleButton value='gain_muscle'>Gain muscle</ToggleButton>
          </ToggleButtonGroup>
-         {/* ACTIVITY LEVEL */}
          <ToggleButtonGroup
             color='primary'
             fullWidth={true}
@@ -59,6 +64,17 @@ export const Calculator = ({
                Moderate (2x - 4x per week)
             </ToggleButton>
             <ToggleButton value={1.5}>Active (5x+ per week)</ToggleButton>
+         </ToggleButtonGroup>
+         <ToggleButtonGroup
+            color='primary'
+            fullWidth={true}
+            value={gender}
+            exclusive
+            onChange={handleGenderChange}
+         >
+            <ToggleButton value='male'>Male</ToggleButton>
+            <ToggleButton value='female'>Female</ToggleButton>
+            <ToggleButton value='other'>Other</ToggleButton>
          </ToggleButtonGroup>
          {/* AGE HEIGHT AND WEIGHT*/}
          <AgeInputField age={age} setAge={setAge} />

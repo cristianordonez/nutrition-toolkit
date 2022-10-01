@@ -1,17 +1,10 @@
 type CurrentGoals = {
    user_id?: number;
-   total_carbohydrates: number;
-   min_carbohydrates_per_meal: number;
-   max_carbohydrates_per_meal: number;
-   total_protein: number;
-   min_protein_per_meal: number;
-   max_protein_per_meal: number;
-   total_fat: number;
-   min_fat_per_meal: number;
-   max_fat_per_meal: number;
+   goal: 'weight_loss' | 'gain_muscle' | 'maintain';
    total_calories: number;
-   min_calories_per_meal: number;
-   max_calories_per_meal: number;
+   total_carbohydrates: number;
+   total_protein: number;
+   total_fat: number;
 };
 
 type Session = {
@@ -75,6 +68,15 @@ type RequestParams = {
    id: number;
 };
 
+type MetricsType = {
+   age: number;
+   goal: 'weight_loss' | 'gain_muscle' | 'maintain';
+   weight: number;
+   gender: string;
+   height: number;
+   activityLevel: number;
+};
+
 export {
    CurrentGoals,
    Session,
@@ -86,4 +88,5 @@ export {
    RequestParams,
    PassportGoogleUser,
    SearchResults,
+   MetricsType,
 };

@@ -1,14 +1,9 @@
-// make test to check if corect function is called
-// either login or other one
-
-import React, { useState } from 'react';
-import { expect } from '../../../../jestGlobals';
-
-import { renderHook } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { getMetrics } from './getMetrics';
+import { renderHook } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MetricsType } from './getMetrics.types';
+import { expect } from '../../../../jestGlobals';
+import { MetricsType } from '../../../../types/types';
+import { getMetrics } from './getMetrics';
 
 interface Props {
    goals: MetricsType;
@@ -20,6 +15,7 @@ const goals = {
    height: 67,
    age: 27,
    activityLevel: 1.2,
+   goal: 'weight_loss' as 'weight_loss' | 'maintain' | 'gain_muscle',
 };
 describe('getMetrics hook ', () => {
    test('calculates correct values ', async () => {

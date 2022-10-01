@@ -32,8 +32,6 @@ export const GoalCardItemCard = ({
             setGoals({
                ...goals,
                total_carbohydrates: totalCarbs,
-               min_carbohydrates_per_meal: Math.floor(minCarbsPerMeal),
-               max_carbohydrates_per_meal: Math.floor(totalCarbs / 3 + 5),
             });
          } else if (event.target.id == 'Protein') {
             let totalProtein = parseInt(event.target.value);
@@ -43,8 +41,6 @@ export const GoalCardItemCard = ({
             setGoals({
                ...goals,
                total_protein: totalProtein,
-               min_protein_per_meal: Math.floor(minProteinPerMeal),
-               max_protein_per_meal: Math.floor(totalProtein / 3 + 10),
             });
          } else if (event.target.id === 'Fat') {
             let totalFat = parseInt(event.target.value);
@@ -53,8 +49,6 @@ export const GoalCardItemCard = ({
             setGoals({
                ...goals,
                total_fat: totalFat,
-               min_fat_per_meal: Math.floor(minFatPerMeal),
-               max_fat_per_meal: Math.floor(totalFat / 3 + 10),
             });
          }
       }
@@ -98,7 +92,7 @@ export const GoalCardItemCard = ({
                      {nutrientsTotal} g
                   </Typography>
                )}
-               {type === 'Carbohydrates' && (
+               {/* {type === 'Carbohydrates' && (
                   <Typography
                      align='center'
                      className='range-text'
@@ -127,7 +121,7 @@ export const GoalCardItemCard = ({
                      Per meal: {goals.min_fat_per_meal} -{' '}
                      {goals.max_fat_per_meal}g
                   </Typography>
-               )}
+               )} */}
             </CardContent>
          </Card>
       </>

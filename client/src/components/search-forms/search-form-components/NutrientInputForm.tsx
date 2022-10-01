@@ -27,23 +27,19 @@ export const NutrientInputForm = ({
 }: Props) => {
    let currentNutrient;
    let minGoal;
-   let maxGoal;
+   let currentGoal;
 
    if (nutrient === 'Carbs') {
-      minGoal = goals.min_carbohydrates_per_meal;
-      maxGoal = goals.max_carbohydrates_per_meal;
+      currentGoal = goals.total_carbohydrates;
       currentNutrient = 'Carbohydrate';
    } else if (nutrient === 'Calories') {
-      minGoal = goals.min_calories_per_meal;
-      maxGoal = goals.max_calories_per_meal;
+      currentGoal = goals.total_calories;
       currentNutrient = 'Calorie';
    } else if (nutrient === 'Fat') {
-      minGoal = goals.min_fat_per_meal;
-      maxGoal = goals.max_fat_per_meal;
+      currentGoal = goals.total_fat;
       currentNutrient = nutrient;
    } else if (nutrient === 'Protein') {
-      minGoal = goals.min_protein_per_meal;
-      maxGoal = goals.max_protein_per_meal;
+      currentGoal = goals.total_protein;
       currentNutrient = nutrient;
    }
 
@@ -52,7 +48,7 @@ export const NutrientInputForm = ({
          <Stack direction='column'>
             <Typography variant='h6'>Choose {currentNutrient} Range</Typography>
             <Typography color='textSecondary' variant='subtitle2'>
-               Goal: {minGoal} - {maxGoal} {measurement} per meal
+               Daily Goal: {currentGoal} {measurement}
             </Typography>
             <Stack direction='row'>
                <FormControl fullWidth variant='standard' sx={{ m: 1, mt: 3 }}>

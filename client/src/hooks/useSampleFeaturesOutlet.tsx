@@ -17,6 +17,8 @@ interface OutletContext {
    alertSeverity: AlertColor;
    showPopularRecipes: boolean;
    alertMessage: string;
+   goal: 'weight_loss' | 'maintain' | 'gain_muscle';
+   setGoal: Dispatch<SetStateAction<string>>;
    goals: CurrentGoals;
    setGoals: Dispatch<SetStateAction<CurrentGoals>>;
    setGender: Dispatch<SetStateAction<string>>;

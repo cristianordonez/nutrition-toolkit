@@ -33,17 +33,10 @@ const initialState = {
 
 const initialGoals = {
    total_carbohydrates: 135,
-   min_carbohydrates_per_meal: 45,
-   max_carbohydrates_per_meal: 55,
    total_protein: 135,
-   min_protein_per_meal: 30,
-   max_protein_per_meal: 50,
    total_fat: 100,
-   min_fat_per_meal: 25,
-   max_fat_per_meal: 45,
    total_calories: 2000,
-   min_calories_per_meal: 450,
-   max_calories_per_meal: 650,
+   goal: 'weight_loss' as 'weight_loss' | 'maintain' | 'gain_muscle',
 };
 
 const initialNutritionSummary = {
@@ -66,11 +59,11 @@ const SampleFeaturesPage = () => {
    const [height, setHeight] = useState<number>(60);
    const [weight, setWeight] = useState<number>(200);
    const [activityLevel, setActivityLevel] = useState<number>(1);
-
+   const [goal, setGoal] = React.useState<
+      'weight_loss' | 'maintain' | 'gain_muscle'
+   >('weight_loss');
    const [gender, setGender] = useState('male');
-   // const [sampleMealplanItems, setSampleMealplanItems] = useState<
-   //    SampleMealplanItem[] | []
-   // >([]);
+
    const [nutritionSummary, setNutritionSummary] = useState(
       initialNutritionSummary
    );
@@ -117,6 +110,7 @@ const SampleFeaturesPage = () => {
          height,
          weight,
          activityLevel,
+         goal,
       });
       setGoals(currentGoals);
       setAlertSeverity('success');
@@ -249,7 +243,6 @@ const SampleFeaturesPage = () => {
                   // mealplanItems,
                   alertSeverity,
                   alertMessage,
-                  // sampleMealplanItems,
                   goals,
                   setGoals,
                   setGender,
@@ -261,6 +254,8 @@ const SampleFeaturesPage = () => {
                   weight,
                   setWeight,
                   activityLevel,
+                  goal,
+                  setGoal,
                   setActivityLevel,
                   handleSubmit,
                }}

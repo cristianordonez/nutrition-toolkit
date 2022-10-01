@@ -37,7 +37,7 @@ const LandingPage = () => {
    };
 
    const cardMessages = [
-      'Save your favorite items to your meal plan and view how many carbs you have left',
+      'Save your favorite items to your meal plan and view your total daily calories and nutrients',
       'Search for recipes, grocery products or menu items that match your nutrient needs',
       'Use our Macronutrient Calculator to find your estimated daily carbohydrate needs',
    ];
@@ -82,12 +82,12 @@ const LandingPage = () => {
                      textAlign={{ xs: 'center', sm: 'left' }}
                      variant='h2'
                   >
-                     The Diabetes Calculator
+                     The Macro Trainer
                   </Typography>
                   <Typography variant='body1' component='h5'>
-                     We help you calculate your daily carbohydrate needs and
-                     give you the power to create and customize your own custom
-                     meal plan.
+                     Calculate your macronutrient needs and find food products
+                     based on your desired nutrient content to reach your
+                     fitness goals
                   </Typography>
                   <div className='home-btn'>
                      <Button

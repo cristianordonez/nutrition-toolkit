@@ -43,12 +43,9 @@ const UserSettingsPage = () => {
                goals.total_protein * 4 +
                goals.total_fat * 9
          );
-         let minCalPerMeal = totalCalories <= 450 ? 0 : totalCalories / 3 - 150;
          let currentGoals = {
             ...goals,
             total_calories: totalCalories,
-            min_calories_per_meal: Math.floor(minCalPerMeal),
-            max_calories_per_meal: Math.floor(totalCalories / 3 + 150),
          };
          setGoals(currentGoals);
          let updatedGoals = await axios.put('/api/metrics', currentGoals);

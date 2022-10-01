@@ -1,5 +1,5 @@
-import React from 'react';
 import { Typography } from '@mui/material';
+import React from 'react';
 import { useAuth } from '../../context/authContext';
 
 export const MainTitle = () => {
@@ -21,7 +21,7 @@ export const MainTitle = () => {
             },
          }}
       >
-         DiabetesCalculator
+         MacroTrainer
       </Typography>
    );
 };
