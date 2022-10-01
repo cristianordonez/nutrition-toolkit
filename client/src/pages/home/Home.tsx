@@ -32,16 +32,7 @@ const Home = () => {
    const [values, setValues] = useState<Query>({
       query: '',
       category: '',
-      allergies: {
-         dairy: false,
-         eggs: false,
-         soy: false,
-         tree_nuts: false,
-         peanuts: false,
-         shellfish: false,
-         fish: false,
-         wheat: false,
-      },
+      allergy: '',
       minCalories: '',
       maxCalories: '',
       minCarbs: '',
@@ -50,7 +41,7 @@ const Home = () => {
       maxProtein: '',
       minFat: '',
       maxFat: '',
-      number: 6,
+      number: 10,
       offset: 0, //number of results to skip, useful for lazy loading
    });
 
@@ -58,12 +49,12 @@ const Home = () => {
    const handleLoadMore = async (event: React.SyntheticEvent) => {
       try {
          setLoading(true);
-         let newValues = { ...values, offset: values.offset + 6 }; //update new offset so that we only receive the correct items from API
+         let newValues = { ...values, offset: values.offset + 10 }; //update new offset so that we only receive the correct items from API
          setValues(newValues);
          let newItems: any = await axios.get(`/api/${route}`, {
             params: newValues,
          });
-         if (newItems.data.length < 6) {
+         if (newItems.data.length < 10) {
             setShowLoadMoreBtn(false);
          } else {
             setShowLoadMoreBtn(true);
@@ -99,6 +90,7 @@ const Home = () => {
             params: newValues,
             withCredentials: true,
          });
+         console.log('foodItems:', foodItems);
          if (foodItems.data.length === 0) {
             setAlertMessage(
                'No options matched your search. Try again with a broader search'
@@ -110,7 +102,7 @@ const Home = () => {
             setAlertSeverity('success');
             setAlertMessage('Success! Here are your matching items.');
             setOpenAlert(true);
-            if (foodItems.data.length < 6) {
+            if (foodItems.data.length < 10) {
                setShowLoadMoreBtn(false);
             } else {
                setShowLoadMoreBtn(true);

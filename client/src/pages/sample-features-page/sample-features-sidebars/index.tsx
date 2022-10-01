@@ -7,7 +7,7 @@ import {
    SelectChangeEvent,
    Toolbar,
 } from '@mui/material';
-import React, { FormEventHandler } from 'react';
+import React, { FormEventHandler, MouseEventHandler } from 'react';
 import { useLocation } from 'react-router-dom';
 import { CurrentGoals, Query } from '../../../../../types/types';
 import { MainTitleLogo } from '../../../components/main-title-logo';
@@ -27,7 +27,7 @@ interface Props {
    goals: CurrentGoals;
    nutritionSummary: any;
    view: 'mealplan' | 'search' | 'calculator';
-   handleCheckboxChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+   handleRadioClick: MouseEventHandler<HTMLInputElement>;
 }
 
 export const SampleFeaturesSidebar = ({
@@ -40,7 +40,7 @@ export const SampleFeaturesSidebar = ({
    goals,
    nutritionSummary,
    view,
-   handleCheckboxChange,
+   handleRadioClick,
 }: Props): ReactJSXElement => {
    const location = useLocation();
    return (
@@ -82,7 +82,7 @@ export const SampleFeaturesSidebar = ({
                   handleInputChange={handleInputChange}
                   handleTypeSelect={handleTypeSelect}
                   goals={goals}
-                  handleCheckboxChange={handleCheckboxChange}
+                  handleRadioClick={handleRadioClick}
                />
             ) : null}
             {view === 'mealplan' ? (
@@ -120,7 +120,7 @@ export const SampleFeaturesSidebar = ({
                      handleInputChange={handleInputChange}
                      handleTypeSelect={handleTypeSelect}
                      goals={goals}
-                     handleCheckboxChange={handleCheckboxChange}
+                     handleRadioClick={handleRadioClick}
                   />
                ) : null}
                {view === 'mealplan' ? (

@@ -1,9 +1,9 @@
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 import { Button, SelectChangeEvent, Stack } from '@mui/material';
-import React, { FormEventHandler } from 'react';
+import React, { FormEventHandler, MouseEventHandler } from 'react';
 import { CurrentGoals, Query } from '../../../../types/types';
 import { CategoryDropDown } from './search-form-components/CategoryDropDown';
-import { CheckBoxGroup } from './search-form-components/checkbox-group/CheckBoxGroup';
+import { RadioAllergyGroup } from './search-form-components/checkbox-group/RadioAllergyGroup';
 import { NutrientInputForm } from './search-form-components/NutrientInputForm';
 import { QueryTextField } from './search-form-components/QueryTextField';
 
@@ -13,7 +13,7 @@ interface Props {
    handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
    handleTypeSelect: (event: SelectChangeEvent) => void;
    goals: CurrentGoals;
-   handleCheckboxChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+   handleRadioClick: MouseEventHandler<HTMLInputElement>;
 }
 
 export const AdvancedSearchForm = ({
@@ -22,7 +22,7 @@ export const AdvancedSearchForm = ({
    handleInputChange,
    handleTypeSelect,
    goals,
-   handleCheckboxChange,
+   handleRadioClick,
 }: Props): ReactJSXElement => {
    return (
       <>
@@ -37,9 +37,9 @@ export const AdvancedSearchForm = ({
                   handleTypeSelect={handleTypeSelect}
                />
 
-               <CheckBoxGroup
-                  allergies={values.allergies}
-                  handleCheckboxChange={handleCheckboxChange}
+               <RadioAllergyGroup
+                  allergy={values.allergy}
+                  handleRadioClick={handleRadioClick}
                />
                <NutrientInputForm
                   handleInputChange={handleInputChange}

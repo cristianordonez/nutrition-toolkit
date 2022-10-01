@@ -50,20 +50,23 @@ export const SearchForm = ({
       setValues({ ...values, category: event.target.value });
    };
 
-   const handleCheckboxChange = (
-      event: React.ChangeEvent<HTMLInputElement>
-   ) => {
-      setValues({
-         ...values,
-         allergies: {
-            ...values.allergies,
-            [event.target.name]: event.target.checked,
-         },
-      });
+   const handleRadioClick = (event: React.MouseEvent<HTMLInputElement>) => {
+      if ((event.target as HTMLInputElement).value === values.allergy) {
+         setValues({
+            ...values,
+            allergy: '',
+         });
+      } else {
+         setValues({
+            ...values,
+            allergy: (event.target as HTMLInputElement).value,
+         });
+      }
    };
+
    return (
       <div className='search-form'>
-         <Stack direction='row' spacing={1} pb='2rem'>
+         <Stack direction='row' spacing={1}>
             <ScreenSearchDesktopIcon />
             <Typography variant='body1'>
                Search from a list of over 350,000 foods to find the ones that
@@ -89,7 +92,7 @@ export const SearchForm = ({
                handleInputChange={handleInputChange}
                handleTypeSelect={handleTypeSelect}
                goals={goals}
-               handleCheckboxChange={handleCheckboxChange}
+               handleRadioClick={handleRadioClick}
             />
          ) : (
             <SimpleSearchForm

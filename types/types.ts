@@ -24,21 +24,10 @@ type SearchResults = {
    test: any;
 };
 
-type Allergies = {
-   dairy: boolean;
-   eggs: boolean;
-   soy: boolean;
-   tree_nuts: boolean;
-   peanuts: boolean;
-   shellfish: boolean;
-   fish: boolean;
-   wheat: boolean;
-};
-
 type Query = {
    query: string;
    category: string;
-   allergies: Allergies;
+   allergy: string;
    minCalories: number | string;
    maxCalories: number | string;
    minCarbs: number | string;
@@ -97,5 +86,4 @@ export {
    RequestParams,
    PassportGoogleUser,
    SearchResults,
-   Allergies,
 };

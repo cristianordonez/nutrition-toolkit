@@ -18,16 +18,7 @@ import './SampleFeaturesPage.scss';
 const initialState = {
    query: '',
    category: 'All',
-   allergies: {
-      dairy: false,
-      eggs: false,
-      soy: false,
-      tree_nuts: false,
-      peanuts: false,
-      shellfish: false,
-      fish: false,
-      wheat: false,
-   },
+   allergy: '',
    minCalories: '',
    maxCalories: '',
    minProtein: '',
@@ -146,17 +137,19 @@ const SampleFeaturesPage = () => {
    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setValues({ ...values, [event.target.id]: event.target.value });
    };
-
-   const handleCheckboxChange = (
-      event: React.ChangeEvent<HTMLInputElement>
-   ) => {
-      setValues({
-         ...values,
-         allergies: {
-            ...values.allergies,
-            [event.target.name]: event.target.checked,
-         },
-      });
+   const handleRadioClick = (event: React.MouseEvent<HTMLInputElement>) => {
+      //  setValue((event.target as HTMLInputElement).value);
+      if ((event.target as HTMLInputElement).value === values.allergy) {
+         setValues({
+            ...values,
+            allergy: '',
+         });
+      } else {
+         setValues({
+            ...values,
+            allergy: (event.target as HTMLInputElement).value,
+         });
+      }
    };
    return (
       <>
@@ -190,7 +183,7 @@ const SampleFeaturesPage = () => {
                            goals={goals}
                            nutritionSummary={nutritionSummary}
                            view={'mealplan'}
-                           handleCheckboxChange={handleCheckboxChange}
+                           handleRadioClick={handleRadioClick}
                         />
                         <SampleMealPlanPage
                            setNutritionSummary={setNutritionSummary}
@@ -218,7 +211,7 @@ const SampleFeaturesPage = () => {
                         goals={goals}
                         nutritionSummary={nutritionSummary}
                         view={'search'}
-                        handleCheckboxChange={handleCheckboxChange}
+                        handleRadioClick={handleRadioClick}
                      />
                   }
                />
@@ -235,7 +228,7 @@ const SampleFeaturesPage = () => {
                         goals={goals}
                         nutritionSummary={nutritionSummary}
                         view={'calculator'}
-                        handleCheckboxChange={handleCheckboxChange}
+                        handleRadioClick={handleRadioClick}
                      />
                   }
                />
