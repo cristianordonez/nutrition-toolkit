@@ -18,7 +18,6 @@ type GoogleUser = {
 };
 
 const createGoogleUser = (user: GoogleUser) => {
-   console.log('user:', user);
    const createGoogleUserQuery = `INSERT INTO users (username, email) 
                         VALUES ('${user.username}', '${user.email}') 
                         RETURNING id`;
@@ -40,7 +39,6 @@ const createUserIntolerances = function (intolerances: Intolerances) {
 };
 
 const getGoogleUser = (email: string) => {
-   console.log('email:', email);
    const getGoogleUserQuery = `SELECT username, email, id FROM users WHERE email='${email}'`;
    const user = db.query(getGoogleUserQuery);
    return user;

@@ -2,9 +2,9 @@ import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 import {
    Card,
    CardContent,
-   Typography,
    LinearProgress,
    Stack,
+   Typography,
 } from '@mui/material';
 import React from 'react';
 

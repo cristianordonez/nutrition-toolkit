@@ -2,7 +2,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { Paper, Stack, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect } from 'react';
-import { DailyGoals } from '../../../components/daily-goals';
+import { DailyGoalsUserProfile } from '../../../components/daily-goals/daily-goals-user-profile/DailyGoalsUserProfile';
 import { useAuth } from '../../../context/authContext';
 import { useHomeOutlet } from '../../../hooks/useHomeOutlet';
 import './UserProfilePage.scss';
@@ -77,9 +77,8 @@ const UserSettingsPage = () => {
                      calculated based on your input).
                   </Typography>
                </Stack>
-               <DailyGoals
+               <DailyGoalsUserProfile
                   goals={goals}
-                  page={'user-profile'}
                   setGoals={setGoals}
                   handleSubmitUpdatedGoals={handleSubmitUpdatedGoals}
                />

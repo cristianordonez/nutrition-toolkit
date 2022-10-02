@@ -2,7 +2,7 @@ import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 import { AlertColor, Button, SelectChangeEvent, Stack } from '@mui/material';
 import axios from 'axios';
 import React, { Dispatch, SetStateAction } from 'react';
-import { Query, SearchResults } from '../../../../types/types';
+import { FoodSearchResult, Query } from '../../../../types/types';
 import { QueryTextField } from './search-form-components/QueryTextField';
 interface Props {
    values: Query;
@@ -14,7 +14,8 @@ interface Props {
    setLoading: Dispatch<SetStateAction<boolean>>;
    setOpenAlert: Dispatch<SetStateAction<boolean>>;
    setShowLoadMoreBtn: Dispatch<SetStateAction<boolean>>;
-   setSearchResults: Dispatch<SetStateAction<SearchResults[]>>;
+   setSearchResults: Dispatch<SetStateAction<FoodSearchResult[]>>;
+   setSendAdvancedRequest: Dispatch<SetStateAction<boolean>>;
 }
 
 export const SimpleSearchForm = ({
@@ -28,13 +29,15 @@ export const SimpleSearchForm = ({
    setOpenAlert,
    setShowLoadMoreBtn,
    setSearchResults,
+   setSendAdvancedRequest,
 }: Props): ReactJSXElement => {
    const handleSuggestedSubmit = async (event: React.SyntheticEvent) => {
-      event.preventDefault();
-      let newValues = { ...values, offset: 0 }; //declare new values so that there are no async bugs, and reset offset to 0 in case user changed it
-      setValues(newValues);
       try {
-         setLoading(true); //used to trigger the loading circle
+         event.preventDefault();
+         setLoading(true);
+         setSendAdvancedRequest(false);
+         let newValues = { ...values, offset: 0 }; //declare new values so that there are no async bugs, and reset offset to 0 in case user changed it
+         setValues(newValues);
          const foodItems = await axios.get(`/api/food/all`, {
             params: newValues,
          });

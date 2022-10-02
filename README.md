@@ -130,6 +130,10 @@ bash rds-login.sh
 GRANT rds_superuser TO root;
 ```
 
+-Data is retrieved from the USDA FoodData and includes branded foods, SR legacy foods and foundation foods.
+
+-  Note that branded foods use the nutrient_nbr field in the nutrient table as a foreign key for nutrition, while other data types use the nutrient id
+
 ## Resources
 
 -  [React code-splitting](https://reactjs.org/docs/code-splitting.html)

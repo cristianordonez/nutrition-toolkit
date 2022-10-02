@@ -1,18 +1,19 @@
-import React from 'react';
 import { SelectChangeEvent } from '@mui/material/Select';
+import React from 'react';
 
 import {
    FormControl,
-   InputLabel,
-   Select,
-   MenuItem,
    FormHelperText,
+   InputLabel,
+   MenuItem,
+   Select,
 } from '@mui/material';
 
 const menuItemsArray = [
    { value: 1, name: 'Morning' },
    { value: 2, name: 'Afternoon' },
    { value: 3, name: 'Evening' },
+   { value: 4, name: 'Snack' },
 ];
 
 interface Props {

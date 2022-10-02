@@ -1,20 +1,30 @@
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import { AlertColor } from '@mui/material';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
+import {
+   AlertColor,
+   Button,
+   Paper,
+   Stack,
+   Table,
+   TableBody,
+   TableContainer,
+   TableHead,
+   Typography,
+} from '@mui/material';
 import React, {
    Dispatch,
    MouseEventHandler,
    SetStateAction,
    useState,
 } from 'react';
-import { SearchResults } from '../../../../../../types/types';
-import { AddToCartModal } from './AddToCartModal';
+import { FoodSearchResult } from '../../../../../../types/types';
+import { FoodListRow } from '../../../../components/food-list-row/FoodListRow';
+import { StyledTableCell } from '../../../../components/styled-table-components/StyledTableCell';
+import { StyledTableRow } from '../../../../components/styled-table-components/StyledTableRow';
+import { AddToCartModal } from './add-to-cart-modal';
+
 import './index.scss';
 interface Props {
-   searchResults: SearchResults[];
-   route: string;
+   searchResults: FoodSearchResult[];
    handleLoadMore: MouseEventHandler<HTMLButtonElement>;
    setAlertMessage: Dispatch<SetStateAction<string>>;
    setOpenSnackbar: Dispatch<SetStateAction<boolean>>;
@@ -24,7 +34,6 @@ interface Props {
 
 export const FoodSearchList = ({
    searchResults,
-   route,
    handleLoadMore,
    setAlertMessage,
    setOpenSnackbar,
@@ -32,32 +41,30 @@ export const FoodSearchList = ({
    showLoadMoreBtn,
 }: Props) => {
    const [openDialog, setOpenDialog] = useState<boolean>(false);
-   const [currentImage, setCurrentImage] = useState('');
    const [currentId, setCurrentId] = useState<number>(0);
-   const [currentTitle, setCurrentTitle] = useState('');
-   const [units, setUnits] = useState<string[]>(['']);
-
-   const handleOpeningAddIngredientModal = (
-      img: string,
-      title: string,
-      units: string[],
-      id: number
-   ) => {
-      setCurrentImage(img);
-      setCurrentTitle(title);
-      setUnits(units);
-      setCurrentId(id);
-      setOpenDialog(!openDialog);
-   };
+   const [currentTitle, setCurrentTitle] = useState<string>('');
+   const [currentIngredients, setCurrentIngredients] = useState<string>('');
+   const [currentDataType, setCurrentDataType] = useState<string>('');
+   const [currentServingSizeUnit, setCurrentServingSizeUnit] =
+      useState<string>('');
+   const [currentServingSizes, setCurrentServingSizes] = useState<number[]>([
+      100,
+   ]);
 
    const handleOpeningAddToMealplanDialog = (
-      imageType: string,
+      id: number,
+      dataType: string,
+      servingSizes: number[],
+      servingSizeUnit: string,
       title: string,
-      id: number
+      ingredients: string
    ) => {
-      setCurrentImage(imageType);
-      setCurrentTitle(title);
       setCurrentId(id);
+      setCurrentDataType(dataType);
+      setCurrentServingSizes(servingSizes);
+      setCurrentServingSizeUnit(servingSizeUnit);
+      setCurrentTitle(title);
+      setCurrentIngredients(ingredients);
       setOpenDialog(!openDialog);
    };
 
@@ -75,81 +82,81 @@ export const FoodSearchList = ({
             >
                <MenuBookIcon />
                <Typography variant='body1'>
-                  Click on the Add to Mealplan button then choose intended date
-                  and slot (morning, afternoon, or evening) to save any item
+                  Click on any item to add it to your mealplan
                </Typography>
             </Stack>
-            {route === 'ingredients' ? (
-               <Typography>
-                  * Note that ingredients cannot currently be added to mealplan.{' '}
-               </Typography>
-            ) : null}
+            <Typography variant='h6' align='left'>
+               Search Results
+            </Typography>
             <div className='food-search-main-container'>
-               {/* TODO fix this part with own component */}
-               {/* {route === 'ingredients'
-                  ? searchResults.map((item: IngredientType, index: number) => (
-                       <React.Fragment key={index}>
-                          <div data-testid='food-search-item'>
-                             <FoodItemContents
-                                route={route}
-                                image={item.image}
-                                id={item.id}
-                                title={item.name}
-                                nutrition={item.nutrition}
-                                imageType={'jpg'}
-                                handleOpeningAddIngredientModal={
-                                   handleOpeningAddIngredientModal
-                                }
-                                amount={item.amount}
-                                possibleUnits={item.possibleUnits}
-                                unit={item.unit}
-                                isMealPlanItem={false} //used to add a X icon to delete mealplans
-                             />
-                          </div>
-                       </React.Fragment>
-                    ))
-                  : searchResults.map((item: FoodItemType, index: number) => (
-                       <React.Fragment key={index}>
-                          <div data-testid='food-search-item'>
-                             <FoodItemContents
-                                route={route}
-                                image={item.image}
-                                id={item.id}
-                                title={item.title}
-                                restaurantChain={item.restaurantChain}
-                                nutrition={item.nutrition}
-                                url={item.sourceUrl}
-                                imageType={item.imageType}
-                                handleOpeningAddToMealplanDialog={
-                                   handleOpeningAddToMealplanDialog
-                                }
-                                isMealPlanItem={false} //used to add a X icon to delete mealplans
-                             />
-                          </div>
-                       </React.Fragment>
-                    ))} */}
+               <TableContainer component={Paper}>
+                  <Table stickyHeader={true} aria-label='search results'>
+                     <TableHead>
+                        <StyledTableRow>
+                           <StyledTableCell variant='head' />
+                           <StyledTableCell>
+                              Food&nbsp;(100g serving)
+                           </StyledTableCell>
+                           <StyledTableCell align='right'>
+                              Calories
+                           </StyledTableCell>
+                           <StyledTableCell align='right'>
+                              Fat&nbsp;(g)
+                           </StyledTableCell>
+                           <StyledTableCell align='right'>
+                              Carbs&nbsp;(g)
+                           </StyledTableCell>
+                           <StyledTableCell align='right'>
+                              Protein&nbsp;(g)
+                           </StyledTableCell>
+                        </StyledTableRow>
+                     </TableHead>
+                     <TableBody>
+                        {searchResults.map((searchResult) => (
+                           <FoodListRow
+                              key={searchResult.fdc_id}
+                              ingredients={searchResult.ingredients}
+                              handleOpeningAddToMealplanDialog={
+                                 handleOpeningAddToMealplanDialog
+                              }
+                              brand_name={searchResult.brand_name}
+                              brand_owner={searchResult.brand_owner}
+                              branded_food_category={
+                                 searchResult.branded_food_category
+                              }
+                              description={searchResult.description}
+                              fdc_id={searchResult.fdc_id}
+                              serving_size={searchResult.serving_size}
+                              serving_size_unit={searchResult.serving_size_unit}
+                              data_type={searchResult.data_type}
+                              nutrition={searchResult.nutrition}
+                           />
+                        ))}
+                     </TableBody>
+                  </Table>
+               </TableContainer>
             </div>
             {showLoadMoreBtn ? (
-               <Button fullWidth onClick={handleLoadMore} variant='contained'>
+               <Button fullWidth onClick={handleLoadMore} variant='text'>
                   Load More
                </Button>
             ) : null}
          </div>
 
-         {route === 'ingredients' ? null : (
-            <AddToCartModal
-               openDialog={openDialog}
-               handleOpeningDialog={handleOpeningDialog}
-               route={route}
-               imageType={currentImage}
-               title={currentTitle}
-               id={currentId}
-               setOpenDialog={setOpenDialog}
-               setAlertMessage={setAlertMessage}
-               setOpenSnackbar={setOpenSnackbar}
-               setAlertSeverity={setAlertSeverity}
-            />
-         )}
+         <AddToCartModal
+            openDialog={openDialog}
+            handleOpeningDialog={handleOpeningDialog}
+            id={currentId}
+            currentDataType={currentDataType}
+            currentServingSizes={currentServingSizes}
+            currentServingSizeUnit={currentServingSizeUnit}
+            setOpenDialog={setOpenDialog}
+            currentTitle={currentTitle}
+            currentIngredients={currentIngredients}
+            setAlertMessage={setAlertMessage}
+            setOpenSnackbar={setOpenSnackbar}
+            setAlertSeverity={setAlertSeverity}
+         />
       </>
    );
 };

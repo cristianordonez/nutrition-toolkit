@@ -3,13 +3,10 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
-import { zonedTimeToUtc } from 'date-fns-tz';
-import getUnixTime from 'date-fns/getUnixTime';
-import startOfDay from 'date-fns/startOfDay';
+import { format } from 'date-fns-tz';
 import startOfToday from 'date-fns/startOfToday';
 import React, { Dispatch, SetStateAction } from 'react';
-import { AddToMealPlanType } from '../../../../../../types/types';
-import { getFormattedDate } from '../../../../utils/getFormattedDateFunc';
+import { AddToMealPlanType } from '../../../../../../../types/types';
 
 interface Props {
    setData: Dispatch<SetStateAction<AddToMealPlanType>>;
@@ -18,17 +15,22 @@ interface Props {
 
 //material ui returns a date in string format Jan 12 2022 for example, but spoonacular requires Unix time
 export const DatePickerTextField = ({ setData, data }: Props) => {
-   const [value, setValue] = React.useState<any>(startOfToday());
+   const [value, setValue] = React.useState<Date | null>(startOfToday());
 
-   const handleChange = (newValue: any) => {
+   const handleChange = (newValue: Date | null) => {
+      let inputDate = newValue as string | number | Date;
       setValue(newValue);
-      let currentDate = zonedTimeToUtc(newValue, 'UTC'); //need to convert local time to UTC time to prevent bugs
+
+      //TODO make sure correct date is being used
+      // let currentDate = zonedTimeToUtc(inputDate, 'UTC'); //need to convert local time to UTC time to prevent bugs
+      // con sole.log('currentDate:', currentDate);
+      const result = format(inputDate, 'yyy-MM-dd') as unknown as Date;
       // let currentDate = formatInTimeZone(new Date(Date.now()), 'America/New_York', 'yyyy-MM-dd HH:mm:ssXXX')
-      let { year, month, day, hour, min, sec } = getFormattedDate(currentDate);
-      const startOfCurrentDay = startOfDay(
-         new Date(year, month, day, hour, min, sec)
-      );
-      const result = getUnixTime(startOfCurrentDay);
+      // let { year, month, day, hour, min, sec } = getFormattedDate(currentDate);
+      // const startOfCurrentDay = startOfDay(
+      //    new Date(year, month, day, hour, min, sec)
+      // );
+      // const result = getUnixTime(startOfCurrentDay);
       setData({ ...data, date: result });
    };
 

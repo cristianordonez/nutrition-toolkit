@@ -6,7 +6,6 @@ const getFoodItemsSimple = async (req: Request, res: Response) => {
    try {
       const query = req.query as unknown as Query;
       const foodItemsSimple = await get(query);
-      console.log('foodItems:', foodItemsSimple);
       res.status(200).send(foodItemsSimple);
    } catch (err) {
       console.log(err);

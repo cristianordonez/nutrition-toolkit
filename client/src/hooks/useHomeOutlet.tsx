@@ -1,7 +1,7 @@
 import { AlertColor } from '@mui/material';
 import { Dispatch, ReactNode, SetStateAction } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { CurrentGoals, SearchResults } from '../../../types/types';
+import { CurrentGoals, FoodSearchResult } from '../../../types/types';
 
 interface OutletContext {
    loading: boolean;
@@ -19,7 +19,7 @@ interface OutletContext {
    currentDay: string;
    setCurrentDay: Dispatch<SetStateAction<string>>;
    // mealplanItems: MealplanItemType[];
-   searchResults: SearchResults[];
+   searchResults: FoodSearchResult[];
    goals: CurrentGoals;
    setGoals: Dispatch<SetStateAction<CurrentGoals>>;
    mobileOpen: boolean;

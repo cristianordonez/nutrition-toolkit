@@ -4,8 +4,8 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import React, { Dispatch, SetStateAction } from 'react';
 import {
    CurrentGoals,
+   FoodSearchResult,
    Query,
-   SearchResults,
 } from '../../../../../../types/types';
 import { AdvancedSearchForm } from '../../../../components/search-forms/AdvancedSearchForm';
 import { SimpleSearchForm } from '../../../../components/search-forms/SimpleSearchForm';
@@ -24,7 +24,8 @@ interface Props {
    setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    setOpenAlert: Dispatch<SetStateAction<boolean>>;
    setShowLoadMoreBtn: Dispatch<SetStateAction<boolean>>;
-   setSearchResults: Dispatch<SetStateAction<SearchResults[]>>;
+   setSearchResults: Dispatch<SetStateAction<FoodSearchResult[]>>;
+   setSendAdvancedRequest: Dispatch<SetStateAction<boolean>>;
 }
 
 export const SearchForm = ({
@@ -41,6 +42,7 @@ export const SearchForm = ({
    setOpenAlert,
    setShowLoadMoreBtn,
    setSearchResults,
+   setSendAdvancedRequest,
 }: Props) => {
    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setValues({ ...values, [event.target.id]: event.target.value });
@@ -106,6 +108,7 @@ export const SearchForm = ({
                setOpenAlert={setOpenAlert}
                setShowLoadMoreBtn={setShowLoadMoreBtn}
                setSearchResults={setSearchResults}
+               setSendAdvancedRequest={setSendAdvancedRequest}
             />
          )}
       </div>

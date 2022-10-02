@@ -69,13 +69,10 @@ passport.use(
          OR email = '${usernameOrEmail}'`
       )
          .then(function (result: any) {
-            console.log('result in local strat:', result);
             if (result.length) {
                const first = result[0];
                bcrypt.compare(password, first.hash, function (err, res) {
                   if (res) {
-                     console.log('res in bcrypt compare:', res);
-                     console.log('first:', first);
                      cb(null, {
                         id: first.id,
                         username: first.username,
@@ -106,25 +103,18 @@ passport.use(
          scope: ['profile', 'email'], //the data we are asking for from google
       },
       (issuer: any, profile: any, done: any) => {
-         console.log('here in passport google strat');
          getGoogleUser(profile.emails[0].value)
             .then((response: PassportGoogleUser[]) => {
-               console.log('response in get google user:', response);
                //if user exists, redirect
                if (response.length > 0) {
                   done(null, response[0]);
                } else {
-                  console.log('here in else block google strat');
                   let user = {} as PassportGoogleUser;
                   user.username = profile.displayName;
                   user.email = profile.emails[0].value;
                   createGoogleUser(user).then((userId: number) => {
-                     console.log(
-                        'profile after creating google user:',
-                        profile
-                     );
                      user.id = userId;
-                     console.log('profile:', profile);
+
                      done(null, user);
                   });
                }

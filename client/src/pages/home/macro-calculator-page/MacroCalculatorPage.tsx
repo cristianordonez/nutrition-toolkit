@@ -42,6 +42,7 @@ const MacroCalculatorPage = () => {
                setAlertSeverity={setAlertSeverity}
                page={'macrocalculator'}
                showNextPage={showNextPage}
+               setGoals={setGoals}
             />
          </div>
       </>

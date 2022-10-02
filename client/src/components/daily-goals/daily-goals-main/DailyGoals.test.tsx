@@ -2,11 +2,11 @@
 /**
  * @jest-environment jsdom
  */
-import React, { useState } from 'react';
-import { expect } from '../../../../jestGlobals';
-import { render, waitFor, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { DailyGoals } from './index';
+import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { expect } from '../../../../../jestGlobals';
+import { DailyGoals } from './DailyGoalsMain';
 
 describe('DailyGoals Component', () => {
    test('Shows correct title when page prop is set to mealplan', async () => {

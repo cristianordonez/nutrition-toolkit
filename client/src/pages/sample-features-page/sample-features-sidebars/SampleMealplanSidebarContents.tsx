@@ -1,17 +1,15 @@
-import React from 'react';
-import { Typography, Stack } from '@mui/material';
-import { GoalCardItemLinearProgress } from '../../../components/goal-card-item-linear-progress/GoalCardItemLinearProgress';
-import { CaloriesCircularProgress } from '../../../components/calories-circular-progress/CaloriesCircularProgress';
-import { CurrentGoals } from '../../../../../types/types';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
+import { Stack, Typography } from '@mui/material';
+import React from 'react';
+import {
+   CurrentGoals,
+   NutritionSummaryMealplan,
+} from '../../../../../types/types';
+import { CaloriesCircularProgress } from '../../../components/calories-circular-progress/CaloriesCircularProgress';
+import { GoalCardItemLinearProgress } from '../../../components/goal-card-item-linear-progress/GoalCardItemLinearProgress';
 
 interface Props {
-   nutritionSummary: {
-      calories: number;
-      carbohydrates: number;
-      fat: number;
-      protein: number;
-   };
+   nutritionSummary: NutritionSummaryMealplan;
    goals: CurrentGoals;
 }
 export const SampleMealplanSidebarContents = ({
@@ -19,7 +17,7 @@ export const SampleMealplanSidebarContents = ({
    goals,
 }: Props): ReactJSXElement => {
    let calories = Math.floor(
-      (nutritionSummary.calories / goals.total_calories) * 100
+      (parseInt(nutritionSummary.total_calories) / goals.total_calories) * 100
    );
    return (
       <React.Fragment>
@@ -28,24 +26,25 @@ export const SampleMealplanSidebarContents = ({
          </Typography>
          <CaloriesCircularProgress
             calories={calories}
-            caloriesUsed={Math.floor(nutritionSummary.calories)}
-            caloriesTotal={goals.total_calories}
+            goalCalories={goals.total_calories}
          />
          <Stack direction='column' spacing={2} sx={{ p: '1rem' }}>
             <GoalCardItemLinearProgress
                nutrientsTotal={goals.total_carbohydrates}
                type={'Carbohydrates'}
-               nutrientsInMealPlan={nutritionSummary.carbohydrates}
+               nutrientsInMealPlan={parseInt(
+                  nutritionSummary.total_carbohydrates
+               )}
             />
             <GoalCardItemLinearProgress
                nutrientsTotal={goals.total_protein}
                type={'Protein'}
-               nutrientsInMealPlan={nutritionSummary.protein}
+               nutrientsInMealPlan={parseInt(nutritionSummary.total_protein)}
             />
             <GoalCardItemLinearProgress
                nutrientsTotal={goals.total_fat}
                type={'Fat'}
-               nutrientsInMealPlan={nutritionSummary.fat}
+               nutrientsInMealPlan={parseInt(nutritionSummary.total_fat)}
             />
             <Typography variant='caption' align='center' sx={{ pt: '5rem' }}>
                Note: goals and mealplan items are generated randomly. Please log

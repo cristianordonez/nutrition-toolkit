@@ -7,7 +7,6 @@ import './SearchPage.scss';
 const SearchPage = () => {
    const {
       loading,
-      route,
       handleLoadMore,
       setAlertMessage,
       setOpenAlert,
@@ -21,12 +20,10 @@ const SearchPage = () => {
       <>
          <>
             <Box className='search-page' sx={{ width: '100vw' }}>
-               {loading ? <CircularProgress size={68} /> : null}
                {searchResults.length ? (
                   <>
                      <FoodSearchList
                         searchResults={searchResults}
-                        route={route}
                         handleLoadMore={handleLoadMore}
                         setAlertMessage={setAlertMessage}
                         setOpenSnackbar={setOpenAlert}
@@ -37,6 +34,7 @@ const SearchPage = () => {
                ) : (
                   <>{SearchFormComponent}</>
                )}
+               {loading ? <CircularProgress size={68} /> : null}
             </Box>
          </>
       </>

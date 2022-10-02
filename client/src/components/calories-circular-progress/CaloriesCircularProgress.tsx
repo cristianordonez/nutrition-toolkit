@@ -1,18 +1,13 @@
+import { CircularProgress, Typography } from '@mui/material';
 import React from 'react';
 import './CaloriesCircularProgress.scss';
-import { Typography, CircularProgress, Button } from '@mui/material';
 
 interface Props {
-   calories: number | undefined;
-   caloriesUsed: number;
-   caloriesTotal: number;
+   calories: number;
+   goalCalories: number;
 }
 
-export const CaloriesCircularProgress = ({
-   calories,
-   caloriesUsed,
-   caloriesTotal,
-}: Props) => {
+export const CaloriesCircularProgress = ({ calories, goalCalories }: Props) => {
    return (
       <>
          <div className='daily-goals-kcal'>
@@ -28,7 +23,7 @@ export const CaloriesCircularProgress = ({
                   Calories
                </Typography>
                <Typography variant='h6'>
-                  {caloriesUsed} / {caloriesTotal}
+                  {calories} / {goalCalories}
                </Typography>
             </div>
          </div>

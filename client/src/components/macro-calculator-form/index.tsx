@@ -14,6 +14,7 @@ import axios from 'axios';
 import React, { Dispatch, SetStateAction } from 'react';
 import { BsCalculatorFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
+import { CurrentGoals } from '../../../../types/types';
 import { getMetrics } from '../../utils/get-metrics/getMetrics';
 import { Calculator } from '../calculator-contents/Calculator';
 import './index.scss';
@@ -25,6 +26,7 @@ interface Props {
    setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    page?: string;
    showNextPage?: boolean | any;
+   setGoals?: Dispatch<SetStateAction<CurrentGoals>> | undefined;
 }
 
 export const MacroCalculatorForm = ({
@@ -35,6 +37,7 @@ export const MacroCalculatorForm = ({
    setAlertSeverity,
    showNextPage,
    page, //used to mark whether this is being shown as part of signup form or as its own page
+   setGoals,
 }: Props) => {
    let navigate = useNavigate();
    const [activityLevel, setActivityLevel] = React.useState<number>(1);
@@ -79,10 +82,10 @@ export const MacroCalculatorForm = ({
          activityLevel,
          goal,
       });
-      console.log('metrics:', metrics);
       try {
          const response = await axios.post(`/api/goals`, metrics);
-         if (page === 'macrocalculator') {
+         if (page === 'macrocalculator' && setGoals !== undefined) {
+            setGoals(metrics);
             setErrorMessage(
                'You have updated your macronutrient needs. Go to search page to begin searching for recipes, menu items, or grocery products within this range.'
             );

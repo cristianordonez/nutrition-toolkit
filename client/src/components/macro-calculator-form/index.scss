@@ -5,9 +5,15 @@
    @include set-size(100%);
    justify-content: center;
    @include devices(mobile) {
-      padding-top: 0;
+      padding: 0;
+   }
+   @include devices(tablet) {
+      padding-left: 1rem;
+      padding-right: 1rem;
    }
    padding-top: 10vh;
+   padding-left: 2rem;
+   padding-right: 2rem;
    .macro-calculator-form {
       @include set-size(100%);
       @include flex-center();
