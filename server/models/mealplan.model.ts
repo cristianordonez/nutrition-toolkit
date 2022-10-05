@@ -82,7 +82,7 @@ const createMealNutrition = (user_id: number) => {
 
 const getByDay = (date: Date | string, user_id: number) => {
    const getMealsAndNutritionQuery = `SELECT slot, data_type, servings, serving_size, serving_size_unit, date, fdc_id,  
-	ingredients, title, row_to_json(user_meal_nutrition) FROM user_meal INNER JOIN user_meal_nutrition ON
+	ingredients, title, row_to_json(user_meal_nutrition) AS nutrition FROM user_meal INNER JOIN user_meal_nutrition ON
 	user_meal.id = user_meal_nutrition.meal_id 
 	WHERE user_id = ${user_id} AND date = '${date}'
 	ORDER BY created_at ASC `;

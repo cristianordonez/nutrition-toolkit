@@ -1,7 +1,7 @@
+import { CircularProgress, Typography } from '@mui/material';
 import React from 'react';
-import './CaloriesCircularProgress.scss';
-import { Typography, CircularProgress } from '@mui/material';
 import { CurrentGoals } from '../../../../types/types';
+import './CaloriesCircularProgress.scss';
 
 interface Props {
    goals: CurrentGoals;

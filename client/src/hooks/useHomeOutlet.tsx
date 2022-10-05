@@ -15,9 +15,10 @@ interface OutletContext {
    SearchFormComponent: ReactNode;
    setNutritionSummary: Dispatch<SetStateAction<[]>>;
    setMealplanItemsFound: Dispatch<SetStateAction<boolean>>;
+   setLoading: Dispatch<SetStateAction<boolean>>;
    // setMealplanItems: Dispatch<SetStateAction<MealplanItemType[] | []>>;
-   currentDay: string;
-   setCurrentDay: Dispatch<SetStateAction<string>>;
+   // currentDay: string;
+   // setCurrentDay: Dispatch<SetStateAction<string>>;
    // mealplanItems: MealplanItemType[];
    searchResults: FoodSearchResult[];
    goals: CurrentGoals;

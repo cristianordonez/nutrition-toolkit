@@ -75,7 +75,7 @@ type MetricsType = {
    activityLevel: number;
 };
 
-type FoodSearchResultNutrition = {
+type FoodNutrition = {
    calories: number;
    calcium: number;
    cholesterol: number;
@@ -106,7 +106,7 @@ type FoodSearchResult = {
    serving_size: number;
    serving_size_unit: string;
    data_type: string;
-   nutrition: FoodSearchResultNutrition;
+   nutrition: FoodNutrition;
 };
 
 type NutritionSummaryMealplan = {
@@ -114,6 +114,19 @@ type NutritionSummaryMealplan = {
    total_carbohydrates: string;
    total_fat: string;
    total_protein: string;
+};
+
+type MealplanItem = {
+   data_type: string;
+   date: string;
+   fdc_id: string;
+   ingredients: string;
+   nutrition: FoodNutrition;
+   serving_size: number;
+   serving_size_unit: string;
+   servings: number;
+   slot: number;
+   title: string;
 };
 
 export {
@@ -127,7 +140,8 @@ export {
    RequestParams,
    PassportGoogleUser,
    FoodSearchResult,
-   FoodSearchResultNutrition,
+   FoodNutrition,
    NutritionSummaryMealplan,
    MetricsType,
+   MealplanItem,
 };

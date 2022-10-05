@@ -17,7 +17,6 @@ router.post('/resetPassword', (req: Request, res: Response) => {
    resetPassword(req, res);
 });
 
-type PassportUser = {};
 //GOOGLE AUTHENTICATION////////////////////////////
 //handles initial redirect of user to google
 router.get('/login/federated/google', passport.authenticate('google'));

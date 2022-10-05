@@ -1,5 +1,5 @@
 import { Box, CircularProgress } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHomeOutlet } from '../../../hooks/useHomeOutlet';
 import { FoodSearchList } from './food-search-list';
 import './SearchPage.scss';
@@ -14,8 +14,12 @@ const SearchPage = () => {
       showLoadMoreBtn,
       SearchFormComponent,
       searchResults,
+      setLoading,
    } = useHomeOutlet();
 
+   useEffect(() => {
+      setLoading(false);
+   }, []);
    return (
       <>
          <>

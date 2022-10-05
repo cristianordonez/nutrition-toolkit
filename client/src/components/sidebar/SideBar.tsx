@@ -23,6 +23,7 @@ interface Props {
    searchResults?: FoodSearchResult[];
    goals: CurrentGoals;
    nutritionSummary: NutritionSummaryMealplan;
+   loading: boolean;
 }
 
 const drawerWidth = 350;
@@ -33,7 +34,7 @@ export const SideBar = ({
    SearchFormComponent,
    searchResults,
    goals,
-
+   loading,
    nutritionSummary,
 }: Props) => {
    const location = useLocation();
@@ -91,28 +92,27 @@ export const SideBar = ({
                   <MainTitleLogo />
                </Stack>
                {/* RENDER SEARCH FORM WHEN THERE ARE FOOD ITEMS IN STATE */}
-               {page === 'search' &&
+               {!loading &&
+               page === 'search' &&
                searchResults !== undefined &&
                searchResults.length > 0
                   ? SearchFormComponent
                   : null}{' '}
                {/* RENDER GOALS WHEN THERE ARE NO SEARCH RESULTS, AND PAGE IS NOT MEALPLAN */}
-               {page !== 'mealplan' &&
+               {!loading &&
+               page !== 'mealplan' &&
                searchResults != undefined &&
                searchResults.length === 0 ? (
                   <DailyGoals goals={goals} />
                ) : null}
                {/* RENDER GOALSMEALPLAN WHEN PAGE IS MEALPLAN AND THERE IS NUTRITION SUMMARY */}
-               {page === 'mealplan' && nutritionSummary !== undefined ? (
+               {!loading &&
+               page === 'mealplan' &&
+               nutritionSummary !== undefined ? (
                   <DailyGoalsMealplan
                      goals={goals}
                      nutritionSummary={nutritionSummary}
                   />
-               ) : null}
-               {/* RENDER THE GOALS, EVEN IF SEARCHRESULTS IS UNDEFINED UNLIKE ABOVE DAILY GOALS */}
-               {page === 'macrocalculator' ||
-               (page === 'user-profile' && !nutritionSummary) ? (
-                  <DailyGoals goals={goals} />
                ) : null}
             </Drawer>
 
@@ -140,28 +140,28 @@ export const SideBar = ({
                   <MainTitleLogo />
                </Stack>
                {/* RENDER SEARCH FORM WHEN THERE ARE FOOD ITEMS IN STATE */}
-               {page === 'search' &&
+               {!loading &&
+               page === 'search' &&
                searchResults !== undefined &&
                searchResults.length > 0
                   ? SearchFormComponent
                   : null}{' '}
                {/* RENDER GOALS WHEN THERE ARE NO SEARCH RESULTS, AND PAGE IS NOT MEALPLAN */}
-               {page !== 'mealplan' &&
+               {!loading &&
+               page !== 'mealplan' &&
                searchResults != undefined &&
                searchResults.length === 0 ? (
                   <DailyGoals goals={goals} />
                ) : null}
                {/* RENDER GOALSMEALPLAN WHEN PAGE IS MEALPLAN AND THERE IS NUTRITION SUMMARY */}
-               {page === 'mealplan' && nutritionSummary !== undefined ? (
+               {!loading &&
+               page === 'mealplan' &&
+               nutritionSummary !== undefined ? (
                   <DailyGoalsMealplan
                      goals={goals}
                      nutritionSummary={nutritionSummary}
                   />
                ) : null}
-               {/* RENDER THE GOALS, EVEN IF SEARCHRESULTS IS UNDEFINED UNLIKE ABOVE DAILY GOALS */}
-               {/* {page === 'other' && !nutritionSummary ? (
-                  <DailyGoals goals={goals} />
-               ) : null} */}
             </Drawer>
          </>
       </>

@@ -12,11 +12,13 @@ import React, {
    useEffect,
    useState,
 } from 'react';
-import { NutritionSummaryMealplan } from '../../../../../types/types';
+import {
+   MealplanItem,
+   NutritionSummaryMealplan,
+} from '../../../../../types/types';
 import { MealPlanWeekText } from '../../../components/mealplan-week-text/MealPlanWeekText';
-import { useAuth } from '../../../context/authContext';
 import { DateSelectForm } from './date-select-form/DateSelectForm';
-import { MealplanDays } from './mealplan-days';
+import { MealplanDays } from './mealplan-day';
 import './MealPlanPage.scss';
 
 const days = [
@@ -36,10 +38,9 @@ interface Props {
    setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    SearchFormComponent: ReactNode;
    setNutritionSummary: Dispatch<SetStateAction<NutritionSummaryMealplan>>;
-   setMealplanItems: Dispatch<SetStateAction<any>>; //TODO add mealplan type
-   mealplanItems: any; //TODO add mealplan type
-   currentDay: string;
-   setCurrentDay: Dispatch<SetStateAction<string>>;
+   setMealplanItems: Dispatch<SetStateAction<MealplanItem[]>>;
+   mealplanItems: MealplanItem[];
+   setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
 const initialNutritionSummary = {
@@ -56,15 +57,15 @@ const MealPlanPage = ({
    setAlertSeverity,
    setNutritionSummary,
    setMealplanItems,
-   currentDay,
-   setCurrentDay,
+   setLoading,
    mealplanItems,
 }: Props) => {
-   const { isLoading, isLoggedin } = useAuth();
    const [dayIndex, setDayIndex] = useState<number>(getDay(Date.now()));
    const [value, setValue] = React.useState<any>(new Date(Date.now()));
+   const [currentDay, setCurrentDay] = useState(
+      format(new Date(Date.now()), 'yyyy-MM-dd')
+   );
 
-   //#check for active mealplan items only when navigating to the mealplan page
    useEffect(() => {
       handleDateChange();
    }, [currentDay]);
@@ -72,34 +73,31 @@ const MealPlanPage = ({
    const handleDateChange = async () => {
       setMealplanItems([]); //when tab changes, reset the nutrition summary and the mealplan items
       // setNutritionSummary(initialNutritionSummary);
+      console.log('here in hande date change');
       try {
-         const userMealplanItems = await axios.get('/api/mealplan/day', {
+         const dbResponse = await axios.get('/api/mealplan/day', {
             params: { date: currentDay },
             withCredentials: true,
          });
-         console.log('userMealplanItems: ', userMealplanItems);
-         if (userMealplanItems.data.mealplanItems.length > 0) {
-            console.log(
-               'userMealplanItems.data in handledate change: ',
-               userMealplanItems.data
+         if (dbResponse.data.mealplanItems.length === 0) {
+            setAlertSeverity('info');
+            setAlertMessage(
+               'You have no items saved on this day for your mealplan.'
             );
-            setNutritionSummary(userMealplanItems.data.nutritionSummary[0]);
-            setMealplanItems(userMealplanItems.data.mealplanItems);
-         } else {
+            setOpenAlert(true);
          }
+         console.log('dbResponse: ', dbResponse);
+         setMealplanItems(dbResponse.data.mealplanItems);
+         setNutritionSummary(dbResponse.data.nutritionSummary[0]);
+         setLoading(false);
       } catch (err) {
          console.log(err);
-         setAlertSeverity('info');
-         setAlertMessage(
-            'You have no items saved on this day for your mealplan.'
-         );
-         setOpenAlert(true);
       }
    };
 
    const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
       setMealplanItems([]); //when tab changes, reset the nutrition summary and the mealplan items
-      setNutritionSummary(initialNutritionSummary);
+      // setNutritionSummary(initialNutritionSummary);
       const prevDate = currentDay; //create variable to store the previous date and previous tab index
       const prevDayIndex = dayIndex;
       let differenceInDays = newValue - dayIndex; //find out how many days before or after current date is new selected date by finding difference between previous tab and current tab
@@ -149,7 +147,6 @@ const MealPlanPage = ({
                         your meal plan
                      </Typography>
                   </Stack>
-                  {/* TODO provide a setmealplans function instead  */}
                   <DateSelectForm
                      currentDay={currentDay}
                      setCurrentDay={setCurrentDay}
@@ -171,16 +168,15 @@ const MealPlanPage = ({
                      ))}
                   </Tabs>
                </div>
-               {isLoading ? null : (
-                  <MealplanDays
-                     // setMealPlanItems={setMealplanItems}
-                     currentDay={currentDay}
-                     // mealplanItems={mealplanItems}
-                     setOpenAlert={setOpenAlert}
-                     setAlertSeverity={setAlertSeverity}
-                     setAlertMessage={setAlertMessage}
-                  />
-               )}
+
+               <MealplanDays
+                  setMealPlanItems={setMealplanItems}
+                  currentDay={currentDay}
+                  mealplanItems={mealplanItems}
+                  setOpenAlert={setOpenAlert}
+                  setAlertSeverity={setAlertSeverity}
+                  setAlertMessage={setAlertMessage}
+               />
             </div>
          </div>
       </>

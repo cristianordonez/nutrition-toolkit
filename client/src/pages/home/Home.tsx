@@ -1,7 +1,6 @@
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { AlertColor, IconButton, Toolbar, Tooltip } from '@mui/material';
 import axios from 'axios';
-import format from 'date-fns/format';
 import React, { useEffect, useState } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 import {
@@ -21,22 +20,15 @@ const Home = () => {
    const [searchResults, setSearchResults] = useState<FoodSearchResult[]>([]);
    const [currentTab, setCurrentTab] = useState<string>('advanced-search');
    const [openAlert, setOpenAlert] = useState<boolean>(false);
-   const [loading, setLoading] = useState<boolean>(false);
+   const [loading, setLoading] = useState<boolean>(true);
    const [alertMessage, setAlertMessage] = useState<string>('');
    //TODO add type for mealplan items
    const [mealplanItems, setMealplanItems] = useState<any>([]);
    const [showLoadMoreBtn, setShowLoadMoreBtn] = useState<boolean>(false);
    const [nutritionSummary, setNutritionSummary] =
-      useState<NutritionSummaryMealplan>({
-         total_calories: '0',
-         total_protein: '0',
-         total_fat: '0',
-         total_carbohydrates: '0',
-      });
+      useState<NutritionSummaryMealplan>({} as NutritionSummaryMealplan);
    const [sendAdvancedRequest, setSendAdvancedRequest] = useState(false);
-   const [currentDay, setCurrentDay] = useState(
-      format(new Date(Date.now()), 'yyyy-MM-dd')
-   );
+
    const [alertSeverity, setAlertSeverity] = useState<AlertColor>('error');
    const [values, setValues] = useState<Query>({
       query: '',
@@ -164,12 +156,15 @@ const Home = () => {
       });
    }, []);
 
+   console.log('nutritionSummary: ', nutritionSummary);
+
    return (
       <>
          <SideBar
             mobileOpen={mobileOpen}
             handleDrawerToggle={handleDrawerToggle}
             SearchFormComponent={SearchFormComponent}
+            loading={loading}
             goals={goals}
             searchResults={searchResults}
             nutritionSummary={nutritionSummary}
@@ -200,10 +195,9 @@ const Home = () => {
                         setAlertSeverity={setAlertSeverity}
                         setNutritionSummary={setNutritionSummary}
                         setMealplanItems={setMealplanItems}
-                        currentDay={currentDay}
-                        setCurrentDay={setCurrentDay}
                         mealplanItems={mealplanItems}
                         SearchFormComponent={SearchFormComponent}
+                        setLoading={setLoading}
                      />
                   </>
                }
@@ -216,14 +210,15 @@ const Home = () => {
                handleDrawerToggle,
                handleLoadMore,
                setAlertMessage,
+               setLoading,
                setOpenAlert,
                setAlertSeverity,
                showLoadMoreBtn,
                SearchFormComponent,
                setNutritionSummary,
                setMealplanItems,
-               currentDay,
-               setCurrentDay,
+               // currentDay,
+               // setCurrentDay,
                searchResults,
                mealplanItems,
                goals,
