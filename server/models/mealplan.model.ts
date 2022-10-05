@@ -81,9 +81,9 @@ const createMealNutrition = (user_id: number) => {
 };
 
 const getByDay = (date: Date | string, user_id: number) => {
-   const getMealsAndNutritionQuery = `SELECT slot, data_type, servings, serving_size, serving_size_unit, date, fdc_id,  
-	ingredients, title, row_to_json(user_meal_nutrition) AS nutrition FROM user_meal INNER JOIN user_meal_nutrition ON
-	user_meal.id = user_meal_nutrition.meal_id 
+   const getMealsAndNutritionQuery = `SELECT user_meal.id, slot, data_type, servings, serving_size, serving_size_unit, date, fdc_id,  
+	ingredients, title, row_to_json(user_meal_nutrition) 
+	AS nutrition FROM user_meal INNER JOIN user_meal_nutrition ON user_meal.id = user_meal_nutrition.meal_id 
 	WHERE user_id = ${user_id} AND date = '${date}'
 	ORDER BY created_at ASC `;
    const response = db.query(getMealsAndNutritionQuery);
@@ -91,7 +91,8 @@ const getByDay = (date: Date | string, user_id: number) => {
 };
 
 const getNutritionSummaryByDay = (date: Date | string, user_id: number) => {
-   const getSummaryQuery = `SELECT COALESCE(SUM(calories), 0) AS total_calories,
+   const getSummaryQuery = `SELECT 
+    COALESCE(SUM(calories), 0) AS total_calories,
 	COALESCE(SUM(total_carbohydrate), 0) AS total_carbohydrates,
 	COALESCE(SUM(total_fat), 0) AS total_fat,
 	COALESCE(SUM(protein), 0) AS total_protein
@@ -101,4 +102,17 @@ const getNutritionSummaryByDay = (date: Date | string, user_id: number) => {
    const nutritionSummary = db.query(getSummaryQuery);
    return nutritionSummary;
 };
-export { create, createMealNutrition, getByDay, getNutritionSummaryByDay };
+
+const deleteFood = (user_id: number, mealId: string) => {
+   const deleteFoodQuery = `DELETE FROM user_meal 
+		WHERE id = ${mealId} AND user_id = ${user_id};`;
+   return db.query(deleteFoodQuery);
+};
+
+export {
+   create,
+   createMealNutrition,
+   getByDay,
+   getNutritionSummaryByDay,
+   deleteFood,
+};

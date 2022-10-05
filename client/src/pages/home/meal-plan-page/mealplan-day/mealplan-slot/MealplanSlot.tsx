@@ -1,5 +1,6 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import {
    AlertColor,
    IconButton,
@@ -8,13 +9,16 @@ import {
    TableBody,
    TableCell,
    TableContainer,
-   TableFooter,
    TableHead,
    Tooltip,
 } from '@mui/material';
+import axios from 'axios';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MealplanItem } from '../../../../../../../types/types';
+import {
+   MealplanItem,
+   NutritionSummaryMealplan,
+} from '../../../../../../../types/types';
 import { NutritionTable } from '../../../../../components/nutrition-table/NutritionTable';
 import { StyledTableCell } from '../../../../../components/styled-table-components/StyledTableCell';
 import { StyledTableRow } from '../../../../../components/styled-table-components/StyledTableRow';
@@ -28,6 +32,7 @@ interface Props {
    setMealPlanItems: Dispatch<SetStateAction<MealplanItem[]>>;
    slotName: string;
    key: number;
+   setNutritionSummary: Dispatch<SetStateAction<NutritionSummaryMealplan>>;
 }
 
 export const MealplanSlot = ({
@@ -38,6 +43,7 @@ export const MealplanSlot = ({
    setMealPlanItems,
    currentDay,
    slotName,
+   setNutritionSummary,
 }: Props) => {
    const navigate = useNavigate();
    const [open, setOpen] = useState<boolean>(false);
@@ -49,7 +55,29 @@ export const MealplanSlot = ({
 
    //TODO add onclick function to delete mealplan item
    //TODO change style of foodnutrition table
-   //TODO  add button to footer
+   //TODO  add button to footer to link to navigate page
+
+   const handleDeleteRow = async (id: number, currentDay: string) => {
+      try {
+         const axiosResponse = await axios.delete(`/api/mealplan/${id}`, {
+            params: { currentDay },
+            withCredentials: true,
+         });
+         console.log('axiosResponse: ', axiosResponse);
+         setMealPlanItems(
+            axiosResponse.data.updatedItems as unknown as MealplanItem[]
+         );
+         setNutritionSummary(axiosResponse.data.updatedNutritionSummary[0]);
+         setAlertSeverity('success');
+         setAlertMessage('Food item has been deleted');
+         setOpenAlert(true);
+      } catch (err) {
+         console.log('err: ', err);
+         setAlertSeverity('error');
+         setAlertMessage('Unable to delete item. Please try again later.');
+         setOpenAlert(true);
+      }
+   };
    return (
       <>
          <TableContainer component={Paper}>
@@ -62,6 +90,7 @@ export const MealplanSlot = ({
                      >
                         {slotName}
                      </StyledTableCell>
+                     <StyledTableCell variant='head' />
                      <StyledTableCell variant='head' />
                      <StyledTableCell variant='head' />
                      <StyledTableCell variant='head' />
@@ -78,8 +107,8 @@ export const MealplanSlot = ({
                         >
                            <TableCell>
                               <Tooltip
-                                 enterDelay={500}
-                                 enterNextDelay={1000}
+                                 enterDelay={600}
+                                 enterNextDelay={1200}
                                  title={`View item's nutrition facts`}
                               >
                                  <IconButton
@@ -101,6 +130,23 @@ export const MealplanSlot = ({
                               {meal.serving_size_unit}
                            </TableCell>
                            <TableCell>{meal.nutrition.calories} kcal</TableCell>
+                           <TableCell>
+                              <Tooltip
+                                 enterDelay={600}
+                                 enterNextDelay={1200}
+                                 title={`Delete item`}
+                              >
+                                 <IconButton
+                                    aria-label='expand row'
+                                    size='small'
+                                    onClick={() =>
+                                       handleDeleteRow(meal.id, currentDay)
+                                    }
+                                 >
+                                    <RemoveCircleIcon color='error' />
+                                 </IconButton>
+                              </Tooltip>
+                           </TableCell>
                         </StyledTableRow>
                         <NutritionTable
                            open={open}
@@ -108,9 +154,6 @@ export const MealplanSlot = ({
                         />
                      </React.Fragment>
                   ))}
-                  <TableFooter>
-                     <StyledTableCell>Add</StyledTableCell>
-                  </TableFooter>
                </TableBody>
             </Table>
          </TableContainer>

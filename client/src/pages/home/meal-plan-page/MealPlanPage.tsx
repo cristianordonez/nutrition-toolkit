@@ -177,6 +177,7 @@ const MealPlanPage = ({
                   setOpenAlert={setOpenAlert}
                   setAlertSeverity={setAlertSeverity}
                   setAlertMessage={setAlertMessage}
+                  setNutritionSummary={setNutritionSummary}
                />
             </div>
          </div>

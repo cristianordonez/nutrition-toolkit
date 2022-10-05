@@ -124,6 +124,7 @@ type MealplanItem = {
    nutrition: FoodNutrition;
    serving_size: number;
    serving_size_unit: string;
+   id: number;
    servings: number;
    slot: number;
    title: string;

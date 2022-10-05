@@ -1,7 +1,11 @@
 import { AlertColor, Stack } from '@mui/material';
 import React, { Dispatch, SetStateAction } from 'react';
-import { MealplanItem } from '../../../../../../types/types';
+import {
+   MealplanItem,
+   NutritionSummaryMealplan,
+} from '../../../../../../types/types';
 import { MealplanSlot } from './mealplan-slot/MealplanSlot';
+
 interface Props {
    mealplanItems: MealplanItem[];
    setOpenAlert: Dispatch<SetStateAction<boolean>>;
@@ -9,6 +13,7 @@ interface Props {
    setAlertMessage: Dispatch<SetStateAction<string>>;
    setMealPlanItems: Dispatch<SetStateAction<MealplanItem[]>>;
    currentDay: string;
+   setNutritionSummary: Dispatch<SetStateAction<NutritionSummaryMealplan>>;
 }
 
 //gets list of meal plan items, then renders one mealplanitem component per item
@@ -19,6 +24,7 @@ export const MealplanDay = ({
    setAlertSeverity,
    setAlertMessage,
    currentDay,
+   setNutritionSummary,
 }: Props) => {
    let breakfastItems: MealplanItem[] = [];
    let lunchItems: MealplanItem[] = [];
@@ -54,6 +60,7 @@ export const MealplanDay = ({
                   setAlertMessage={setAlertMessage}
                   setMealPlanItems={setMealPlanItems}
                   currentDay={currentDay}
+                  setNutritionSummary={setNutritionSummary}
                />
             ))}
          </Stack>
