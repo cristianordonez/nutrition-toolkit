@@ -12,7 +12,7 @@ interface Props {
 }
 
 //gets list of meal plan items, then renders one mealplanitem component per item
-export const MealplanDays = ({
+export const MealplanDay = ({
    mealplanItems,
    setMealPlanItems,
    setOpenAlert,

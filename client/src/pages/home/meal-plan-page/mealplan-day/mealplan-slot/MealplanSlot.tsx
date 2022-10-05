@@ -10,6 +10,7 @@ import {
    TableContainer,
    TableFooter,
    TableHead,
+   Tooltip,
 } from '@mui/material';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -70,24 +71,29 @@ export const MealplanSlot = ({
                   {meals.map((meal) => (
                      <React.Fragment key={meal.fdc_id}>
                         <StyledTableRow
-                           hover={true}
+                           hover={false}
                            sx={{
                               '& > *': { borderBottom: 'unset' },
-                              cursor: 'pointer',
                            }}
                         >
                            <TableCell>
-                              <IconButton
-                                 aria-label='expand row'
-                                 size='small'
-                                 onClick={handleOpeningRow}
+                              <Tooltip
+                                 enterDelay={500}
+                                 enterNextDelay={1000}
+                                 title={`View item's nutrition facts`}
                               >
-                                 {open ? (
-                                    <KeyboardArrowUpIcon />
-                                 ) : (
-                                    <KeyboardArrowDownIcon />
-                                 )}
-                              </IconButton>
+                                 <IconButton
+                                    aria-label='expand row'
+                                    size='small'
+                                    onClick={handleOpeningRow}
+                                 >
+                                    {open ? (
+                                       <KeyboardArrowUpIcon />
+                                    ) : (
+                                       <KeyboardArrowDownIcon />
+                                    )}
+                                 </IconButton>
+                              </Tooltip>
                            </TableCell>
                            <TableCell>{meal.title}</TableCell>
                            <TableCell>

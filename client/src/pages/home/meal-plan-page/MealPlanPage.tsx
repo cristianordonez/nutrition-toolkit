@@ -18,7 +18,7 @@ import {
 } from '../../../../../types/types';
 import { MealPlanWeekText } from '../../../components/mealplan-week-text/MealPlanWeekText';
 import { DateSelectForm } from './date-select-form/DateSelectForm';
-import { MealplanDays } from './mealplan-day';
+import { MealplanDay } from './mealplan-day';
 import './MealPlanPage.scss';
 
 const days = [
@@ -143,8 +143,9 @@ const MealPlanPage = ({
                   <Stack direction='row' spacing={0.5} sx={{ width: '50%' }}>
                      <CalendarMonthIcon />
                      <Typography variant='body1'>
-                        View your daily meal plan items or begin to add items to
-                        your meal plan
+                        Change the current day by navigating through the tabs,
+                        or change the week by using the calendar dropdown to the
+                        right
                      </Typography>
                   </Stack>
                   <DateSelectForm
@@ -169,7 +170,7 @@ const MealPlanPage = ({
                   </Tabs>
                </div>
 
-               <MealplanDays
+               <MealplanDay
                   setMealPlanItems={setMealplanItems}
                   currentDay={currentDay}
                   mealplanItems={mealplanItems}
