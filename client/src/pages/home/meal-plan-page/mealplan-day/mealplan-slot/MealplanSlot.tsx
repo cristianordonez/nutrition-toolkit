@@ -3,13 +3,16 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import {
    AlertColor,
+   Button,
    IconButton,
    Paper,
    Table,
    TableBody,
    TableCell,
    TableContainer,
+   TableFooter,
    TableHead,
+   TableRow,
    Tooltip,
 } from '@mui/material';
 import axios from 'axios';
@@ -22,7 +25,6 @@ import {
 import { NutritionTable } from '../../../../../components/nutrition-table/NutritionTable';
 import { StyledTableCell } from '../../../../../components/styled-table-components/StyledTableCell';
 import { StyledTableRow } from '../../../../../components/styled-table-components/StyledTableRow';
-
 interface Props {
    meals: MealplanItem[];
    setOpenAlert: Dispatch<SetStateAction<boolean>>;
@@ -53,9 +55,8 @@ export const MealplanSlot = ({
       setOpen(!open);
    };
 
-   //TODO add onclick function to delete mealplan item
-   //TODO change style of foodnutrition table
    //TODO  add button to footer to link to navigate page
+   //TODO change style of foodnutrition table
 
    const handleDeleteRow = async (id: number, currentDay: string) => {
       try {
@@ -155,26 +156,29 @@ export const MealplanSlot = ({
                      </React.Fragment>
                   ))}
                </TableBody>
+               <TableFooter>
+                  <TableRow>
+                     <TableCell
+                        sx={{ whiteSpace: 'nowrap' }}
+                        size='small'
+                        variant='footer'
+                     >
+                        <Button
+                           size='small'
+                           variant='text'
+                           onClick={() => navigate('/home/search')}
+                        >
+                           Add Food
+                        </Button>
+                     </TableCell>
+                     <TableCell variant='footer' />
+                     <TableCell variant='footer' />
+                     <TableCell variant='footer' />
+                     <TableCell variant='footer' />
+                  </TableRow>
+               </TableFooter>
             </Table>
          </TableContainer>
       </>
    );
 };
-
-{
-   /* <MealplanItem
-                                   slotName={meal.slotName}
-                                   id={meal.value.id}
-                                   shoppingListId={meal.id}
-                                   servings={meal.value.servings}
-                                   title={meal.value.title || meal.value.name}
-                                   setOpenAlert={setOpenAlert}
-                                   image={meal.value.image}
-                                   setAlertSeverity={setAlertSeverity}
-                                   setAlertMessage={setAlertMessage}
-                                   setMealPlanItems={setMealPlanItems}
-                                   currentDay={currentDay}
-                                   amount={meal.value.amount}
-                                   unit={meal.value.unit}
-                                /> */
-}

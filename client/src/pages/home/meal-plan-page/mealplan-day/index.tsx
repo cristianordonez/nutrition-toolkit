@@ -49,7 +49,7 @@ export const MealplanDay = ({
 
    return (
       <>
-         <Stack direction='column' spacing={1} sx={{ width: '100%' }}>
+         <Stack direction='column' spacing={4} sx={{ width: '100%' }}>
             {mealItems.map((meals, index) => (
                <MealplanSlot
                   key={index}

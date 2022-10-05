@@ -8,15 +8,16 @@ interface Props {
 }
 
 export const CaloriesCircularProgress = ({ calories, goalCalories }: Props) => {
+   console.log('calories: ', calories);
    return (
       <>
          <div className='daily-goals-kcal'>
             <CircularProgress
                variant='determinate'
                size={200}
-               value={calories}
+               value={(calories / goalCalories) * 100}
                thickness={1}
-               color='secondary'
+               color='primary'
             />
             <div className='daily-goals-kcal-title'>
                <Typography variant='body1' align='center'>
