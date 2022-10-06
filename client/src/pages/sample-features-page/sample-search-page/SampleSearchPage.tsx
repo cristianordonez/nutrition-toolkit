@@ -1,42 +1,44 @@
 import { CircularProgress, Stack } from '@mui/material';
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect } from 'react';
+import { FoodSearchList } from '../../../components/food-search-list';
 import { useSampleFeaturesOutlet } from '../../../hooks/useSampleFeaturesOutlet';
-
-//TODO provide a go back button somewhere on page that user can user to go back to home page
 const SampleSearchPage = () => {
    const {
       setAlertSeverity,
-      openAlert,
-      setOpenAlert,
       setAlertMessage,
+      setOpenAlert,
+      searchResults,
       isLoading,
-      alertSeverity,
-      showPopularRecipes,
-      alertMessage,
-      route,
+      handleLoadMore,
+      showLoadMoreBtn,
+      setSearchResults,
    } = useSampleFeaturesOutlet();
 
-   const [showLoadMoreBtn, setShowLoadMoreBtn] = useState<boolean>(false);
-   const [searchedRecipes, setSearchedRecipes] = useState([]);
-
+   useEffect(() => {
+      const sampleItems = axios.get('/api/food/sample');
+      sampleItems.then((response) => {
+         setSearchResults(response.data);
+      });
+   }, []);
+   console.log('searchResults: ', searchResults);
    return (
       <>
+         {searchResults.length > 0 ? (
+            <FoodSearchList
+               handleLoadMore={handleLoadMore}
+               searchResults={searchResults}
+               setOpenSnackbar={setOpenAlert}
+               setAlertMessage={setAlertMessage}
+               setAlertSeverity={setAlertSeverity}
+               showLoadMoreBtn={showLoadMoreBtn}
+            />
+         ) : null}
          {isLoading ? (
             <Stack alignItems='center'>
                <CircularProgress size={100} />
             </Stack>
          ) : null}
-         {/* {popularRecipes.length ? (
-            <SampleRecipeList
-               showPopularRecipes={showPopularRecipes}
-               popularRecipes={popularRecipes}
-               route={route}
-            />
-         ) : (
-            <Stack alignItems='center'>
-               <CircularProgress size={100} />
-            </Stack>
-         )} */}
       </>
    );
 };

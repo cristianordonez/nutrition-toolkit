@@ -150,7 +150,7 @@ export const SignupForm = ({
                   fullWidth
                   variant='contained'
                >
-                  Create Account
+                  Almost done
                </Button>
 
                <Button variant='text' onClick={handleRedirectToSignup}>

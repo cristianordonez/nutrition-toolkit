@@ -4,7 +4,7 @@ import { useOutletContext } from 'react-router-dom';
 import { CurrentGoals, FoodSearchResult } from '../../../types/types';
 
 interface OutletContext {
-   loading: boolean;
+   isSearching: boolean;
    handleDrawerToggle: () => void;
    route: string;
    handleLoadMore: () => void;
@@ -15,11 +15,7 @@ interface OutletContext {
    SearchFormComponent: ReactNode;
    setNutritionSummary: Dispatch<SetStateAction<[]>>;
    setMealplanItemsFound: Dispatch<SetStateAction<boolean>>;
-   setLoading: Dispatch<SetStateAction<boolean>>;
-   // setMealplanItems: Dispatch<SetStateAction<MealplanItemType[] | []>>;
-   // currentDay: string;
-   // setCurrentDay: Dispatch<SetStateAction<string>>;
-   // mealplanItems: MealplanItemType[];
+   setIsSearching: Dispatch<SetStateAction<boolean>>;
    searchResults: FoodSearchResult[];
    goals: CurrentGoals;
    setGoals: Dispatch<SetStateAction<CurrentGoals>>;

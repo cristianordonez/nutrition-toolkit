@@ -13,7 +13,6 @@ import {
 import axios from 'axios';
 import React, { Dispatch, SetStateAction } from 'react';
 import { BsCalculatorFill } from 'react-icons/bs';
-import { useNavigate } from 'react-router-dom';
 import { CurrentGoals } from '../../../../types/types';
 import { getMetrics } from '../../utils/get-metrics/getMetrics';
 import { Calculator } from '../calculator-contents/Calculator';
@@ -39,7 +38,6 @@ export const MacroCalculatorForm = ({
    page, //used to mark whether this is being shown as part of signup form or as its own page
    setGoals,
 }: Props) => {
-   let navigate = useNavigate();
    const [activityLevel, setActivityLevel] = React.useState<number>(1);
    const [gender, setGender] = React.useState('male');
    const [goal, setGoal] = React.useState<

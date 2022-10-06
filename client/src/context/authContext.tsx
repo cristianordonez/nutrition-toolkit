@@ -1,14 +1,14 @@
 import React, {
    createContext,
-   useState,
-   useContext,
-   useEffect,
    Dispatch,
    SetStateAction,
+   useContext,
+   useEffect,
+   useState,
 } from 'react';
 
 import axios from 'axios';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
    children: React.ReactNode;
@@ -32,7 +32,6 @@ const AuthContext = createContext<any>({
 
 //# sends request to server to see if user is still logged in or not, redirects if they are not
 const AuthProvider = ({ children }: Props) => {
-   const location = useLocation();
    const navigate = useNavigate();
    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
    const [isLoading, setIsLoading] = useState<Context | boolean>(true);

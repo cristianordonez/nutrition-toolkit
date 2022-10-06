@@ -1,16 +1,25 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { InputAdornment, TextField } from '@mui/material';
-import React from 'react';
+import React, { ChangeEventHandler } from 'react';
 
 interface Props {
    query: string;
-   handleInputChange: any;
+   handleInputChange: ChangeEventHandler<
+      HTMLInputElement | HTMLTextAreaElement
+   >;
+   helperText: string;
+   id: string;
 }
 
-export const QueryTextField = ({ query, handleInputChange }: Props) => {
+export const QueryTextField = ({
+   query,
+   id,
+   handleInputChange,
+   helperText,
+}: Props) => {
    return (
       <TextField
-         id='query'
+         id={id}
          required
          data-testid='query-text-field'
          InputProps={{
@@ -20,8 +29,7 @@ export const QueryTextField = ({ query, handleInputChange }: Props) => {
                </InputAdornment>
             ),
          }}
-         label='Item'
-         helperText='Search for a food'
+         helperText={helperText}
          value={query}
          onChange={handleInputChange}
       />

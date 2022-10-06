@@ -55,7 +55,7 @@ router.post(
       failureMessage: true,
    }),
    (req: Request, res: Response) => {
-      let user = req.user as PassportGoogleUser;
+      const user = req.user as PassportGoogleUser;
       let session = req.session as any;
       session.user_id = user.user_id;
       session.username = user.username;

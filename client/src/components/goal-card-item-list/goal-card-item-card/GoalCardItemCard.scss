@@ -1,13 +1,6 @@
-.nutrient-type-text {
-   font-weight: 700;
-   width: 100%;
-   display: flex;
-   flex-direction: row;
-   gap: 1rem;
-   align-items: center;
-   justify-content: center;
-}
+@use '../../../index.scss' as *;
 
-.range-text {
-   opacity: 50%;
+.svg-icon {
+   @include set-size(25%);
+   margin-left: 5px;
 }

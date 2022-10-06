@@ -1,5 +1,5 @@
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
-import { AlertColor, Button, SelectChangeEvent, Stack } from '@mui/material';
+import { AlertColor, Button, Stack } from '@mui/material';
 import axios from 'axios';
 import React, { Dispatch, SetStateAction } from 'react';
 import { FoodSearchResult, Query } from '../../../../types/types';
@@ -7,11 +7,10 @@ import { QueryTextField } from '../form-input-components/QueryTextField';
 interface Props {
    values: Query;
    handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-   handleTypeSelect: (event: SelectChangeEvent) => void;
    setValues: Dispatch<SetStateAction<any>>;
    setAlertMessage: Dispatch<SetStateAction<string>>;
    setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
-   setLoading: Dispatch<SetStateAction<boolean>>;
+   setIsSearching: Dispatch<SetStateAction<boolean>>;
    setOpenAlert: Dispatch<SetStateAction<boolean>>;
    setShowLoadMoreBtn: Dispatch<SetStateAction<boolean>>;
    setSearchResults: Dispatch<SetStateAction<FoodSearchResult[]>>;
@@ -21,11 +20,10 @@ interface Props {
 export const SimpleSearchForm = ({
    values,
    handleInputChange,
-   handleTypeSelect,
    setValues,
    setAlertMessage,
    setAlertSeverity,
-   setLoading,
+   setIsSearching,
    setOpenAlert,
    setShowLoadMoreBtn,
    setSearchResults,
@@ -34,11 +32,12 @@ export const SimpleSearchForm = ({
    const handleSuggestedSubmit = async (event: React.SyntheticEvent) => {
       try {
          event.preventDefault();
-         setLoading(true);
+         let url = '/api/food/all';
+         setIsSearching(true);
          setSendAdvancedRequest(false);
          let newValues = { ...values, offset: 0 }; //declare new values so that there are no async bugs, and reset offset to 0 in case user changed it
          setValues(newValues);
-         const foodItems = await axios.get(`/api/food/all`, {
+         const foodItems = await axios.get(url, {
             params: newValues,
          });
          if (foodItems.data.length === 0) {
@@ -57,11 +56,11 @@ export const SimpleSearchForm = ({
             } else {
                setShowLoadMoreBtn(true);
             }
+            setSearchResults(foodItems.data);
          }
-         setSearchResults(foodItems.data);
-         setLoading(false);
+         setIsSearching(false);
       } catch (err) {
-         setLoading(false); //used to trigger the loading circle
+         setIsSearching(false); //used to trigger the loading circle
          setAlertSeverity('error');
          setAlertMessage(
             'Unable to get search results. Please try again later.'
@@ -77,7 +76,9 @@ export const SimpleSearchForm = ({
             <Stack spacing={3}>
                <QueryTextField
                   query={values.query}
+                  id={'query'}
                   handleInputChange={handleInputChange}
+                  helperText={'Search by food'}
                />
 
                <Button type='submit' variant='contained'>

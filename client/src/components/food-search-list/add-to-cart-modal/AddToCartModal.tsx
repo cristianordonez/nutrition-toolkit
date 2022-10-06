@@ -6,6 +6,9 @@ import {
    DialogActions,
    DialogContent,
    DialogTitle,
+   Divider,
+   Stack,
+   Typography,
 } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import axios from 'axios';
@@ -19,21 +22,22 @@ import React, {
    useEffect,
    useState,
 } from 'react';
-import { AddToMealPlanType } from '../../../../../../../types/types';
-import { DatePickerTextField } from '../../../../../components/form-input-components/DatePickerTextField';
-import { DialogSelectServingSize } from '../../../../../components/form-input-components/DialogSelectServingSize';
-import { DialogSelectSlot } from '../../../../../components/form-input-components/DialogSelectSlot';
-import { FormNumberInput } from '../../../../../components/form-input-components/FormNumberInput';
+import { AddToMealPlanType } from '../../../../../types/types';
+import { DatePickerTextField } from '../../form-input-components/DatePickerTextField';
+import { DialogSelectServingSize } from '../../form-input-components/DialogSelectServingSize';
+import { DialogSelectSlot } from '../../form-input-components/DialogSelectSlot';
+import { FormNumberInput } from '../../form-input-components/FormNumberInput';
 
 interface Props {
    openDialog: boolean;
    handleOpeningDialog: MouseEventHandler<HTMLButtonElement>;
    id: number;
    currentDataType: string;
+   currentModifier: string | null | undefined;
    currentServingSizes: number[];
    currentServingSizeUnit: string;
-   currentTitle: string;
-   currentIngredients: string;
+   currentDescription: string;
+   currentBrand: string;
    setOpenDialog: Dispatch<SetStateAction<boolean>>;
    setAlertMessage: Dispatch<SetStateAction<string>>;
    setOpenSnackbar: Dispatch<SetStateAction<boolean>>;
@@ -46,9 +50,10 @@ export const AddToCartModal = ({
    id,
    currentDataType,
    currentServingSizes,
+   currentModifier,
    currentServingSizeUnit,
-   currentTitle,
-   currentIngredients,
+   currentDescription,
+   currentBrand,
    setOpenDialog,
    setAlertMessage,
    setOpenSnackbar,
@@ -62,8 +67,8 @@ export const AddToCartModal = ({
       data_type: currentDataType,
       serving_size: currentServingSizes[0],
       serving_size_unit: currentServingSizeUnit,
-      title: currentTitle,
-      ingredients: currentIngredients,
+      description: currentDescription,
+      brand_owner: currentBrand,
    });
 
    const handleSelectSlot = (event: SelectChangeEvent) => {
@@ -109,8 +114,8 @@ export const AddToCartModal = ({
          serving_size_unit: currentServingSizeUnit,
          slot: 1,
          date: format(startOfToday(), 'yyyy-MM-dd'),
-         title: currentTitle,
-         ingredients: currentIngredients,
+         description: currentDescription,
+         brand_owner: currentBrand,
       });
    }, [id]);
 
@@ -127,9 +132,20 @@ export const AddToCartModal = ({
       >
          <DialogTitle align='left'>Add item to mealplan</DialogTitle>
          <form onSubmit={handleSubmit}>
-            <DialogContent>
-               <Box display='flex' flexDirection='column' gap='1rem'>
-                  <DatePickerTextField setData={setData} data={data} />
+            <DialogContent sx={{ p: 0, width: '100%' }}>
+               <Box display='flex' flexDirection='column' gap='10px'>
+                  <Divider />
+                  <Stack
+                     spacing={2}
+                     direction={'row'}
+                     alignItems='center'
+                     sx={{ pl: '1rem', pr: '1rem' }}
+                  >
+                     <Typography sx={{ minWidth: '25%' }} variant='body2'>
+                        Date{' '}
+                     </Typography>
+                     <DatePickerTextField setData={setData} data={data} />
+                  </Stack>
                   <DialogSelectSlot
                      handleSelectSlot={handleSelectSlot}
                      slot={data.slot}
@@ -139,16 +155,25 @@ export const AddToCartModal = ({
                      handleSelectServingSize={handleSelectServingSize}
                      currentServingSizes={currentServingSizes}
                      currentServingSizeUnit={currentServingSizeUnit}
+                     currentModifier={currentModifier}
                   />
-                  <FormNumberInput
-                     inputValue={data.servings}
-                     handleNumberChange={handleSelectServings}
-                     helperText={
-                        'Enter number of inputValue (up to two decimal places)'
-                     }
-                     label='Servings'
-                     id={'servings'}
-                  />
+                  <Divider />
+                  <Stack
+                     spacing={2}
+                     direction={'row'}
+                     alignItems='center'
+                     sx={{ pl: '1rem', pr: '1rem' }}
+                  >
+                     <Typography sx={{ minWidth: '25%' }} variant='body2'>
+                        Number of servings
+                     </Typography>
+                     <FormNumberInput
+                        inputValue={data.servings}
+                        handleNumberChange={handleSelectServings}
+                        label='Enter Number of Servings'
+                        id={'servings'}
+                     />
+                  </Stack>
                </Box>
             </DialogContent>
             <DialogActions>

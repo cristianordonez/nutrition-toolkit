@@ -30,18 +30,18 @@ export const DatePickerTextField = ({ setData, data }: Props) => {
 
    return (
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-         <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+         <Box sx={{ display: { xs: 'block', sm: 'none' }, width: '100%' }}>
             <MobileDatePicker
                label='Select day'
                inputFormat='MM/dd/yyyy'
                value={value}
                onChange={handleChange}
                renderInput={(params) => (
-                  <TextField {...params} variant='standard' />
+                  <TextField {...params} variant='standard' fullWidth />
                )}
             />
          </Box>
-         <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+         <Box sx={{ display: { xs: 'none', sm: 'block' }, width: '100%' }}>
             <DesktopDatePicker
                label='Select day'
                inputFormat='MM/dd/yyyy'
@@ -49,7 +49,7 @@ export const DatePickerTextField = ({ setData, data }: Props) => {
                value={value}
                onChange={handleChange}
                renderInput={(params) => (
-                  <TextField {...params} variant='standard' />
+                  <TextField {...params} variant='standard' fullWidth />
                )}
             />
          </Box>

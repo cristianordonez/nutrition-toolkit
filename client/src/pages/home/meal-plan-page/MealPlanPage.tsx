@@ -40,7 +40,7 @@ interface Props {
    setNutritionSummary: Dispatch<SetStateAction<NutritionSummaryMealplan>>;
    setMealplanItems: Dispatch<SetStateAction<MealplanItem[]>>;
    mealplanItems: MealplanItem[];
-   setLoading: Dispatch<SetStateAction<boolean>>;
+   setIsSearching: Dispatch<SetStateAction<boolean>>;
 }
 
 const initialNutritionSummary = {
@@ -57,7 +57,7 @@ const MealPlanPage = ({
    setAlertSeverity,
    setNutritionSummary,
    setMealplanItems,
-   setLoading,
+   setIsSearching,
    mealplanItems,
 }: Props) => {
    const [dayIndex, setDayIndex] = useState<number>(getDay(Date.now()));
@@ -71,9 +71,6 @@ const MealPlanPage = ({
    }, [currentDay]);
 
    const handleDateChange = async () => {
-      // setMealplanItems([]); //when tab changes, reset the nutrition summary and the mealplan items
-      // setNutritionSummary(initialNutritionSummary);
-      console.log('here in hande date change');
       try {
          const dbResponse = await axios.get('/api/mealplan/day', {
             params: { date: currentDay },
@@ -86,18 +83,15 @@ const MealPlanPage = ({
             );
             setOpenAlert(true);
          }
-         console.log('dbResponse: ', dbResponse);
          setMealplanItems(dbResponse.data.mealplanItems);
          setNutritionSummary(dbResponse.data.nutritionSummary[0]);
-         setLoading(false);
+         setIsSearching(false);
       } catch (err) {
          console.log(err);
       }
    };
 
    const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-      // setMealplanItems([]); //when tab changes, reset the nutrition summary and the mealplan items
-      // setNutritionSummary(initialNutritionSummary);
       const prevDate = currentDay; //create variable to store the previous date and previous tab index
       const prevDayIndex = dayIndex;
       let differenceInDays = newValue - dayIndex; //find out how many days before or after current date is new selected date by finding difference between previous tab and current tab

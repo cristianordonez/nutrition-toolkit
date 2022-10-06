@@ -16,16 +16,13 @@ export const SampleMealplanSidebarContents = ({
    nutritionSummary,
    goals,
 }: Props): ReactJSXElement => {
-   let calories = Math.floor(
-      (parseInt(nutritionSummary.total_calories) / goals.total_calories) * 100
-   );
    return (
       <React.Fragment>
          <Typography variant='h4' component='h1' align='center'>
             Today's Goals
          </Typography>
          <CaloriesCircularProgress
-            calories={calories}
+            calories={parseInt(nutritionSummary.total_calories)}
             goalCalories={goals.total_calories}
          />
          <Stack direction='column' spacing={2} sx={{ p: '1rem' }}>
@@ -47,9 +44,9 @@ export const SampleMealplanSidebarContents = ({
                nutrientsInMealPlan={parseInt(nutritionSummary.total_fat)}
             />
             <Typography variant='caption' align='center' sx={{ pt: '5rem' }}>
-               Note: goals and mealplan items are generated randomly. Please log
-               in or create an account to search and save items to your meal
-               plan.
+               Note: This is a sample meal plan using our own nutrition goals.
+               Please log in or create an account to search and save items to
+               your meal plan.
             </Typography>
          </Stack>
       </React.Fragment>

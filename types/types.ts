@@ -1,3 +1,49 @@
+type Food = {
+   data_type: string;
+   serving_size: number | string;
+   serving_size_unit: string;
+};
+
+interface FoodItem extends Food {
+   date: string | Date;
+   slot: 1 | 2 | 3 | 4;
+   servings: number | string;
+   brand_owner: string;
+   description: string;
+}
+
+type FdcId = {
+   fdc_id: number;
+};
+type MealId = {
+   meal_id: number;
+};
+
+type ItemNutrition = {
+   nutrition: FoodNutrition;
+};
+
+type AddToMealPlanType = FoodItem & FdcId;
+
+type MealplanItem = AddToMealPlanType & MealId & ItemNutrition;
+
+type CustomFoodInput = FoodItem & ItemNutrition;
+
+type FoodSearchResult = {
+   data_type: string;
+   nutrition: FoodNutrition;
+   serving_size: number | null;
+   serving_size_unit: string | null;
+   brand_owner: string | null;
+   custom_food_brand_owner: string | null;
+   description: string;
+   fdc_id: string;
+   custom_food_serving_size: number | null;
+   custom_food_serving_size_unit: string | null;
+   gram_weight: number | null;
+   modifier: string | null;
+};
+
 type CurrentGoals = {
    user_id?: number;
    goal: 'weight_loss' | 'gain_muscle' | 'maintain';
@@ -41,18 +87,6 @@ type PassportGoogleUser = {
    user_id: number;
 };
 
-type AddToMealPlanType = {
-   date: Date | string;
-   slot: 1 | 2 | 3 | 4;
-   data_type: string;
-   fdc_id: number;
-   servings: number | string;
-   serving_size: number;
-   serving_size_unit: string;
-   ingredients: string;
-   title: string;
-};
-
 type Intolerances = {
    user_id: number;
    intolerances: string;
@@ -76,37 +110,24 @@ type MetricsType = {
 };
 
 type FoodNutrition = {
-   calories: number;
-   calcium: number;
-   cholesterol: number;
-   dietary_fiber: number;
-   iron: number;
-   potassium: number;
-   protein: number;
-   saturated_fat: number;
-   monounsaturated_fat: number;
-   polyunsaturated_fat: number;
-   sodium: number;
-   sugar: number;
-   total_carbohydrates: number;
-   total_fat: number;
-   trans_fat: number;
-   vitamin_a: number;
-   vitamin_c: number;
-   vitamin_d: number;
-};
-
-type FoodSearchResult = {
-   brand_name: string | null;
-   brand_owner: string | null;
-   branded_food_category: string | null;
-   ingredients: string;
-   description: string;
-   fdc_id: string;
-   serving_size: number;
-   serving_size_unit: string;
-   data_type: string;
-   nutrition: FoodNutrition;
+   calories: number | string;
+   calcium: number | string | null;
+   cholesterol: number | string | null;
+   dietary_fiber: number | string | null;
+   iron: number | string | null;
+   potassium: number | string | null;
+   protein: number | string;
+   saturated_fat: number | string | null;
+   monounsaturated_fat: number | string | null;
+   polyunsaturated_fat: number | string | null;
+   sodium: number | string | null;
+   sugar: number | string | null;
+   total_carbohydrates: number | string;
+   total_fat: number | string;
+   trans_fat: number | string | null;
+   vitamin_a: number | string | null;
+   vitamin_c: number | string | null;
+   vitamin_d: number | string | null;
 };
 
 type NutritionSummaryMealplan = {
@@ -114,20 +135,6 @@ type NutritionSummaryMealplan = {
    total_carbohydrates: string;
    total_fat: string;
    total_protein: string;
-};
-
-type MealplanItem = {
-   data_type: string;
-   date: string;
-   fdc_id: string;
-   ingredients: string;
-   nutrition: FoodNutrition;
-   serving_size: number;
-   serving_size_unit: string;
-   id: number;
-   servings: number;
-   slot: number;
-   title: string;
 };
 
 export {
@@ -145,4 +152,5 @@ export {
    NutritionSummaryMealplan,
    MetricsType,
    MealplanItem,
+   CustomFoodInput,
 };

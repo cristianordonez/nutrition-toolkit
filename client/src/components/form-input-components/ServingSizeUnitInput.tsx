@@ -2,7 +2,6 @@ import React from 'react';
 
 import {
    FormControl,
-   FormHelperText,
    InputLabel,
    MenuItem,
    Select,
@@ -38,7 +37,6 @@ export const ServingSizeUnitInput = ({
                </MenuItem>
             ))}
          </Select>
-         <FormHelperText>Unit</FormHelperText>
       </FormControl>
    );
 };

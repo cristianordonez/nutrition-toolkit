@@ -2,28 +2,32 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { AlertColor, IconButton, Toolbar, Tooltip } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Outlet, Route, Routes } from 'react-router-dom';
+import { Outlet, Route, Routes, useNavigate } from 'react-router-dom';
 import {
    CurrentGoals,
    FoodSearchResult,
+   MealplanItem,
    NutritionSummaryMealplan,
    Query,
 } from '../../../../types/types';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
 import { SideBar } from '../../components/sidebar/SideBar';
+import { useAuth } from '../../context/authContext';
 import MealPlanPage from './meal-plan-page/MealPlanPage';
 import { SearchForm } from './search-page/search-form';
 
 const Home = () => {
+   const { isLoggedIn } = useAuth();
    const [goals, setGoals] = useState({} as CurrentGoals);
    const [mobileOpen, setMobileOpen] = useState(false);
    const [searchResults, setSearchResults] = useState<FoodSearchResult[]>([]);
    const [currentTab, setCurrentTab] = useState<string>('advanced-search');
    const [openAlert, setOpenAlert] = useState<boolean>(false);
-   const [loading, setLoading] = useState<boolean>(true);
+   const [isSearching, setIsSearching] = useState<boolean>(false);
    const [alertMessage, setAlertMessage] = useState<string>('');
-   //TODO add type for mealplan items
-   const [mealplanItems, setMealplanItems] = useState<any>([]);
+   const [mealplanItems, setMealplanItems] = useState<MealplanItem[]>(
+      [] as MealplanItem[]
+   );
    const [showLoadMoreBtn, setShowLoadMoreBtn] = useState<boolean>(false);
    const [nutritionSummary, setNutritionSummary] =
       useState<NutritionSummaryMealplan>({} as NutritionSummaryMealplan);
@@ -43,12 +47,12 @@ const Home = () => {
       minFat: '',
       maxFat: '',
       number: 10,
-      offset: 0, //number of results to skip, useful for lazy loading
+      offset: 0, //number of results to skip, useful for lazy isSearching
    });
 
    const handleLoadMore = async (event: React.SyntheticEvent) => {
       try {
-         setLoading(true);
+         setIsSearching(true);
          let newValues = { ...values, offset: values.offset + 10 }; //update new offset so that we only receive the correct items from API
          setValues(newValues);
          const searchResultItems = sendAdvancedRequest
@@ -66,9 +70,9 @@ const Home = () => {
             setShowLoadMoreBtn(true);
          }
          setSearchResults(searchResults.concat(searchResultItems.data));
-         setLoading(false);
+         setIsSearching(false);
       } catch (err) {
-         setLoading(false);
+         setIsSearching(false);
          console.log(err);
       }
    };
@@ -91,11 +95,16 @@ const Home = () => {
          setSendAdvancedRequest(true);
          const newValues = { ...values, offset: 0 }; //declare new values so that there are no async bugs, and reset offset to 0 in case user changed it
          setValues(newValues);
-         setLoading(true);
-         const searchResultItems = await axios.get(`/api/food`, {
-            params: newValues,
-            withCredentials: true,
-         });
+         setIsSearching(true);
+         const searchResultItems = sendAdvancedRequest
+            ? await axios.get(`/api/food`, {
+                 params: newValues,
+                 withCredentials: true,
+              })
+            : await axios.get('/api/food/all', {
+                 params: newValues,
+                 withCredentials: true,
+              });
          if (searchResultItems.data.length === 0) {
             setAlertMessage(
                'No options matched your search. Try again with a broader search'
@@ -112,11 +121,11 @@ const Home = () => {
             } else {
                setShowLoadMoreBtn(true);
             }
+            setSearchResults(searchResultItems.data);
          }
-         setSearchResults(searchResultItems.data);
-         setLoading(false);
+         setIsSearching(false);
       } catch (err) {
-         setLoading(false);
+         setIsSearching(false);
          setAlertSeverity('error');
          setAlertMessage(
             'Unable to get search results. Please try again later.'
@@ -132,13 +141,12 @@ const Home = () => {
          handleSubmit={handleSubmit}
          handleChange={handleChange}
          currentTab={currentTab}
-         setCurrentTab={setCurrentTab}
          values={values}
          setValues={setValues}
          goals={goals}
          setAlertMessage={setAlertMessage}
          setAlertSeverity={setAlertSeverity}
-         setLoading={setLoading}
+         setIsSearching={setIsSearching}
          setOpenAlert={setOpenAlert}
          setShowLoadMoreBtn={setShowLoadMoreBtn}
          setSearchResults={setSearchResults}
@@ -146,17 +154,25 @@ const Home = () => {
       />
    );
 
-   useEffect(() => {
-      let promise = axios.get('/api/goals', { withCredentials: true });
-      promise.then((results) => {
-         setGoals(results.data);
-      });
-      promise.catch((err) => {
-         console.log(err);
-      });
-   }, []);
+   const navigate = useNavigate();
 
-   console.log('nutritionSummary: ', nutritionSummary);
+   //#navigate to home if user is not logged in, do not reroute in useAuth since we don't want user to reroute to landing page if they go straight to loggedin page or resetpassword page
+   useEffect(() => {
+      if (isLoggedIn === false) {
+         navigate('/', {
+            state: { showError: false },
+            replace: true,
+         });
+      } else {
+         let promise = axios.get('/api/goals', { withCredentials: true });
+         promise.then((results) => {
+            setGoals(results.data);
+         });
+         promise.catch((err) => {
+            console.log(err);
+         });
+      }
+   }, []);
 
    return (
       <>
@@ -164,7 +180,7 @@ const Home = () => {
             mobileOpen={mobileOpen}
             handleDrawerToggle={handleDrawerToggle}
             SearchFormComponent={SearchFormComponent}
-            loading={loading}
+            isSearching={isSearching}
             goals={goals}
             searchResults={searchResults}
             nutritionSummary={nutritionSummary}
@@ -197,7 +213,7 @@ const Home = () => {
                         setMealplanItems={setMealplanItems}
                         mealplanItems={mealplanItems}
                         SearchFormComponent={SearchFormComponent}
-                        setLoading={setLoading}
+                        setIsSearching={setIsSearching}
                      />
                   </>
                }
@@ -205,20 +221,18 @@ const Home = () => {
          </Routes>
          <Outlet
             context={{
-               loading,
+               isSearching,
                setGoals,
                handleDrawerToggle,
                handleLoadMore,
                setAlertMessage,
-               setLoading,
+               setIsSearching,
                setOpenAlert,
                setAlertSeverity,
                showLoadMoreBtn,
                SearchFormComponent,
                setNutritionSummary,
                setMealplanItems,
-               // currentDay,
-               // setCurrentDay,
                searchResults,
                mealplanItems,
                goals,

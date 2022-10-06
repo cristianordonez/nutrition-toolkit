@@ -1,25 +1,20 @@
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 import { Card, CardContent, Typography } from '@mui/material';
-import React, { Dispatch, SetStateAction } from 'react';
-import { CurrentGoals } from '../../../../../types/types';
-import { useLocalStorageState } from '../../../hooks/useLocalStorage';
+
+import React, { SVGProps } from 'react';
 import './GoalCardItemCard.scss';
 
 interface Props {
    type: 'Carbohydrates' | 'Protein' | 'Fat';
    nutrientsTotal: number;
-   setGoals?: Dispatch<SetStateAction<CurrentGoals>>;
-   goals: CurrentGoals;
+   Icon: (props: SVGProps<SVGSVGElement>) => JSX.Element;
 }
 
 export const GoalCardItemCard = ({
    nutrientsTotal,
    type,
-   setGoals,
-   goals,
+   Icon,
 }: Props): ReactJSXElement => {
-   const [colorMode, setColorMode] = useLocalStorageState('mode', 'dark');
-
    return (
       <>
          <Card sx={{ borderRadius: '15%' }} elevation={5}>
@@ -29,22 +24,27 @@ export const GoalCardItemCard = ({
                   flexDirection: 'column',
                   height: '10rem',
                   width: '10rem',
-                  aligItems: 'center',
+                  alignItems: 'center',
                   gap: '1rem',
                   justifyContent: 'center',
                }}
             >
+               <Icon className='svg-icon' />
+               <Typography
+                  sx={{ fontWeight: 'bold' }}
+                  align='center'
+                  variant='h5'
+               >
+                  {nutrientsTotal} g
+               </Typography>
                <Typography
                   className='nutrient-type-text'
+                  variant='body2'
                   align='center'
-                  variant='body1'
+                  sx={{ width: '100%', opacity: '0.7' }}
                   component='div'
                >
                   {type}
-               </Typography>
-
-               <Typography align='center' variant='h6'>
-                  {nutrientsTotal} g
                </Typography>
             </CardContent>
          </Card>

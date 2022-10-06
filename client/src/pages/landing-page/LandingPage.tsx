@@ -36,22 +36,19 @@ const LandingPage = () => {
       setOpenAlert(!openAlert);
    };
 
-   const cardMessages = [
-      'Save your favorite items to your meal plan and view your total daily calories and nutrients',
-      'Search for recipes, grocery products or menu items that match your nutrient needs',
-      'Use our Macronutrient Calculator to find your estimated daily carbohydrate needs',
-   ];
    const cardTitles = [
-      'Create Your Own Custom Mealplan',
-      'Search For Matching Food Items',
       'Calculate Your Macronutrient Needs',
+      'Search For Matching Food Items',
+      'Save Foods To Your Food Diary',
+   ];
+   const cardMessages = [
+      'Use our Macronutrient Calculator to find your  calorie and nutrient needs',
+      'Search from over 350,000 foods, filtering by calories, carbs, protein or fat',
+      `Get a better understanding of your eating habits with our food diary`,
    ];
    const cardImages = [ScheduleSvg, MaleChefSvg, CalculateSvg];
+   const featureView = ['calculator', 'search', 'mealplan'];
 
-   //pass down the feature view to cards so that they can be used to call the handleNavigatingToFeatures function
-   const featureView = ['mealplan', 'search', 'calculator'];
-
-   //used to navigate to the SampleAppFeaturesPage with the correction variable passed down in location state
    const handleNavigatingToFeatures = (featureView: string) => {
       if (featureView === 'mealplan') {
          navigate(`/diabetes-calculator-features`);

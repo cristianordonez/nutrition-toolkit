@@ -1,21 +1,105 @@
-import { Divider, Paper, Stack, Typography } from '@mui/material';
-import React from 'react';
+import {
+   Divider,
+   FormControl,
+   Paper,
+   Stack,
+   TextField,
+   Typography,
+} from '@mui/material';
+import React, { ChangeEventHandler } from 'react';
 import { FoodNutrition } from '../../../../types/types';
-
+import { getNutrientUnitName } from '../../utils/getNutrientUnitName';
 interface Props {
    nutritionData: FoodNutrition;
+   handleNutritionInput: ChangeEventHandler<
+      HTMLInputElement | HTMLTextAreaElement
+   >;
 }
-export const NutritionDataForm = ({ nutritionData }: Props) => {
-   console.log('nutritionData: ', nutritionData);
+export const NutritionDataForm = ({
+   nutritionData,
+   handleNutritionInput,
+}: Props) => {
+   const formatString = (string: string) => {
+      let updatedString = string.replace('_', ' ');
+      let words = updatedString.split(' ');
+      for (let i = 0; i < words.length; i++) {
+         words[i] =
+            words[i][0].toUpperCase() + words[i].slice(1, words[i].length);
+      }
+      if (string === 'calories') {
+         return words.join(' ');
+      } else {
+         return words.join(' ') + ` (${getNutrientUnitName(string)})`;
+      }
+   };
+
+   let currentLabel;
+
    return (
       <>
-         <Paper elevation={5}>
-            <Typography variant='h6'>Nutrition Facts</Typography>
+         <Paper elevation={5} sx={{ width: '100%' }}>
+            <Typography variant='h6' sx={{ p: '1rem' }}>
+               Nutrition Facts
+            </Typography>
             {Object.keys(nutritionData).map((nutrient, index) => (
                <React.Fragment key={index}>
                   <Divider />
-                  <Stack direction={'row'} sx={{ p: '1rem' }}>
-                     <Typography>{nutrient.replace('_', ' ')}</Typography>
+                  <Stack
+                     flexGrow={1}
+                     alignItems='center'
+                     justifyContent='space-between'
+                     direction={'row'}
+                     sx={{ p: '1rem' }}
+                  >
+                     {nutrient === 'calories' ||
+                     nutrient === 'total_carbohydrates' ||
+                     nutrient === 'protein' ||
+                     nutrient === 'total_fat' ? (
+                        <>
+                           <Typography sx={{ fontWeight: 'bold' }}>
+                              {formatString(nutrient)}
+                           </Typography>
+                           <FormControl sx={{ maxWidth: '40%' }}>
+                              <TextField
+                                 value={
+                                    nutritionData[
+                                       `${nutrient}` as keyof FoodNutrition
+                                    ]
+                                 }
+                                 required
+                                 id={nutrient}
+                                 label={'Required'}
+                                 type='number'
+                                 variant='outlined'
+                                 inputProps={{ step: '0.1', lang: 'en-US' }}
+                                 onChange={handleNutritionInput}
+                                 fullWidth
+                              />
+                           </FormControl>
+                        </>
+                     ) : (
+                        <>
+                           <Typography variant='body2'>
+                              {formatString(nutrient)}
+                           </Typography>
+                           <FormControl sx={{ maxWidth: '40%' }}>
+                              <TextField
+                                 value={
+                                    nutritionData[
+                                       nutrient as keyof FoodNutrition
+                                    ]
+                                 }
+                                 id={nutrient}
+                                 label={'Optional'}
+                                 type='number'
+                                 variant='outlined'
+                                 inputProps={{ step: '0.1', lang: 'en-US' }}
+                                 onChange={handleNutritionInput}
+                                 fullWidth
+                              />
+                           </FormControl>
+                        </>
+                     )}
                   </Stack>
                </React.Fragment>
             ))}

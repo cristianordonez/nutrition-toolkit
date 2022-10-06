@@ -1,13 +1,15 @@
 import { SelectChangeEvent } from '@mui/material/Select';
-import React from 'react';
 
 import {
+   Divider,
    FormControl,
-   FormHelperText,
    InputLabel,
    MenuItem,
    Select,
+   Stack,
+   Typography,
 } from '@mui/material';
+import React from 'react';
 
 const menuItemsArray = [
    { value: 1, name: 'Morning' },
@@ -23,23 +25,36 @@ interface Props {
 
 export const DialogSelectSlot = ({ slot, handleSelectSlot }: Props) => {
    return (
-      <FormControl>
-         <InputLabel>Slot</InputLabel>
-         <Select
-            value={`${slot}`}
-            onChange={handleSelectSlot}
-            label='Slot'
-            required
-            fullWidth
-            id='slot'
+      <>
+         <Divider />
+
+         <Stack
+            alignItems='center'
+            direction={'row'}
+            spacing={2}
+            sx={{ pl: '1rem', pr: '1rem', width: '100%' }}
          >
-            {menuItemsArray.map((item) => (
-               <MenuItem key={item.value} value={item.value}>
-                  {item.name}
-               </MenuItem>
-            ))}
-         </Select>
-         <FormHelperText>Choose correct slot for chosen day</FormHelperText>
-      </FormControl>
+            <Typography variant='body2' sx={{ minWidth: '25%' }}>
+               Slot
+            </Typography>
+            <FormControl sx={{ width: '100%' }}>
+               <InputLabel>Enter Slot</InputLabel>
+               <Select
+                  value={`${slot}`}
+                  onChange={handleSelectSlot}
+                  label='Enter Slot'
+                  required
+                  fullWidth
+                  id='slot'
+               >
+                  {menuItemsArray.map((item) => (
+                     <MenuItem key={item.value} value={item.value}>
+                        {item.name}
+                     </MenuItem>
+                  ))}
+               </Select>
+            </FormControl>
+         </Stack>
+      </>
    );
 };

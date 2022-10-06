@@ -13,14 +13,13 @@ import './index.scss';
 
 interface Props {
    handleSubmit: (event: React.SyntheticEvent) => Promise<void>;
-   setCurrentTab: Dispatch<SetStateAction<string>>;
    currentTab: string;
    handleChange: (event: React.SyntheticEvent, currentValue: string) => void;
    values: Query;
    setValues: Dispatch<SetStateAction<Query>>;
    goals: CurrentGoals;
    setAlertMessage: Dispatch<SetStateAction<string>>;
-   setLoading: Dispatch<SetStateAction<boolean>>;
+   setIsSearching: Dispatch<SetStateAction<boolean>>;
    setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    setOpenAlert: Dispatch<SetStateAction<boolean>>;
    setShowLoadMoreBtn: Dispatch<SetStateAction<boolean>>;
@@ -30,7 +29,6 @@ interface Props {
 
 export const SearchForm = ({
    handleSubmit,
-   setCurrentTab,
    currentTab,
    handleChange,
    values,
@@ -38,7 +36,7 @@ export const SearchForm = ({
    goals,
    setAlertMessage,
    setAlertSeverity,
-   setLoading,
+   setIsSearching,
    setOpenAlert,
    setShowLoadMoreBtn,
    setSearchResults,
@@ -100,11 +98,10 @@ export const SearchForm = ({
             <SimpleSearchForm
                values={values}
                handleInputChange={handleInputChange}
-               handleTypeSelect={handleTypeSelect}
                setValues={setValues}
                setAlertMessage={setAlertMessage}
                setAlertSeverity={setAlertSeverity}
-               setLoading={setLoading}
+               setIsSearching={setIsSearching}
                setOpenAlert={setOpenAlert}
                setShowLoadMoreBtn={setShowLoadMoreBtn}
                setSearchResults={setSearchResults}

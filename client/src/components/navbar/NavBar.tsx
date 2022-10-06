@@ -32,18 +32,21 @@ const NavBar = () => {
    const theme = useTheme();
    const colorMode = useContext(ColorModeContext);
    const navigate = useNavigate();
-   const { isLoading, isLoggedIn, username, handleLogout } = useAuth(); //used to check if data is still being retrieved from database
+   const { isLoading, isLoggedIn, handleLogout } = useAuth(); //used to check if data is still being retrieved from database
 
-   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-      null
-   );
    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
       null
    );
 
+   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+      null
+   );
+
    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+      console.log('event.currentTarget: ', event.currentTarget);
       setAnchorElNav(event.currentTarget);
    };
+
    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
       setAnchorElUser(event.currentTarget);
    };
@@ -52,7 +55,7 @@ const NavBar = () => {
       setAnchorElNav(null);
    };
 
-   const handleMenuClick = () => {
+   const handleCloseUserMenu = () => {
       setAnchorElUser(null);
    };
 
@@ -66,7 +69,6 @@ const NavBar = () => {
          position='fixed'
          sx={{
             boxShadow: 'none',
-
             padding: '0 1vw',
             backdropFilter: 'blue(20px)',
          }}
@@ -74,11 +76,11 @@ const NavBar = () => {
          enableColorOnDark={true}
       >
          <Toolbar disableGutters>
-            {/* USER IS LOGGED IN */}
+            {/* ONLY ON XS SCREENS */}
             <Box sx={{ pl: '1rem', display: { xs: 'flex', sm: 'none' } }}>
                <LogoIcon />
             </Box>
-
+            {/* ONLY ON SM SCREENS BUT NOT XS OR ABOVE AND ONLY WHEN PAGE IS NOT HOME OR FEATURES*/}
             {location.pathname.split('/')[1] !== 'home' &&
             location.pathname.split('/')[1] !==
                'diabetes-calculator-features' ? (
@@ -86,7 +88,6 @@ const NavBar = () => {
                   <MainTitleLogo />
                </Box>
             ) : null}
-
             {location.pathname.split('/')[1] ===
             'diabetes-calculator-features' ? (
                <Button
@@ -104,23 +105,21 @@ const NavBar = () => {
             ) : null}
             {isLoggedIn === true && isLoading === false ? (
                <>
-                  {/* MOBILE ONLY */}
+                  {/* ON XS, SM AND MD SCREENS */}
                   <Box
                      sx={{
                         flexGrow: 1,
                         display: { xs: 'flex', md: 'none' },
+                        paddingLeft: { xs: 0, sm: '350px' },
                      }}
                   >
                      <IconButton
                         size='large'
-                        aria-label='account of current user'
+                        color='inherit'
+                        aria-label='navigation'
                         aria-controls='menu-appbar'
                         aria-haspopup='true'
                         onClick={handleOpenNavMenu}
-                        color='inherit'
-                        sx={{
-                           paddingLeft: { xs: 0, sm: '350px' },
-                        }}
                      >
                         <MenuIcon />
                      </IconButton>
@@ -139,7 +138,7 @@ const NavBar = () => {
                         open={Boolean(anchorElNav)}
                         onClose={handleCloseNavMenu}
                         sx={{
-                           display: 'block',
+                           display: { xs: 'block', md: 'none' },
                         }}
                      >
                         <Stack direction='column' sx={{ padding: '0.5rem' }}>
@@ -186,8 +185,7 @@ const NavBar = () => {
                         </Button>
                      ) : null}
                   </Box>
-                  {/* END MOBILE ONLY */}
-                  {/* DESKTOP ONLY */}
+                  {/* ONLY ON MD AND ABOVE SCREENS*/}
                   <Box
                      sx={{
                         flexGrow: 1,
@@ -198,7 +196,6 @@ const NavBar = () => {
                         justifyContent: 'center',
                      }}
                   >
-                     {/* SHOW ONLY ON SETTINGS PAGE WHEN ON DESKTOP AND LOGGED IN*/}
                      {location.pathname === '/home/settings' ? (
                         <Button
                            variant='text'
@@ -208,7 +205,6 @@ const NavBar = () => {
                            Go Back
                         </Button>
                      ) : (
-                        // SHOW ON ALL PAGES WHEN ON DESKTOP AND LOGGED IN
                         <>
                            <Link
                               component={NavLink}
@@ -246,7 +242,6 @@ const NavBar = () => {
                         </>
                      )}
                   </Box>
-                  {/* SHOW THIS ON ALL PAGES WHEN LOGGED IN */}
                   <Box sx={{ flexGrow: 0 }}>
                      <Tooltip title='Open settings'>
                         <IconButton
@@ -271,7 +266,7 @@ const NavBar = () => {
                            horizontal: 'right',
                         }}
                         open={Boolean(anchorElUser)}
-                        onClose={handleMenuClick}
+                        onClose={handleCloseUserMenu}
                      >
                         <MenuItem onClick={handleUserProfileClick}>
                            <Typography textAlign='center'>
@@ -293,11 +288,11 @@ const NavBar = () => {
                   component={NavLink}
                   to='/login'
                   color='inherit'
-                  sx={{ marginLeft: 'auto' }}
+                  sx={{ marginLeft: 'auto', flexGrow: 0, pr: '1rem' }}
                   underline='none'
                   data-testid='home-page'
                >
-                  <Typography sx={{ fontWeight: '500' }} variant='body2'>
+                  <Typography sx={{ fontWeight: '500' }} variant='body1'>
                      Log in
                   </Typography>
                </Link>
@@ -305,7 +300,7 @@ const NavBar = () => {
 
             <Tooltip title='Toggle theme'>
                <IconButton
-                  sx={{ ml: '1rem' }}
+                  sx={isLoggedIn ? { ml: 'auto' } : { ml: 0 }}
                   onClick={colorMode.toggleColorMode}
                   color='inherit'
                   aria-label='Toggle color theme'

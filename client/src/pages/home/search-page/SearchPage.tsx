@@ -1,12 +1,12 @@
 import { Box, CircularProgress } from '@mui/material';
 import React, { useEffect } from 'react';
+import { FoodSearchList } from '../../../components/food-search-list';
 import { useHomeOutlet } from '../../../hooks/useHomeOutlet';
-import { FoodSearchList } from './food-search-list';
 import './SearchPage.scss';
 
 const SearchPage = () => {
    const {
-      loading,
+      isSearching,
       handleLoadMore,
       setAlertMessage,
       setOpenAlert,
@@ -14,16 +14,16 @@ const SearchPage = () => {
       showLoadMoreBtn,
       SearchFormComponent,
       searchResults,
-      setLoading,
+      setIsSearching,
    } = useHomeOutlet();
 
    useEffect(() => {
-      setLoading(false);
+      setIsSearching(false);
    }, []);
    return (
       <>
          <>
-            <Box className='search-page' sx={{ width: '100vw' }}>
+            <Box className='search-page' sx={{ width: '100%' }}>
                {searchResults.length ? (
                   <>
                      <FoodSearchList
@@ -38,7 +38,7 @@ const SearchPage = () => {
                ) : (
                   <>{SearchFormComponent}</>
                )}
-               {loading ? <CircularProgress size={68} /> : null}
+               {isSearching ? <CircularProgress size={68} /> : null}
             </Box>
          </>
       </>

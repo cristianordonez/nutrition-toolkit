@@ -39,31 +39,36 @@ const checkAuthentication = async (req: Request, res: Response) => {
    if (session.passport || session.username) {
       res.status(201).send(session.username);
    } else {
-      res.status(403).send('User is not logged in.');
+      res.status(205).send('User is not logged in.');
    }
 };
 
 const forgotPassword = async (req: Request, res: Response) => {
    try {
-      let user = await userModel.getHash(req.body.email);
+      let user = await userModel.getGoogleUser(req.body.email);
+      console.log('user: ', user);
       if (user.length === 0) {
          res.status(403).send(
             'No account registered to that email exists. Would you like to create an account instead?'
          );
       } else {
-         let currentToken = await tokensModel.findOne(user[0].id);
+         let currentToken = await tokensModel.findOne(user[0].user_id);
+         console.log('currentToken: ', currentToken);
          if (currentToken.length > 0) {
             await tokensModel.deleteOne(currentToken[0].token);
          }
          let resetToken = crypto.randomBytes(32).toString('hex');
+
          const hash = await bcrypt.hash(resetToken, Number(saltRounds));
+
          await tokensModel.addToken({
-            userId: user[0].id,
+            userId: user[0].user_id,
             token: hash,
             createdAt: format(new Date(Date.now()), 'MM/dd/yyyy'),
          });
          //send email to user using sendEmail file that uses token to verify user, and sends to user w
-         const link = `${process.env.CLIENT_URL}/passwordReset?token=${resetToken}&id=${user[0].id}`;
+         const link = `${process.env.CLIENT_URL}/passwordReset?token=${resetToken}&id=${user[0].user_id}`;
+         console.log('link: ', link);
          await sendEmail(user[0].email, link);
          res.status(200).send(
             'Your account recovery link has been sent to your email.'

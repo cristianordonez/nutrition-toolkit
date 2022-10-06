@@ -16,12 +16,11 @@ import React, {
    SetStateAction,
    useState,
 } from 'react';
-import { FoodSearchResult } from '../../../../../../types/types';
-import { FoodListRow } from '../../../../components/food-list-row/FoodListRow';
-import { StyledTableCell } from '../../../../components/styled-table-components/StyledTableCell';
-import { StyledTableRow } from '../../../../components/styled-table-components/StyledTableRow';
+import { FoodSearchResult } from '../../../../types/types';
+import { StyledTableCell } from '../styled-table-components/StyledTableCell';
+import { StyledTableRow } from '../styled-table-components/StyledTableRow';
 import { AddToCartModal } from './add-to-cart-modal/AddToCartModal';
-
+import { FoodListRow } from './food-list-row/FoodListRow';
 import './index.scss';
 interface Props {
    searchResults: FoodSearchResult[];
@@ -42,8 +41,9 @@ export const FoodSearchList = ({
 }: Props) => {
    const [openDialog, setOpenDialog] = useState<boolean>(false);
    const [currentId, setCurrentId] = useState<number>(0);
-   const [currentTitle, setCurrentTitle] = useState<string>('');
-   const [currentIngredients, setCurrentIngredients] = useState<string>('');
+   const [currentDescription, setCurrentDescription] = useState<string>('');
+   const [currentBrand, setCurrentBrand] = useState<string>('');
+   const [currentModifier, setCurrentModifier] = useState<string | null>();
    const [currentDataType, setCurrentDataType] = useState<string>('');
    const [currentServingSizeUnit, setCurrentServingSizeUnit] =
       useState<string>('');
@@ -56,22 +56,24 @@ export const FoodSearchList = ({
       dataType: string,
       servingSizes: number[],
       servingSizeUnit: string,
-      title: string,
-      ingredients: string
+      description: string,
+      brand: string,
+      modifier: string | null
    ) => {
       setCurrentId(id);
       setCurrentDataType(dataType);
       setCurrentServingSizes(servingSizes);
       setCurrentServingSizeUnit(servingSizeUnit);
-      setCurrentTitle(title);
-      setCurrentIngredients(ingredients);
+      setCurrentDescription(description);
+      setCurrentBrand(brand);
+      setCurrentModifier(modifier);
       setOpenDialog(!openDialog);
    };
 
    const handleOpeningDialog = () => {
       setOpenDialog(!openDialog);
    };
-
+   console.log('searchResults: ', searchResults);
    return (
       <>
          <div className='food-search-list'>
@@ -82,7 +84,10 @@ export const FoodSearchList = ({
             >
                <MenuBookIcon />
                <Typography variant='body1'>
-                  Click on any item to add it to your mealplan
+                  Note: Nutrition Facts for results may differ from those seen
+                  on their nutrition label as they are standardized per 100
+                  grams. This is to help better compare the nutrition of
+                  different foods to each other.
                </Typography>
             </Stack>
             <Typography variant='h6' align='left'>
@@ -95,41 +100,56 @@ export const FoodSearchList = ({
                         <StyledTableRow>
                            <StyledTableCell variant='head' />
                            <StyledTableCell>
-                              Food&nbsp;(100g serving)
+                              Food&nbsp;(per 100g)
                            </StyledTableCell>
                            <StyledTableCell align='right'>
                               Calories
                            </StyledTableCell>
-                           <StyledTableCell align='right'>
+                           <StyledTableCell
+                              align='right'
+                              className='desktop-table-view'
+                           >
                               Fat&nbsp;(g)
                            </StyledTableCell>
-                           <StyledTableCell align='right'>
+                           <StyledTableCell
+                              align='right'
+                              className='desktop-table-view'
+                           >
                               Carbs&nbsp;(g)
                            </StyledTableCell>
-                           <StyledTableCell align='right'>
+                           <StyledTableCell
+                              align='right'
+                              className='desktop-table-view'
+                           >
                               Protein&nbsp;(g)
                            </StyledTableCell>
                         </StyledTableRow>
                      </TableHead>
                      <TableBody>
-                        {searchResults.map((searchResult) => (
+                        {searchResults.map((searchResult, index) => (
                            <FoodListRow
-                              key={searchResult.fdc_id}
-                              ingredients={searchResult.ingredients}
+                              key={index}
                               handleOpeningAddToMealplanDialog={
                                  handleOpeningAddToMealplanDialog
                               }
-                              brand_name={searchResult.brand_name}
                               brand_owner={searchResult.brand_owner}
-                              branded_food_category={
-                                 searchResult.branded_food_category
+                              custom_food_brand_owner={
+                                 searchResult.custom_food_brand_owner
                               }
                               description={searchResult.description}
                               fdc_id={searchResult.fdc_id}
                               serving_size={searchResult.serving_size}
+                              custom_food_serving_size={
+                                 searchResult.custom_food_serving_size
+                              }
                               serving_size_unit={searchResult.serving_size_unit}
+                              custom_food_serving_size_unit={
+                                 searchResult.custom_food_serving_size_unit
+                              }
                               data_type={searchResult.data_type}
                               nutrition={searchResult.nutrition}
+                              gram_weight={searchResult.gram_weight}
+                              modifier={searchResult.modifier}
                            />
                         ))}
                      </TableBody>
@@ -151,11 +171,12 @@ export const FoodSearchList = ({
             currentServingSizes={currentServingSizes}
             currentServingSizeUnit={currentServingSizeUnit}
             setOpenDialog={setOpenDialog}
-            currentTitle={currentTitle}
-            currentIngredients={currentIngredients}
+            currentDescription={currentDescription}
             setAlertMessage={setAlertMessage}
             setOpenSnackbar={setOpenSnackbar}
             setAlertSeverity={setAlertSeverity}
+            currentModifier={currentModifier}
+            currentBrand={currentBrand}
          />
       </>
    );

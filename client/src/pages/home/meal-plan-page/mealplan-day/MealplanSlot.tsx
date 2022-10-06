@@ -20,12 +20,14 @@ import axios from 'axios';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
+   CustomFoodInput,
    MealplanItem,
    NutritionSummaryMealplan,
-} from '../../../../../../../types/types';
-import { NutritionTable } from '../../../../../components/nutrition-table/NutritionTable';
-import { StyledTableCell } from '../../../../../components/styled-table-components/StyledTableCell';
-import { StyledTableRow } from '../../../../../components/styled-table-components/StyledTableRow';
+} from '../../../../../../types/types';
+import { getFoodTitle } from '../../../../../../utils/getFoodTitle';
+import { NutritionTable } from '../../../../components/nutrition-table/NutritionTable';
+import { StyledTableCell } from '../../../../components/styled-table-components/StyledTableCell';
+import { StyledTableRow } from '../../../../components/styled-table-components/StyledTableRow';
 interface Props {
    meals: MealplanItem[];
    setOpenAlert: Dispatch<SetStateAction<boolean>>;
@@ -37,8 +39,9 @@ interface Props {
    key: number;
    setNutritionSummary: Dispatch<SetStateAction<NutritionSummaryMealplan>>;
    handleOpeningDialog: () => void;
-   setCurrentSlot: Dispatch<SetStateAction<number>>;
-   slot: number;
+   slot: 1 | 2 | 3 | 4;
+   setCreateFoodData: Dispatch<SetStateAction<CustomFoodInput>>;
+   createFoodData: CustomFoodInput;
 }
 
 export const MealplanSlot = ({
@@ -51,8 +54,9 @@ export const MealplanSlot = ({
    slotName,
    setNutritionSummary,
    handleOpeningDialog,
-   setCurrentSlot,
    slot,
+   setCreateFoodData,
+   createFoodData,
 }: Props) => {
    const navigate = useNavigate();
    const [open, setOpen] = useState<boolean>(false);
@@ -85,7 +89,7 @@ export const MealplanSlot = ({
 
    //runs the handleopendialog function, but also updates the slot so dialog can receive it
    const handleDialogChild = (e: React.MouseEvent) => {
-      setCurrentSlot(slot);
+      setCreateFoodData({ ...createFoodData, slot: slot });
       handleOpeningDialog();
    };
    return (
@@ -134,9 +138,12 @@ export const MealplanSlot = ({
                                  </IconButton>
                               </Tooltip>
                            </TableCell>
-                           <TableCell>{meal.title}</TableCell>
                            <TableCell>
-                              {meal.serving_size * meal.servings}{' '}
+                              {getFoodTitle(meal.brand_owner, meal.description)}
+                           </TableCell>
+                           <TableCell>
+                              {Number(meal.serving_size) *
+                                 Number(meal.servings)}{' '}
                               {meal.serving_size_unit}
                            </TableCell>
                            <TableCell>{meal.nutrition.calories} kcal</TableCell>
@@ -150,7 +157,7 @@ export const MealplanSlot = ({
                                     aria-label='expand row'
                                     size='small'
                                     onClick={() =>
-                                       handleDeleteRow(meal.id, currentDay)
+                                       handleDeleteRow(meal.meal_id, currentDay)
                                     }
                                  >
                                     <RemoveCircleIcon color='error' />

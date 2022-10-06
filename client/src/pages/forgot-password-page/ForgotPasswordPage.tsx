@@ -35,6 +35,7 @@ const ForgotPasswordPage = () => {
             replace: true,
          });
       } catch (err: any) {
+         console.log('err: ', err);
          setAlertSeverity('error');
          setAlertMessage(err.response.data);
          setOpenAlert(true);

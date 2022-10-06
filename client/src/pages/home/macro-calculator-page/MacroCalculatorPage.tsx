@@ -1,3 +1,5 @@
+import CalculateIcon from '@mui/icons-material/Calculate';
+import { Stack, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { MacroCalculatorForm } from '../../../components/macro-calculator-form';
@@ -34,6 +36,13 @@ const MacroCalculatorPage = () => {
    return isLoading ? null : (
       <>
          <div className='macro-calc-page'>
+            <Stack direction='row' spacing={1}>
+               <CalculateIcon />
+               <Typography variant='body1' align='center'>
+                  Recalculate your goals here, or navigate to your user profile
+                  page to enter your desired macronutrients
+               </Typography>
+            </Stack>
             <MacroCalculatorForm
                setOpenErrorAlert={setOpenAlert}
                setErrorMessage={setAlertMessage}

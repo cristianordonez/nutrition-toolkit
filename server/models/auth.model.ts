@@ -3,11 +3,11 @@ import { db } from '../database/db';
 
 const createUser = (user: UserType) => {
    const createQuery = `WITH getId AS 
-                        (INSERT INTO users (username, email) 
-                        VALUES ('${user.username}', '${user.email}') 
-                        RETURNING user_id)
-                        INSERT into user_hash (user_id, hash)
-                        VALUES ((SELECT user_id from getId), '${user.password}') RETURNING user_id`;
+      (INSERT INTO users (username, email) 
+      VALUES ('${user.username}', '${user.email}') 
+      RETURNING user_id)
+      INSERT INTO user_hash (user_id, hash)
+      VALUES ((SELECT user_id FROM getId), '${user.password}') RETURNING user_id`;
    let dbResponse = db.query(createQuery);
    return dbResponse;
 };
@@ -19,8 +19,8 @@ type GoogleUser = {
 
 const createGoogleUser = (user: GoogleUser) => {
    const createGoogleUserQuery = `INSERT INTO users (username, email) 
-                        VALUES ('${user.username}', '${user.email}') 
-                        RETURNING user_id`;
+       VALUES ('${user.username}', '${user.email}') 
+       RETURNING user_id`;
    const createGoogleUserResponse = db.query(createGoogleUserQuery);
    return createGoogleUserResponse;
 };
@@ -29,13 +29,6 @@ const updatePassword = (userId: string, password: string) => {
    const passwordQuery = `UPDATE user_hash SET hash='${password}' WHERE user_id='${userId}'`;
    let dbResponse = db.query(passwordQuery);
    return dbResponse;
-};
-
-const createUserIntolerances = function (intolerances: Intolerances) {
-   let dbQuery = `UPDATE users SET intolerances = '{${intolerances.intolerances}}'
-   `;
-   let result = db.query(dbQuery);
-   return result;
 };
 
 const getGoogleUser = (email: string) => {
@@ -49,16 +42,9 @@ const getHash = (usernameOrEmail: string) => {
                          INNER JOIN users 
                          ON user_hash.user_id = users.user_id
                          WHERE username = '${usernameOrEmail}' 
-                         OR email = '${usernameOrEmail}' `;
+                         OR email = '${usernameOrEmail}'`;
    const hash = db.query(getHashQuery);
    return hash;
 };
 
-export {
-   createUser,
-   updatePassword,
-   createUserIntolerances,
-   getHash,
-   getGoogleUser,
-   createGoogleUser,
-};
+export { createUser, updatePassword, getHash, getGoogleUser, createGoogleUser };

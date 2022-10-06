@@ -29,7 +29,9 @@ export const AdvancedSearchForm = ({
             <Stack spacing={3}>
                <QueryTextField
                   query={values.query}
+                  id={'query'}
                   handleInputChange={handleInputChange}
+                  helperText={'Search by food'}
                />
 
                <RadioAllergyGroup
