@@ -12,8 +12,6 @@ interface AllergyMap {
    wheat: string;
 }
 
-//TODO use row_to_json to build object of nutrition items
-
 const allergyMap = {
    dairy: `AND ingredients !~* 'cheese'
    AND ingredients !~* 'butter'
@@ -120,4 +118,8 @@ const getAdvanced = (query: Query) => {
    return matchingItems;
 };
 
-export { get, getAdvanced };
+const createFood = () => {};
+
+const updateNutritionCustomFoods = () => {};
+
+export { get, getAdvanced, createFood, updateNutritionCustomFoods };

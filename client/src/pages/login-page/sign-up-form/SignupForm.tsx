@@ -2,11 +2,11 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { AlertColor, Button, Paper, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { ConfirmPasswordTextField } from '../../../components/form-input-components/confirm-password-textfield/ConfirmPasswordTextField';
+import { EmailTextField } from '../../../components/form-input-components/email-textfield/EmailTextField';
+import { PasswordTextField } from '../../../components/form-input-components/password-textfield/PasswordTextField';
+import { UsernameTextField } from '../../../components/form-input-components/username-textfield/UsernameTextField';
 import { MacroCalculatorForm } from '../../../components/macro-calculator-form';
-import { ConfirmPasswordTextField } from '../../../components/text-fields/confirm-password-textfield/ConfirmPasswordTextField';
-import { EmailTextField } from '../../../components/text-fields/email-textfield/EmailTextField';
-import { PasswordTextField } from '../../../components/text-fields/password-textfield/PasswordTextField';
-import { UsernameTextField } from '../../../components/text-fields/username-textfield/UsernameTextField';
 import './SignupForm.scss';
 
 interface Props {

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { PasswordTextField } from '../../components/text-fields/password-textfield/PasswordTextField';
-import { ConfirmPasswordTextField } from '../../components/text-fields/confirm-password-textfield/ConfirmPasswordTextField';
-import { CustomAlert } from '../../components/custom-alert/CustomAlert';
-import { Typography, Paper, Button, AlertColor } from '@mui/material';
+import { AlertColor, Button, Paper, Typography } from '@mui/material';
 import axios from 'axios';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CustomAlert } from '../../components/custom-alert/CustomAlert';
+import { ConfirmPasswordTextField } from '../../components/form-input-components/confirm-password-textfield/ConfirmPasswordTextField';
+import { PasswordTextField } from '../../components/form-input-components/password-textfield/PasswordTextField';
 
 function useQuery() {
    return new URLSearchParams(window.location.search);

@@ -62,9 +62,9 @@ app.use(passport.session());
 passport.use(
    new LocalStrategy((usernameOrEmail, password, cb) => {
       db.query(
-         `SELECT hash, users.id FROM user_hash 
+         `SELECT hash, users.user_id FROM user_hash 
          INNER JOIN users
-         ON user_id=users.id
+         ON user_hash.user_id=users.user_id
          WHERE username='${usernameOrEmail}' 
          OR email = '${usernameOrEmail}'`
       )
@@ -113,7 +113,7 @@ passport.use(
                   user.username = profile.displayName;
                   user.email = profile.emails[0].value;
                   createGoogleUser(user).then((userId: number) => {
-                     user.id = userId;
+                     user.user_id = userId;
 
                      done(null, user);
                   });
@@ -129,11 +129,14 @@ passport.use(
 
 //determines which data of user object should be stored in session to be accessed below in the deserializeUser function
 passport.serializeUser((user: any, done) => {
-   done(null, user.id);
+   console.log('user: ', user);
+   done(null, user.user_id);
 });
 
-passport.deserializeUser((id: string, cb) => {
-   db.query(`SELECT id, username, email FROM users WHERE id='${id}'`)
+passport.deserializeUser((user_id: string, cb) => {
+   db.query(
+      `SELECT user_id, username, email FROM users WHERE user_id='${user_id}'`
+   )
       .then(function (results: any) {
          cb(null, results[0]);
       })

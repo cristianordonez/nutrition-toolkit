@@ -8,16 +8,16 @@ const create = (mealplan: AddToMealPlanType, user_id: number) => {
     VALUES (${user_id}, ${mealplan.fdc_id}, ${mealplan.slot}, '${mealplan.data_type}',
     ${mealplan.servings}, ${mealplan.serving_size}, '${mealplan.serving_size_unit}',
      '${mealplan.date}', '${mealplan.ingredients}', '${mealplan.title}') 
-    RETURNING id`;
+    RETURNING meal_id`;
    const results = db.query(dbQuery);
    return results;
 };
 
-const createMealNutrition = (user_id: number) => {
+const createMealNutrition = (meal_id: number) => {
    const userMealNutritionQuery = `INSERT INTO user_meal_nutrition (meal_id, total_carbohydrate, total_fat, protein, calories,
      dietary_fiber, saturated_fat, trans_fat, sugar, polyunsaturated_fat, monounsaturated_fat, 
      cholesterol, sodium, calcium, iron, potassium, vitamin_a, vitamin_c, vitamin_d)
-     select ${user_id}, (CASE WHEN user_meal.serving_size = 100 THEN food_nutrition.total_carbohydrates * user_meal.servings 
+     select ${meal_id}, (CASE WHEN user_meal.serving_size = 100 THEN food_nutrition.total_carbohydrates * user_meal.servings 
 	ELSE food_nutrition.total_carbohydrates * food.serving_size_conversion_factor * user_meal.servings  
 	END) as total_carbohydrate, 
 	(CASE WHEN user_meal.serving_size = 100 THEN food_nutrition.total_fat * user_meal.servings
@@ -74,16 +74,17 @@ const createMealNutrition = (user_id: number) => {
     FROM user_meal 
     INNER JOIN food ON user_meal.fdc_id = food.fdc_id 
     INNER JOIN food_nutrition ON food.fdc_id = food_nutrition.fdc_id 
-    WHERE user_meal.id = ${user_id}
+    WHERE user_meal.meal_id = ${meal_id}
         `;
    const result = db.query(userMealNutritionQuery);
    return result;
 };
 
 const getByDay = (date: Date | string, user_id: number) => {
-   const getMealsAndNutritionQuery = `SELECT user_meal.id, slot, data_type, servings, serving_size, serving_size_unit, date, fdc_id,  
+   console.log('user_id: ', user_id);
+   const getMealsAndNutritionQuery = `SELECT user_meal.meal_id, slot, data_type, servings, serving_size, serving_size_unit, date, fdc_id,  
 	ingredients, title, row_to_json(user_meal_nutrition) 
-	AS nutrition FROM user_meal INNER JOIN user_meal_nutrition ON user_meal.id = user_meal_nutrition.meal_id 
+	AS nutrition FROM user_meal INNER JOIN user_meal_nutrition ON user_meal.meal_id = user_meal_nutrition.meal_id 
 	WHERE user_id = ${user_id} AND date = '${date}'
 	ORDER BY created_at ASC `;
    const response = db.query(getMealsAndNutritionQuery);
@@ -96,7 +97,7 @@ const getNutritionSummaryByDay = (date: Date | string, user_id: number) => {
 	COALESCE(SUM(total_carbohydrate), 0) AS total_carbohydrates,
 	COALESCE(SUM(total_fat), 0) AS total_fat,
 	COALESCE(SUM(protein), 0) AS total_protein
-	FROM user_meal_nutrition INNER JOIN user_meal ON user_meal.id = user_meal_nutrition.meal_id 
+	FROM user_meal_nutrition INNER JOIN user_meal ON user_meal.meal_id = user_meal_nutrition.meal_id 
 	WHERE user_id = ${user_id}
 	AND date = '${date}'`;
    const nutritionSummary = db.query(getSummaryQuery);
@@ -105,7 +106,7 @@ const getNutritionSummaryByDay = (date: Date | string, user_id: number) => {
 
 const deleteFood = (user_id: number, mealId: string) => {
    const deleteFoodQuery = `DELETE FROM user_meal 
-		WHERE id = ${mealId} AND user_id = ${user_id};`;
+		WHERE meal_id = ${mealId} AND user_id = ${user_id};`;
    return db.query(deleteFoodQuery);
 };
 

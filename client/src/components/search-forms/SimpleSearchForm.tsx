@@ -3,7 +3,7 @@ import { AlertColor, Button, SelectChangeEvent, Stack } from '@mui/material';
 import axios from 'axios';
 import React, { Dispatch, SetStateAction } from 'react';
 import { FoodSearchResult, Query } from '../../../../types/types';
-import { QueryTextField } from './search-form-components/QueryTextField';
+import { QueryTextField } from '../form-input-components/QueryTextField';
 interface Props {
    values: Query;
    handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;

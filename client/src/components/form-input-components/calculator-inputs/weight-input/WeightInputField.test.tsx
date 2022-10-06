@@ -2,17 +2,10 @@
 /**
  * @jest-environment jsdom
  */
-import React, { useState } from 'react';
-import { expect } from '../../../../../jestGlobals';
-import {
-   render,
-   waitFor,
-   screen,
-   fireEvent,
-   pointer,
-} from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import React, { useState } from 'react';
 import { WeightInputField } from './WeightInputField';
 
 function App() {

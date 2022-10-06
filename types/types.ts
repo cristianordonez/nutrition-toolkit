@@ -38,7 +38,7 @@ type UserType = {
 type PassportGoogleUser = {
    username: string;
    email: string;
-   id: number;
+   user_id: number;
 };
 
 type AddToMealPlanType = {

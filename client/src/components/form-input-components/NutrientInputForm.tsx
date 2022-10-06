@@ -7,7 +7,7 @@ import {
    Typography,
 } from '@mui/material';
 import React from 'react';
-import { CurrentGoals } from '../../../../../types/types';
+import { CurrentGoals } from '../../../../types/types';
 
 interface Props {
    handleInputChange: any;

@@ -25,7 +25,7 @@ const createAccount = async (req: Request, res: Response) => {
          user.password = hash;
          const dbResponse = await userModel.createUser(user);
          const session: any = req.session;
-         session.user_id = dbResponse[0].id; //save user_id to session so that it can be retrieved with next request when getting metrics
+         session.user_id = dbResponse[0].user_id; //save user_id to session so that it can be retrieved with next request when getting metrics
          res.status(201).send('You have successfully created an account!');
       }
    } catch (err) {

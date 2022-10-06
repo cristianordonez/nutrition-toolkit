@@ -20,10 +20,10 @@ import React, {
    useState,
 } from 'react';
 import { AddToMealPlanType } from '../../../../../../../types/types';
-import { DatePickerTextField } from './DatePickerTextField';
-import { DialogSelectServingSize } from './DialogSelectServingSize';
-import { DialogSelectSlot } from './DialogSelectSlot';
-import { DialogServingsInput } from './DialogServingsInput';
+import { DatePickerTextField } from '../../../../../components/form-input-components/DatePickerTextField';
+import { DialogSelectServingSize } from '../../../../../components/form-input-components/DialogSelectServingSize';
+import { DialogSelectSlot } from '../../../../../components/form-input-components/DialogSelectSlot';
+import { FormNumberInput } from '../../../../../components/form-input-components/FormNumberInput';
 
 interface Props {
    openDialog: boolean;
@@ -140,21 +140,18 @@ export const AddToCartModal = ({
                      currentServingSizes={currentServingSizes}
                      currentServingSizeUnit={currentServingSizeUnit}
                   />
-                  <DialogServingsInput
-                     handleSelectServings={handleSelectServings}
-                     servings={data.servings}
+                  <FormNumberInput
+                     inputValue={data.servings}
+                     handleNumberChange={handleSelectServings}
+                     helperText={
+                        'Enter number of inputValue (up to two decimal places)'
+                     }
+                     label='Servings'
+                     id={'servings'}
                   />
                </Box>
             </DialogContent>
             <DialogActions>
-               <Button
-                  data-testid='add-mealplan-btn'
-                  aria-label='submit form to add to meal plan'
-                  type='submit'
-                  variant='contained'
-               >
-                  Submit
-               </Button>
                <Button
                   variant='contained'
                   aria-label='cancel'
@@ -162,6 +159,15 @@ export const AddToCartModal = ({
                   color='error'
                >
                   Cancel
+               </Button>
+               <Button
+                  data-testid='add-mealplan-btn'
+                  aria-label='submit form to add to meal plan'
+                  type='submit'
+                  variant='contained'
+                  color='success'
+               >
+                  Submit
                </Button>
             </DialogActions>
          </form>

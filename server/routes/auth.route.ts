@@ -57,7 +57,7 @@ router.post(
    (req: Request, res: Response) => {
       let user = req.user as PassportGoogleUser;
       let session = req.session as any;
-      session.user_id = user.id;
+      session.user_id = user.user_id;
       session.username = user.username;
       session.save();
       res.status(201).send('Successfully logged in.');

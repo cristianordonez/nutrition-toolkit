@@ -20,7 +20,7 @@ import { FoodSearchResult } from '../../../../../../types/types';
 import { FoodListRow } from '../../../../components/food-list-row/FoodListRow';
 import { StyledTableCell } from '../../../../components/styled-table-components/StyledTableCell';
 import { StyledTableRow } from '../../../../components/styled-table-components/StyledTableRow';
-import { AddToCartModal } from './add-to-cart-modal';
+import { AddToCartModal } from './add-to-cart-modal/AddToCartModal';
 
 import './index.scss';
 interface Props {

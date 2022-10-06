@@ -1,10 +1,10 @@
-import React, { useState, ChangeEvent, SyntheticEvent } from 'react';
-import './ForgotPasswordPage.scss';
-import { Paper, Typography, Button, AlertColor } from '@mui/material';
-import { EmailTextField } from '../../components/text-fields/email-textfield/EmailTextField';
-import axios, { AxiosError } from 'axios';
+import { AlertColor, Button, Paper, Typography } from '@mui/material';
+import axios from 'axios';
+import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { EmailTextField } from '../../components/form-input-components/email-textfield/EmailTextField';
+import './ForgotPasswordPage.scss';
 
 const ForgotPasswordPage = () => {
    const [email, setEmail] = useState<string>('');

@@ -1,3 +1,4 @@
+import AddIcon from '@mui/icons-material/Add';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
@@ -6,14 +7,14 @@ import {
    Button,
    IconButton,
    Paper,
+   Stack,
    Table,
    TableBody,
    TableCell,
    TableContainer,
-   TableFooter,
    TableHead,
-   TableRow,
    Tooltip,
+   Typography,
 } from '@mui/material';
 import axios from 'axios';
 import React, { Dispatch, SetStateAction, useState } from 'react';
@@ -35,6 +36,9 @@ interface Props {
    slotName: string;
    key: number;
    setNutritionSummary: Dispatch<SetStateAction<NutritionSummaryMealplan>>;
+   handleOpeningDialog: () => void;
+   setCurrentSlot: Dispatch<SetStateAction<number>>;
+   slot: number;
 }
 
 export const MealplanSlot = ({
@@ -46,6 +50,9 @@ export const MealplanSlot = ({
    currentDay,
    slotName,
    setNutritionSummary,
+   handleOpeningDialog,
+   setCurrentSlot,
+   slot,
 }: Props) => {
    const navigate = useNavigate();
    const [open, setOpen] = useState<boolean>(false);
@@ -55,16 +62,12 @@ export const MealplanSlot = ({
       setOpen(!open);
    };
 
-   //TODO  add button to footer to link to navigate page
-   //TODO change style of foodnutrition table
-
    const handleDeleteRow = async (id: number, currentDay: string) => {
       try {
          const axiosResponse = await axios.delete(`/api/mealplan/${id}`, {
             params: { currentDay },
             withCredentials: true,
          });
-         console.log('axiosResponse: ', axiosResponse);
          setMealPlanItems(
             axiosResponse.data.updatedItems as unknown as MealplanItem[]
          );
@@ -79,10 +82,16 @@ export const MealplanSlot = ({
          setOpenAlert(true);
       }
    };
+
+   //runs the handleopendialog function, but also updates the slot so dialog can receive it
+   const handleDialogChild = (e: React.MouseEvent) => {
+      setCurrentSlot(slot);
+      handleOpeningDialog();
+   };
    return (
       <>
          <TableContainer component={Paper}>
-            <Table>
+            <Table aria-label={`Food items for ${slotName}`}>
                <TableHead>
                   <StyledTableRow>
                      <StyledTableCell
@@ -156,28 +165,21 @@ export const MealplanSlot = ({
                      </React.Fragment>
                   ))}
                </TableBody>
-               <TableFooter>
-                  <TableRow>
-                     <TableCell
-                        sx={{ whiteSpace: 'nowrap' }}
-                        size='small'
-                        variant='footer'
-                     >
-                        <Button
-                           size='small'
-                           variant='text'
-                           onClick={() => navigate('/home/search')}
-                        >
-                           Add Food
-                        </Button>
-                     </TableCell>
-                     <TableCell variant='footer' />
-                     <TableCell variant='footer' />
-                     <TableCell variant='footer' />
-                     <TableCell variant='footer' />
-                  </TableRow>
-               </TableFooter>
             </Table>
+            <Stack sx={{ p: '5px' }} alignItems='center' direction='row'>
+               <Button onClick={() => navigate('/home/search')}>
+                  <AddIcon fontSize='small' />
+                  <Typography variant='overline'>Add Food</Typography>
+               </Button>
+               <Button
+                  variant='text'
+                  color='secondary'
+                  onClick={handleDialogChild}
+               >
+                  <AddIcon fontSize='small' />
+                  <Typography variant='overline'>Add Custom Food</Typography>
+               </Button>
+            </Stack>
          </TableContainer>
       </>
    );
