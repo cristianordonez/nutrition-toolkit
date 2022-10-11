@@ -9,7 +9,11 @@ import {
 } from '@mui/material';
 import React, { FormEventHandler, MouseEventHandler } from 'react';
 import { useLocation } from 'react-router-dom';
-import { CurrentGoals, Query } from '../../../../../types/types';
+import {
+   CurrentGoals,
+   NutritionSummaryMealplan,
+   Query,
+} from '../../../../../types/types';
 import { MainTitleLogo } from '../../../components/main-title-logo';
 import { AdvancedSearchForm } from '../../../components/search-forms/AdvancedSearchForm';
 import { SampleCalculatorSidebarContents } from './SampleCalculatorSidebarContents';
@@ -25,7 +29,7 @@ interface Props {
    handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
    handleTypeSelect: (event: SelectChangeEvent) => void;
    goals: CurrentGoals;
-   nutritionSummary: any;
+   nutritionSummary: NutritionSummaryMealplan;
    view: 'mealplan' | 'search' | 'calculator';
    handleRadioClick: MouseEventHandler<HTMLInputElement>;
 }

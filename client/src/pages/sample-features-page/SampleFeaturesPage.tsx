@@ -20,7 +20,6 @@ import { CustomAlert } from '../../components/custom-alert/CustomAlert';
 import { getMetrics } from '../../utils/get-metrics/getMetrics';
 import SampleMealPlanPage from './sample-app-mealplan-page/SampleMealPlanPage';
 import { SampleFeaturesSidebar } from './sample-features-sidebars';
-import './SampleFeaturesPage.scss';
 
 const initialState = {
    query: '',
@@ -200,7 +199,9 @@ const SampleFeaturesPage = () => {
       <>
          <div className='main-page-container'>
             <Tooltip title='Open Sidebar'>
-               <Toolbar sx={{ display: { sm: 'none' } }}>
+               <Toolbar
+                  sx={{ display: { sm: 'none' }, alignSelf: 'flex-start' }}
+               >
                   <IconButton
                      color='inherit'
                      aria-label='open drawer'

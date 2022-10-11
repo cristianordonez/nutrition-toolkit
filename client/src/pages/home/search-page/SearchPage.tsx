@@ -32,6 +32,7 @@ const SearchPage = () => {
                         setAlertMessage={setAlertMessage}
                         setOpenSnackbar={setOpenAlert}
                         setAlertSeverity={setAlertSeverity}
+                        enableAddToMealplanFeature={true}
                         showLoadMoreBtn={showLoadMoreBtn}
                      />
                   </>

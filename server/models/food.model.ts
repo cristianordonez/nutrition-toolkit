@@ -109,11 +109,13 @@ const get = (query: Query) => {
    LEFT JOIN branded_food ON food.fdc_id = branded_food.fdc_id
    LEFT JOIN custom_food on custom_food.fdc_id = food.fdc_id
    LEFT JOIN food_portion on food.fdc_id = food_portion.fdc_id
-   WHERE description ~* '${query.query}'
+   WHERE description ~* $<query.query>
    AND calories IS NOT null
- 	LIMIT ${query.number} OFFSET ${query.offset}
+ 	LIMIT $<query.number> OFFSET $<query.offset>
       `;
-   const matchingItems = db.query(selectQuery);
+   const matchingItems = db.any(selectQuery, {
+      query: query,
+   });
    return matchingItems;
 };
 
@@ -133,10 +135,12 @@ const getByBrand = (query: Query) => {
  	INNER JOIN food_nutrition ON food.fdc_id = food_nutrition.fdc_id
    LEFT JOIN branded_food ON food.fdc_id = branded_food.fdc_id
    LEFT JOIN custom_food on custom_food.fdc_id = food.fdc_id
-   WHERE (branded_food.brand_owner ~* '${query.query}' OR custom_food.brand_owner ~* '${query.query}')
- 	LIMIT ${query.number} OFFSET ${query.offset}
+   WHERE (branded_food.brand_owner ~* $<query.query> OR custom_food.brand_owner ~* $<query.query>)
+ 	LIMIT $<query.number> OFFSET $<query.offset>
       `;
-   const matchingItems = db.query(selectQuery);
+   const matchingItems = db.any(selectQuery, {
+      query: query,
+   });
    return matchingItems;
 };
 
@@ -156,25 +160,19 @@ const getAdvanced = (query: Query) => {
 	 INNER JOIN food_nutrition ON food.fdc_id = food_nutrition.fdc_id
     LEFT JOIN branded_food ON food.fdc_id = branded_food.fdc_id
     LEFT JOIN custom_food on custom_food.fdc_id = food.fdc_id
-    WHERE description ~* '${query.query}' 
-    AND calories BETWEEN ${Number(query.minCalories)} AND ${Number(
-      query.maxCalories
-   )}
-   AND total_fat BETWEEN ${Number(query.minFat)} AND ${Number(query.maxFat)}
-   AND protein BETWEEN ${Number(query.minProtein)} AND ${Number(
-      query.maxProtein
-   )} 
-   AND total_carbohydrates BETWEEN ${Number(query.minCarbs)} AND ${Number(
-      query.maxCarbs
-   )}
+    WHERE description ~* $<query.query> 
+    AND calories BETWEEN $<query.minCalories> AND $<query.maxCalories>
+   AND total_fat BETWEEN $<query.minFat> AND $<query.maxFat>
+   AND protein BETWEEN $<query.minProtein> AND $<query.maxProtein> 
+   AND total_carbohydrates BETWEEN $<query.minCarbs> AND $<query.maxCarbs>
    `;
    const allergyQuery =
       query.allergy === '' ? '' : allergyMap[query.allergy as keyof AllergyMap];
-   const limitQuery = `LIMIT ${query.number} OFFSET ${query.offset}`;
+   const limitQuery = `LIMIT $<query.number> OFFSET $<query.offset>`;
    const currentQuery = selectContentsQuery + allergyQuery + limitQuery;
-   const matchingItems = db.query(
-      selectContentsQuery + allergyQuery + limitQuery
-   );
+   const matchingItems = db.any(currentQuery, {
+      query: query,
+   });
    return matchingItems;
 };
 
@@ -194,27 +192,19 @@ const getAdvancedByBrand = (query: Query) => {
 	 INNER JOIN food_nutrition ON food.fdc_id = food_nutrition.fdc_id
     LEFT JOIN branded_food ON food.fdc_id = branded_food.fdc_id
     LEFT JOIN custom_food on custom_food.fdc_id = food.fdc_id
-    WHERE (branded_food.brand_owner ~* '${
-       query.query
-    }' OR custom_food.brand_owner ~* '${query.query}') 
-    AND calories BETWEEN ${Number(query.minCalories)} AND ${Number(
-      query.maxCalories
-   )}
-   AND total_fat BETWEEN ${Number(query.minFat)} AND ${Number(query.maxFat)}
-   AND protein BETWEEN ${Number(query.minProtein)} AND ${Number(
-      query.maxProtein
-   )} 
-   AND total_carbohydrates BETWEEN ${Number(query.minCarbs)} AND ${Number(
-      query.maxCarbs
-   )}
+    WHERE (branded_food.brand_owner ~* $<query.query> OR custom_food.brand_owner ~* $<query.query>) 
+    AND calories BETWEEN $<query.minCalories> AND $<query.maxCalories>
+   AND total_fat BETWEEN $<query.minFat> AND $<query.maxFat>
+   AND protein BETWEEN $<query.minProtein> AND $<query.maxProtein>
+   AND total_carbohydrates BETWEEN $<query.minCarbs> AND $<query.maxCarbs>
    `;
    const allergyQuery =
       query.allergy === '' ? '' : allergyMap[query.allergy as keyof AllergyMap];
-   const limitQuery = `LIMIT ${query.number} OFFSET ${query.offset}`;
+   const limitQuery = `LIMIT $<query.number> OFFSET $<query.offset>`;
    const currentQuery = selectContentsQuery + allergyQuery + limitQuery;
-   const matchingItems = db.query(
-      selectContentsQuery + allergyQuery + limitQuery
-   );
+   const matchingItems = db.any(currentQuery, {
+      query: query,
+   });
    return matchingItems;
 };
 
@@ -228,15 +218,21 @@ const createFood = (
 ) => {
    const createFoodQuery = `With getId AS 
    (INSERT INTO food (data_type, description, serving_size_conversion_factor) 
-   VALUES ('custom', '${description}', ${serving_size_conversion_factor}) 
+   VALUES ('custom', $1, $2) 
    RETURNING fdc_id)
    INSERT INTO custom_food 
    (brand_owner, serving_size, serving_size_unit, fdc_id, user_id) 
-   VALUES ('${brand_owner}', ${serving_size}, '${serving_size_unit}', (SELECT fdc_id FROM getId), ${user_id})
+   VALUES ($3, $4, $5, (SELECT fdc_id FROM getId), $6)
    RETURNING fdc_id`;
 
-   console.log('createFoodQuery: ', createFoodQuery);
-   const serialIdFood = db.query(createFoodQuery);
+   const serialIdFood = db.one(createFoodQuery, [
+      description,
+      serving_size_conversion_factor,
+      brand_owner,
+      serving_size,
+      serving_size_unit,
+      user_id,
+   ]);
    return serialIdFood;
 };
 
@@ -250,28 +246,30 @@ const createFoodNutrition = (
    (fdc_id, calories, total_fat, total_carbohydrates, protein, trans_fat,
    polyunsaturated_fat, monounsaturated_fat, cholesterol, dietary_fiber,
    sugar, vitamin_d, calcium, saturated_fat, sodium, iron, potassium, vitamin_a, vitamin_c)
-   VALUES (${fdc_id}, ${
-      Number(nutrition.calories) * standardized_conversion_factor
-   }, 
-   ${Number(nutrition.total_fat) * standardized_conversion_factor},
-   ${Number(nutrition.total_carbohydrates) * standardized_conversion_factor},
-   ${Number(nutrition.protein) * standardized_conversion_factor},
-   ${Number(nutrition.trans_fat) * standardized_conversion_factor},
-   ${Number(nutrition.polyunsaturated_fat) * standardized_conversion_factor},
-   ${Number(nutrition.monounsaturated_fat) * standardized_conversion_factor},
-   ${Number(nutrition.cholesterol) * standardized_conversion_factor},
-   ${Number(nutrition.dietary_fiber) * standardized_conversion_factor},
-   ${Number(nutrition.sugar) * standardized_conversion_factor},
-   ${Number(nutrition.vitamin_d) * standardized_conversion_factor},
-   ${Number(nutrition.calcium) * standardized_conversion_factor},
-   ${Number(nutrition.saturated_fat) * standardized_conversion_factor},
-   ${Number(nutrition.sodium) * standardized_conversion_factor},
-   ${Number(nutrition.iron) * standardized_conversion_factor},
-   ${Number(nutrition.potassium) * standardized_conversion_factor},
-   ${Number(nutrition.vitamin_a) * standardized_conversion_factor},
-   ${Number(nutrition.vitamin_c) * standardized_conversion_factor})`;
+   VALUES ($<fdc_id>, $<nutrition.calories> * $<standardized_conversion_factor>, 
+   $<nutrition.total_fat * $<standardized_conversion_factor>,
+   $<nutrition.total_carbohydrates * $<standardized_conversion_factor>,
+   $<nutrition.protein * $<standardized_conversion_factor>,
+   $<nutrition.trans_fat * $<standardized_conversion_factor>,
+   $<nutrition.polyunsaturated_fat * $<standardized_conversion_factor>,
+   $<nutrition.monounsaturated_fat * $<standardized_conversion_factor>,
+   $<nutrition.cholesterol * $<standardized_conversion_factor>,
+   $<nutrition.dietary_fiber * $<standardized_conversion_factor>,
+   $<nutrition.sugar * $<standardized_conversion_factor>,
+   $<nutrition.vitamin_d * $<standardized_conversion_factor>,
+   $<nutrition.calcium * $<standardized_conversion_factor>,
+   $<nutrition.saturated_fat * $<standardized_conversion_factor>,
+   $<nutrition.sodium * $<standardized_conversion_factor>,
+   $<nutrition.iron * $<standardized_conversion_factor>,
+   $<nutrition.potassium * $<standardized_conversion_factor>,
+   $<nutrition.vitamin_a * $<standardized_conversion_factor>,
+   $<nutrition.vitamin_c * $<standardized_conversion_factor>)`;
 
-   const dbResponse = db.query(createFoodNutritionQuery);
+   const dbResponse = db.none(createFoodNutritionQuery, {
+      nutrition,
+      fdc_id,
+      standardized_conversion_factor,
+   });
    return dbResponse;
 };
 

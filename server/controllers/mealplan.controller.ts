@@ -88,10 +88,6 @@ const createCustomItem = async (req: Request, res: Response) => {
       const user = req.user as PassportGoogleUser;
       const serving_size_conversion_factor = Number(body.serving_size) / 100; //used to convert to amount per serving size used from amount per 100 g
       const standardized_conversion_factor = 100 / Number(body.serving_size); //used to convert the input amount to amount per 100 g
-      console.log(
-         'standardized conversion factor: ',
-         standardized_conversion_factor
-      );
       const fdc_id = await createFood(
          body.description,
          serving_size_conversion_factor,

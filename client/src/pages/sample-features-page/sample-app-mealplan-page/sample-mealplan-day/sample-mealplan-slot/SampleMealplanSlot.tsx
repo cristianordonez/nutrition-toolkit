@@ -53,8 +53,10 @@ export const SampleMealplanSlot = ({
                         {slotName}
                      </StyledTableCell>
                      <StyledTableCell variant='head' />
-                     <StyledTableCell variant='head' />
-                     <StyledTableCell variant='head' />
+                     <StyledTableCell
+                        variant='head'
+                        className='hide-on-mobile'
+                     />
                      <StyledTableCell variant='head' />
                   </StyledTableRow>
                </TableHead>
@@ -89,7 +91,7 @@ export const SampleMealplanSlot = ({
                            <TableCell>
                               {getFoodTitle(meal.brand_owner, meal.description)}
                            </TableCell>
-                           <TableCell>
+                           <TableCell className='hide-on-mobile'>
                               {Number(meal.serving_size) *
                                  Number(meal.servings)}{' '}
                               {meal.serving_size_unit}

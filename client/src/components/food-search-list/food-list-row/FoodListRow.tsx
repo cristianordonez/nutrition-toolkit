@@ -17,6 +17,7 @@ interface Props extends FoodSearchResult {
       brand: string,
       modifier: string | null
    ) => void;
+   enableAddToMealplanFeature: boolean;
 }
 export const FoodListRow = ({
    brand_owner,
@@ -32,6 +33,7 @@ export const FoodListRow = ({
    gram_weight,
    modifier,
    handleOpeningAddToMealplanDialog,
+   enableAddToMealplanFeature,
 }: Props) => {
    const [open, setOpen] = useState<boolean>(false);
    let brand: string = '';
@@ -82,7 +84,7 @@ export const FoodListRow = ({
    return (
       <>
          <StyledTableRow
-            hover={true}
+            hover={enableAddToMealplanFeature ? true : false}
             onClick={handleOpeningModal}
             sx={{ '& > *': { borderBottom: 'unset' }, cursor: 'pointer' }}
          >

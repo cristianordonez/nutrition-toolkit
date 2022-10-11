@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import { FoodSearchList } from '../../../components/food-search-list';
 import { useSampleFeaturesOutlet } from '../../../hooks/useSampleFeaturesOutlet';
+import '../../../index.scss';
 const SampleSearchPage = () => {
    const {
       setAlertSeverity,
@@ -21,9 +22,8 @@ const SampleSearchPage = () => {
          setSearchResults(response.data);
       });
    }, []);
-   console.log('searchResults: ', searchResults);
    return (
-      <>
+      <div className='search-page'>
          {searchResults.length > 0 ? (
             <FoodSearchList
                handleLoadMore={handleLoadMore}
@@ -32,6 +32,7 @@ const SampleSearchPage = () => {
                setAlertMessage={setAlertMessage}
                setAlertSeverity={setAlertSeverity}
                showLoadMoreBtn={showLoadMoreBtn}
+               enableAddToMealplanFeature={false}
             />
          ) : null}
          {isLoading ? (
@@ -39,7 +40,7 @@ const SampleSearchPage = () => {
                <CircularProgress size={100} />
             </Stack>
          ) : null}
-      </>
+      </div>
    );
 };
 

@@ -134,7 +134,12 @@ const MealPlanPage = ({
                   spacing={{ xs: 1, sm: 4 }}
                   alignItems='space-evenly'
                >
-                  <Stack direction='row' spacing={0.5} sx={{ width: '50%' }}>
+                  <Stack
+                     direction='row'
+                     spacing={0.5}
+                     sx={{ width: '50%' }}
+                     justifyContent='space-between'
+                  >
                      <CalendarMonthIcon />
                      <Typography variant='body1'>
                         Change the current day by navigating through the tabs,

@@ -1,19 +1,20 @@
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import {
    AlertColor,
    CircularProgress,
+   Stack,
    Tab,
    Tabs,
-   Tooltip,
+   Typography,
 } from '@mui/material';
-import { Box } from '@mui/system';
 import axios from 'axios';
 import format from 'date-fns/format';
 import getDay from 'date-fns/getDay';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { MealplanItem } from '../../../../../types/types';
 import { MealPlanWeekText } from '../../../components/mealplan-week-text/MealPlanWeekText';
+import '../../../index.scss';
 import { SampleMealPlanDay } from './sample-mealplan-day/SampleMealplanDay';
-import './SampleMealPlanPage.scss';
 
 const days = [
    'Sunday',
@@ -67,10 +68,22 @@ const SampleMealPlanPage = ({
 
    return (
       <>
-         <div className='sample-mealplan-page'>
+         <div className='mealplan-page'>
             <MealPlanWeekText currentDay={currentDay} />
-            <Box sx={{ maxWidth: { xs: 320, sm: 480 } }}>
-               <Tooltip title='Please create an account to save foods and navigate to different days'>
+            <div className='mealplan-page-main-content'>
+               <Stack
+                  direction='row'
+                  spacing={{ xs: 1, sm: 4 }}
+                  alignItems='space-evenly'
+               >
+                  <CalendarMonthIcon />
+                  <Typography variant='body1'>
+                     Log in or create an account to save items and navigate to
+                     different days
+                  </Typography>
+               </Stack>
+
+               <div className='tabs-container'>
                   <Tabs
                      value={dayIndex}
                      variant='scrollable'
@@ -81,13 +94,15 @@ const SampleMealPlanPage = ({
                         <Tab disabled key={day} label={day} />
                      ))}
                   </Tabs>
-               </Tooltip>
-            </Box>
-            {sampleMealplanItems.length > 0 ? (
-               <SampleMealPlanDay sampleMealplanItems={sampleMealplanItems} />
-            ) : (
-               <CircularProgress size={100} />
-            )}
+               </div>
+               {sampleMealplanItems.length > 0 ? (
+                  <SampleMealPlanDay
+                     sampleMealplanItems={sampleMealplanItems}
+                  />
+               ) : (
+                  <CircularProgress size={100} />
+               )}
+            </div>
          </div>
       </>
    );

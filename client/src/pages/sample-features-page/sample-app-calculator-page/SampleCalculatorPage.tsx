@@ -1,8 +1,10 @@
+import CalculateIcon from '@mui/icons-material/Calculate';
 import { Button, Paper, Stack, Typography } from '@mui/material';
 import React from 'react';
+import { BsCalculatorFill } from 'react-icons/bs';
 import { Calculator } from '../../../components/calculator-contents/Calculator';
 import { useSampleFeaturesOutlet } from '../../../hooks/useSampleFeaturesOutlet';
-import './SampleCalculatorPage.scss';
+import '../../../index.scss';
 
 const SampleCalculatorPage = () => {
    const {
@@ -43,29 +45,30 @@ const SampleCalculatorPage = () => {
    };
 
    return (
-      <>
-         <Stack
-            direction='column'
-            alignItems='center'
-            justifyContent={'center'}
-            sx={{
-               pt: '2rem',
-               pb: '2rem',
-               pl: { xs: 0, sm: '1rem' },
-               pr: { xs: 0, sm: '1rem' },
-            }}
-            spacing={2}
-         >
-            <Typography variant='h2'>MacroCalculator</Typography>
+      <div className='macro-calc-page'>
+         <Stack direction='row' spacing={1}>
+            <CalculateIcon />
+            <Typography variant='body1' align='center'>
+               Log in or create an account to save your goals for future
+               reference
+            </Typography>
+         </Stack>
+         <div className='macro-calculator-container'>
             <Paper
-               elevation={1}
-               className='calculator-page'
+               elevation={2}
+               className='macro-calculator-form'
                component='form'
                onSubmit={handleSubmit}
             >
-               <Typography variant='body1'>
-                  Enter your personal metrics below to determine your
-                  recommended calorie and macronutrient ranges
+               <Stack direction='row' sx={{ gap: '1em' }}>
+                  <BsCalculatorFill className='macro-calculator-icon' />
+                  <Typography align='center' variant='h6'>
+                     Calculate your Macronutrient Recommendations
+                  </Typography>
+               </Stack>
+               <Typography variant='subtitle1'>
+                  Fill out the form below to calculate your recommended nutrient
+                  needs
                </Typography>
                <Calculator
                   handleGenderChange={handleGenderChange}
@@ -85,8 +88,8 @@ const SampleCalculatorPage = () => {
                   Calculate
                </Button>
             </Paper>
-         </Stack>
-      </>
+         </div>
+      </div>
    );
 };
 

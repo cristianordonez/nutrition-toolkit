@@ -29,6 +29,7 @@ interface Props {
    setOpenSnackbar: Dispatch<SetStateAction<boolean>>;
    setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    showLoadMoreBtn: boolean;
+   enableAddToMealplanFeature: boolean;
 }
 
 export const FoodSearchList = ({
@@ -38,6 +39,7 @@ export const FoodSearchList = ({
    setOpenSnackbar,
    setAlertSeverity,
    showLoadMoreBtn,
+   enableAddToMealplanFeature,
 }: Props) => {
    const [openDialog, setOpenDialog] = useState<boolean>(false);
    const [currentId, setCurrentId] = useState<number>(0);
@@ -79,7 +81,7 @@ export const FoodSearchList = ({
          <div className='food-search-list'>
             <Stack
                direction='row'
-               spacing={{ xs: 0, sm: 1 }}
+               spacing={{ xs: 0.5, sm: 1 }}
                sx={{ width: '100%' }}
             >
                <MenuBookIcon />
@@ -150,6 +152,9 @@ export const FoodSearchList = ({
                               nutrition={searchResult.nutrition}
                               gram_weight={searchResult.gram_weight}
                               modifier={searchResult.modifier}
+                              enableAddToMealplanFeature={
+                                 enableAddToMealplanFeature
+                              }
                            />
                         ))}
                      </TableBody>
@@ -162,22 +167,23 @@ export const FoodSearchList = ({
                </Button>
             ) : null}
          </div>
-
-         <AddToCartModal
-            openDialog={openDialog}
-            handleOpeningDialog={handleOpeningDialog}
-            id={currentId}
-            currentDataType={currentDataType}
-            currentServingSizes={currentServingSizes}
-            currentServingSizeUnit={currentServingSizeUnit}
-            setOpenDialog={setOpenDialog}
-            currentDescription={currentDescription}
-            setAlertMessage={setAlertMessage}
-            setOpenSnackbar={setOpenSnackbar}
-            setAlertSeverity={setAlertSeverity}
-            currentModifier={currentModifier}
-            currentBrand={currentBrand}
-         />
+         {enableAddToMealplanFeature === true ? (
+            <AddToCartModal
+               openDialog={openDialog}
+               handleOpeningDialog={handleOpeningDialog}
+               id={currentId}
+               currentDataType={currentDataType}
+               currentServingSizes={currentServingSizes}
+               currentServingSizeUnit={currentServingSizeUnit}
+               setOpenDialog={setOpenDialog}
+               currentDescription={currentDescription}
+               setAlertMessage={setAlertMessage}
+               setOpenSnackbar={setOpenSnackbar}
+               setAlertSeverity={setAlertSeverity}
+               currentModifier={currentModifier}
+               currentBrand={currentBrand}
+            />
+         ) : null}
       </>
    );
 };
