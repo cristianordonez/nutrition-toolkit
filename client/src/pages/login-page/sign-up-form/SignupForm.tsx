@@ -69,7 +69,7 @@ export const SignupForm = ({
          setShowTextFieldError(true);
       } else {
          try {
-            let response: any = await axios.post(`/api/signup`, signupValues);
+            await axios.post(`/api/signup`, signupValues);
             setAlertSeverity('success');
             setErrorMessage(
                'Your account has been created! Now enter your metrics to get customized macronutrient recommendations.'

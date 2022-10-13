@@ -8,16 +8,9 @@ import { useHomeOutlet } from '../../../hooks/useHomeOutlet';
 import './MacroCalculatorPage.scss';
 
 const MacroCalculatorPage = () => {
-   const {
-      handleDrawerToggle,
-      setAlertMessage,
-      setOpenAlert,
-      setAlertSeverity,
-      setGoals,
-      goals,
-   } = useHomeOutlet();
+   const { setAlertMessage, setOpenAlert, setAlertSeverity } = useHomeOutlet();
 
-   const { isLoading, isLoggedIn, username } = useAuth();
+   const { isLoading, setGoals } = useAuth();
    const [showNextPage, setShowNextPage] = useState(false);
    const [showSignup, setShowSignup] = useState(false);
 
@@ -28,7 +21,9 @@ const MacroCalculatorPage = () => {
    const getGoals = async () => {
       try {
          let currentGoals = await axios.get('/api/goals');
-         setGoals(currentGoals.data);
+         if (currentGoals.data !== '') {
+            setGoals(currentGoals.data);
+         }
       } catch (err) {
          console.log(err);
       }

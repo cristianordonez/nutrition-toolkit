@@ -31,8 +31,7 @@ export const LoginForm = ({
    handleErrorAlert,
 }: Props) => {
    const navigate = useNavigate();
-   const { isLoading, isLoggedIn, username, handleLogout, setIsLoggedIn } =
-      useAuth(); //used to check if data is still being retrieved from database
+   const { setIsLoggedIn } = useAuth(); //used to check if data is still being retrieved from database
 
    const [loginValues, setLoginValues] = useState({
       username: '',

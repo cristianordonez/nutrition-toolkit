@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, {
    createContext,
    Dispatch,
@@ -6,8 +7,6 @@ import React, {
    useEffect,
    useState,
 } from 'react';
-
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
@@ -60,22 +59,14 @@ const AuthProvider = ({ children }: Props) => {
             if (response.status === 201) {
                setUsername(response.data);
                setIsLoggedIn(true);
-               axios
-                  .get('/api/metrics')
-                  .then((response) => {
-                     if (response.data.length === 0) {
-                        navigate('/home/macrocalculator');
-                     }
-                  })
-                  .catch((err) => {
-                     console.log(err);
-                  });
+               setIsLoading(false);
             } else {
                setIsLoggedIn(false);
+               setIsLoading(false);
             }
-            setIsLoading(false);
          })
          .catch((err) => {
+            console.log('err in useeffect useauth: ', err);
             setIsLoggedIn(false);
             navigate('/', {
                state: { showError: false },

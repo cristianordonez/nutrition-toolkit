@@ -1,6 +1,6 @@
 import { CurrentGoals, MetricsType } from '../../../../types/types';
 
-export const getMetrics = ({
+export const getGoalsFromMetrics = ({
    age,
    weight,
    gender,

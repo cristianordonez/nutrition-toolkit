@@ -58,6 +58,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+type HashResponse = {
+   hash: string;
+   user_id: string;
+};
+
 passport.use(
    new LocalStrategy((Email, password, cb) => {
       db.query(
@@ -67,15 +72,13 @@ passport.use(
          WHERE email = $1`,
          Email
       )
-         .then(function (result: any) {
+         .then(function (result: HashResponse[]) {
             if (result.length) {
                const first = result[0];
                bcrypt.compare(password, first.hash, function (err, res) {
                   if (res) {
-                     cb(null, {
-                        user_id: first.user_id,
-                        username: first.username,
-                     });
+                     //saves second value to req.user, which I use to save to req.session so that it aligns with Google signin
+                     cb(null, first.user_id);
                   } else {
                      cb(null, false, { message: 'Incorrect password' });
                   }
@@ -102,22 +105,17 @@ passport.use(
          scope: ['profile', 'email'], //the data we are asking for from google
       },
       (issuer: any, profile: any, done: any) => {
-         console.log('profile: ', profile);
          getGoogleUser(profile.emails[0].value)
             .then((response: PassportGoogleUser | null) => {
                //if user exists, redirect
-               console.log('response in get google user: ', response);
                if (response !== null && response.user_id) {
                   done(null, response.user_id);
                } else {
                   let user = {} as PassportGoogleUser;
-                  console.log('profile above create google user: ', profile);
                   user.username = profile.displayName;
                   user.email = profile.emails[0].value;
                   createGoogleUser(user).then((userId: number) => {
-                     console.log('user in create google user:', user);
                      user.user_id = userId;
-                     console.log('userId in create google user:', userId);
                      done(null, user.user_id);
                   });
                }
@@ -132,19 +130,14 @@ passport.use(
 
 //determines which data of user object should be stored in session to be accessed below in the deserializeUser function
 passport.serializeUser((userId: any, done) => {
-   console.log('userId: ', userId);
    done(null, userId);
 });
 
-type Profile = {
-   user_id: string;
-};
 passport.deserializeUser((userId: string, cb) => {
    db.any(`SELECT user_id, username, email FROM users WHERE user_id=$1`, [
       Number(userId),
    ])
       .then(function (results: any) {
-         console.log('results in deserialize: ', results);
          cb(null, results[0]);
       })
       .catch(function (err: any) {

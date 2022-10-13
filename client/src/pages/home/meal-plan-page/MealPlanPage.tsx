@@ -17,6 +17,7 @@ import {
    NutritionSummaryMealplan,
 } from '../../../../../types/types';
 import { MealPlanWeekText } from '../../../components/mealplan-week-text/MealPlanWeekText';
+import { useAuth } from '../../../context/authContext';
 import { DateSelectForm } from './date-select-form/DateSelectForm';
 import { MealplanDay } from './mealplan-day';
 import './MealPlanPage.scss';
@@ -62,6 +63,7 @@ const MealPlanPage = ({
 }: Props) => {
    const [dayIndex, setDayIndex] = useState<number>(getDay(Date.now()));
    const [value, setValue] = React.useState<any>(new Date(Date.now()));
+   const { goals, setGoals } = useAuth();
    const [currentDay, setCurrentDay] = useState(
       format(new Date(Date.now()), 'yyyy-MM-dd')
    );
@@ -83,7 +85,6 @@ const MealPlanPage = ({
             );
             setOpenAlert(true);
          }
-         console.log('dbResponse.data: ', dbResponse.data);
          setMealplanItems(dbResponse.data.mealplanItems);
          setNutritionSummary(dbResponse.data.nutritionSummary);
          setIsSearching(false);

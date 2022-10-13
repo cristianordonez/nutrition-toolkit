@@ -22,7 +22,7 @@ export const CaloriesCircularProgress = ({ calories, goalCalories }: Props) => {
                <Typography variant='body1' align='center'>
                   Calories
                </Typography>
-               <Typography variant='h6'>
+               <Typography variant='h6' align='center'>
                   {calories} / {goalCalories}
                </Typography>
             </div>

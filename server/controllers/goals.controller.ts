@@ -5,7 +5,7 @@ import { create, get, update } from '../models/goals.model';
 const getGoals = async (req: any, res: Response) => {
    try {
       const user_id = req.session.user_id;
-      console.log('user_id: ', user_id);
+      console.log('user_id in goals: ', user_id);
       console.log('req.session: ', req.session);
       const userGoals: CurrentGoals[] = await get(user_id);
       console.log('userGoals in getGoals controller: ', userGoals);

@@ -18,7 +18,6 @@ router.post('/resetPassword', (req: Request, res: Response) => {
 });
 
 //GOOGLE AUTHENTICATION////////////////////////////
-//handles initial redirect of user to google
 router.get('/login/federated/google', passport.authenticate('google'));
 
 //gets code from google, then exchaanges code for profile info
@@ -38,8 +37,6 @@ router.get(
    }
 );
 
-////////////////////////////////////////////////////////
-
 router.get('/authentication', (req: Request, res: Response) => {
    checkAuthentication(req, res);
 });
@@ -55,11 +52,9 @@ router.post(
       failureMessage: true,
    }),
    (req: Request, res: Response) => {
-      const user = req.user as PassportGoogleUser;
-      let session = req.session as any;
-      session.user_id = user.user_id;
-      session.username = user.username;
-      session.save();
+      const user = req.user as string;
+      let session = req.session as unknown as Session;
+      session.user_id = user;
       res.status(201).send('Successfully logged in.');
    }
 );

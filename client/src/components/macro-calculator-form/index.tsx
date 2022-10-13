@@ -14,7 +14,7 @@ import axios from 'axios';
 import React, { Dispatch, SetStateAction } from 'react';
 import { BsCalculatorFill } from 'react-icons/bs';
 import { CurrentGoals } from '../../../../types/types';
-import { getMetrics } from '../../utils/get-metrics/getMetrics';
+import { getGoalsFromMetrics } from '../../utils/get-goals-from-metrics/getGoalsFromMetrics';
 import { Calculator } from '../calculator-contents/Calculator';
 import './index.scss';
 interface Props {
@@ -69,10 +69,10 @@ export const MacroCalculatorForm = ({
       setActivityLevel(newActivityLevel);
    };
 
-   //handles submission of metrics, then navigates to search page
+   //handles submission of currentGoals, then navigates to search page
    const handleSubmit = async (event: React.SyntheticEvent) => {
       event.preventDefault();
-      const metrics = getMetrics({
+      const currentGoals = getGoalsFromMetrics({
          gender,
          age,
          height,
@@ -81,9 +81,9 @@ export const MacroCalculatorForm = ({
          goal,
       });
       try {
-         const response = await axios.post(`/api/goals`, metrics);
+         const response = await axios.post(`/api/goals`, currentGoals);
          if (page === 'macrocalculator' && setGoals !== undefined) {
-            setGoals(metrics);
+            setGoals(currentGoals);
             setErrorMessage(
                'You have updated your macronutrient needs. Go to search page to begin searching for recipes, menu items, or grocery products within this range.'
             );
@@ -166,8 +166,8 @@ export const MacroCalculatorForm = ({
             {page !== undefined && page === 'macrocalculator' ? (
                <Dialog open={showNextPage}>
                   <DialogTitle>
-                     Are you sure you want to update your metrics? This will
-                     overwrite any of your current settings.
+                     Are you sure you want to update your currentGoals? This
+                     will overwrite any of your current settings.
                   </DialogTitle>
                   <form>
                      <DialogContent>

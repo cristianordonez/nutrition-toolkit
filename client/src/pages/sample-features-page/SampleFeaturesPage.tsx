@@ -17,7 +17,7 @@ import {
    Query,
 } from '../../../../types/types';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
-import { getMetrics } from '../../utils/get-metrics/getMetrics';
+import { getGoalsFromMetrics } from '../../utils/get-goals-from-metrics/getGoalsFromMetrics';
 import SampleMealPlanPage from './sample-app-mealplan-page/SampleMealPlanPage';
 import { SampleFeaturesSidebar } from './sample-features-sidebars';
 
@@ -132,7 +132,7 @@ const SampleFeaturesPage = () => {
 
    const handleSubmit = (event: React.SyntheticEvent) => {
       event.preventDefault();
-      const currentGoals = getMetrics({
+      const currentGoals = getGoalsFromMetrics({
          gender,
          age,
          height,

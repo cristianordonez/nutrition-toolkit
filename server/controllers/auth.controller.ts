@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
 import format from 'date-fns/format';
 import { Request, Response } from 'express';
-import { PassportGoogleUser, UserType } from '../../types/types';
+import { PassportGoogleUser, Session, UserType } from '../../types/types';
 import * as userModel from '../models/auth.model';
 import * as tokensModel from '../models/tokens.model';
 import { sendEmail } from '../utils/sendEmail';
@@ -10,11 +10,11 @@ const saltRounds = 10;
 
 const createAccount = async (req: Request, res: Response) => {
    try {
-      let checkForExistingAccount: any = await userModel.getHash(
-         req.body.email
-      );
+      let checkForExistingAccount: null | { hash: string } =
+         await userModel.getHash(req.body.email);
+      console.log('checkForExistingAccount: ', checkForExistingAccount);
       if (
-         checkForExistingAccount.length // if either email or username already exists in db, cancel the request
+         checkForExistingAccount !== null // if either email or username already exists in db, cancel the request
       ) {
          res.status(500).send(
             'An account with your email or username already exists.'
@@ -24,7 +24,8 @@ const createAccount = async (req: Request, res: Response) => {
          const hash: string = await bcrypt.hash(user.password, saltRounds);
          user.password = hash;
          const dbResponse = await userModel.createUser(user);
-         const session: any = req.session;
+         console.log('dbResponse in create account: ', dbResponse);
+         const session = req.session as unknown as Session;
          session.user_id = dbResponse.user_id; //save user_id to session so that it can be retrieved with next request when getting metrics
          res.status(201).send('You have successfully created an account!');
       }

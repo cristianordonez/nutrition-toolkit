@@ -54,8 +54,8 @@ type CurrentGoals = {
 };
 
 type Session = {
-   user_id: string;
-   passport: { user: string };
+   user_id: string | number;
+   passport: { user: string | number };
    username: string;
 };
 

@@ -1,12 +1,7 @@
 //shared sidebar
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Drawer, IconButton, Stack, Toolbar, Typography } from '@mui/material';
-import React, {
-   MouseEventHandler,
-   ReactNode,
-   useEffect,
-   useState,
-} from 'react';
+import React, { MouseEventHandler, ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
    CurrentGoals,
@@ -38,40 +33,48 @@ export const SideBar = ({
    nutritionSummary,
 }: Props) => {
    const location = useLocation();
-   const [page, setPage] = useState('');
 
-   useEffect(() => {
-      if (location.pathname === '/home') {
-         setPage('mealplan');
-      } else if ((location.pathname = '/home/search')) {
-         setPage('search');
-      } else {
-         setPage('other');
-      }
-   }, [location]);
+   // useEffect(() => {
+   //    if (location.pathname === '/home') {
+   //       setPage('mealplan');
+   //    } else if ((location.pathname = '/home/search')) {
+   //       setPage('search');
+   //    } else {
+   //       setPage('other');
+   //    }
+   // }, [location]);
 
+   let page;
+   if (location.pathname === '/home') {
+      page = 'mealplan';
+   } else if (location.pathname === '/home/search') {
+      page = 'search';
+   } else {
+      page = 'other';
+   }
    console.log('page: ', page);
    console.log('goals: ', goals);
    console.log('nutritionSummary: ', nutritionSummary);
    if (page === '' || Object.keys(goals).length === 0) {
-      return (
-         <>
-            <Drawer
-               open
-               variant='permanent'
-               ModalProps={{ keepMounted: true }}
-               sx={{
-                  '& .MuiDrawer-paper': {
-                     boxSizing: 'border-box',
-                     width: drawerWidth,
-                     pt: '1rem',
-                  },
-               }}
-            >
-               <MainTitleLogo />
-            </Drawer>
-         </>
-      );
+      // return (
+      //    <>
+      //       <Drawer
+      //          open
+      //          variant='permanent'
+      //          ModalProps={{ keepMounted: true }}
+      //          sx={{
+      //             '& .MuiDrawer-paper': {
+      //                boxSizing: 'border-box',
+      //                width: drawerWidth,
+      //                pt: '1rem',
+      //             },
+      //          }}
+      //       >
+      //          <MainTitleLogo />
+      //       </Drawer>
+      //    </>
+      // );
+      return null;
    } else {
       return (
          <>

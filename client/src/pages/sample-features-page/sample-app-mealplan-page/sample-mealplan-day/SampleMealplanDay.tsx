@@ -45,7 +45,7 @@ export const SampleMealPlanDay = ({ sampleMealplanItems }: Props) => {
          <div className='meal-plan-slots-container'>
             {mealItems.map((meals, index) => (
                <SampleMealplanSlot
-                  key={index}
+                  key={meals[0].fdc_id}
                   slotName={mealSlotTitles[index]}
                   meals={meals}
                   handleOpeningDialog={handleOpeningDialog}

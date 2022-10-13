@@ -16,9 +16,20 @@ import { useAuth } from '../../context/authContext';
 import MealPlanPage from './meal-plan-page/MealPlanPage';
 import { SearchForm } from './search-page/search-form';
 
+const initialGoals = {
+   goal: 'weight_loss',
+   total_calories: 0,
+   total_carbohydrates: 0,
+   total_protein: 0,
+   total_fat: 0,
+};
+
 const Home = () => {
-   const { isLoggedIn } = useAuth();
+   const navigate = useNavigate();
+   const { isLoggedIn, isLoading } = useAuth();
    const [goals, setGoals] = useState({} as CurrentGoals);
+
+   // const [goals, setGoals] = useState({} as CurrentGoals);
    const [mobileOpen, setMobileOpen] = useState(false);
    const [searchResults, setSearchResults] = useState<FoodSearchResult[]>([]);
    const [currentTab, setCurrentTab] = useState<string>('advanced-search');
@@ -32,7 +43,6 @@ const Home = () => {
    const [nutritionSummary, setNutritionSummary] =
       useState<NutritionSummaryMealplan>({} as NutritionSummaryMealplan);
    const [sendAdvancedRequest, setSendAdvancedRequest] = useState(false);
-
    const [alertSeverity, setAlertSeverity] = useState<AlertColor>('error');
    const [values, setValues] = useState<Query>({
       query: '',
@@ -154,39 +164,52 @@ const Home = () => {
       />
    );
 
-   const navigate = useNavigate();
-
    //#navigate to home if user is not logged in, do not reroute in useAuth since we don't want user to reroute to landing page if they go straight to loggedin page or resetpassword page
    useEffect(() => {
-      if (isLoggedIn === false) {
+      if (isLoggedIn === false && isLoading === false) {
          navigate('/', {
             state: { showError: false },
             replace: true,
          });
       } else {
-         let promise = axios.get('/api/goals', { withCredentials: true });
-
-         promise.then((results) => {
-            console.log('results: ', results);
-            setGoals(results.data);
-         });
-         promise.catch((err) => {
-            console.log(err);
-         });
+         const initialGoals = {
+            goal: 'weight_loss',
+            total_calories: 0,
+            total_carbohydrates: 0,
+            total_protein: 0,
+            total_fat: 0,
+         };
+         axios
+            .get('/api/goals')
+            .then((response) => {
+               console.log('response: ', response);
+               if (response.data === '') {
+                  setGoals(initialGoals as CurrentGoals);
+                  navigate('/home/macrocalculator');
+               } else {
+                  console.log('response in useauth: ', response);
+                  setGoals(response.data);
+               }
+            })
+            .catch((err) => {
+               console.log(err);
+            });
       }
    }, []);
 
    return (
       <>
-         <SideBar
-            mobileOpen={mobileOpen}
-            handleDrawerToggle={handleDrawerToggle}
-            SearchFormComponent={SearchFormComponent}
-            isSearching={isSearching}
-            goals={goals}
-            searchResults={searchResults}
-            nutritionSummary={nutritionSummary}
-         />
+         {!isSearching && !isLoading && Object.keys(goals).length > 0 ? (
+            <SideBar
+               mobileOpen={mobileOpen}
+               handleDrawerToggle={handleDrawerToggle}
+               SearchFormComponent={SearchFormComponent}
+               isSearching={isSearching}
+               goals={goals}
+               searchResults={searchResults}
+               nutritionSummary={nutritionSummary}
+            />
+         ) : null}
          <Tooltip title='Open Sidebar'>
             <Toolbar sx={{ display: { sm: 'none' } }}>
                <IconButton
@@ -224,8 +247,6 @@ const Home = () => {
          <Outlet
             context={{
                isSearching,
-               setGoals,
-               handleDrawerToggle,
                handleLoadMore,
                setAlertMessage,
                setIsSearching,
@@ -237,8 +258,6 @@ const Home = () => {
                setMealplanItems,
                searchResults,
                mealplanItems,
-               goals,
-               mobileOpen,
             }}
          />
          <CustomAlert

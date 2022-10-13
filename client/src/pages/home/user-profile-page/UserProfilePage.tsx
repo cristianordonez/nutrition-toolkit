@@ -7,18 +7,10 @@ import { useAuth } from '../../../context/authContext';
 import { useHomeOutlet } from '../../../hooks/useHomeOutlet';
 import './UserProfilePage.scss';
 
-const UserSettingsPage = () => {
-   const {
-      handleDrawerToggle,
-      setAlertMessage,
-      setOpenAlert,
-      setAlertSeverity,
-      setGoals,
-      goals,
-      mobileOpen,
-   } = useHomeOutlet();
+const UserProfilePage = () => {
+   const { setAlertMessage, setOpenAlert, setAlertSeverity } = useHomeOutlet();
 
-   const { isLoading, isLoggedIn, username } = useAuth();
+   const { isLoading, setGoals, goals, username } = useAuth();
 
    useEffect(() => {
       axios
@@ -88,4 +80,4 @@ const UserSettingsPage = () => {
    );
 };
 
-export default UserSettingsPage;
+export default UserProfilePage;
