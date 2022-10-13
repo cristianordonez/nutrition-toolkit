@@ -2,8 +2,6 @@ export const getFoodTitle = (
    brand_owner: string | null | undefined,
    description: string
 ) => {
-   console.log('description: ', description);
-   console.log('brand_owner: ', brand_owner);
    let brand_name_updated = '';
    let description_updated = '';
    let title = '';
@@ -13,18 +11,14 @@ export const getFoodTitle = (
       brand_owner !== undefined
    ) {
       let brandNameArr = brand_owner.split(' ');
-      console.log('brandNameArr: ', brandNameArr);
-
       for (let i = 0; i < brandNameArr.length; i++) {
          if (brandNameArr[i] !== '') {
             brandNameArr[i] =
                brandNameArr[i][0] + brandNameArr[i].slice(1).toLowerCase();
          }
-         console.log('brandNameArr[i]: ', brandNameArr[i]);
       }
       brand_name_updated = brandNameArr.join(' ');
    }
-
    if (
       description !== null &&
       description !== undefined &&
@@ -39,7 +33,6 @@ export const getFoodTitle = (
       }
       description_updated = descriptionArr.join(' ');
    }
-
    if (brand_name_updated !== '') {
       title = `${description_updated} (${brand_name_updated})`;
    } else {

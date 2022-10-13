@@ -19,8 +19,6 @@ export const DatePickerTextField = ({ setData, data }: Props) => {
    const handleChange = (newValue: Date | null) => {
       let inputDate = newValue as string | number | Date;
       setValue(newValue);
-
-      //TODO make sure correct date is being used
       // let currentDate = zonedTimeToUtc(inputDate, 'UTC'); //need to convert local time to UTC time to prevent bugs
       const result = format(inputDate, 'yyy-MM-dd') as unknown as Date;
       // let currentDate = formatInTimeZone(new Date(Date.now()), 'America/New_York', 'yyyy-MM-dd HH:mm:ssXXX')

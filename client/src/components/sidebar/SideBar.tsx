@@ -50,6 +50,9 @@ export const SideBar = ({
       }
    }, [location]);
 
+   console.log('page: ', page);
+   console.log('goals: ', goals);
+   console.log('nutritionSummary: ', nutritionSummary);
    if (page === '' || Object.keys(goals).length === 0) {
       return (
          <>

@@ -214,7 +214,9 @@ const createFood = (
    brand_owner: string,
    serving_size: number | string,
    serving_size_unit: string,
-   user_id: number
+   user_id: number,
+   nutrition: FoodNutrition,
+   standardized_conversion_factor: number
 ) => {
    const createFoodQuery = `With getId AS 
    (INSERT INTO food (data_type, description, serving_size_conversion_factor) 
@@ -225,52 +227,56 @@ const createFood = (
    VALUES ($3, $4, $5, (SELECT fdc_id FROM getId), $6)
    RETURNING fdc_id`;
 
-   const serialIdFood = db.one(createFoodQuery, [
-      description,
-      serving_size_conversion_factor,
-      brand_owner,
-      serving_size,
-      serving_size_unit,
-      user_id,
-   ]);
-   return serialIdFood;
-};
-
-//all items in food_nutrition table are per 100 g, so use standardized_conversion_factor to convert before inserting
-const createFoodNutrition = (
-   nutrition: FoodNutrition,
-   fdc_id: number,
-   standardized_conversion_factor: number
-) => {
-   const createFoodNutritionQuery = `INSERT INTO food_nutrition 
-   (fdc_id, calories, total_fat, total_carbohydrates, protein, trans_fat,
-   polyunsaturated_fat, monounsaturated_fat, cholesterol, dietary_fiber,
-   sugar, vitamin_d, calcium, saturated_fat, sodium, iron, potassium, vitamin_a, vitamin_c)
-   VALUES ($<fdc_id>, $<nutrition.calories> * $<standardized_conversion_factor>, 
-   $<nutrition.total_fat * $<standardized_conversion_factor>,
-   $<nutrition.total_carbohydrates * $<standardized_conversion_factor>,
-   $<nutrition.protein * $<standardized_conversion_factor>,
-   $<nutrition.trans_fat * $<standardized_conversion_factor>,
-   $<nutrition.polyunsaturated_fat * $<standardized_conversion_factor>,
-   $<nutrition.monounsaturated_fat * $<standardized_conversion_factor>,
-   $<nutrition.cholesterol * $<standardized_conversion_factor>,
-   $<nutrition.dietary_fiber * $<standardized_conversion_factor>,
-   $<nutrition.sugar * $<standardized_conversion_factor>,
-   $<nutrition.vitamin_d * $<standardized_conversion_factor>,
-   $<nutrition.calcium * $<standardized_conversion_factor>,
-   $<nutrition.saturated_fat * $<standardized_conversion_factor>,
-   $<nutrition.sodium * $<standardized_conversion_factor>,
-   $<nutrition.iron * $<standardized_conversion_factor>,
-   $<nutrition.potassium * $<standardized_conversion_factor>,
-   $<nutrition.vitamin_a * $<standardized_conversion_factor>,
-   $<nutrition.vitamin_c * $<standardized_conversion_factor>)`;
-
-   const dbResponse = db.none(createFoodNutritionQuery, {
-      nutrition,
-      fdc_id,
-      standardized_conversion_factor,
+   return db.task(async (t: any) => {
+      const fdc_id = await t.one(createFoodQuery, [
+         description,
+         serving_size_conversion_factor,
+         brand_owner,
+         serving_size,
+         serving_size_unit,
+         user_id,
+      ]);
+      Object.keys(nutrition).forEach((nutrient) => {
+         if (
+            nutrition[nutrient as keyof typeof nutrition] !== '' &&
+            nutrition !== null
+         ) {
+            nutrition[nutrient as keyof typeof nutrition] =
+               standardized_conversion_factor *
+               Number(nutrition[nutrient as keyof typeof nutrition]);
+         } else {
+            nutrition[nutrient as keyof typeof nutrition] = null;
+         }
+      });
+      const createFoodNutritionQuery = `INSERT INTO food_nutrition 
+         (fdc_id, calories, total_fat, total_carbohydrates, protein, trans_fat,
+         polyunsaturated_fat, monounsaturated_fat, cholesterol, dietary_fiber,
+         sugar, vitamin_d, calcium, saturated_fat, sodium, iron, potassium, vitamin_a, vitamin_c)
+         VALUES ($<fdc_id.fdc_id>, $<nutrition.calories>, 
+         $<nutrition.total_fat>,
+         $<nutrition.total_carbohydrates>,
+         $<nutrition.protein>,
+         $<nutrition.trans_fat>,
+         $<nutrition.polyunsaturated_fat>,
+         $<nutrition.monounsaturated_fat>,
+         $<nutrition.cholesterol>,
+         $<nutrition.dietary_fiber>,
+         $<nutrition.sugar>,
+         $<nutrition.vitamin_d>,
+         $<nutrition.calcium>,
+         $<nutrition.saturated_fat>,
+         $<nutrition.sodium>,
+         $<nutrition.iron>,
+         $<nutrition.potassium>,
+         $<nutrition.vitamin_a>,
+         $<nutrition.vitamin_c>) RETURNING fdc_id`;
+      const nutritionFdcId = await t.one(createFoodNutritionQuery, {
+         nutrition,
+         fdc_id,
+         standardized_conversion_factor,
+      });
+      return nutritionFdcId;
    });
-   return dbResponse;
 };
 
 const getSampleItems = () => {
@@ -300,6 +306,5 @@ export {
    getAdvanced,
    getAdvancedByBrand,
    createFood,
-   createFoodNutrition,
    getSampleItems,
 };

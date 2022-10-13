@@ -165,7 +165,9 @@ const Home = () => {
          });
       } else {
          let promise = axios.get('/api/goals', { withCredentials: true });
+
          promise.then((results) => {
+            console.log('results: ', results);
             setGoals(results.data);
          });
          promise.catch((err) => {

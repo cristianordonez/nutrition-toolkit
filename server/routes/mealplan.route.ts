@@ -18,7 +18,6 @@ router.get('/day', (req: Request, res: Response) => {
 });
 
 router.delete('/:id', (req: Request, res: Response) => {
-   console.log('here in router delete');
    deleteMealPlanItem(req, res);
 });
 

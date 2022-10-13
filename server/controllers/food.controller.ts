@@ -55,7 +55,6 @@ const getFoodItemsAdvancedByBrand = async (req: Request, res: Response) => {
 const getSampleFoodItems = async (req: Request, res: Response) => {
    try {
       const foodItems = await getSampleItems();
-      console.log('foodItems: ', foodItems);
       res.status(200).send(foodItems);
    } catch (err) {
       console.log('err: ', err);

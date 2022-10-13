@@ -75,7 +75,6 @@ export const FoodSearchList = ({
    const handleOpeningDialog = () => {
       setOpenDialog(!openDialog);
    };
-   console.log('searchResults: ', searchResults);
    return (
       <>
          <div className='food-search-list'>

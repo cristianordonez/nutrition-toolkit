@@ -5,10 +5,9 @@ import {
    PassportGoogleUser,
    SelectedDate,
 } from '../../types/types';
-import { createFood, createFoodNutrition } from '../models/food.model';
+import { createFood } from '../models/food.model';
 import {
    createMeal,
-   createMealNutrition,
    deleteFood,
    getByDay,
    getNutritionSummaryByDay,
@@ -33,11 +32,10 @@ const addMealPlanItem = async function (req: Request, res: Response) {
    try {
       const body = req.body as AddToMealPlanType;
       const user = req.user as PassportGoogleUser;
-      const mealId = await createMeal(body, user.user_id);
-      await createMealNutrition(mealId[0].meal_id);
+      await createMeal(body, user.user_id);
       res.status(201).send('Successfully posted mealplan item');
    } catch (err) {
-      console.log('error adding mealplan item', err);
+      console.log('error', err);
       res.status(400).send('Error adding item to mealplan');
    }
 };
@@ -74,7 +72,7 @@ const deleteMealPlanItem = async function (req: Request, res: Response) {
       );
       res.status(200).send({ updatedItems, updatedNutritionSummary });
    } catch (err) {
-      console.log('error deleting mealplan item: ', err);
+      console.log('error', err);
       res.status(400).send('Unable to delete item.');
    }
 };
@@ -88,33 +86,29 @@ const createCustomItem = async (req: Request, res: Response) => {
       const user = req.user as PassportGoogleUser;
       const serving_size_conversion_factor = Number(body.serving_size) / 100; //used to convert to amount per serving size used from amount per 100 g
       const standardized_conversion_factor = 100 / Number(body.serving_size); //used to convert the input amount to amount per 100 g
-      const fdc_id = await createFood(
+      const response = await createFood(
          body.description,
          serving_size_conversion_factor,
          body.brand_owner,
          body.serving_size,
          body.serving_size_unit,
-         user.user_id
-      );
-      await createFoodNutrition(
+         user.user_id,
          body.nutrition,
-         fdc_id[0].fdc_id,
          standardized_conversion_factor
       );
-      // const title = getFoodTitle(body.brand_name, body.description);
+
       const mealItem = {
          date: body.date,
          slot: body.slot,
          data_type: body.data_type,
-         fdc_id: fdc_id[0].fdc_id,
+         fdc_id: response.fdc_id,
          servings: body.servings,
          serving_size: body.serving_size,
          serving_size_unit: body.serving_size_unit,
          description: body.description,
          brand_owner: body.brand_owner,
       };
-      const mealId = await createMeal(mealItem, user.user_id);
-      const dbResponse = await createMealNutrition(mealId[0].meal_id);
+      await createMeal(mealItem, user.user_id);
       const updatedMealItems = await getByDay(body.date, user.user_id);
       const updatedNutritionSummary = await getNutritionSummaryByDay(
          body.date,

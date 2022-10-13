@@ -1,5 +1,5 @@
 require('dotenv').config();
-//TODO change back to co
+
 let database =
    process.env.NODE_ENV === 'test' ? 'mealplans_test' : 'mealplans_test';
 

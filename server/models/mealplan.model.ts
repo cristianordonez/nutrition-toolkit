@@ -9,15 +9,12 @@ const createMeal = (mealplan: AddToMealPlanType, user_id: number) => {
      $<mealplan.date>, $<mealplan.description>, $<mealplan.brand_owner>) 
     RETURNING meal_id
 	`;
-   const results = db.one(dbQuery, {
-      mealplan,
-      user_id,
-   });
-   return results;
-};
-
-const createMealNutrition = (meal_id: number) => {
-   const userMealNutritionQuery = `INSERT INTO user_meal_nutrition (meal_id, total_carbohydrates, total_fat, protein, calories,
+   return db.task(async (t: any) => {
+      const results = await t.one(dbQuery, {
+         mealplan,
+         user_id,
+      });
+      const userMealNutritionQuery = `INSERT INTO user_meal_nutrition (meal_id, total_carbohydrates, total_fat, protein, calories,
      dietary_fiber, saturated_fat, trans_fat, sugar, polyunsaturated_fat, monounsaturated_fat,
      cholesterol, sodium, calcium, iron, potassium, vitamin_a, vitamin_c, vitamin_d)
      select $1, (CASE WHEN user_meal.serving_size = 100 THEN food_nutrition.total_carbohydrates * user_meal.servings
@@ -80,8 +77,8 @@ const createMealNutrition = (meal_id: number) => {
     WHERE user_meal.meal_id = $1
         `;
 
-   const result = db.none(userMealNutritionQuery, meal_id);
-   return result;
+      await t.none(userMealNutritionQuery, results.meal_id);
+   });
 };
 
 const getByDay = (date: Date | string, user_id: number) => {
@@ -155,7 +152,6 @@ const getSampleFoodsNutritionSummary = () => {
 
 export {
    createMeal,
-   createMealNutrition,
    getByDay,
    getNutritionSummaryByDay,
    deleteFood,

@@ -60,7 +60,6 @@ export const getMetrics = ({
          total_calories = Math.floor(ibwInKg * 22);
          total_protein = Math.floor(ibwInKg * 1.8);
       } else if (goal === 'gain_muscle') {
-         console.log('here');
          total_calories = Math.floor(ibwInKg * 32);
          total_protein = Math.floor(ibwInKg * 1.8);
       } else {

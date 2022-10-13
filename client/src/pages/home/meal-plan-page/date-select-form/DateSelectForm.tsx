@@ -23,10 +23,6 @@ export const DateSelectForm = ({
    value,
    setValue,
 }: Props) => {
-   //must use seperate value for initital state to prevent date being off by 1 day due to different expected format
-   //material ui returns a date in string format Jan 12 2022 for example, but spoonacular requires Unix time
-
-   // TODO pass in setmealplanitems and call it here in handle change
    const handleChange = async (newValue: any) => {
       setDayIndex(getDay(newValue));
       setValue(newValue); //update the state for date text field

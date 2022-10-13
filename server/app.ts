@@ -26,7 +26,6 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//TODO change database back after testing
 const database =
    process.env.NODE_ENV === 'test' ? 'mealplans_test' : 'mealplans_test';
 
@@ -60,13 +59,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(
-   new LocalStrategy((usernameOrEmail, password, cb) => {
+   new LocalStrategy((Email, password, cb) => {
       db.query(
          `SELECT hash, users.user_id FROM user_hash 
          INNER JOIN users
          ON user_hash.user_id=users.user_id
-         WHERE username='${usernameOrEmail}' 
-         OR email = '${usernameOrEmail}'`
+         WHERE email = $1`,
+         Email
       )
          .then(function (result: any) {
             if (result.length) {
@@ -83,7 +82,7 @@ passport.use(
                });
             } else {
                cb(null, false, {
-                  message: 'No account with that username exists',
+                  message: 'No account with that email exists',
                });
             }
          })
@@ -103,19 +102,23 @@ passport.use(
          scope: ['profile', 'email'], //the data we are asking for from google
       },
       (issuer: any, profile: any, done: any) => {
+         console.log('profile: ', profile);
          getGoogleUser(profile.emails[0].value)
-            .then((response: PassportGoogleUser[]) => {
+            .then((response: PassportGoogleUser | null) => {
                //if user exists, redirect
-               if (response.length > 0) {
-                  done(null, response[0]);
+               console.log('response in get google user: ', response);
+               if (response !== null && response.user_id) {
+                  done(null, response.user_id);
                } else {
                   let user = {} as PassportGoogleUser;
+                  console.log('profile above create google user: ', profile);
                   user.username = profile.displayName;
                   user.email = profile.emails[0].value;
                   createGoogleUser(user).then((userId: number) => {
+                     console.log('user in create google user:', user);
                      user.user_id = userId;
-
-                     done(null, user);
+                     console.log('userId in create google user:', userId);
+                     done(null, user.user_id);
                   });
                }
             })
@@ -128,18 +131,24 @@ passport.use(
 );
 
 //determines which data of user object should be stored in session to be accessed below in the deserializeUser function
-passport.serializeUser((user: any, done) => {
-   done(null, user.user_id);
+passport.serializeUser((userId: any, done) => {
+   console.log('userId: ', userId);
+   done(null, userId);
 });
 
-passport.deserializeUser((user_id: string, cb) => {
-   db.query(
-      `SELECT user_id, username, email FROM users WHERE user_id='${user_id}'`
-   )
+type Profile = {
+   user_id: string;
+};
+passport.deserializeUser((userId: string, cb) => {
+   db.any(`SELECT user_id, username, email FROM users WHERE user_id=$1`, [
+      Number(userId),
+   ])
       .then(function (results: any) {
+         console.log('results in deserialize: ', results);
          cb(null, results[0]);
       })
       .catch(function (err: any) {
+         console.log('err in deserialize: ', err);
          return cb(err);
       });
 });
@@ -150,7 +159,7 @@ app.get('/', (req: Request, res: Response) => {
       status: 'success',
       data: {
          name: 'Diabetes Calculator API',
-         version: '1.0.0',
+         version: '2.0.0',
       },
    });
 });

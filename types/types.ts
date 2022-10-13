@@ -110,20 +110,20 @@ type MetricsType = {
 };
 
 type FoodNutrition = {
-   calories: number | string;
+   calories: number | string | null;
    calcium: number | string | null;
    cholesterol: number | string | null;
    dietary_fiber: number | string | null;
    iron: number | string | null;
    potassium: number | string | null;
-   protein: number | string;
+   protein: number | string | null;
    saturated_fat: number | string | null;
    monounsaturated_fat: number | string | null;
    polyunsaturated_fat: number | string | null;
    sodium: number | string | null;
    sugar: number | string | null;
-   total_carbohydrates: number | string;
-   total_fat: number | string;
+   total_carbohydrates: number | string | null;
+   total_fat: number | string | null;
    trans_fat: number | string | null;
    vitamin_a: number | string | null;
    vitamin_c: number | string | null;

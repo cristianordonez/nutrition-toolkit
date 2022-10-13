@@ -83,8 +83,9 @@ const MealPlanPage = ({
             );
             setOpenAlert(true);
          }
+         console.log('dbResponse.data: ', dbResponse.data);
          setMealplanItems(dbResponse.data.mealplanItems);
-         setNutritionSummary(dbResponse.data.nutritionSummary[0]);
+         setNutritionSummary(dbResponse.data.nutritionSummary);
          setIsSearching(false);
       } catch (err) {
          console.log(err);

@@ -1,6 +1,6 @@
 import { db } from '../database/db';
 
-const findOne = async function (userId: string) {
+const findOne = async function (userId: number) {
    let currentQuery = `SELECT token FROM tokens WHERE user_id=$1`;
    let dbResponse = await db.oneOrNone(currentQuery, userId);
    return dbResponse;
@@ -13,7 +13,7 @@ const deleteOne = async function (token: string) {
 };
 
 type TokensType = {
-   userId: string;
+   userId: number;
    token: string;
    createdAt: string;
 };
