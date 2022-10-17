@@ -11,7 +11,7 @@ describe('The Login Page', () => {
       cy.findByPlaceholderText('Email').type('currenttestemail@email.com');
       cy.findByPlaceholderText('Password').type('password');
       cy.findByPlaceholderText('Confirm Password').type('password');
-      cy.contains('Create Account').click();
+      cy.contains('Almost done').click();
       cy.contains('Female').click();
       cy.contains('Other').click();
       cy.findByTestId('age-input').type('{backspace}{backspace}27');
@@ -27,11 +27,11 @@ describe('The Login Page', () => {
    it('Allows user to login after creating an account', () => {
       cy.visit('/');
       cy.contains('Log in').click();
-      cy.findByPlaceholderText('Username or Email').type('TEST_USERNAME01');
+      cy.findByPlaceholderText('Email').type('currenttestemail@email.com');
       cy.findByPlaceholderText('Password').type('password');
       cy.findByTestId('login-btn').click();
       cy.findByText(
-         'View your daily meal plan items or begin to add items to your meal plan'
+         'Change the current day by navigating through the tabs, or change the week by using the calendar dropdown to the right'
       ).should('be.visible');
       cy.logout();
    });

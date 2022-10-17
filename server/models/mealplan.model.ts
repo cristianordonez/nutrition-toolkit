@@ -1,7 +1,8 @@
 import { AddToMealPlanType } from '../../types/types';
 import { db } from '../database/db';
 
-const createMeal = (mealplan: AddToMealPlanType, user_id: number) => {
+const createMeal = (mealplan: AddToMealPlanType, user_id: string | number) => {
+   console.log('mealplan: ', mealplan);
    const dbQuery = `INSERT INTO user_meal (user_id, fdc_id, slot, 
     data_type, servings, serving_size, serving_size_unit, date, description, brand_owner)
     VALUES ($<user_id>, $<mealplan.fdc_id>, $<mealplan.slot>, $<mealplan.data_type>,
@@ -81,7 +82,7 @@ const createMeal = (mealplan: AddToMealPlanType, user_id: number) => {
    });
 };
 
-const getByDay = (date: Date | string, user_id: number) => {
+const getByDay = (date: Date | string, user_id: number | string) => {
    const getMealsAndNutritionQuery = `SELECT
 	user_meal.meal_id, slot, data_type, servings, serving_size, serving_size_unit, date, fdc_id, 
    	description, brand_owner, row_to_json(user_meal_nutrition) 
@@ -92,7 +93,10 @@ const getByDay = (date: Date | string, user_id: number) => {
    return response;
 };
 
-const getNutritionSummaryByDay = (date: Date | string, user_id: number) => {
+const getNutritionSummaryByDay = (
+   date: Date | string,
+   user_id: number | string
+) => {
    const getSummaryQuery = `SELECT 
     COALESCE(SUM(calories), 0) AS total_calories,
 	COALESCE(SUM(total_carbohydrates), 0) AS total_carbohydrates,
@@ -105,7 +109,7 @@ const getNutritionSummaryByDay = (date: Date | string, user_id: number) => {
    return nutritionSummary;
 };
 
-const deleteFood = (user_id: number, mealId: string) => {
+const deleteMealItem = (user_id: number | string, mealId: string) => {
    const deleteFoodQuery = `DELETE FROM user_meal 
 		WHERE meal_id = $1 AND user_id = $2`;
    return db.none(deleteFoodQuery, [mealId, user_id]);
@@ -154,7 +158,7 @@ export {
    createMeal,
    getByDay,
    getNutritionSummaryByDay,
-   deleteFood,
+   deleteMealItem,
    getRandomFoods,
    getSampleFoods,
    getSampleFoodsNutritionSummary,

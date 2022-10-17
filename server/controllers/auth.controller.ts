@@ -12,7 +12,6 @@ const createAccount = async (req: Request, res: Response) => {
    try {
       let checkForExistingAccount: null | { hash: string } =
          await userModel.getHash(req.body.email);
-      console.log('checkForExistingAccount: ', checkForExistingAccount);
       if (
          checkForExistingAccount !== null // if either email or username already exists in db, cancel the request
       ) {
@@ -24,7 +23,6 @@ const createAccount = async (req: Request, res: Response) => {
          const hash: string = await bcrypt.hash(user.password, saltRounds);
          user.password = hash;
          const dbResponse = await userModel.createUser(user);
-         console.log('dbResponse in create account: ', dbResponse);
          const session = req.session as unknown as Session;
          session.user_id = dbResponse.user_id; //save user_id to session so that it can be retrieved with next request when getting metrics
          res.status(201).send('You have successfully created an account!');
@@ -36,9 +34,11 @@ const createAccount = async (req: Request, res: Response) => {
 };
 
 const checkAuthentication = async (req: Request, res: Response) => {
-   let session: any = req.session;
-   if (session.passport || session.username) {
-      res.status(201).send(session.username);
+   const session = req.session as unknown as Session;
+   if (session.passport || session.user_id) {
+      const username = await userModel.getUserById(session.user_id);
+      console.log('username: ', username);
+      res.status(201).send(username[0].username);
    } else {
       res.status(205).send('User is not logged in.');
    }

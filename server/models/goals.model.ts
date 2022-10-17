@@ -36,12 +36,11 @@ const update = (goals: CurrentGoals) => {
    SET total_carbohydrates = $<goals.total_carbohydrates>,
    total_protein = $<goals.total_protein>,
    total_fat = $<goals.total_fat>,
-   total_calories = $<goals.total_calories>,
-   WHERE user_id = $<goals.user_id>
+   total_calories = $<goals.total_calories>
+   WHERE user_id = $<goals.user_id> 
+   RETURNING total_carbohydrates, total_protein, total_calories, total_fat;
    `;
-   const updateResponse = db.none(dbQuery, {
-      goals,
-   });
+   const updateResponse = db.one(dbQuery, { goals });
    return updateResponse;
 };
 

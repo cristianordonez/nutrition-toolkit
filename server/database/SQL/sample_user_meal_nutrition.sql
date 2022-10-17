@@ -1,0 +1,22 @@
+CREATE TABLE sample_user_meal_nutrition (
+    id bigserial NOT NULL,
+    meal_id bigint REFERENCES sample_user_meal(meal_id),
+    total_carbohydrates integer,
+    total_fat integer,
+    protein integer,
+    calories integer,
+    dietary_fiber integer,
+    saturated_fat integer,
+    trans_fat integer,
+    sugar integer,
+    polyunsaturated_fat integer,
+    monounsaturated_fat integer,
+    cholesterol integer,
+    sodium integer,
+    calcium integer,
+    iron integer,
+    potassium integer,
+    vitamin_a integer,
+    vitamin_c integer,
+    vitamin_d integer
+);

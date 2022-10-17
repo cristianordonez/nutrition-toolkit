@@ -1,31 +1,17 @@
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Paper, Stack, Typography } from '@mui/material';
 import axios from 'axios';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { DailyGoalsUserProfile } from '../../../components/daily-goals/daily-goals-user-profile/DailyGoalsUserProfile';
 import { useAuth } from '../../../context/authContext';
 import { useHomeOutlet } from '../../../hooks/useHomeOutlet';
 import './UserProfilePage.scss';
 
 const UserProfilePage = () => {
-   const { setAlertMessage, setOpenAlert, setAlertSeverity } = useHomeOutlet();
+   const { setAlertMessage, setOpenAlert, setAlertSeverity, goals, setGoals } =
+      useHomeOutlet();
 
-   const { isLoading, setGoals, goals, username } = useAuth();
-
-   useEffect(() => {
-      axios
-         .get('/api/metrics')
-         .then((results) => {
-            setGoals(results.data);
-         })
-         .catch((err) => {
-            setAlertMessage(
-               'Could not retrieve your daily goals. Please try again later.'
-            );
-            setAlertSeverity('error');
-            setOpenAlert(true);
-         });
-   }, []);
+   const { isLoading, username } = useAuth();
 
    const handleSubmitUpdatedGoals = async (event: React.FormEvent) => {
       event.preventDefault();
@@ -39,9 +25,9 @@ const UserProfilePage = () => {
             ...goals,
             total_calories: totalCalories,
          };
-         setGoals(currentGoals);
-         let updatedGoals = await axios.put('/api/metrics', currentGoals);
+         let updatedGoals = await axios.put('/api/goals', currentGoals);
          if (updatedGoals.status === 201) {
+            setGoals(updatedGoals.data);
             setAlertMessage('Your Macronutrient goals have been updated!');
             setAlertSeverity('success');
             setOpenAlert(true);

@@ -30,33 +30,6 @@ const NavBar = () => {
    const navigate = useNavigate();
    const { isLoading, isLoggedIn, handleLogout } = useAuth(); //used to check if data is still being retrieved from database
 
-   // const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>();
-
-   // const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-   //    null
-   // );
-
-   // const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-   //    setAnchorElNav(event.currentTarget);
-   // };
-
-   // const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-   //    setAnchorElUser(event.currentTarget);
-   // };
-
-   // const handleCloseNavMenu = () => {
-   //    setAnchorElNav(null);
-   // };
-
-   // const handleCloseUserMenu = () => {
-   //    setAnchorElUser(null);
-   // };
-
-   // const handleUserProfileClick = () => {
-   //    // setAnchorElUser(null);
-   //    navigate('/home/settings');
-   // };
-
    return (
       <AppBar
          position='fixed'
@@ -172,45 +145,6 @@ const NavBar = () => {
                      )}
                   </Box>
                   <UserMenu />
-                  {/* HERE **** */}
-                  {/* <Box sx={{ flexGrow: 0 }}>
-                     <Tooltip title='Open settings'>
-                        <IconButton
-                           onClick={handleOpenUserMenu}
-                           sx={{ p: 0 }}
-                           data-testid='avatar'
-                        >
-                           <Avatar alt='user avatar' src={DefaultAvatar} />
-                        </IconButton>
-                     </Tooltip>
-                     <Menu
-                        sx={{ mt: '45px' }}
-                        id='menu-appbar'
-                        anchorEl={anchorElUser}
-                        anchorOrigin={{
-                           vertical: 'top',
-                           horizontal: 'right',
-                        }}
-                        transformOrigin={{
-                           vertical: 'top',
-                           horizontal: 'right',
-                        }}
-                        open={Boolean(anchorElUser)}
-                        onClose={handleCloseUserMenu}
-                     >
-                        <MenuItem onClick={handleUserProfileClick}>
-                           <Typography textAlign='center'>
-                              User Profile
-                           </Typography>
-                        </MenuItem>
-                        <MenuItem
-                           onClick={handleLogout}
-                           data-testid='logout-btn'
-                        >
-                           <Typography textAlign='center'>Logout</Typography>
-                        </MenuItem>
-                     </Menu>
-                  </Box> */}
                </>
             ) : // END USER IS LOGGED IN
             isLoading === false ? (

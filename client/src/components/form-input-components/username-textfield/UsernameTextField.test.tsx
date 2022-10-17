@@ -1,12 +1,12 @@
 // make test to check if corect function is called
 // either login or other one
 
-import React, { useState } from 'react';
-import { expect } from '../../../../../jestGlobals';
-import { render, waitFor, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { UsernameTextField } from './UsernameTextField';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import React from 'react';
+import { expect } from '../../../../../jestGlobals';
+import { UsernameTextField } from './UsernameTextField';
 
 const mockedFn = jest.fn();
 
@@ -20,8 +20,8 @@ describe('UsernameTextField Component ', () => {
          />
       );
       await user.type(
-         screen.getByPlaceholderText('Username or Email'),
-         'this is a username component'
+         screen.getByPlaceholderText('Email'),
+         'this is a email/username component'
       );
       expect(mockedFn).toHaveBeenCalledTimes(0);
    });

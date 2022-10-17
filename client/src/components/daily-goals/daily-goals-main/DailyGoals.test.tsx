@@ -12,7 +12,7 @@ describe('DailyGoals Component', () => {
    test('Shows correct title when page prop is set to mealplan', async () => {
       render(<DailyGoals page='mealplan' />);
       const dailyGoals = await screen.findByText(
-         "Today's Macronutrient Totals"
+         'Your Daily Macronutrient Goals'
       );
       expect(dailyGoals).toBeInTheDocument();
    });

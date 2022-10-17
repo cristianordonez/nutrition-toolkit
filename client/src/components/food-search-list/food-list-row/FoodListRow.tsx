@@ -84,6 +84,7 @@ export const FoodListRow = ({
    return (
       <>
          <StyledTableRow
+            data-testid='food-search-item'
             hover={enableAddToMealplanFeature ? true : false}
             onClick={handleOpeningModal}
             sx={{ '& > *': { borderBottom: 'unset' }, cursor: 'pointer' }}

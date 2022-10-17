@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import passport from 'passport';
-import { PassportGoogleUser, Session } from '../../types/types';
+import { Session } from '../../types/types';
 import {
    checkAuthentication,
    createAccount,
@@ -29,9 +29,7 @@ router.get(
    }), //fires second part of passport strategy
    (req: Request, res: Response) => {
       let session = req.session as unknown as Session;
-      let user = req.user as PassportGoogleUser;
       session.user_id = session.passport.user;
-      session.username = user.username;
       //redirect user to the search page where session will be checked
       res.redirect(`/home`);
    }
@@ -44,6 +42,8 @@ router.get('/authentication', (req: Request, res: Response) => {
 router.post('/signup', (req: Request, res: Response) => {
    createAccount(req, res);
 });
+
+//#req.user will be just a string of the user_id for both google and email login
 
 router.post(
    '/login',

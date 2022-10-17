@@ -2,13 +2,13 @@
 /**
  * @jest-environment jsdom
  */
-import React, { useState } from 'react';
-import { expect } from '../../../../jestGlobals';
-import { render, waitFor, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import LandingPage from './LandingPage';
+import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
+import { expect } from '../../../../jestGlobals';
+import LandingPage from './LandingPage';
 
 function App() {
    return (
@@ -21,6 +21,6 @@ describe('Landing Page', () => {
    test('Correctly renders the landing page', async () => {
       const user = userEvent.setup();
       render(<App />);
-      expect(screen.getByText('The Diabetes Calculator')).toBeInTheDocument();
+      expect(screen.getByText('The Macro Trainer')).toBeInTheDocument();
    });
 });

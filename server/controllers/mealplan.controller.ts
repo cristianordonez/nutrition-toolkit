@@ -2,13 +2,13 @@ import { Request, Response } from 'express';
 import {
    AddToMealPlanType,
    CustomFoodInput,
-   PassportGoogleUser,
    SelectedDate,
+   Session,
 } from '../../types/types';
 import { createFood } from '../models/food.model';
 import {
    createMeal,
-   deleteFood,
+   deleteMealItem,
    getByDay,
    getNutritionSummaryByDay,
    getSampleFoods,
@@ -31,8 +31,9 @@ const getSampleMealplanDay = async (req: Request, res: Response) => {
 const addMealPlanItem = async function (req: Request, res: Response) {
    try {
       const body = req.body as AddToMealPlanType;
-      const user = req.user as PassportGoogleUser;
-      await createMeal(body, user.user_id);
+      const session = req.session as unknown as Session;
+      console.log('req.session in addmealplanitem: ', req.session);
+      await createMeal(body, session.user_id);
       res.status(201).send('Successfully posted mealplan item');
    } catch (err) {
       console.log('error', err);
@@ -45,11 +46,11 @@ const addMealPlanItem = async function (req: Request, res: Response) {
 const getMealPlanDay = async function (req: Request, res: Response) {
    try {
       const query = req.query as SelectedDate;
-      const user = req.user as PassportGoogleUser;
-      const mealplanItems = await getByDay(query.date, user.user_id);
+      const session = req.session as unknown as Session;
+      const mealplanItems = await getByDay(query.date, session.user_id);
       const nutritionSummary = await getNutritionSummaryByDay(
          query.date,
-         user.user_id
+         session.user_id
       );
       res.status(200).send({ mealplanItems, nutritionSummary });
    } catch (err) {
@@ -63,12 +64,13 @@ const deleteMealPlanItem = async function (req: Request, res: Response) {
    try {
       const params = req.params as { id: string };
       const query = req.query as { currentDay: string };
-      const user = req.user as PassportGoogleUser;
-      await deleteFood(user.user_id, params.id);
-      const updatedItems = await getByDay(query.currentDay, user.user_id);
+      const session = req.session as unknown as Session;
+
+      await deleteMealItem(session.user_id, params.id);
+      const updatedItems = await getByDay(query.currentDay, session.user_id);
       const updatedNutritionSummary = await getNutritionSummaryByDay(
          query.currentDay,
-         user.user_id
+         session.user_id
       );
       res.status(200).send({ updatedItems, updatedNutritionSummary });
    } catch (err) {
@@ -83,7 +85,8 @@ const deleteMealPlanItem = async function (req: Request, res: Response) {
 const createCustomItem = async (req: Request, res: Response) => {
    try {
       const body = req.body as CustomFoodInput;
-      const user = req.user as PassportGoogleUser;
+      const session = req.session as unknown as Session;
+
       const serving_size_conversion_factor = Number(body.serving_size) / 100; //used to convert to amount per serving size used from amount per 100 g
       const standardized_conversion_factor = 100 / Number(body.serving_size); //used to convert the input amount to amount per 100 g
       const response = await createFood(
@@ -92,7 +95,7 @@ const createCustomItem = async (req: Request, res: Response) => {
          body.brand_owner,
          body.serving_size,
          body.serving_size_unit,
-         user.user_id,
+         session.user_id,
          body.nutrition,
          standardized_conversion_factor
       );
@@ -108,11 +111,11 @@ const createCustomItem = async (req: Request, res: Response) => {
          description: body.description,
          brand_owner: body.brand_owner,
       };
-      await createMeal(mealItem, user.user_id);
-      const updatedMealItems = await getByDay(body.date, user.user_id);
+      await createMeal(mealItem, session.user_id);
+      const updatedMealItems = await getByDay(body.date, session.user_id);
       const updatedNutritionSummary = await getNutritionSummaryByDay(
          body.date,
-         user.user_id
+         session.user_id
       );
       res.status(200).send({ updatedMealItems, updatedNutritionSummary });
    } catch (err) {

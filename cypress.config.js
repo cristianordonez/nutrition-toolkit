@@ -1,8 +1,6 @@
 //! Cypress tests use the real database, not test database;
 const { defineConfig } = require('cypress');
-import { buildQueries } from '@testing-library/react';
 import { db } from './server/database/db';
-import { schemas } from './server/database/SQL'; //import the sql queries
 
 // tasks are called with cy.task(taskName)
 module.exports = defineConfig({
@@ -15,17 +13,14 @@ module.exports = defineConfig({
          on('task', {
             'db:teardown': async () => {
                await db.query(
-                  `DELETE FROM daily_goals WHERE user_id IN (SELECT id FROM users WHERE username='test_username01')`
+                  `DELETE FROM user_daily_goals WHERE user_id IN (SELECT user_id FROM users WHERE email='currenttestemail@email.com')`
                );
                await db.query(
-                  `DELETE FROM daily_goals WHERE user_id IN (SELECT id FROM users WHERE username='thisisatestuser')`
+                  `DELETE FROM user_hash WHERE user_id IN (SELECT user_id FROM users WHERE email='currenttestemail@email.com')`
                );
 
                const response = db.query(`
-                  DELETE FROM users WHERE username = 'test_username01';
-                  `);
-               const finalResponse = db.query(`
-                  DELETE FROM users WHERE username = 'thisisatestuser';
+                  DELETE FROM users WHERE email = 'currenttestemail@email.com';
                   `);
                return response;
             },

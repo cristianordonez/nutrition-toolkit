@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const database =
-   process.env.NODE_ENV === 'test' ? 'mealplans_test' : 'mealplans_test';
+   process.env.NODE_ENV === 'test' ? 'test_database' : 'mealplans_test';
 
 const conObject = {
    user: process.env.DATABASE_USER,
@@ -64,15 +64,17 @@ type HashResponse = {
 };
 
 passport.use(
-   new LocalStrategy((Email, password, cb) => {
+   new LocalStrategy((username, password, cb) => {
+      //expects key in body called username, but will check email instead for authentication
       db.query(
          `SELECT hash, users.user_id FROM user_hash 
          INNER JOIN users
          ON user_hash.user_id=users.user_id
          WHERE email = $1`,
-         Email
+         username
       )
          .then(function (result: HashResponse[]) {
+            console.log('result in new local strategy: ', result);
             if (result.length) {
                const first = result[0];
                bcrypt.compare(password, first.hash, function (err, res) {
@@ -138,6 +140,7 @@ passport.deserializeUser((userId: string, cb) => {
       Number(userId),
    ])
       .then(function (results: any) {
+         console.log('results in deserialize user: ', results);
          cb(null, results[0]);
       })
       .catch(function (err: any) {

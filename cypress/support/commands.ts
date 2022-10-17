@@ -23,11 +23,10 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-import 'cypress-jest-adapter';
 import '@testing-library/cypress/add-commands';
-import getUnixTime from 'date-fns/getUnixTime';
+import 'cypress-jest-adapter';
+import format from 'date-fns/format';
 import startOfToday from 'date-fns/startOfToday';
-
 declare global {
    namespace Cypress {
       interface Chainable {
@@ -46,26 +45,67 @@ Cypress.Commands.add('signup', () => {
       method: 'POST',
       body: {
          username: 'thisisatestuser',
-         email: 'thisisatestemail@email.com',
+         email: 'currenttestemail@email.com',
          password: 'password',
       },
    });
    cy.request({
-      url: '/api/metrics',
+      url: '/api/goals',
       method: 'POST',
       body: {
          total_carbohydrates: 200,
-         min_carbs_per_meal: 20,
-         max_carbs_per_meal: 40,
          total_protein: 85,
-         min_protein_per_meal: 20,
-         max_protein_per_meal: 35,
          total_fat: 75,
-         min_fat_per_meal: 10,
-         max_fat_per_meal: 25,
          total_calories: 2000,
-         min_calories_per_meal: 400,
-         max_calories_per_meal: 650,
+      },
+   });
+   cy.request({
+      url: '/api/mealplan',
+      method: 'POST',
+      body: {
+         date: format(startOfToday(), 'yyyy-MM-dd'),
+         slot: 1,
+         position: 0,
+         fdc_id: 1936614,
+         servings: 2,
+         brand_owner: 'Paramount Foods, LLC',
+         description: 'Wasabi Green Peas',
+         data_type: 'branded_food',
+         serving_size: '100',
+         serving_size_unit: 'g',
+      },
+   });
+   cy.request({
+      url: '/api/mealplan',
+      method: 'POST',
+      body: {
+         date: format(startOfToday(), 'yyyy-MM-dd'),
+         slot: 1,
+         position: 0,
+         fdc_id: 1936614,
+         servings: 2,
+         brand_owner: 'Paramount Foods, LLC',
+         description: 'Wasabi Green Peas',
+         data_type: 'branded_food',
+         serving_size: '100',
+         serving_size_unit: 'g',
+      },
+   });
+
+   cy.request({
+      url: '/api/mealplan',
+      method: 'POST',
+      body: {
+         date: format(startOfToday(), 'yyyy-MM-dd'),
+         slot: 1,
+         position: 0,
+         fdc_id: 1936614,
+         servings: 2,
+         brand_owner: 'Paramount Foods, LLC',
+         description: 'Wasabi Green Peas',
+         data_type: 'branded_food',
+         serving_size: '100',
+         serving_size_unit: 'g',
       },
    });
 });
@@ -85,9 +125,11 @@ Cypress.Commands.add('login', () => {
 
 // custom command to logout user
 Cypress.Commands.add('logout', () => {
-   cy.contains('Login').should('not.exist');
-   cy.findByTestId('avatar').click();
-   cy.findByTestId('logout-btn').click();
+   cy.request({
+      url: '/api/logout',
+      method: 'POST',
+   });
+   cy.visit(`/`);
 });
 
 //sends request to add items to meal plan, must first create user and log him in
@@ -96,32 +138,32 @@ Cypress.Commands.add('addItemsToMealplan', () => {
       url: '/api/mealplan',
       method: 'POST',
       body: {
-         date: getUnixTime(startOfToday()),
+         date: format(startOfToday(), 'yyyy-MM-dd'),
          slot: 1,
          position: 0,
-         type: 'RECIPE',
-         value: {
-            id: 296213,
-            servings: 2,
-            title: 'Spinach Salad with Roasted Vegetables and Spiced Chickpea',
-            imageType: 'jpg',
-         },
+         fdc_id: 1936614,
+         servings: 2,
+         brand_owner: 'Paramount Foods, LLC',
+         description: 'Wasabi Green Peas',
+         data_type: 'branded_food',
+         serving_size: '100',
+         serving_size_unit: 'g',
       },
    });
    cy.request({
       url: '/api/mealplan',
       method: 'POST',
       body: {
-         date: getUnixTime(startOfToday()),
-         slot: 2,
+         date: format(startOfToday(), 'yyyy-MM-dd'),
+         slot: 1,
          position: 0,
-         type: 'PRODUCT',
-         value: {
-            id: 183433,
-            servings: 1,
-            title: 'Ahold Lasagna with Meat Sauce',
-            imageType: 'jpg',
-         },
+         fdc_id: 1936614,
+         servings: 2,
+         brand_owner: 'Paramount Foods, LLC',
+         description: 'Wasabi Green Peas',
+         data_type: 'branded_food',
+         serving_size: '100',
+         serving_size_unit: 'g',
       },
    });
 
@@ -129,16 +171,16 @@ Cypress.Commands.add('addItemsToMealplan', () => {
       url: '/api/mealplan',
       method: 'POST',
       body: {
-         date: getUnixTime(startOfToday()),
-         slot: 3,
+         date: format(startOfToday(), 'yyyy-MM-dd'),
+         slot: 1,
          position: 0,
-         type: 'MENU_ITEM',
-         value: {
-            id: 378557,
-            servings: 1,
-            title: 'Pizza 73 BBQ Steak Pizza, 9',
-            imageType: 'png',
-         },
+         fdc_id: 1936614,
+         servings: 2,
+         brand_owner: 'Paramount Foods, LLC',
+         description: 'Wasabi Green Peas',
+         data_type: 'branded_food',
+         serving_size: '100',
+         serving_size_unit: 'g',
       },
    });
 });

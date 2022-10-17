@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 let database =
-   process.env.NODE_ENV === 'test' ? 'mealplans_test' : 'mealplans_test';
+   process.env.NODE_ENV === 'test' ? 'test_database' : 'mealplans_test';
 
 const pgp = require('pg-promise')();
 

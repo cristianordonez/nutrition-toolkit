@@ -214,7 +214,7 @@ const createFood = (
    brand_owner: string,
    serving_size: number | string,
    serving_size_unit: string,
-   user_id: number,
+   user_id: number | string,
    nutrition: FoodNutrition,
    standardized_conversion_factor: number
 ) => {

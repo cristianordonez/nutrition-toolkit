@@ -28,8 +28,6 @@ const Home = () => {
    const navigate = useNavigate();
    const { isLoggedIn, isLoading } = useAuth();
    const [goals, setGoals] = useState({} as CurrentGoals);
-
-   // const [goals, setGoals] = useState({} as CurrentGoals);
    const [mobileOpen, setMobileOpen] = useState(false);
    const [searchResults, setSearchResults] = useState<FoodSearchResult[]>([]);
    const [currentTab, setCurrentTab] = useState<string>('advanced-search');
@@ -257,6 +255,8 @@ const Home = () => {
                setNutritionSummary,
                setMealplanItems,
                searchResults,
+               goals,
+               setGoals,
                mealplanItems,
             }}
          />

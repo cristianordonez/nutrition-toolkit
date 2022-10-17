@@ -10,7 +10,12 @@ function sql(file: any) {
 module.exports = {
    schemas: {
       users: sql('./users.schema.sql'),
-      daily_goals: sql('./daily_goals.schema.sql'),
+      user_daily_goals: sql('./user_daily_goals.schema.sql'),
       session: sql('./session.schema.sql'),
+      user_hash: sql('./user_hash.sql'),
+      user_meal: sql('./user_meal.sql'),
+      user_meal_nutrition: sql('./user_meal_nutrition.sql'),
+      sample_user_meal: sql('./sample_user_meal.sql'),
+      sample_user_meal_nutrition: sql('./sample_user_meal_nutrition.sql'),
    },
 };

@@ -1,7 +1,7 @@
 import { AlertColor } from '@mui/material';
 import { Dispatch, ReactNode, SetStateAction } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { FoodSearchResult } from '../../../types/types';
+import { CurrentGoals, FoodSearchResult } from '../../../types/types';
 
 interface OutletContext {
    isSearching: boolean;
@@ -15,6 +15,8 @@ interface OutletContext {
    setMealplanItemsFound: Dispatch<SetStateAction<boolean>>;
    setIsSearching: Dispatch<SetStateAction<boolean>>;
    searchResults: FoodSearchResult[];
+   goals: CurrentGoals;
+   setGoals: Dispatch<SetStateAction<CurrentGoals>>;
 }
 
 export const useHomeOutlet = () => {

@@ -1,10 +1,7 @@
-type Food = {
+interface Food {
    data_type: string;
    serving_size: number | string;
    serving_size_unit: string;
-};
-
-interface FoodItem extends Food {
    date: string | Date;
    slot: 1 | 2 | 3 | 4;
    servings: number | string;
@@ -23,11 +20,11 @@ type ItemNutrition = {
    nutrition: FoodNutrition;
 };
 
-type AddToMealPlanType = FoodItem & FdcId;
+type AddToMealPlanType = Food & FdcId;
 
 type MealplanItem = AddToMealPlanType & MealId & ItemNutrition;
 
-type CustomFoodInput = FoodItem & ItemNutrition;
+type CustomFoodInput = Food & ItemNutrition;
 
 type FoodSearchResult = {
    data_type: string;
@@ -56,7 +53,6 @@ type CurrentGoals = {
 type Session = {
    user_id: string | number;
    passport: { user: string | number };
-   username: string;
 };
 
 type Query = {
@@ -105,7 +101,7 @@ type MetricsType = {
    goal: 'weight_loss' | 'gain_muscle' | 'maintain';
    weight: number;
    gender: string;
-   height: number;
+   height: any;
    activityLevel: number;
 };
 

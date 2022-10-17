@@ -2,7 +2,7 @@ import { Button, Typography } from '@mui/material';
 import React, { Dispatch, SetStateAction } from 'react';
 import { CurrentGoals } from '../../../../../types/types';
 import { CaloriesCircularProgressWithoutGoals } from '../../calories-circular-progress/CaloriesCircularProgressWithoutGoals';
-import { GoalCardItemList } from '../../goal-card-item-list/GoalCardItemList';
+import { GoalCardItemListWithInput } from '../../goal-card-item-list/GoalCardItemListWithInput';
 import '../DailyGoals.scss';
 
 interface Props {
@@ -26,13 +26,16 @@ export const DailyGoalsUserProfile = ({
                      onSubmit={handleSubmitUpdatedGoals}
                      className='daily-goals-items'
                   >
-                     <GoalCardItemList goals={goals} setGoals={setGoals} />
+                     <GoalCardItemListWithInput
+                        goals={goals}
+                        setGoals={setGoals}
+                     />
+                     <Button variant='contained' fullWidth type='submit'>
+                        Save Changes
+                     </Button>
                   </form>
                </>
             ) : null}
-            <Button variant='contained' fullWidth type='submit'>
-               Update Goals
-            </Button>
          </div>
       </>
    );

@@ -8,12 +8,12 @@ import { useHomeOutlet } from '../../../hooks/useHomeOutlet';
 import './MacroCalculatorPage.scss';
 
 const MacroCalculatorPage = () => {
-   const { setAlertMessage, setOpenAlert, setAlertSeverity } = useHomeOutlet();
+   const { setAlertMessage, setOpenAlert, setAlertSeverity, setGoals } =
+      useHomeOutlet();
 
-   const { isLoading, setGoals } = useAuth();
+   const { isLoading } = useAuth();
    const [showNextPage, setShowNextPage] = useState(false);
    const [showSignup, setShowSignup] = useState(false);
-
    useEffect(() => {
       getGoals();
    }, []);

@@ -154,7 +154,7 @@ export const MealplanSlot = ({
                                  title={`Delete item`}
                               >
                                  <IconButton
-                                    aria-label='expand row'
+                                    aria-label='delete from mealplan'
                                     size='small'
                                     onClick={() =>
                                        handleDeleteRow(meal.meal_id, currentDay)

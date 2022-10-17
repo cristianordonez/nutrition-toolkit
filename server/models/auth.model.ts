@@ -2,7 +2,6 @@ import { UserType } from '../../types/types';
 import { db } from '../database/db';
 
 const createUser = (user: UserType) => {
-   console.log('user: ', user);
    try {
       const createQuery = `WITH getId AS 
           (INSERT INTO users (username, email) 
@@ -65,6 +64,9 @@ const getGoogleUser = async (email: string) => {
    }
 };
 
+const getUserById = (id: string | number) => {
+   return db.any('SELECT username from users where user_id = $1', id);
+};
 const getHash = (usernameOrEmail: string) => {
    console.log('usernameOrEmail: ', usernameOrEmail);
    const getHashQuery = `SELECT hash FROM user_hash
@@ -76,4 +78,11 @@ const getHash = (usernameOrEmail: string) => {
    return hash;
 };
 
-export { createUser, updatePassword, getHash, getGoogleUser, createGoogleUser };
+export {
+   createUser,
+   updatePassword,
+   getHash,
+   getGoogleUser,
+   createGoogleUser,
+   getUserById,
+};

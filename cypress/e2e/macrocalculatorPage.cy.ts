@@ -2,16 +2,12 @@ describe('The MacroCalculator Page', () => {
    //create user before all tests
    before(() => {
       cy.signup();
-   });
-
-   beforeEach(() => {
       cy.login();
    });
-   afterEach(() => {
-      cy.logout();
-   });
+
    //then drop the database after all tests are completed
    after(() => {
+      cy.logout();
       cy.task('db:teardown');
    });
 
@@ -24,11 +20,10 @@ describe('The MacroCalculator Page', () => {
       cy.findByTestId('weight-input').type(
          '{backspace}{backspace}{backspace}150'
       );
-
       cy.findByTestId('recalculate-btn').click();
       cy.contains('Confirm').click();
-      cy.contains(
-         'You have updated your macronutrient needs. Go to search page to begin searching for recipes, menu items, or grocery products within this range.'
-      ).should('be.visible');
+      cy.contains('You have updated your macronutrient needs.').should(
+         'be.visible'
+      );
    });
 });
