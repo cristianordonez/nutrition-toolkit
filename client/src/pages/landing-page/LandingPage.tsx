@@ -47,13 +47,13 @@ const LandingPage = () => {
       `Get a better understanding of your eating habits with our food diary`,
    ];
    const cardImages = [ScheduleSvg, MaleChefSvg, CalculateSvg];
-   const featureView = ['calculator', 'search', 'mealplan'];
+   const featureView = ['calculator', 'search', 'foodLog'];
 
    const handleNavigatingToFeatures = (featureView: string) => {
-      if (featureView === 'mealplan') {
-         navigate(`/diabetes-calculator-features`);
+      if (featureView === 'foodLog') {
+         navigate(`/macro-trainer-features`);
       } else {
-         navigate(`/diabetes-calculator-features/${featureView}`);
+         navigate(`/macro-trainer-features/${featureView}`);
       }
    };
 

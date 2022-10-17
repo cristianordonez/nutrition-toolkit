@@ -3,10 +3,9 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
-import React, { Dispatch, SetStateAction } from 'react';
-// import { MealplanItemType } from '../../../../../../types/types';
 import format from 'date-fns/format';
 import getDay from 'date-fns/getDay';
+import React, { Dispatch, SetStateAction } from 'react';
 
 interface Props {
    currentDay: string;

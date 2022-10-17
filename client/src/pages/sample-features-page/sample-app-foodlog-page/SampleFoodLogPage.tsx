@@ -11,10 +11,10 @@ import axios from 'axios';
 import format from 'date-fns/format';
 import getDay from 'date-fns/getDay';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { MealplanItem } from '../../../../../types/types';
-import { MealPlanWeekText } from '../../../components/mealplan-week-text/MealPlanWeekText';
+import { FoodLogItem } from '../../../../../types/types';
+import { FoodLogWeekText } from '../../../components/foodlog-week-text/FoodLogWeekText';
 import '../../../index.scss';
-import { SampleMealPlanDay } from './sample-mealplan-day/SampleMealplanDay';
+import { SampleFoodLogDay } from './sample-foodlog-day/SampleFoodLogDay';
 
 const days = [
    'Sunday',
@@ -32,17 +32,17 @@ interface Props {
    setNutritionSummary: Dispatch<SetStateAction<any>>;
    setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    setOpenAlert: Dispatch<SetStateAction<boolean>>;
-   setSampleMealplanItems: Dispatch<SetStateAction<MealplanItem[]>>;
+   setSampleFoodLogItems: Dispatch<SetStateAction<FoodLogItem[]>>;
    setAlertMessage: Dispatch<SetStateAction<string>>;
-   sampleMealplanItems: MealplanItem[];
+   sampleFoodLogItems: FoodLogItem[];
 }
 
-const SampleMealPlanPage = ({
+const SampleFoodLogPage = ({
    setNutritionSummary,
    setAlertSeverity,
    setOpenAlert,
-   setSampleMealplanItems,
-   sampleMealplanItems,
+   setSampleFoodLogItems,
+   sampleFoodLogItems,
    setAlertMessage,
 }: Props) => {
    const [dayIndex, setDayIndex] = useState<number>(getDay(Date.now())); //used for tab highlighting
@@ -52,14 +52,14 @@ const SampleMealPlanPage = ({
 
    useEffect(() => {
       axios
-         .get('/api/mealplan/sample')
+         .get('/api/foodLog/sample')
          .then((response) => {
             setNutritionSummary(response.data.nutritionSummary[0]);
-            setSampleMealplanItems(response.data.sampleItems);
+            setSampleFoodLogItems(response.data.sampleItems);
          })
          .catch((err) => {
             setAlertMessage(
-               'Unable to retrieve meal plan items. Please try again later.'
+               'Unable to retrieve food log items. Please try again later.'
             );
             setAlertSeverity('error');
             setOpenAlert(true);
@@ -68,9 +68,9 @@ const SampleMealPlanPage = ({
 
    return (
       <>
-         <div className='mealplan-page'>
-            <MealPlanWeekText currentDay={currentDay} />
-            <div className='mealplan-page-main-content'>
+         <div className='food-log-page'>
+            <FoodLogWeekText currentDay={currentDay} />
+            <div className='food-log-page-main-content'>
                <Stack
                   direction='row'
                   spacing={{ xs: 1, sm: 4 }}
@@ -88,17 +88,15 @@ const SampleMealPlanPage = ({
                      value={dayIndex}
                      variant='scrollable'
                      scrollButtons='auto'
-                     aria-label='change mealplan date'
+                     aria-label='change food log date'
                   >
                      {days.map((day) => (
                         <Tab disabled key={day} label={day} />
                      ))}
                   </Tabs>
                </div>
-               {sampleMealplanItems.length > 0 ? (
-                  <SampleMealPlanDay
-                     sampleMealplanItems={sampleMealplanItems}
-                  />
+               {sampleFoodLogItems.length > 0 ? (
+                  <SampleFoodLogDay sampleFoodLogItems={sampleFoodLogItems} />
                ) : (
                   <CircularProgress size={100} />
                )}
@@ -108,4 +106,4 @@ const SampleMealPlanPage = ({
    );
 };
 
-export default SampleMealPlanPage;
+export default SampleFoodLogPage;

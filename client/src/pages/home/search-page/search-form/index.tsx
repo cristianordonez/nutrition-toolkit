@@ -1,7 +1,7 @@
 import ScreenSearchDesktopIcon from '@mui/icons-material/ScreenSearchDesktop';
 import { AlertColor, Stack, Tab, Tabs, Typography } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import {
    CurrentGoals,
    FoodSearchResult,
@@ -13,8 +13,6 @@ import './index.scss';
 
 interface Props {
    handleSubmit: (event: React.SyntheticEvent) => Promise<void>;
-   currentTab: string;
-   handleChange: (event: React.SyntheticEvent, currentValue: string) => void;
    values: Query;
    setValues: Dispatch<SetStateAction<Query>>;
    goals: CurrentGoals;
@@ -29,8 +27,6 @@ interface Props {
 
 export const SearchForm = ({
    handleSubmit,
-   currentTab,
-   handleChange,
    values,
    setValues,
    goals,
@@ -42,6 +38,8 @@ export const SearchForm = ({
    setSearchResults,
    setSendAdvancedRequest,
 }: Props) => {
+   const [currentTab, setCurrentTab] = useState<string>('advanced-search');
+
    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setValues({ ...values, [event.target.id]: event.target.value });
    };
@@ -64,8 +62,12 @@ export const SearchForm = ({
       }
    };
 
+   const handleChange = (event: React.SyntheticEvent, currentValue: string) => {
+      setCurrentTab(currentValue);
+   };
+
    return (
-      <div className='search-form'>
+      <div className={'search-form'}>
          <Stack direction='row' spacing={1}>
             <ScreenSearchDesktopIcon />
             <Typography variant='body1'>

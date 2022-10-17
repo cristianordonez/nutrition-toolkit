@@ -11,14 +11,14 @@ import React, { FormEventHandler, MouseEventHandler } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
    CurrentGoals,
-   NutritionSummaryMealplan,
+   NutritionSummaryFoodLog,
    Query,
 } from '../../../../../types/types';
 import { MainTitleLogo } from '../../../components/main-title-logo';
 import { AdvancedSearchForm } from '../../../components/search-forms/AdvancedSearchForm';
 import { SampleCalculatorSidebarContents } from './SampleCalculatorSidebarContents';
 import './SampleFeatureSidebars.scss';
-import { SampleMealplanSidebarContents } from './SampleMealplanSidebarContents';
+import { SampleFoodLogSidebarContents } from './SampleFoodLogSidebarContents';
 const drawerWidth = '350px';
 
 interface Props {
@@ -29,8 +29,8 @@ interface Props {
    handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
    handleTypeSelect: (event: SelectChangeEvent) => void;
    goals: CurrentGoals;
-   nutritionSummary: NutritionSummaryMealplan;
-   view: 'mealplan' | 'search' | 'calculator';
+   nutritionSummary: NutritionSummaryFoodLog;
+   view: 'foodLog' | 'search' | 'calculator';
    handleRadioClick: MouseEventHandler<HTMLInputElement>;
 }
 
@@ -89,8 +89,8 @@ export const SampleFeaturesSidebar = ({
                   handleRadioClick={handleRadioClick}
                />
             ) : null}
-            {view === 'mealplan' ? (
-               <SampleMealplanSidebarContents
+            {view === 'foodLog' ? (
+               <SampleFoodLogSidebarContents
                   goals={goals}
                   nutritionSummary={nutritionSummary}
                />
@@ -127,8 +127,8 @@ export const SampleFeaturesSidebar = ({
                      handleRadioClick={handleRadioClick}
                   />
                ) : null}
-               {view === 'mealplan' ? (
-                  <SampleMealplanSidebarContents
+               {view === 'foodLog' ? (
+                  <SampleFoodLogSidebarContents
                      goals={goals}
                      nutritionSummary={nutritionSummary}
                   />

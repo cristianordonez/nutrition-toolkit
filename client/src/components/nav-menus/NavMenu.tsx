@@ -1,18 +1,14 @@
-import React from 'react';
-import { useAuth } from '../../context/authContext';
-
 import MenuIcon from '@mui/icons-material/Menu';
 import { IconButton, Link, Menu, Stack } from '@mui/material';
-import { NavLink, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const pages = ['Search', 'Macro Calculator'];
 
 export const NavMenu = () => {
-   const navigate = useNavigate();
    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
       null
    );
-   const { isLoading, isLoggedIn, handleLogout } = useAuth(); //used to check if data is still being retrieved from database
 
    const handleCloseNavMenu = () => {
       setAnchorElNav(null);
@@ -67,7 +63,7 @@ export const NavMenu = () => {
                   to={`/home`}
                   end
                >
-                  Meal Plan
+                  Food Log
                </Link>
                {pages.map((page) => (
                   <Link

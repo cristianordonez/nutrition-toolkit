@@ -6,11 +6,11 @@ import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { format } from 'date-fns-tz';
 import startOfToday from 'date-fns/startOfToday';
 import React, { Dispatch, SetStateAction } from 'react';
-import { AddToMealPlanType } from '../../../../types/types';
+import { AddToFoodLogType } from '../../../../types/types';
 
 interface Props {
-   setData: Dispatch<SetStateAction<AddToMealPlanType>>;
-   data: AddToMealPlanType;
+   setData: Dispatch<SetStateAction<AddToFoodLogType>>;
+   data: AddToFoodLogType;
 }
 
 export const DatePickerTextField = ({ setData, data }: Props) => {

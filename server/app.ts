@@ -13,8 +13,8 @@ import { db } from './database/db';
 import { createGoogleUser, getGoogleUser } from './models/auth.model';
 import { router as authRoute } from './routes/auth.route';
 import { router as foodRoute } from './routes/food.route';
+import { router as foodLogRoute } from './routes/foodLog.route';
 import { router as goalsRoute } from './routes/goals.route';
-import { router as mealplanRoute } from './routes/mealplan.route';
 
 const GoogleStrategy = require('passport-google-oidc');
 const pgSession = require('connect-pg-simple')(session);
@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const database =
-   process.env.NODE_ENV === 'test' ? 'test_database' : 'mealplans_test';
+   process.env.NODE_ENV === 'test' ? 'test_database' : 'the_macro_trainer';
 
 const conObject = {
    user: process.env.DATABASE_USER,
@@ -74,7 +74,6 @@ passport.use(
          username
       )
          .then(function (result: HashResponse[]) {
-            console.log('result in new local strategy: ', result);
             if (result.length) {
                const first = result[0];
                bcrypt.compare(password, first.hash, function (err, res) {
@@ -123,7 +122,6 @@ passport.use(
                }
             })
             .catch((err: any) => {
-               console.log('error authenticating with Google: ', err);
                done(err);
             });
       }
@@ -140,11 +138,9 @@ passport.deserializeUser((userId: string, cb) => {
       Number(userId),
    ])
       .then(function (results: any) {
-         console.log('results in deserialize user: ', results);
          cb(null, results[0]);
       })
       .catch(function (err: any) {
-         console.log('err in deserialize: ', err);
          return cb(err);
       });
 });
@@ -154,7 +150,7 @@ app.get('/', (req: Request, res: Response) => {
    res.status(200).json({
       status: 'success',
       data: {
-         name: 'Diabetes Calculator API',
+         name: 'Macro Trainer API',
          version: '2.0.0',
       },
    });
@@ -162,7 +158,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use('/api', authRoute);
 app.use('/api/goals', goalsRoute);
-app.use('/api/mealplan', mealplanRoute);
+app.use('/api/foodLog', foodLogRoute);
 app.use('/api/food', foodRoute);
 
 app.get('/*', (req, res) => {

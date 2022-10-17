@@ -82,8 +82,6 @@ export const MacroCalculatorForm = ({
       });
       try {
          const response = await axios.post(`/api/goals`, currentGoals);
-         console.log('page: ', page);
-         console.log('setGoals: ', setGoals);
          if (page === 'macrocalculator' && setGoals !== undefined) {
             setGoals(currentGoals);
             setErrorMessage('You have updated your macronutrient needs.');

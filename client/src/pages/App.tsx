@@ -18,10 +18,10 @@ const MacroCalculatorPage = lazy(
       )
 );
 
-const MealPlanPage = lazy(
+const FoodLogPage = lazy(
    () =>
       import(
-         /* webpackChunkName: "MealPlanPage" */ './home/meal-plan-page/MealPlanPage'
+         /* webpackChunkName: "FoodLogPage" */ './home/food-log-page/FoodLogPage'
       )
 );
 
@@ -78,10 +78,10 @@ const SampleCalculatorPage = lazy(
       )
 );
 
-const SampleMealPlanPage = lazy(
+const SampleFoodLogPage = lazy(
    () =>
       import(
-         /* webpackChunkName: "SampleMealPlanPage" */ './sample-features-page/sample-app-mealplan-page/SampleMealPlanPage'
+         /* webpackChunkName: "SampleFoodLogPage" */ './sample-features-page/sample-app-foodlog-page/SampleFoodLogPage'
       )
 );
 
@@ -132,18 +132,12 @@ export const App = () => {
                            path='/passwordReset'
                            element={<ResetPasswordPage />}
                         />
-
-                        {/* renders the home component only */}
                         <Route path='/home/*' element={<Home />}>
-                           {' '}
-                           {/* renders the Home component AND the SearchPage component*/}
                            <Route path='search' element={<SearchPage />} />
-                           {/* renders the Home component AND the MacroCalculatorPage components */}
                            <Route
                               path='macrocalculator'
                               element={<MacroCalculatorPage />}
                            />
-                           {/* renders the Home component AND the UserSettingsPage components */}
                            <Route
                               path='settings'
                               element={<UserSettingsPage />}
@@ -151,7 +145,7 @@ export const App = () => {
                         </Route>
 
                         <Route
-                           path='/diabetes-calculator-features/*'
+                           path='/macro-trainer-features/*'
                            element={<SampleFeaturesPage />}
                         >
                            <Route

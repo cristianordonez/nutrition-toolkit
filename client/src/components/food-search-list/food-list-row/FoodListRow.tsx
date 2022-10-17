@@ -8,7 +8,7 @@ import { NutritionTable } from '../../nutrition-table/NutritionTable';
 import { StyledTableRow } from '../../styled-table-components/StyledTableRow';
 import './FoodListRow.scss';
 interface Props extends FoodSearchResult {
-   handleOpeningAddToMealplanDialog: (
+   handleOpeningAddToFoodLogDialog: (
       id: number,
       dataType: string,
       servingSizes: number[],
@@ -17,7 +17,7 @@ interface Props extends FoodSearchResult {
       brand: string,
       modifier: string | null
    ) => void;
-   enableAddToMealplanFeature: boolean;
+   enableAddToFoodLogFeature: boolean;
 }
 export const FoodListRow = ({
    brand_owner,
@@ -32,8 +32,8 @@ export const FoodListRow = ({
    custom_food_serving_size_unit,
    gram_weight,
    modifier,
-   handleOpeningAddToMealplanDialog,
-   enableAddToMealplanFeature,
+   handleOpeningAddToFoodLogDialog,
+   enableAddToFoodLogFeature,
 }: Props) => {
    const [open, setOpen] = useState<boolean>(false);
    let brand: string = '';
@@ -70,7 +70,7 @@ export const FoodListRow = ({
       if (current_serving_size_unit === null) {
          current_serving_size_unit = 'g';
       }
-      handleOpeningAddToMealplanDialog(
+      handleOpeningAddToFoodLogDialog(
          parseInt(fdc_id),
          data_type,
          servingSizesArr,
@@ -85,7 +85,7 @@ export const FoodListRow = ({
       <>
          <StyledTableRow
             data-testid='food-search-item'
-            hover={enableAddToMealplanFeature ? true : false}
+            hover={enableAddToFoodLogFeature ? true : false}
             onClick={handleOpeningModal}
             sx={{ '& > *': { borderBottom: 'unset' }, cursor: 'pointer' }}
          >

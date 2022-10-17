@@ -5,8 +5,6 @@ import { create, get, update } from '../models/goals.model';
 const getGoals = async (req: any, res: Response) => {
    try {
       const user_id = req.session.user_id;
-      console.log('req.session: ', req.session);
-      console.log('req.user: ', req.user);
       const userGoals: CurrentGoals[] = await get(user_id);
       res.status(201).send(userGoals);
    } catch (err) {

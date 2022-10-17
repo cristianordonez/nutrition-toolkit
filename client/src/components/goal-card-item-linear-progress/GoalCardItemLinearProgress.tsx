@@ -13,7 +13,7 @@ import React from 'react';
 interface Props {
    nutrientsTotal: number;
    type: string;
-   nutrientsInMealPlan: number;
+   nutrientsInFoodLog: number;
 }
 
 const StyledLinearProgress = styled(LinearProgress)(({ theme }) => ({
@@ -28,13 +28,11 @@ const StyledLinearProgress = styled(LinearProgress)(({ theme }) => ({
 export const GoalCardItemLinearProgress = ({
    nutrientsTotal,
    type,
-   nutrientsInMealPlan,
+   nutrientsInFoodLog,
 }: Props): ReactJSXElement => {
    let percentageTotal;
-   if (nutrientsInMealPlan !== undefined) {
-      percentageTotal = Math.floor(
-         (nutrientsInMealPlan / nutrientsTotal) * 100
-      );
+   if (nutrientsInFoodLog !== undefined) {
+      percentageTotal = Math.floor((nutrientsInFoodLog / nutrientsTotal) * 100);
    }
 
    return (
@@ -58,7 +56,7 @@ export const GoalCardItemLinearProgress = ({
                      variant='body1'
                      sx={{ marginLeft: 'auto' }}
                   >
-                     {Math.floor(nutrientsInMealPlan)} / {nutrientsTotal} g
+                     {Math.floor(nutrientsInFoodLog)} / {nutrientsTotal} g
                   </Typography>
                </Stack>
 

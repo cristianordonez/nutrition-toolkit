@@ -1,30 +1,19 @@
-# The Diabetes Calculator
+# The Macro Trainer
 
-A meal planning application that allows users to calculate their recommended carbohydrate needs per meal to maintain stable blood glucose levels for T2DM, and then search for recipes, menu items, or grocery products that fit within these ranges.
-
-View Miro: https://miro.com/app/board/uXjVOtvKH2s=/?share_link_id=720508772353
+A full-stack food logging application that allows users to calculate their recommended calories and macronutrient needs based on their metrics. They can then search from a list of over 350,000 foods to find any that match their desired macronutrient ranges.
 
 ## Live Link
 
-View live deployment [here](https://thediabetescalculator.com) or see the demo below.
+View live deployment [here](https://themacrotrainer.com) or see the demo below.
 
 ## Features & Usage
 
 -  create account with username, email, password or sign in using Google
--  Enter height, weight, age, gender, and activity level to calculate your total daily recommended calories, carbohydrates, protein, and fat for someone with Type 2 Diabetes Mellitus
--  Search for recipes, grocery products, or menu items from a list of over 800+ American restaurants (search results provided by [Spoonacular API](https://spoonacular.com/food-api))
--  Save your favorite food items to the day and meal of your choice to create a custom mealplan
+-  Enter height, weight, age, gender, fitness goals and activity level to calculate your total daily recommended calories, carbohydrates, protein, and fat
+-  Save your favorite food items to your own personal food log
 -  Search for food items with any custom nutrient ranges
--  Edit your recommended nutrient ranges by using the Diabetes Calculator again or simply entering your preferred nutrient ranges
--  Dark and light modes are available for preferred viewing option, with preferred option being saved to local storage
-
-## Roadmap
-
--  Allow other sign in methods including Apple or Facebook
--  Be able to search for specific ingredients
--  Can include food intolerances when searching for items
--  User can create a shopping list from their meal plan
--  Provide user the option to create a sample meal plan
+-  Edit your recommended nutrient ranges by using the Macronutrient Calculator again or simply entering your preferred nutrient ranges
+-  Dark and light modes are available for preferred viewing option. User's preferred viewing option is then saved to local storage for their next visit.
 
 ## Demo
 
@@ -91,7 +80,7 @@ git pull
 -  Then restart PM2 process
 
 ```bash
-sudo pm2 restart thediabetescalculator
+sudo pm2 restart themacrotrainer
 ```
 
 Then navigate to port 8080 in your browser to view your application.
@@ -130,7 +119,7 @@ bash rds-login.sh
 GRANT rds_superuser TO root;
 ```
 
--Data is retrieved from the USDA FoodData and includes branded foods, SR legacy foods and foundation foods.
+-All data was retrieved from CSV files provided by USDA and imported into RDS PostgreSQL database.
 
 -  Note that branded foods use the nutrient_nbr field in the nutrient table as a foreign key for nutrition, while other data types use the nutrient id
 
@@ -143,5 +132,4 @@ GRANT rds_superuser TO root;
 -  [Set up users for PostgreSQL](https://stackoverflow.com/questions/42749033/fatal-password-authentication-failed-for-user-root-postgresql)
 -  [Fixing issues with setting up PostgreSQL on RDS](https://stackoverflow.com/questions/65877048/pgadmin-on-ubuntu-20-04-fatal-password-authentication-failed-for-user)
 -  [Getting correct permissions to tables for requests sent from EC2 instance](https://stackoverflow.com/questions/55080121/amazon-rds-postgresql-role-cannot-access-tables)
-
--  https://stackoverflow.com/questions/6256610/updating-table-rows-in-postgres-using-subquery
+-  [Setting up custom domain when using Nginx](https://stackoverflow.com/questions/32467541/link-a-google-domain-to-amazon-ec2-server#:~:text=In%20your%20google%20domain%20admin,from%20the%20amazon%20EC2%20instance.)

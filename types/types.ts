@@ -20,9 +20,9 @@ type ItemNutrition = {
    nutrition: FoodNutrition;
 };
 
-type AddToMealPlanType = Food & FdcId;
+type AddToFoodLogType = Food & FdcId;
 
-type MealplanItem = AddToMealPlanType & MealId & ItemNutrition;
+type FoodLogItem = AddToFoodLogType & MealId & ItemNutrition;
 
 type CustomFoodInput = Food & ItemNutrition;
 
@@ -126,7 +126,7 @@ type FoodNutrition = {
    vitamin_d: number | string | null;
 };
 
-type NutritionSummaryMealplan = {
+type NutritionSummaryFoodLog = {
    total_calories: string;
    total_carbohydrates: string;
    total_fat: string;
@@ -138,15 +138,15 @@ export {
    Session,
    Query,
    UserType,
-   AddToMealPlanType,
+   AddToFoodLogType,
    Intolerances,
    SelectedDate,
    RequestParams,
    PassportGoogleUser,
    FoodSearchResult,
    FoodNutrition,
-   NutritionSummaryMealplan,
+   NutritionSummaryFoodLog,
    MetricsType,
-   MealplanItem,
+   FoodLogItem,
    CustomFoodInput,
 };

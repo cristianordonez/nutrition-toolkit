@@ -32,7 +32,7 @@ const SampleSearchPage = () => {
                setAlertMessage={setAlertMessage}
                setAlertSeverity={setAlertSeverity}
                showLoadMoreBtn={showLoadMoreBtn}
-               enableAddToMealplanFeature={false}
+               enableAddToFoodLogFeature={false}
             />
          ) : null}
          {isLoading ? (

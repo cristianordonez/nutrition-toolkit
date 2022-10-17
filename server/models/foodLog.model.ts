@@ -1,18 +1,20 @@
-import { AddToMealPlanType } from '../../types/types';
+import { AddToFoodLogType } from '../../types/types';
 import { db } from '../database/db';
 
-const createMeal = (mealplan: AddToMealPlanType, user_id: string | number) => {
-   console.log('mealplan: ', mealplan);
+const createFoodLogItem = (
+   foodLog: AddToFoodLogType,
+   user_id: string | number
+) => {
    const dbQuery = `INSERT INTO user_meal (user_id, fdc_id, slot, 
     data_type, servings, serving_size, serving_size_unit, date, description, brand_owner)
-    VALUES ($<user_id>, $<mealplan.fdc_id>, $<mealplan.slot>, $<mealplan.data_type>,
-    $<mealplan.servings>, $<mealplan.serving_size>, $<mealplan.serving_size_unit>,
-     $<mealplan.date>, $<mealplan.description>, $<mealplan.brand_owner>) 
+    VALUES ($<user_id>, $<foodLog.fdc_id>, $<foodLog.slot>, $<foodLog.data_type>,
+    $<foodLog.servings>, $<foodLog.serving_size>, $<foodLog.serving_size_unit>,
+     $<foodLog.date>, $<foodLog.description>, $<foodLog.brand_owner>) 
     RETURNING meal_id
 	`;
    return db.task(async (t: any) => {
       const results = await t.one(dbQuery, {
-         mealplan,
+         foodLog,
          user_id,
       });
       const userMealNutritionQuery = `INSERT INTO user_meal_nutrition (meal_id, total_carbohydrates, total_fat, protein, calories,
@@ -90,6 +92,7 @@ const getByDay = (date: Date | string, user_id: number | string) => {
 	WHERE user_id = $1 AND date = $2
 	ORDER BY created_at ASC `;
    const response = db.any(getMealsAndNutritionQuery, [user_id, date]);
+   console.log('response in getbyday: ', response);
    return response;
 };
 
@@ -109,7 +112,7 @@ const getNutritionSummaryByDay = (
    return nutritionSummary;
 };
 
-const deleteMealItem = (user_id: number | string, mealId: string) => {
+const deleteFoodLogItem = (user_id: number | string, mealId: string) => {
    const deleteFoodQuery = `DELETE FROM user_meal 
 		WHERE meal_id = $1 AND user_id = $2`;
    return db.none(deleteFoodQuery, [mealId, user_id]);
@@ -155,10 +158,10 @@ const getSampleFoodsNutritionSummary = () => {
 };
 
 export {
-   createMeal,
+   createFoodLogItem,
    getByDay,
    getNutritionSummaryByDay,
-   deleteMealItem,
+   deleteFoodLogItem,
    getRandomFoods,
    getSampleFoods,
    getSampleFoodsNutritionSummary,

@@ -1,7 +1,7 @@
 {
-   "name": "the-diabetes-calculator",
+   "name": "the-macro-trainer",
    "version": "1.0.0",
-   "description": "Meal planning app",
+   "description": "Food Logging app to find foods with desired number of calories, carbs, protein and fat.",
    "main": "server.js",
    "scripts": {
       "test": "concurrently -n 'jest,Cypress' -c 'bgGreen.bold,bgBlue.bold' \"npm:jest\" \"npm:cypress-CLI\" ",

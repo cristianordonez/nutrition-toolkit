@@ -11,7 +11,7 @@ import {
    Tooltip,
 } from '@mui/material';
 import React, { useState } from 'react';
-import { MealplanItem } from '../../../../../../../types/types';
+import { FoodLogItem } from '../../../../../../../types/types';
 import { getFoodTitle } from '../../../../../../../utils/getFoodTitle';
 import { NutritionTable } from '../../../../../components/nutrition-table/NutritionTable';
 import { StyledTableCell } from '../../../../../components/styled-table-components/StyledTableCell';
@@ -19,12 +19,12 @@ import { StyledTableRow } from '../../../../../components/styled-table-component
 interface Props {
    key: number;
    slotName: string;
-   meals: MealplanItem[];
+   meals: FoodLogItem[];
    handleOpeningDialog: () => void;
    slot: 1 | 2 | 3 | 4;
 }
 
-export const SampleMealplanSlot = ({
+export const SampleFoodLogSlot = ({
    slotName,
    meals,
    handleOpeningDialog,

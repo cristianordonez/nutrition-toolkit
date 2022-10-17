@@ -33,7 +33,7 @@ declare global {
          login(): Chainable<Element>;
          logout(): Chainable<Element>;
          signup(): Chainable<Element>;
-         addItemsToMealplan(): Chainable<Element>;
+         addItemsToFoodLog(): Chainable<Element>;
       }
    }
 }
@@ -60,7 +60,7 @@ Cypress.Commands.add('signup', () => {
       },
    });
    cy.request({
-      url: '/api/mealplan',
+      url: '/api/foodLog',
       method: 'POST',
       body: {
          date: format(startOfToday(), 'yyyy-MM-dd'),
@@ -76,7 +76,7 @@ Cypress.Commands.add('signup', () => {
       },
    });
    cy.request({
-      url: '/api/mealplan',
+      url: '/api/foodLog',
       method: 'POST',
       body: {
          date: format(startOfToday(), 'yyyy-MM-dd'),
@@ -93,7 +93,7 @@ Cypress.Commands.add('signup', () => {
    });
 
    cy.request({
-      url: '/api/mealplan',
+      url: '/api/foodLog',
       method: 'POST',
       body: {
          date: format(startOfToday(), 'yyyy-MM-dd'),
@@ -132,10 +132,10 @@ Cypress.Commands.add('logout', () => {
    cy.visit(`/`);
 });
 
-//sends request to add items to meal plan, must first create user and log him in
-Cypress.Commands.add('addItemsToMealplan', () => {
+//sends request to add items to food log, must first create user and log him in
+Cypress.Commands.add('addItemsToFoodLog', () => {
    cy.request({
-      url: '/api/mealplan',
+      url: '/api/foodLog',
       method: 'POST',
       body: {
          date: format(startOfToday(), 'yyyy-MM-dd'),
@@ -151,7 +151,7 @@ Cypress.Commands.add('addItemsToMealplan', () => {
       },
    });
    cy.request({
-      url: '/api/mealplan',
+      url: '/api/foodLog',
       method: 'POST',
       body: {
          date: format(startOfToday(), 'yyyy-MM-dd'),
@@ -168,7 +168,7 @@ Cypress.Commands.add('addItemsToMealplan', () => {
    });
 
    cy.request({
-      url: '/api/mealplan',
+      url: '/api/foodLog',
       method: 'POST',
       body: {
          date: format(startOfToday(), 'yyyy-MM-dd'),

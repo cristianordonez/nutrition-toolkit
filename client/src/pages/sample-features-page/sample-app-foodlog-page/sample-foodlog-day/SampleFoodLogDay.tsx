@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
-import { MealplanItem } from '../../../../../../types/types';
-import { SampleMealplanSlot } from './sample-mealplan-slot/SampleMealplanSlot';
-import './SampleMealplanDay.scss';
+import { FoodLogItem } from '../../../../../../types/types';
+import { SampleFoodLogSlot } from './sample-foodlog-slot/SampleFoodlogSlot';
+import './SampleFoodLogDay.scss';
 
 interface Props {
-   sampleMealplanItems: MealplanItem[];
+   sampleFoodLogItems: FoodLogItem[];
 }
-export const SampleMealPlanDay = ({ sampleMealplanItems }: Props) => {
+export const SampleFoodLogDay = ({ sampleFoodLogItems }: Props) => {
    const [openDialog, setOpenDialog] = useState(false);
    const [showNutrientDataForm, setShowNutrientDataForm] =
       useState<boolean>(false);
 
-   let breakfastItems: MealplanItem[] = [];
-   let lunchItems: MealplanItem[] = [];
-   let dinnerItems: MealplanItem[] = [];
-   let snackItems: MealplanItem[] = [];
+   let breakfastItems: FoodLogItem[] = [];
+   let lunchItems: FoodLogItem[] = [];
+   let dinnerItems: FoodLogItem[] = [];
+   let snackItems: FoodLogItem[] = [];
 
-   if (sampleMealplanItems.length) {
-      sampleMealplanItems.forEach((item) => {
+   if (sampleFoodLogItems.length) {
+      sampleFoodLogItems.forEach((item) => {
          if (item.slot === 1) {
             breakfastItems.push(item);
          } else if (item.slot === 2) {
@@ -44,7 +44,7 @@ export const SampleMealPlanDay = ({ sampleMealplanItems }: Props) => {
       <>
          <div className='meal-plan-slots-container'>
             {mealItems.map((meals, index) => (
-               <SampleMealplanSlot
+               <SampleFoodLogSlot
                   key={meals[0].fdc_id}
                   slotName={mealSlotTitles[index]}
                   meals={meals}

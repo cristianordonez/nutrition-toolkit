@@ -21,35 +21,35 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
    CustomFoodInput,
-   MealplanItem,
-   NutritionSummaryMealplan,
+   FoodLogItem,
+   NutritionSummaryFoodLog,
 } from '../../../../../../types/types';
 import { getFoodTitle } from '../../../../../../utils/getFoodTitle';
 import { NutritionTable } from '../../../../components/nutrition-table/NutritionTable';
 import { StyledTableCell } from '../../../../components/styled-table-components/StyledTableCell';
 import { StyledTableRow } from '../../../../components/styled-table-components/StyledTableRow';
 interface Props {
-   meals: MealplanItem[];
+   meals: FoodLogItem[];
    setOpenAlert: Dispatch<SetStateAction<boolean>>;
    setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    setAlertMessage: Dispatch<SetStateAction<string>>;
    currentDay: string;
-   setMealPlanItems: Dispatch<SetStateAction<MealplanItem[]>>;
+   setFoodLogItems: Dispatch<SetStateAction<FoodLogItem[]>>;
    slotName: string;
    key: number;
-   setNutritionSummary: Dispatch<SetStateAction<NutritionSummaryMealplan>>;
+   setNutritionSummary: Dispatch<SetStateAction<NutritionSummaryFoodLog>>;
    handleOpeningDialog: () => void;
    slot: 1 | 2 | 3 | 4;
    setCreateFoodData: Dispatch<SetStateAction<CustomFoodInput>>;
    createFoodData: CustomFoodInput;
 }
 
-export const MealplanSlot = ({
+export const FoodLogSlot = ({
    meals,
    setOpenAlert,
    setAlertSeverity,
    setAlertMessage,
-   setMealPlanItems,
+   setFoodLogItems,
    currentDay,
    slotName,
    setNutritionSummary,
@@ -68,14 +68,16 @@ export const MealplanSlot = ({
 
    const handleDeleteRow = async (id: number, currentDay: string) => {
       try {
-         const axiosResponse = await axios.delete(`/api/mealplan/${id}`, {
+         const axiosResponse = await axios.delete(`/api/foodLog/${id}`, {
             params: { currentDay },
             withCredentials: true,
          });
-         setMealPlanItems(
-            axiosResponse.data.updatedItems as unknown as MealplanItem[]
+         console.log('axiosResponse in handledeleterow: ', axiosResponse);
+         setFoodLogItems(
+            axiosResponse.data.updatedItems as unknown as FoodLogItem[]
          );
-         setNutritionSummary(axiosResponse.data.updatedNutritionSummary[0]);
+
+         setNutritionSummary(axiosResponse.data.updatedNutritionSummary);
          setAlertSeverity('success');
          setAlertMessage('Food item has been deleted');
          setOpenAlert(true);
@@ -154,7 +156,7 @@ export const MealplanSlot = ({
                                  title={`Delete item`}
                               >
                                  <IconButton
-                                    aria-label='delete from mealplan'
+                                    aria-label='delete from food log'
                                     size='small'
                                     onClick={() =>
                                        handleDeleteRow(meal.meal_id, currentDay)

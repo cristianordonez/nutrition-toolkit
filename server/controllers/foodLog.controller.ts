@@ -1,72 +1,71 @@
 import { Request, Response } from 'express';
 import {
-   AddToMealPlanType,
+   AddToFoodLogType,
    CustomFoodInput,
    SelectedDate,
    Session,
 } from '../../types/types';
 import { createFood } from '../models/food.model';
 import {
-   createMeal,
-   deleteMealItem,
+   createFoodLogItem,
+   deleteFoodLogItem,
    getByDay,
    getNutritionSummaryByDay,
    getSampleFoods,
    getSampleFoodsNutritionSummary,
-} from '../models/mealplan.model';
+} from '../models/foodLog.model';
 
-const getSampleMealplanDay = async (req: Request, res: Response) => {
+const getSampleFoodLogDay = async (req: Request, res: Response) => {
    try {
       const sampleItems = await getSampleFoods();
       const nutritionSummary = await getSampleFoodsNutritionSummary();
       res.status(200).send({ sampleItems, nutritionSummary });
    } catch (err) {
       console.log('err getting sample meals: ', err);
-      res.status(400).send('Unable to get sample meal plan');
+      res.status(400).send('Unable to get sample food log');
    }
 };
 
 //# adds item to users meals, then updates the user_meal_nutrition table
 //# for this item in seperate query
-const addMealPlanItem = async function (req: Request, res: Response) {
+const addFoodLogItem = async function (req: Request, res: Response) {
    try {
-      const body = req.body as AddToMealPlanType;
+      const body = req.body as AddToFoodLogType;
       const session = req.session as unknown as Session;
-      console.log('req.session in addmealplanitem: ', req.session);
-      await createMeal(body, session.user_id);
-      res.status(201).send('Successfully posted mealplan item');
+      await createFoodLogItem(body, session.user_id);
+      res.status(201).send('Successfully posted food log item');
    } catch (err) {
       console.log('error', err);
-      res.status(400).send('Error adding item to mealplan');
+      res.status(400).send('Error adding item to foodlog');
    }
 };
 
 //# gets all meals for user, then also gets object showing sum of
 //# calories, carbs, protein, fat for all meal items
-const getMealPlanDay = async function (req: Request, res: Response) {
+const getFoodLogDay = async function (req: Request, res: Response) {
    try {
       const query = req.query as SelectedDate;
       const session = req.session as unknown as Session;
-      const mealplanItems = await getByDay(query.date, session.user_id);
+      const foodLogItems = await getByDay(query.date, session.user_id);
       const nutritionSummary = await getNutritionSummaryByDay(
          query.date,
          session.user_id
       );
-      res.status(200).send({ mealplanItems, nutritionSummary });
+      res.status(200).send({ foodLogItems, nutritionSummary });
    } catch (err) {
       console.log('err:', err);
-      res.status(400).send('Unable to get mealplan items');
+      res.status(400).send('Unable to get food log items');
    }
 };
 
 //#deletes item from users meals, then gets updated meals and returns to user
-const deleteMealPlanItem = async function (req: Request, res: Response) {
+const deleteItem = async function (req: Request, res: Response) {
    try {
       const params = req.params as { id: string };
       const query = req.query as { currentDay: string };
       const session = req.session as unknown as Session;
 
-      await deleteMealItem(session.user_id, params.id);
+      await deleteFoodLogItem(session.user_id, params.id);
       const updatedItems = await getByDay(query.currentDay, session.user_id);
       const updatedNutritionSummary = await getNutritionSummaryByDay(
          query.currentDay,
@@ -75,7 +74,7 @@ const deleteMealPlanItem = async function (req: Request, res: Response) {
       res.status(200).send({ updatedItems, updatedNutritionSummary });
    } catch (err) {
       console.log('error', err);
-      res.status(400).send('Unable to delete item.');
+      res.status(400).send('Unable to delete food log item.');
    }
 };
 
@@ -111,23 +110,24 @@ const createCustomItem = async (req: Request, res: Response) => {
          description: body.description,
          brand_owner: body.brand_owner,
       };
-      await createMeal(mealItem, session.user_id);
-      const updatedMealItems = await getByDay(body.date, session.user_id);
+      await createFoodLogItem(mealItem, session.user_id);
+      const updatedFoodLogItems = await getByDay(body.date, session.user_id);
+      console.log('updatedFoodLogItems: ', updatedFoodLogItems);
       const updatedNutritionSummary = await getNutritionSummaryByDay(
          body.date,
          session.user_id
       );
-      res.status(200).send({ updatedMealItems, updatedNutritionSummary });
+      res.status(200).send({ updatedFoodLogItems, updatedNutritionSummary });
    } catch (err) {
       console.log('err: ', err);
-      res.status(400).send('Unable to createMeal new food');
+      res.status(400).send('Unable to createFoodLogItem new food');
    }
 };
 
 export {
-   addMealPlanItem,
-   getMealPlanDay,
-   deleteMealPlanItem,
+   addFoodLogItem,
+   getFoodLogDay,
+   deleteItem,
    createCustomItem,
-   getSampleMealplanDay,
+   getSampleFoodLogDay,
 };

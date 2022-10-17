@@ -37,7 +37,6 @@ const checkAuthentication = async (req: Request, res: Response) => {
    const session = req.session as unknown as Session;
    if (session.passport || session.user_id) {
       const username = await userModel.getUserById(session.user_id);
-      console.log('username: ', username);
       res.status(201).send(username[0].username);
    } else {
       res.status(205).send('User is not logged in.');

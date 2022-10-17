@@ -3,25 +3,24 @@ import axios from 'axios';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import {
    CustomFoodInput,
-   MealplanItem,
-   NutritionSummaryMealplan,
+   FoodLogItem,
+   NutritionSummaryFoodLog,
 } from '../../../../../../types/types';
 import { AddCustomFoodDialog } from './AddCustomFoodDialog';
-import { MealplanSlot } from './MealplanSlot';
+import { FoodLogSlot } from './FoodLogSlot';
 interface Props {
-   mealplanItems: MealplanItem[];
+   foodLogItems: FoodLogItem[];
    setOpenAlert: Dispatch<SetStateAction<boolean>>;
    setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    setAlertMessage: Dispatch<SetStateAction<string>>;
-   setMealPlanItems: Dispatch<SetStateAction<MealplanItem[]>>;
+   setFoodLogItems: Dispatch<SetStateAction<FoodLogItem[]>>;
    currentDay: string;
-   setNutritionSummary: Dispatch<SetStateAction<NutritionSummaryMealplan>>;
+   setNutritionSummary: Dispatch<SetStateAction<NutritionSummaryFoodLog>>;
 }
 
-//gets list of meal plan items, then renders one mealplanitem component per item
-export const MealplanDay = ({
-   mealplanItems,
-   setMealPlanItems,
+export const FoodLogDay = ({
+   foodLogItems,
+   setFoodLogItems,
    setOpenAlert,
    setAlertSeverity,
    setAlertMessage,
@@ -66,13 +65,13 @@ export const MealplanDay = ({
    const [createFoodData, setCreateFoodData] =
       useState<CustomFoodInput>(initialFoodData);
 
-   let breakfastItems: MealplanItem[] = [];
-   let lunchItems: MealplanItem[] = [];
-   let dinnerItems: MealplanItem[] = [];
-   let snackItems: MealplanItem[] = [];
+   let breakfastItems: FoodLogItem[] = [];
+   let lunchItems: FoodLogItem[] = [];
+   let dinnerItems: FoodLogItem[] = [];
+   let snackItems: FoodLogItem[] = [];
 
-   if (mealplanItems.length) {
-      mealplanItems.forEach((item) => {
+   if (foodLogItems.length) {
+      foodLogItems.forEach((item) => {
          if (item.slot === 1) {
             breakfastItems.push(item);
          } else if (item.slot === 2) {
@@ -89,24 +88,25 @@ export const MealplanDay = ({
       try {
          event.preventDefault();
          setAlertSeverity('success');
-         setAlertMessage('Custom food has been added to your mealplan');
-         setOpenAlert(true);
+         setAlertMessage('Custom food has been added to your food log!');
          const updatedItems = await axios.post(
-            '/api/mealplan/custom',
+            '/api/foodLog/custom',
             createFoodData
          );
-         setMealPlanItems(
-            updatedItems.data.updatedMealItems as unknown as MealplanItem[]
+         setFoodLogItems(
+            updatedItems.data.updatedFoodLogItems as unknown as FoodLogItem[]
          );
-         setNutritionSummary(updatedItems.data.updatedNutritionSummary[0]);
+         setOpenAlert(true);
+         console.log('updatedItems in hadnelsubmit : ', updatedItems);
+         setNutritionSummary(updatedItems.data.updatedNutritionSummary);
          setCreateFoodData(initialFoodData);
          handleOpeningDialog();
       } catch (err) {
          setAlertSeverity('error');
-         setAlertMessage('Unable to add custom food to your mealplan');
+         setAlertMessage('Unable to add custom food to your food log');
          setOpenAlert(true);
-         console.log(err);
          handleOpeningDialog();
+         console.log(err);
       }
    };
 
@@ -125,14 +125,14 @@ export const MealplanDay = ({
       <>
          <Stack direction='column' spacing={4} sx={{ width: '100%' }}>
             {mealItems.map((meals, index) => (
-               <MealplanSlot
+               <FoodLogSlot
                   key={index}
                   slotName={mealSlotTitles[index]}
                   meals={meals}
                   setOpenAlert={setOpenAlert}
                   setAlertSeverity={setAlertSeverity}
                   setAlertMessage={setAlertMessage}
-                  setMealPlanItems={setMealPlanItems}
+                  setFoodLogItems={setFoodLogItems}
                   currentDay={currentDay}
                   setNutritionSummary={setNutritionSummary}
                   handleOpeningDialog={handleOpeningDialog}

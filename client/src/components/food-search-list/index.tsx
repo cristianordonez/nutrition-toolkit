@@ -29,7 +29,7 @@ interface Props {
    setOpenSnackbar: Dispatch<SetStateAction<boolean>>;
    setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    showLoadMoreBtn: boolean;
-   enableAddToMealplanFeature: boolean;
+   enableAddToFoodLogFeature: boolean;
 }
 
 export const FoodSearchList = ({
@@ -39,7 +39,7 @@ export const FoodSearchList = ({
    setOpenSnackbar,
    setAlertSeverity,
    showLoadMoreBtn,
-   enableAddToMealplanFeature,
+   enableAddToFoodLogFeature,
 }: Props) => {
    const [openDialog, setOpenDialog] = useState<boolean>(false);
    const [currentId, setCurrentId] = useState<number>(0);
@@ -53,7 +53,7 @@ export const FoodSearchList = ({
       100,
    ]);
 
-   const handleOpeningAddToMealplanDialog = (
+   const handleOpeningAddToFoodLogDialog = (
       id: number,
       dataType: string,
       servingSizes: number[],
@@ -130,8 +130,8 @@ export const FoodSearchList = ({
                         {searchResults.map((searchResult, index) => (
                            <FoodListRow
                               key={index}
-                              handleOpeningAddToMealplanDialog={
-                                 handleOpeningAddToMealplanDialog
+                              handleOpeningAddToFoodLogDialog={
+                                 handleOpeningAddToFoodLogDialog
                               }
                               brand_owner={searchResult.brand_owner}
                               custom_food_brand_owner={
@@ -151,8 +151,8 @@ export const FoodSearchList = ({
                               nutrition={searchResult.nutrition}
                               gram_weight={searchResult.gram_weight}
                               modifier={searchResult.modifier}
-                              enableAddToMealplanFeature={
-                                 enableAddToMealplanFeature
+                              enableAddToFoodLogFeature={
+                                 enableAddToFoodLogFeature
                               }
                            />
                         ))}
@@ -166,7 +166,7 @@ export const FoodSearchList = ({
                </Button>
             ) : null}
          </div>
-         {enableAddToMealplanFeature === true ? (
+         {enableAddToFoodLogFeature === true ? (
             <AddToCartModal
                openDialog={openDialog}
                handleOpeningDialog={handleOpeningDialog}

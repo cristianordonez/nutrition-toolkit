@@ -1,24 +1,24 @@
 import { Request, Response, Router } from 'express';
 import {
-   addMealPlanItem,
+   addFoodLogItem,
    createCustomItem,
-   deleteMealPlanItem,
-   getMealPlanDay,
-   getSampleMealplanDay,
-} from '../controllers/mealplan.controller';
+   deleteItem,
+   getFoodLogDay,
+   getSampleFoodLogDay,
+} from '../controllers/foodLog.controller';
 
 const router = Router();
 
 router.post('/', (req: Request, res: Response) => {
-   addMealPlanItem(req, res);
+   addFoodLogItem(req, res);
 });
 
 router.get('/day', (req: Request, res: Response) => {
-   getMealPlanDay(req, res);
+   getFoodLogDay(req, res);
 });
 
 router.delete('/:id', (req: Request, res: Response) => {
-   deleteMealPlanItem(req, res);
+   deleteItem(req, res);
 });
 
 router.post('/custom', (req: Request, res: Response) => {
@@ -26,7 +26,7 @@ router.post('/custom', (req: Request, res: Response) => {
 });
 
 router.get('/sample', (req: Request, res: Response) => {
-   getSampleMealplanDay(req, res);
+   getSampleFoodLogDay(req, res);
 });
 
 export { router };

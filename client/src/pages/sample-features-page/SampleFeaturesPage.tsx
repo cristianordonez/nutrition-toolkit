@@ -11,14 +11,14 @@ import React, { useState } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 import {
    CurrentGoals,
+   FoodLogItem,
    FoodSearchResult,
-   MealplanItem,
-   NutritionSummaryMealplan,
+   NutritionSummaryFoodLog,
    Query,
 } from '../../../../types/types';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
 import { getGoalsFromMetrics } from '../../utils/get-goals-from-metrics/getGoalsFromMetrics';
-import SampleMealPlanPage from './sample-app-mealplan-page/SampleMealPlanPage';
+import SampleFoodLogPage from './sample-app-foodlog-page/SampleFoodLogPage';
 import { SampleFeaturesSidebar } from './sample-features-sidebars';
 
 const initialState = {
@@ -45,7 +45,7 @@ const initialGoals = {
    goal: 'weight_loss' as 'weight_loss' | 'maintain' | 'gain_muscle',
 };
 
-const initialMealplanGoals = {
+const initialFoodLogGoals = {
    total_carbohydrates: 250,
    total_protein: 100,
    total_fat: 75,
@@ -69,8 +69,8 @@ const SampleFeaturesPage = () => {
    const [alertMessage, setAlertMessage] = useState<string>('');
    const [values, setValues] = useState<Query>(initialState);
    const [openAlert, setOpenAlert] = useState<boolean>(false);
-   const [sampleMealplanItems, setSampleMealplanItems] = useState<
-      MealplanItem[] | []
+   const [sampleFoodLogItems, setSampleFoodLogItems] = useState<
+      FoodLogItem[] | []
    >([]);
    const [searchResults, setSearchResults] = useState<FoodSearchResult[]>(
       [] as FoodSearchResult[]
@@ -84,7 +84,7 @@ const SampleFeaturesPage = () => {
    >('weight_loss');
    const [gender, setGender] = useState<'male' | 'female'>('male');
    const [nutritionSummary, setNutritionSummary] =
-      useState<NutritionSummaryMealplan>(initialNutritionSummary);
+      useState<NutritionSummaryFoodLog>(initialNutritionSummary);
 
    const handleDrawerToggle = () => {
       setMobileOpen(!mobileOpen);
@@ -226,18 +226,18 @@ const SampleFeaturesPage = () => {
                            handleSearch={handleSearch}
                            handleInputChange={handleInputChange}
                            handleTypeSelect={handleTypeSelect}
-                           goals={initialMealplanGoals}
+                           goals={initialFoodLogGoals}
                            nutritionSummary={nutritionSummary}
-                           view={'mealplan'}
+                           view={'foodLog'}
                            handleRadioClick={handleRadioClick}
                         />
-                        <SampleMealPlanPage
+                        <SampleFoodLogPage
                            setNutritionSummary={setNutritionSummary}
                            setAlertSeverity={setAlertSeverity}
                            setOpenAlert={setOpenAlert}
-                           setSampleMealplanItems={setSampleMealplanItems}
+                           setSampleFoodLogItems={setSampleFoodLogItems}
                            setAlertMessage={setAlertMessage}
-                           sampleMealplanItems={sampleMealplanItems}
+                           sampleFoodLogItems={sampleFoodLogItems}
                         />
                      </>
                   }

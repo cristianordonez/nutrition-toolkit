@@ -2,17 +2,17 @@ import { Typography } from '@mui/material';
 import React from 'react';
 import {
    CurrentGoals,
-   NutritionSummaryMealplan,
+   NutritionSummaryFoodLog,
 } from '../../../../../types/types';
 import { CaloriesCircularProgress } from '../../calories-circular-progress/CaloriesCircularProgress';
 import { GoalCardItemLinearProgress } from '../../goal-card-item-linear-progress/GoalCardItemLinearProgress';
 import '../DailyGoals.scss';
 
 interface Props {
-   nutritionSummary: NutritionSummaryMealplan;
+   nutritionSummary: NutritionSummaryFoodLog;
    goals: CurrentGoals;
 }
-export const DailyGoalsMealplan = ({ nutritionSummary, goals }: Props) => {
+export const DailyGoalsFoodLog = ({ nutritionSummary, goals }: Props) => {
    return (
       <div className='daily-goals'>
          <Typography variant='h6'>Today's Macronutrient Totals</Typography>
@@ -24,17 +24,17 @@ export const DailyGoalsMealplan = ({ nutritionSummary, goals }: Props) => {
                />
                <div
                   className='daily-goals-items'
-                  data-testid='mealplan-goal-items'
+                  data-testid='foodLog-goal-items'
                >
                   <GoalCardItemLinearProgress
                      type={'Carbohydrates'}
-                     nutrientsInMealPlan={parseInt(
+                     nutrientsInFoodLog={parseInt(
                         nutritionSummary.total_carbohydrates
                      )}
                      nutrientsTotal={goals.total_carbohydrates}
                   />
                   <GoalCardItemLinearProgress
-                     nutrientsInMealPlan={parseInt(
+                     nutrientsInFoodLog={parseInt(
                         nutritionSummary.total_protein
                      )}
                      nutrientsTotal={goals.total_protein}
@@ -43,7 +43,7 @@ export const DailyGoalsMealplan = ({ nutritionSummary, goals }: Props) => {
                   <GoalCardItemLinearProgress
                      nutrientsTotal={goals.total_fat}
                      type={'Fat'}
-                     nutrientsInMealPlan={parseInt(nutritionSummary.total_fat)}
+                     nutrientsInFoodLog={parseInt(nutritionSummary.total_fat)}
                   />
                </div>
             </>

@@ -22,7 +22,7 @@ import React, {
    useEffect,
    useState,
 } from 'react';
-import { AddToMealPlanType } from '../../../../../types/types';
+import { AddToFoodLogType } from '../../../../../types/types';
 import { DatePickerTextField } from '../../form-input-components/DatePickerTextField';
 import { DialogSelectServingSize } from '../../form-input-components/DialogSelectServingSize';
 import { DialogSelectSlot } from '../../form-input-components/DialogSelectSlot';
@@ -59,7 +59,7 @@ export const AddToCartModal = ({
    setOpenSnackbar,
    setAlertSeverity,
 }: Props) => {
-   const [data, setData] = useState<AddToMealPlanType>({
+   const [data, setData] = useState<AddToFoodLogType>({
       date: format(startOfToday(), 'yyyy-MM-dd'),
       slot: 1,
       fdc_id: id,
@@ -82,7 +82,7 @@ export const AddToCartModal = ({
    const handleSelectServings = (
       event: React.ChangeEvent<HTMLInputElement>
    ) => {
-      setData((data: AddToMealPlanType) => {
+      setData((data: AddToFoodLogType) => {
          return {
             ...data,
             servings: event.target.value,
@@ -93,9 +93,9 @@ export const AddToCartModal = ({
    const handleSubmit = async (event: SyntheticEvent) => {
       try {
          event.preventDefault();
-         await axios.post('/api/mealplan', data);
+         await axios.post('/api/foodLog', data);
          setAlertSeverity('success');
-         setAlertMessage('Item has been added to your mealplan!');
+         setAlertMessage('Item has been added to your food log!');
          setOpenSnackbar(true);
          setOpenDialog(false);
       } catch (err) {
@@ -130,7 +130,7 @@ export const AddToCartModal = ({
             handleClose('backdropClick');
          }}
       >
-         <DialogTitle align='left'>Add item to mealplan</DialogTitle>
+         <DialogTitle align='left'>Add item to your food log</DialogTitle>
          <form onSubmit={handleSubmit}>
             <DialogContent sx={{ p: 0, width: '100%' }}>
                <Box display='flex' flexDirection='column' gap='10px'>
@@ -186,8 +186,8 @@ export const AddToCartModal = ({
                   Cancel
                </Button>
                <Button
-                  data-testid='add-mealplan-btn'
-                  aria-label='submit form to add to meal plan'
+                  data-testid='add-foodLog-btn'
+                  aria-label='submit the form to add the item to your food log'
                   type='submit'
                   variant='contained'
                   color='success'

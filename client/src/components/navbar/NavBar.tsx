@@ -48,14 +48,12 @@ const NavBar = () => {
             </Box>
             {/* ONLY ON SM SCREENS BUT NOT XS OR ABOVE AND ONLY WHEN PAGE IS NOT HOME OR FEATURES*/}
             {location.pathname.split('/')[1] !== 'home' &&
-            location.pathname.split('/')[1] !==
-               'diabetes-calculator-features' ? (
+            location.pathname.split('/')[1] !== 'macro-trainer-features' ? (
                <Box sx={{ pl: '1rem', display: { xs: 'none', sm: 'flex' } }}>
                   <MainTitleLogo />
                </Box>
             ) : null}
-            {location.pathname.split('/')[1] ===
-            'diabetes-calculator-features' ? (
+            {location.pathname.split('/')[1] === 'macro-trainer-features' ? (
                <Button
                   sx={{
                      paddingLeft: {
@@ -120,7 +118,7 @@ const NavBar = () => {
                               to={`/home`}
                               end
                            >
-                              Meal Plan
+                              Food Log
                            </Link>
                            {pages.map((page) => (
                               <Link
