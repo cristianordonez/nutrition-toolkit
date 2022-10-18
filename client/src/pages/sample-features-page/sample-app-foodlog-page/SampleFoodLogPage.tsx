@@ -13,8 +13,8 @@ import getDay from 'date-fns/getDay';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FoodLogItem } from '../../../../../types/types';
 import { FoodLogWeekText } from '../../../components/foodlog-week-text/FoodLogWeekText';
-import '../../../index.scss';
 import { SampleFoodLogDay } from './sample-foodlog-day/SampleFoodLogDay';
+import './SampleFoodLogPage.scss';
 
 const days = [
    'Sunday',

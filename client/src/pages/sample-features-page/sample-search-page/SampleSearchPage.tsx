@@ -3,7 +3,8 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import { FoodSearchList } from '../../../components/food-search-list';
 import { useSampleFeaturesOutlet } from '../../../hooks/useSampleFeaturesOutlet';
-import '../../../index.scss';
+import './SampleSearchPage.scss';
+
 const SampleSearchPage = () => {
    const {
       setAlertSeverity,

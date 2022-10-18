@@ -28,7 +28,7 @@ interface Props {
    setGoals?: Dispatch<SetStateAction<CurrentGoals>> | undefined;
 }
 
-export const MacroCalculatorForm = ({
+export const MacroCalculatorContainer = ({
    setOpenErrorAlert,
    setErrorMessage,
    setShowNextPage,

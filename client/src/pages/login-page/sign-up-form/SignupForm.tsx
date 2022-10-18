@@ -6,7 +6,7 @@ import { ConfirmPasswordTextField } from '../../../components/form-input-compone
 import { EmailTextField } from '../../../components/form-input-components/email-textfield/EmailTextField';
 import { PasswordTextField } from '../../../components/form-input-components/password-textfield/PasswordTextField';
 import { UsernameTextField } from '../../../components/form-input-components/username-textfield/UsernameTextField';
-import { MacroCalculatorForm } from '../../../components/macro-calculator-form';
+import { MacroCalculatorContainer } from '../../../components/macro-calculator-container';
 import './SignupForm.scss';
 
 interface Props {
@@ -91,7 +91,7 @@ export const SignupForm = ({
    return (
       <div className='signup'>
          {showNextPage ? (
-            <MacroCalculatorForm
+            <MacroCalculatorContainer
                setOpenErrorAlert={setOpenErrorAlert}
                setErrorMessage={setErrorMessage}
                setShowNextPage={setShowNextPage}

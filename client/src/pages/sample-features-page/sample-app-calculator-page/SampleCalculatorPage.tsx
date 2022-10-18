@@ -4,7 +4,7 @@ import React from 'react';
 import { BsCalculatorFill } from 'react-icons/bs';
 import { Calculator } from '../../../components/calculator-contents/Calculator';
 import { useSampleFeaturesOutlet } from '../../../hooks/useSampleFeaturesOutlet';
-import '../../../index.scss';
+import './SampleCalculatorPage.scss';
 
 const SampleCalculatorPage = () => {
    const {
