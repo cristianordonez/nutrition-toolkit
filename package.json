@@ -58,7 +58,6 @@
       "react-icons": "^4.4.0",
       "react-router-dom": "^6.3.0",
       "serve-favicon": "^2.5.0",
-      "uuid": "^8.3.2",
       "webpack-bundle-analyzer": "^4.5.0",
       "webpack-merge": "^5.8.0"
    },
@@ -90,7 +89,6 @@
       "@types/react-icons": "^3.0.0",
       "@types/serve-favicon": "^2.5.3",
       "@types/supertest": "^2.0.12",
-      "@types/uuid": "^8.3.4",
       "babel-jest": "^28.1.1",
       "babel-loader": "^8.2.5",
       "css-loader": "^6.7.1",

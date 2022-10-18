@@ -37,7 +37,7 @@ module.exports = {
    },
    plugins: [
       new HtmlWebpackPlugin({
-         title: 'The Diabetes Calculator',
+         title: 'The Macro Trainer',
          template: 'template.html',
          favicon: './favicon_io/favicon.ico',
       }),

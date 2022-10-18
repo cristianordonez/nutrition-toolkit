@@ -92,7 +92,6 @@ const getByDay = (date: Date | string, user_id: number | string) => {
 	WHERE user_id = $1 AND date = $2
 	ORDER BY created_at ASC `;
    const response = db.any(getMealsAndNutritionQuery, [user_id, date]);
-   console.log('response in getbyday: ', response);
    return response;
 };
 

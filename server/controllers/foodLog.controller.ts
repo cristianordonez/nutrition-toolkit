@@ -112,7 +112,6 @@ const createCustomItem = async (req: Request, res: Response) => {
       };
       await createFoodLogItem(mealItem, session.user_id);
       const updatedFoodLogItems = await getByDay(body.date, session.user_id);
-      console.log('updatedFoodLogItems: ', updatedFoodLogItems);
       const updatedNutritionSummary = await getNutritionSummaryByDay(
          body.date,
          session.user_id

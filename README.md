@@ -17,9 +17,9 @@ View live deployment [here](https://themacrotrainer.com) or see the demo below.
 
 ## Demo
 
-![homepage](./gifs/ezgif.com-gif-maker.gif)
-![searchpage](./gifs/search-page.gif)
-![mealplanpage](./gifs/mealplan-page.gif)
+![home](./gifs/home-page.gif)
+![search](./gifs/search-page.gif)
+![calculator](./gifs/macrocalculator.gif)
 
 ## Tech Stack
 

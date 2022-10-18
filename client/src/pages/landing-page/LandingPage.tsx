@@ -39,12 +39,12 @@ const LandingPage = () => {
    const cardTitles = [
       'Calculate Your Macronutrient Needs',
       'Search For Matching Food Items',
-      'Save Foods To Your Food Diary',
+      'Save Foods To Your Food Log',
    ];
    const cardMessages = [
       'Use our Macronutrient Calculator to find your  calorie and nutrient needs',
       'Search from over 350,000 foods, filtering by calories, carbs, protein or fat',
-      `Get a better understanding of your eating habits with our food diary`,
+      `Get a better understanding of your eating habits with our food log`,
    ];
    const cardImages = [ScheduleSvg, MaleChefSvg, CalculateSvg];
    const featureView = ['calculator', 'search', 'foodLog'];

@@ -97,7 +97,6 @@ export const FoodLogDay = ({
             updatedItems.data.updatedFoodLogItems as unknown as FoodLogItem[]
          );
          setOpenAlert(true);
-         console.log('updatedItems in hadnelsubmit : ', updatedItems);
          setNutritionSummary(updatedItems.data.updatedNutritionSummary);
          setCreateFoodData(initialFoodData);
          handleOpeningDialog();

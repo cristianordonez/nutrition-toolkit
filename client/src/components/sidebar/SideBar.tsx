@@ -70,9 +70,6 @@ export const SideBar = ({
       page = 'other';
    }
 
-   console.log('goals: ', goals);
-   console.log('nutritionSummary: ', nutritionSummary);
-   console.log('page: ', page);
    return (
       <>
          {/* MOBILE */}
@@ -145,6 +142,11 @@ export const SideBar = ({
                      nutritionSummary={nutritionSummary}
                   />
                ) : null}
+               {page === 'other' &&
+               searchResults != undefined &&
+               searchResults.length > 0 ? (
+                  <DailyGoals goals={goals} />
+               ) : null}
                {isSearching ? (
                   <Typography align='center' variant='h6' sx={{ pt: '1rem' }}>
                      Searching...
@@ -199,7 +201,12 @@ export const SideBar = ({
                searchResults.length === 0 ? (
                   <DailyGoals goals={goals} />
                ) : null}
-               {/* RENDER GOALSFoodLog WHEN PAGE IS FoodLog AND THERE IS NUTRITION SUMMARY */}
+               {page === 'other' &&
+               searchResults != undefined &&
+               searchResults.length > 0 ? (
+                  <DailyGoals goals={goals} />
+               ) : null}
+               {/* RENDER GOALS WHEN PAGE IS FoodLog AND THERE IS NUTRITION SUMMARY */}
                {page === 'foodlog' && nutritionSummary !== undefined ? (
                   <DailyGoalsFoodLog
                      goals={goals}

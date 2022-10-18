@@ -72,7 +72,6 @@ export const FoodLogSlot = ({
             params: { currentDay },
             withCredentials: true,
          });
-         console.log('axiosResponse in handledeleterow: ', axiosResponse);
          setFoodLogItems(
             axiosResponse.data.updatedItems as unknown as FoodLogItem[]
          );
