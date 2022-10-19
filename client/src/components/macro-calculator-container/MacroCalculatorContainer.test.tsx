@@ -2,22 +2,21 @@
 /**
  * @jest-environment jsdom
  */
-import React, { useState } from 'react';
-import { expect } from '../../../../jestGlobals';
-import { render, waitFor, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import userEvent from '@testing-library/user-event';
-import { MacroCalculatorForm } from '.';
+import { render, screen } from '@testing-library/react';
+import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
+import { MacroCalculatorContainer } from '.';
+import { expect } from '../../../../jestGlobals';
 
 function App() {
    return (
       <MemoryRouter>
-         <MacroCalculatorForm />
+         <MacroCalculatorContainer />
       </MemoryRouter>
    );
 }
-describe('MacroCalculator Form', () => {
+describe('MacroCalculator Container', () => {
    test('Correctly renders the correct text when no page prop is passed in', async () => {
       render(<App />);
       expect(

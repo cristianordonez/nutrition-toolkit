@@ -95,47 +95,18 @@ const get = (query: Query) => {
  	food.fdc_id, 
  	food.description, 
  	branded_food.brand_owner,
-   modifier,
-   gram_weight,
-	custom_food.brand_owner as custom_food_brand_owner,
-   custom_food.serving_size AS custom_food_serving_size,
-   custom_food.serving_size_unit AS custom_food_serving_size_unit,
- 	branded_food.serving_size,
-   branded_food.serving_size_unit,
+   custom_food.brand_owner as custom_food_brand_owner,
+   food.nutrition_label_serving_size as serving_size,
+   food.nutrition_label_serving_size_unit as serving_size_unit,
+   food.serving_size_conversion_factor,
    food.data_type,
    row_to_json(food_nutrition.*) AS nutrition
    FROM food
  	INNER JOIN food_nutrition ON food.fdc_id = food_nutrition.fdc_id
    LEFT JOIN branded_food ON food.fdc_id = branded_food.fdc_id
    LEFT JOIN custom_food on custom_food.fdc_id = food.fdc_id
-   LEFT JOIN food_portion on food.fdc_id = food_portion.fdc_id
    WHERE description ~* $<query.query>
    AND calories IS NOT null
- 	LIMIT $<query.number> OFFSET $<query.offset>
-      `;
-   const matchingItems = db.any(selectQuery, {
-      query: query,
-   });
-   return matchingItems;
-};
-
-const getByBrand = (query: Query) => {
-   const selectQuery = `SELECT 
- 	food.fdc_id, 
- 	food.description, 
- 	branded_food.brand_owner,
-	custom_food.brand_name as custom_food_brand_owner,
-   custom_food.serving_size AS custom_food_serving_size,
-   custom_food.serving_size_unit AS custom_food_serving_size_unit,
- 	branded_food.serving_size,
-   branded_food.serving_size_unit,
-   food.data_type,
-   row_to_json(food_nutrition.*) AS nutrition
-   FROM food
- 	INNER JOIN food_nutrition ON food.fdc_id = food_nutrition.fdc_id
-   LEFT JOIN branded_food ON food.fdc_id = branded_food.fdc_id
-   LEFT JOIN custom_food on custom_food.fdc_id = food.fdc_id
-   WHERE (branded_food.brand_owner ~* $<query.query> OR custom_food.brand_owner ~* $<query.query>)
  	LIMIT $<query.number> OFFSET $<query.offset>
       `;
    const matchingItems = db.any(selectQuery, {
@@ -150,11 +121,10 @@ const getAdvanced = (query: Query) => {
     food.description,
     branded_food.brand_owner,
     custom_food.brand_owner as custom_food_brand_owner,
-    custom_food.serving_size AS custom_food_serving_size,
-    custom_food.serving_size_unit AS custom_food_serving_size_unit,
-    branded_food.serving_size,
-    branded_food.serving_size_unit,
+    food.nutrition_label_serving_size AS serving_size,
+    food.nutrition_label_serving_size_unit AS serving_size_unit,
     food.data_type,
+    food.serving_size_conversion_factor,
     row_to_json(food_nutrition.*) AS nutrition
     FROM food
 	 INNER JOIN food_nutrition ON food.fdc_id = food_nutrition.fdc_id
@@ -182,10 +152,9 @@ const getAdvancedByBrand = (query: Query) => {
     food.description,
     branded_food.brand_owner,
     custom_food.brand_owner as custom_food_brand_owner,
-    custom_food.serving_size AS custom_food_serving_size,
-    custom_food.serving_size_unit AS custom_food_serving_size_unit,
-    branded_food.serving_size,
-    branded_food.serving_size_unit,
+    food.nutrition_label_serving_size AS serving_size,
+    food.nutrition_label_serving_size_unit AS serving_size_unit,
+    food.serving_size_conversion_factor,
     food.data_type,
     row_to_json(food_nutrition.*) AS nutrition
     FROM food
@@ -219,21 +188,21 @@ const createFood = (
    standardized_conversion_factor: number
 ) => {
    const createFoodQuery = `With getId AS 
-   (INSERT INTO food (data_type, description, serving_size_conversion_factor) 
-   VALUES ('custom', $1, $2) 
+   (INSERT INTO food (data_type, description, serving_size_conversion_factor, nutrition_label_serving_size, nutrition_label_serving_size_unit) 
+   VALUES ('custom', $1, $2, $3, $4) 
    RETURNING fdc_id)
    INSERT INTO custom_food 
-   (brand_owner, serving_size, serving_size_unit, fdc_id, user_id) 
-   VALUES ($3, $4, $5, (SELECT fdc_id FROM getId), $6)
+   (brand_owner, user_id, fdc_id) 
+   VALUES ($5, $6, (SELECT fdc_id FROM getId))
    RETURNING fdc_id`;
 
    return db.task(async (t: any) => {
       const fdc_id = await t.one(createFoodQuery, [
          description,
          serving_size_conversion_factor,
-         brand_owner,
          serving_size,
          serving_size_unit,
+         brand_owner,
          user_id,
       ]);
       Object.keys(nutrition).forEach((nutrient) => {
@@ -283,16 +252,14 @@ const getSampleItems = () => {
    const getSampleItemsQuery = `SELECT food.fdc_id, 
  	food.description, 
  	branded_food.brand_owner,
-   modifier,
-   gram_weight,
- 	branded_food.serving_size,
-   branded_food.serving_size_unit,
+   food.nutrition_label_serving_size AS serving_size,
+   food.nutrition_label_serving_size_unit AS serving_size_unit,
+   food.serving_size_conversion_factor,
    food.data_type,
    row_to_json(food_nutrition.*) AS nutrition
    FROM food
  	INNER JOIN food_nutrition ON food.fdc_id = food_nutrition.fdc_id
    LEFT JOIN branded_food ON food.fdc_id = branded_food.fdc_id
-   LEFT JOIN food_portion on food.fdc_id = food_portion.fdc_id
    WHERE calories IS NOT null
    AND data_type = 'branded_food'
    LIMIT 10`;
@@ -300,11 +267,4 @@ const getSampleItems = () => {
    return db.query(getSampleItemsQuery);
 };
 
-export {
-   get,
-   getByBrand,
-   getAdvanced,
-   getAdvancedByBrand,
-   createFood,
-   getSampleItems,
-};
+export { get, getAdvanced, getAdvancedByBrand, createFood, getSampleItems };

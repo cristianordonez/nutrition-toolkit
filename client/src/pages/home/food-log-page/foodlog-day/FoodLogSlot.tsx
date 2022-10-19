@@ -13,6 +13,7 @@ import {
    TableCell,
    TableContainer,
    TableHead,
+   TableRow,
    Tooltip,
    Typography,
 } from '@mui/material';
@@ -27,7 +28,7 @@ import {
 import { getFoodTitle } from '../../../../../../utils/getFoodTitle';
 import { NutritionTable } from '../../../../components/nutrition-table/NutritionTable';
 import { StyledTableCell } from '../../../../components/styled-table-components/StyledTableCell';
-import { StyledTableRow } from '../../../../components/styled-table-components/StyledTableRow';
+
 interface Props {
    meals: FoodLogItem[];
    setOpenAlert: Dispatch<SetStateAction<boolean>>;
@@ -98,7 +99,7 @@ export const FoodLogSlot = ({
          <TableContainer component={Paper}>
             <Table aria-label={`Food items for ${slotName}`}>
                <TableHead>
-                  <StyledTableRow>
+                  <TableRow>
                      <StyledTableCell
                         sx={{ fontWeight: 'bold' }}
                         variant='head'
@@ -109,12 +110,12 @@ export const FoodLogSlot = ({
                      <StyledTableCell variant='head' />
                      <StyledTableCell variant='head' />
                      <StyledTableCell variant='head' />
-                  </StyledTableRow>
+                  </TableRow>
                </TableHead>
                <TableBody>
                   {meals.map((meal) => (
                      <React.Fragment key={meal.fdc_id}>
-                        <StyledTableRow
+                        <TableRow
                            hover={false}
                            sx={{
                               '& > *': { borderBottom: 'unset' },
@@ -165,10 +166,11 @@ export const FoodLogSlot = ({
                                  </IconButton>
                               </Tooltip>
                            </TableCell>
-                        </StyledTableRow>
+                        </TableRow>
                         <NutritionTable
                            open={open}
                            nutrition={meal.nutrition}
+                           serving_size_conversion_factor={1}
                         />
                      </React.Fragment>
                   ))}

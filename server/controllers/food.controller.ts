@@ -4,7 +4,6 @@ import {
    get,
    getAdvanced,
    getAdvancedByBrand,
-   getByBrand,
    getSampleItems,
 } from '../models/food.model';
 
@@ -12,17 +11,6 @@ const getFoodItemsSimple = async (req: Request, res: Response) => {
    try {
       const query = req.query as unknown as Query;
       const foodItemsSimple = await get(query);
-      res.status(200).send(foodItemsSimple);
-   } catch (err) {
-      console.log(err);
-      res.status(400).send('Unable to retrieve search results.');
-   }
-};
-
-const getFoodItemsSimpleByBrand = async (req: Request, res: Response) => {
-   try {
-      const query = req.query as unknown as Query;
-      const foodItemsSimple = await getByBrand(query);
       res.status(200).send(foodItemsSimple);
    } catch (err) {
       console.log(err);
@@ -63,7 +51,6 @@ const getSampleFoodItems = async (req: Request, res: Response) => {
 };
 export {
    getFoodItemsAdvanced,
-   getFoodItemsSimpleByBrand,
    getFoodItemsSimple,
    getFoodItemsAdvancedByBrand,
    getSampleFoodItems,

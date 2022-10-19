@@ -8,6 +8,7 @@ import {
    TableBody,
    TableContainer,
    TableHead,
+   TableRow,
    Typography,
 } from '@mui/material';
 import React, {
@@ -18,7 +19,6 @@ import React, {
 } from 'react';
 import { FoodSearchResult } from '../../../../types/types';
 import { StyledTableCell } from '../styled-table-components/StyledTableCell';
-import { StyledTableRow } from '../styled-table-components/StyledTableRow';
 import { AddToCartModal } from './add-to-cart-modal/AddToCartModal';
 import { FoodListRow } from './food-list-row/FoodListRow';
 import './index.scss';
@@ -59,8 +59,7 @@ export const FoodSearchList = ({
       servingSizes: number[],
       servingSizeUnit: string,
       description: string,
-      brand: string,
-      modifier: string | null
+      brand: string
    ) => {
       setCurrentId(id);
       setCurrentDataType(dataType);
@@ -68,13 +67,13 @@ export const FoodSearchList = ({
       setCurrentServingSizeUnit(servingSizeUnit);
       setCurrentDescription(description);
       setCurrentBrand(brand);
-      setCurrentModifier(modifier);
       setOpenDialog(!openDialog);
    };
 
    const handleOpeningDialog = () => {
       setOpenDialog(!openDialog);
    };
+   console.log('searchResults: ', searchResults);
    return (
       <>
          <div className='food-search-list'>
@@ -85,10 +84,9 @@ export const FoodSearchList = ({
             >
                <MenuBookIcon />
                <Typography variant='body1'>
-                  Note: Nutrition Facts for results may differ from those seen
-                  on their nutrition label as they are standardized per 100
-                  grams. This is to help better compare the nutrition of
-                  different foods to each other.
+                  Click on the arrow to the left of each search result to view
+                  the nutrition facts for the item. Then click on any row to
+                  save the item to your food log.
                </Typography>
             </Stack>
             <Typography variant='h6' align='left'>
@@ -98,21 +96,19 @@ export const FoodSearchList = ({
                <TableContainer component={Paper}>
                   <Table stickyHeader={true} aria-label='search results'>
                      <TableHead>
-                        <StyledTableRow>
+                        <TableRow>
                            <StyledTableCell variant='head' />
                            <StyledTableCell>
-                              Food&nbsp;(per 100g)
-                           </StyledTableCell>
-                           <StyledTableCell align='right'>
-                              Calories
+                              Food&nbsp;Description
                            </StyledTableCell>
                            <StyledTableCell
                               align='right'
                               className='desktop-table-view'
                            >
-                              Fat&nbsp;(g)
+                              Serving&nbsp;Size
                            </StyledTableCell>
-                           <StyledTableCell
+
+                           {/* <StyledTableCell
                               align='right'
                               className='desktop-table-view'
                            >
@@ -124,7 +120,16 @@ export const FoodSearchList = ({
                            >
                               Protein&nbsp;(g)
                            </StyledTableCell>
-                        </StyledTableRow>
+                           <StyledTableCell
+                              align='right'
+                              className='desktop-table-view'
+                           >
+                              Fat&nbsp;(g)
+                           </StyledTableCell> */}
+                           <StyledTableCell align='right'>
+                              Calories
+                           </StyledTableCell>
+                        </TableRow>
                      </TableHead>
                      <TableBody>
                         {searchResults.map((searchResult, index) => (
@@ -140,19 +145,14 @@ export const FoodSearchList = ({
                               description={searchResult.description}
                               fdc_id={searchResult.fdc_id}
                               serving_size={searchResult.serving_size}
-                              custom_food_serving_size={
-                                 searchResult.custom_food_serving_size
-                              }
                               serving_size_unit={searchResult.serving_size_unit}
-                              custom_food_serving_size_unit={
-                                 searchResult.custom_food_serving_size_unit
-                              }
                               data_type={searchResult.data_type}
                               nutrition={searchResult.nutrition}
-                              gram_weight={searchResult.gram_weight}
-                              modifier={searchResult.modifier}
                               enableAddToFoodLogFeature={
                                  enableAddToFoodLogFeature
+                              }
+                              serving_size_conversion_factor={
+                                 searchResult.serving_size_conversion_factor
                               }
                            />
                         ))}

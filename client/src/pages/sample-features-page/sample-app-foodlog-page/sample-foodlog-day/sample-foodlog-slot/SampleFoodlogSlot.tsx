@@ -8,6 +8,7 @@ import {
    TableCell,
    TableContainer,
    TableHead,
+   TableRow,
    Tooltip,
 } from '@mui/material';
 import React, { useState } from 'react';
@@ -15,7 +16,6 @@ import { FoodLogItem } from '../../../../../../../types/types';
 import { getFoodTitle } from '../../../../../../../utils/getFoodTitle';
 import { NutritionTable } from '../../../../../components/nutrition-table/NutritionTable';
 import { StyledTableCell } from '../../../../../components/styled-table-components/StyledTableCell';
-import { StyledTableRow } from '../../../../../components/styled-table-components/StyledTableRow';
 interface Props {
    key: number;
    slotName: string;
@@ -45,7 +45,7 @@ export const SampleFoodLogSlot = ({
          <TableContainer component={Paper}>
             <Table aria-label={`Food items for ${slotName}`}>
                <TableHead>
-                  <StyledTableRow>
+                  <TableRow>
                      <StyledTableCell
                         sx={{ fontWeight: 'bold' }}
                         variant='head'
@@ -58,12 +58,12 @@ export const SampleFoodLogSlot = ({
                         className='hide-on-mobile'
                      />
                      <StyledTableCell variant='head' />
-                  </StyledTableRow>
+                  </TableRow>
                </TableHead>
                <TableBody>
                   {meals.map((meal) => (
                      <React.Fragment key={meal.fdc_id}>
-                        <StyledTableRow
+                        <TableRow
                            hover={false}
                            sx={{
                               '& > *': { borderBottom: 'unset' },
@@ -97,10 +97,11 @@ export const SampleFoodLogSlot = ({
                               {meal.serving_size_unit}
                            </TableCell>
                            <TableCell>{meal.nutrition.calories} kcal</TableCell>
-                        </StyledTableRow>
+                        </TableRow>
                         <NutritionTable
                            open={open}
                            nutrition={meal.nutrition}
+                           serving_size_conversion_factor={1}
                         />
                      </React.Fragment>
                   ))}

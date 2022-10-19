@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import React, { ChangeEventHandler } from 'react';
 import { FoodNutrition } from '../../../../types/types';
-import { getNutrientUnitName } from '../../utils/getNutrientUnitName';
+import { getNutrientFormattedName } from '../../utils/getNutrientUnitInfoArray';
 interface Props {
    nutritionData: FoodNutrition;
    handleNutritionInput: ChangeEventHandler<
@@ -19,21 +19,19 @@ export const NutritionDataForm = ({
    nutritionData,
    handleNutritionInput,
 }: Props) => {
-   const formatString = (string: string) => {
-      let updatedString = string.replace('_', ' ');
-      let words = updatedString.split(' ');
-      for (let i = 0; i < words.length; i++) {
-         words[i] =
-            words[i][0].toUpperCase() + words[i].slice(1, words[i].length);
-      }
-      if (string === 'calories') {
-         return words.join(' ');
-      } else {
-         return words.join(' ') + ` (${getNutrientUnitName(string)})`;
-      }
-   };
-
-   let currentLabel;
+   // const formatString = (string: string) => {
+   //    let updatedString = string.replace('_', ' ');
+   //    let words = updatedString.split(' ');
+   //    for (let i = 0; i < words.length; i++) {
+   //       words[i] =
+   //          words[i][0].toUpperCase() + words[i].slice(1, words[i].length);
+   //    }
+   //    if (string === 'calories') {
+   //       return words.join(' ');
+   //    } else {
+   //       return words.join(' ') + ` (${getNutrientUnitName(string)})`;
+   //    }
+   // };
 
    return (
       <>
@@ -57,7 +55,7 @@ export const NutritionDataForm = ({
                      nutrient === 'total_fat' ? (
                         <>
                            <Typography sx={{ fontWeight: 'bold' }}>
-                              {formatString(nutrient)}
+                              {getNutrientFormattedName(nutrient)}
                            </Typography>
                            <FormControl sx={{ maxWidth: '40%' }}>
                               <TextField
@@ -80,7 +78,7 @@ export const NutritionDataForm = ({
                      ) : (
                         <>
                            <Typography variant='body2'>
-                              {formatString(nutrient)}
+                              {getNutrientFormattedName(nutrient)}
                            </Typography>
                            <FormControl sx={{ maxWidth: '40%' }}>
                               <TextField

@@ -3,7 +3,6 @@ import {
    getFoodItemsAdvanced,
    getFoodItemsAdvancedByBrand,
    getFoodItemsSimple,
-   getFoodItemsSimpleByBrand,
    getSampleFoodItems,
 } from '../controllers/food.controller';
 
@@ -15,10 +14,6 @@ router.get('/', (req: Request, res: Response) => {
 
 router.get('/all', (req: Request, res: Response) => {
    getFoodItemsSimple(req, res);
-});
-
-router.get('/all/brand', (req: Request, res: Response) => {
-   getFoodItemsSimpleByBrand(req, res);
 });
 
 router.get('/brand', (req: Request, res: Response) => {

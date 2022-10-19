@@ -35,10 +35,7 @@ type FoodSearchResult = {
    custom_food_brand_owner: string | null;
    description: string;
    fdc_id: string;
-   custom_food_serving_size: number | null;
-   custom_food_serving_size_unit: string | null;
-   gram_weight: number | null;
-   modifier: string | null;
+   serving_size_conversion_factor: number;
 };
 
 type CurrentGoals = {
@@ -106,6 +103,8 @@ type MetricsType = {
 };
 
 type FoodNutrition = {
+   id?: number | null;
+   fdc_id?: number | null;
    calories: number | string | null;
    calcium: number | string | null;
    cholesterol: number | string | null;
@@ -114,15 +113,11 @@ type FoodNutrition = {
    potassium: number | string | null;
    protein: number | string | null;
    saturated_fat: number | string | null;
-   monounsaturated_fat: number | string | null;
-   polyunsaturated_fat: number | string | null;
    sodium: number | string | null;
-   sugar: number | string | null;
+   total_sugars: number | string | null;
    total_carbohydrates: number | string | null;
    total_fat: number | string | null;
    trans_fat: number | string | null;
-   vitamin_a: number | string | null;
-   vitamin_c: number | string | null;
    vitamin_d: number | string | null;
 };
 

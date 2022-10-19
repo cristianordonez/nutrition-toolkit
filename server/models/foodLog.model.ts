@@ -117,23 +117,6 @@ const deleteFoodLogItem = (user_id: number | string, mealId: string) => {
    return db.none(deleteFoodQuery, [mealId, user_id]);
 };
 
-const getRandomFoods = () => {
-   const randomInt = Math.floor(Math.random() * 1500);
-   const getRandomDayQuery = `
-		SELECT data_type,
-		description,
-		brand_owner
-		serving_size, 
-		serving_size_unit, 
-		food.fdc_id,  
-		row_to_json(food_nutrition) AS nutrition 
-		FROM food INNER JOIN food_nutrition ON food.fdc_id = food_nutrition.fdc_id
-		INNER JOIN branded_food ON branded_food.fdc_id = food.fdc_id
-		WHERE calories is NOT null and brand_owner is not null
-		OFFSET $1 LIMIT 3`;
-   return db.any(getRandomDayQuery, randomInt);
-};
-
 const getSampleFoods = () => {
    const getSampleQuery = `
 	SELECT
@@ -161,7 +144,6 @@ export {
    getByDay,
    getNutritionSummaryByDay,
    deleteFoodLogItem,
-   getRandomFoods,
    getSampleFoods,
    getSampleFoodsNutritionSummary,
 };

@@ -1,0 +1,4 @@
+@use '../../index.scss' as *;
+.MuiCollapse-wrapperInner {
+   @include flex-center();
+}
