@@ -45,7 +45,10 @@ export const FoodSearchList = ({
    const [currentId, setCurrentId] = useState<number>(0);
    const [currentDescription, setCurrentDescription] = useState<string>('');
    const [currentBrand, setCurrentBrand] = useState<string>('');
-   const [currentModifier, setCurrentModifier] = useState<string | null>();
+   const [
+      currentServingSizeUnitDescription,
+      setCurrentServingSizeUnitDescription,
+   ] = useState<string | null>();
    const [currentDataType, setCurrentDataType] = useState<string>('');
    const [currentServingSizeUnit, setCurrentServingSizeUnit] =
       useState<string>('');
@@ -73,7 +76,6 @@ export const FoodSearchList = ({
    const handleOpeningDialog = () => {
       setOpenDialog(!openDialog);
    };
-   console.log('searchResults: ', searchResults);
    return (
       <>
          <div className='food-search-list'>
@@ -107,25 +109,6 @@ export const FoodSearchList = ({
                            >
                               Serving&nbsp;Size
                            </StyledTableCell>
-
-                           {/* <StyledTableCell
-                              align='right'
-                              className='desktop-table-view'
-                           >
-                              Carbs&nbsp;(g)
-                           </StyledTableCell>
-                           <StyledTableCell
-                              align='right'
-                              className='desktop-table-view'
-                           >
-                              Protein&nbsp;(g)
-                           </StyledTableCell>
-                           <StyledTableCell
-                              align='right'
-                              className='desktop-table-view'
-                           >
-                              Fat&nbsp;(g)
-                           </StyledTableCell> */}
                            <StyledTableCell align='right'>
                               Calories
                            </StyledTableCell>
@@ -150,9 +133,6 @@ export const FoodSearchList = ({
                               nutrition={searchResult.nutrition}
                               enableAddToFoodLogFeature={
                                  enableAddToFoodLogFeature
-                              }
-                              serving_size_conversion_factor={
-                                 searchResult.serving_size_conversion_factor
                               }
                            />
                         ))}
@@ -179,7 +159,6 @@ export const FoodSearchList = ({
                setAlertMessage={setAlertMessage}
                setOpenSnackbar={setOpenSnackbar}
                setAlertSeverity={setAlertSeverity}
-               currentModifier={currentModifier}
                currentBrand={currentBrand}
             />
          ) : null}

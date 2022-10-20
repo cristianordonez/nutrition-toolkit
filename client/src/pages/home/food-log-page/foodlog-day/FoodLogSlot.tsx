@@ -1,34 +1,26 @@
 import AddIcon from '@mui/icons-material/Add';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import {
    AlertColor,
    Button,
-   IconButton,
    Paper,
    Stack,
    Table,
    TableBody,
-   TableCell,
    TableContainer,
    TableHead,
    TableRow,
-   Tooltip,
    Typography,
 } from '@mui/material';
 import axios from 'axios';
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
    CustomFoodInput,
    FoodLogItem,
    NutritionSummaryFoodLog,
 } from '../../../../../../types/types';
-import { getFoodTitle } from '../../../../../../utils/getFoodTitle';
-import { NutritionTable } from '../../../../components/nutrition-table/NutritionTable';
 import { StyledTableCell } from '../../../../components/styled-table-components/StyledTableCell';
-
+import { FoodLogRow } from './FoodLogRow';
 interface Props {
    meals: FoodLogItem[];
    setOpenAlert: Dispatch<SetStateAction<boolean>>;
@@ -60,12 +52,6 @@ export const FoodLogSlot = ({
    createFoodData,
 }: Props) => {
    const navigate = useNavigate();
-   const [open, setOpen] = useState<boolean>(false);
-
-   const handleOpeningRow = (e: React.MouseEvent) => {
-      e.stopPropagation();
-      setOpen(!open);
-   };
 
    const handleDeleteRow = async (id: number, currentDay: string) => {
       try {
@@ -114,8 +100,14 @@ export const FoodLogSlot = ({
                </TableHead>
                <TableBody>
                   {meals.map((meal) => (
-                     <React.Fragment key={meal.fdc_id}>
-                        <TableRow
+                     // <React.Fragment key={meal.fdc_id}>
+                     <FoodLogRow
+                        key={meal.fdc_id}
+                        meal={meal}
+                        currentDay={currentDay}
+                        handleDeleteRow={handleDeleteRow}
+                     />
+                     /* <TableRow
                            hover={false}
                            sx={{
                               '& > *': { borderBottom: 'unset' },
@@ -170,9 +162,10 @@ export const FoodLogSlot = ({
                         <NutritionTable
                            open={open}
                            nutrition={meal.nutrition}
-                           serving_size_conversion_factor={1}
-                        />
-                     </React.Fragment>
+                           serving_size={100} //this is needed because Nutrition Table is expecting nutrition to be per 100 g or mL, but meals in food log are saved as is (not standardized to 100)
+                           showStandardizedCol={false}
+                        /> */
+                     // </React.Fragment>
                   ))}
                </TableBody>
             </Table>

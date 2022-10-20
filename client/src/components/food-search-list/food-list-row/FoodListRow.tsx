@@ -4,7 +4,7 @@ import { IconButton, TableCell, TableRow } from '@mui/material';
 import React, { useState } from 'react';
 import { FoodSearchResult } from '../../../../../types/types';
 import { getFoodTitle } from '../../../../../utils/getFoodTitle';
-import { NutritionTable } from '../../nutrition-table/NutritionTable';
+import { NutritionTable } from '../../nutrition-table';
 import './FoodListRow.scss';
 interface Props extends FoodSearchResult {
    handleOpeningAddToFoodLogDialog: (
@@ -26,23 +26,18 @@ export const FoodListRow = ({
    data_type,
    nutrition,
    custom_food_brand_owner,
-   serving_size_conversion_factor,
    handleOpeningAddToFoodLogDialog,
    enableAddToFoodLogFeature,
 }: Props) => {
    const [open, setOpen] = useState<boolean>(false);
    let brand: string = '';
-   let servingSizesArr = [100];
-   let finalModifier: string | null = '';
+   let servingSizesArr = [100]; //value for 1 is manually placed on DOM for correct order
    if (data_type === 'custom' && custom_food_brand_owner !== null) {
       brand = custom_food_brand_owner;
-      finalModifier = 'Custom input';
    } else if (data_type === 'branded_food' && brand_owner !== null) {
       brand = brand_owner;
-      finalModifier = '1 serving as per nutrition label';
    } else if (brand_owner !== null) {
       brand = brand_owner;
-      finalModifier = serving_size_unit;
    }
 
    const handleOpeningRow = (e: React.MouseEvent) => {
@@ -51,7 +46,18 @@ export const FoodListRow = ({
    };
 
    const handleOpeningModal = (e: React.MouseEvent) => {
-      if (serving_size !== 100 && serving_size !== null) {
+      if (
+         serving_size !== 100 &&
+         serving_size !== null &&
+         serving_size < 100 &&
+         serving_size > 1
+      ) {
+         servingSizesArr.unshift(serving_size);
+      } else if (
+         serving_size !== 100 &&
+         serving_size !== null &&
+         serving_size > 100
+      ) {
          servingSizesArr.push(serving_size);
       }
       if (serving_size_unit === null) {
@@ -67,10 +73,6 @@ export const FoodListRow = ({
       );
    };
 
-   console.log(
-      'serving_size_conversion_factor: ',
-      serving_size_conversion_factor
-   );
    return (
       <>
          <TableRow
@@ -98,15 +100,15 @@ export const FoodListRow = ({
 
             <TableCell align='right'>
                {Math.round(
-                  Number(nutrition.calories) *
-                     Number(serving_size_conversion_factor)
+                  (Number(nutrition.calories) / 100) * Number(serving_size)
                )}
             </TableCell>
          </TableRow>
          <NutritionTable
             open={open}
             nutrition={nutrition}
-            serving_size_conversion_factor={serving_size_conversion_factor}
+            serving_size={serving_size}
+            showStandardizedCol={true}
          />
       </>
    );

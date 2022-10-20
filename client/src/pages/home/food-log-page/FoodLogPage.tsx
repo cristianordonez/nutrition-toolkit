@@ -58,7 +58,7 @@ const FoodLogPage = ({
    );
 
    useEffect(() => {
-      handleDateChange();
+      handleDateChange(); //2. calls handledate change function
    }, [currentDay]);
 
    const handleDateChange = async () => {
@@ -74,6 +74,7 @@ const FoodLogPage = ({
             );
             setOpenAlert(true);
          }
+         console.log('dbResponse.data: ', dbResponse.data);
          setFoodLogItems(dbResponse.data.foodLogItems);
          setNutritionSummary(dbResponse.data.nutritionSummary);
          setIsSearching(false);
@@ -103,7 +104,7 @@ const FoodLogPage = ({
       if (newDate !== undefined) {
          setValue(newDate); //updates the date textfield value
          setDayIndex(newValue);
-         setCurrentDay(format(newDate, 'yyyy-MM-dd'));
+         setCurrentDay(format(newDate, 'yyyy-MM-dd')); //1. changes currentday state
       }
    };
 

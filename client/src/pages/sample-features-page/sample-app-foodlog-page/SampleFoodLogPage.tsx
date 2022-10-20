@@ -54,6 +54,7 @@ const SampleFoodLogPage = ({
       axios
          .get('/api/foodLog/sample')
          .then((response) => {
+            console.log('response in sample food log page:', response);
             setNutritionSummary(response.data.nutritionSummary[0]);
             setSampleFoodLogItems(response.data.sampleItems);
          })

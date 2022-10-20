@@ -1,4 +1,6 @@
 @use '../../index.scss' as *;
+
 .MuiCollapse-wrapperInner {
    @include flex-center();
+   min-width: 600px;
 }

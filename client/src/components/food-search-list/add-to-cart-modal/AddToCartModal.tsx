@@ -33,7 +33,6 @@ interface Props {
    handleOpeningDialog: MouseEventHandler<HTMLButtonElement>;
    id: number;
    currentDataType: string;
-   currentModifier: string | null | undefined;
    currentServingSizes: number[];
    currentServingSizeUnit: string;
    currentDescription: string;
@@ -50,7 +49,6 @@ export const AddToCartModal = ({
    id,
    currentDataType,
    currentServingSizes,
-   currentModifier,
    currentServingSizeUnit,
    currentDescription,
    currentBrand,
@@ -155,7 +153,6 @@ export const AddToCartModal = ({
                      handleSelectServingSize={handleSelectServingSize}
                      currentServingSizes={currentServingSizes}
                      currentServingSizeUnit={currentServingSizeUnit}
-                     currentModifier={currentModifier}
                   />
                   <Divider />
                   <Stack

@@ -64,7 +64,8 @@ export const AddCustomFoodDialog = ({
          ...createFoodData,
          nutrition: {
             ...createFoodData.nutrition,
-            [event.target.id]: parseFloat(event.target.value),
+            // [event.target.id]: parseFloat(event.target.value),
+            [event.target.id]: event.target.value,
          },
       }));
    };

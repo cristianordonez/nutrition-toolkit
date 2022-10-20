@@ -5,80 +5,38 @@ const createFoodLogItem = (
    foodLog: AddToFoodLogType,
    user_id: string | number
 ) => {
-   const dbQuery = `INSERT INTO user_meal (user_id, fdc_id, slot, 
-    data_type, servings, serving_size, serving_size_unit, date, description, brand_owner)
-    VALUES ($<user_id>, $<foodLog.fdc_id>, $<foodLog.slot>, $<foodLog.data_type>,
-    $<foodLog.servings>, $<foodLog.serving_size>, $<foodLog.serving_size_unit>,
-     $<foodLog.date>, $<foodLog.description>, $<foodLog.brand_owner>) 
-    RETURNING meal_id
-	`;
    return db.task(async (t: any) => {
+      const dbQuery = `INSERT INTO user_meal (user_id, fdc_id, slot, 
+		data_type, servings, serving_size, serving_size_unit, date, description, brand_owner)
+		VALUES ($<user_id>, $<foodLog.fdc_id>, $<foodLog.slot>, $<foodLog.data_type>,
+		$<foodLog.servings>, $<foodLog.serving_size>, $<foodLog.serving_size_unit>,
+		$<foodLog.date>, $<foodLog.description>, $<foodLog.brand_owner>) 
+		RETURNING meal_id`;
       const results = await t.one(dbQuery, {
          foodLog,
          user_id,
       });
       const userMealNutritionQuery = `INSERT INTO user_meal_nutrition (meal_id, total_carbohydrates, total_fat, protein, calories,
-     dietary_fiber, saturated_fat, trans_fat, sugar, polyunsaturated_fat, monounsaturated_fat,
-     cholesterol, sodium, calcium, iron, potassium, vitamin_a, vitamin_c, vitamin_d)
-     select $1, (CASE WHEN user_meal.serving_size = 100 THEN food_nutrition.total_carbohydrates * user_meal.servings
-	ELSE food_nutrition.total_carbohydrates * food.serving_size_conversion_factor * user_meal.servings
-	END) as total_carbohydrates,
-	(CASE WHEN user_meal.serving_size = 100 THEN food_nutrition.total_fat * user_meal.servings
-	ELSE food_nutrition.total_fat * food.serving_size_conversion_factor * user_meal.servings
-	END) as total_fat,
-	 (CASE WHEN user_meal.serving_size = 100 THEN food_nutrition.protein * user_meal.servings
-	ELSE food_nutrition.protein * food.serving_size_conversion_factor * user_meal.servings
-	END) as protein,
-	   (CASE WHEN user_meal.serving_size = 100 THEN food_nutrition.calories * user_meal.servings
-	ELSE food_nutrition.calories * food.serving_size_conversion_factor * user_meal.servings
-	END) as calories,
-	   (CASE WHEN user_meal.serving_size = 100 THEN food_nutrition.dietary_fiber * user_meal.servings
-	ELSE food_nutrition.dietary_fiber * food.serving_size_conversion_factor * user_meal.servings
-	END) as dietary_fiber,
-	   (CASE WHEN user_meal.serving_size = 100 THEN food_nutrition.saturated_fat * user_meal.servings
-	ELSE food_nutrition.saturated_fat * food.serving_size_conversion_factor * user_meal.servings
-	END) as saturated_fat,
-	   (CASE WHEN user_meal.serving_size = 100 THEN food_nutrition.trans_fat * user_meal.servings
-	ELSE food_nutrition.trans_fat * food.serving_size_conversion_factor * user_meal.servings
-	END) as trans_fat,
-	   (CASE WHEN user_meal.serving_size = 100 THEN food_nutrition.sugar * user_meal.servings
-	ELSE food_nutrition.sugar * food.serving_size_conversion_factor * user_meal.servings
-	END) as sugar,
-	   (CASE WHEN user_meal.serving_size = 100 THEN food_nutrition.polyunsaturated_fat * user_meal.servings
-	ELSE food_nutrition.polyunsaturated_fat * food.serving_size_conversion_factor * user_meal.servings
-	END) as polyunsaturated_fat,
-	  (CASE WHEN user_meal.serving_size = 100 THEN food_nutrition.monounsaturated_fat * user_meal.servings
-	ELSE food_nutrition.monounsaturated_fat * food.serving_size_conversion_factor * user_meal.servings
-	END) as monounsaturated_fat,
-	  (CASE WHEN user_meal.serving_size = 100 THEN food_nutrition.cholesterol * user_meal.servings
-	ELSE food_nutrition.cholesterol * food.serving_size_conversion_factor * user_meal.servings
-	END) as cholesterol,
-	  (CASE WHEN user_meal.serving_size = 100 THEN food_nutrition.sodium * user_meal.servings
-	ELSE food_nutrition.sodium * food.serving_size_conversion_factor * user_meal.servings
-	END) as sodium,
-	  (CASE WHEN user_meal.serving_size = 100 THEN food_nutrition.calcium * user_meal.servings
-	ELSE food_nutrition.calcium * food.serving_size_conversion_factor * user_meal.servings
-	END) as calcium,
-	  (CASE WHEN user_meal.serving_size = 100 THEN food_nutrition.iron * user_meal.servings
-	ELSE food_nutrition.iron * food.serving_size_conversion_factor * user_meal.servings
-	END) as iron,
-	  (CASE WHEN user_meal.serving_size = 100 THEN food_nutrition.potassium * user_meal.servings
-	ELSE food_nutrition.potassium * food.serving_size_conversion_factor * user_meal.servings
-	END) as potassium,
-	  (CASE WHEN user_meal.serving_size = 100 THEN food_nutrition.vitamin_a * user_meal.servings
-	ELSE food_nutrition.vitamin_a * food.serving_size_conversion_factor * user_meal.servings
-	END) as vitamin_a,
-	  (CASE WHEN user_meal.serving_size = 100 THEN food_nutrition.vitamin_c * user_meal.servings
-	ELSE food_nutrition.vitamin_c * food.serving_size_conversion_factor * user_meal.servings
-	END) as vitamin_c,
-	  (CASE WHEN user_meal.serving_size = 100 THEN food_nutrition.vitamin_d * user_meal.servings
-	ELSE food_nutrition.vitamin_d * food.serving_size_conversion_factor * user_meal.servings
-	END) as vitamin_d
+     dietary_fiber, saturated_fat, trans_fat, total_sugars,
+     cholesterol, sodium, calcium, iron, potassium, vitamin_d)
+     select $1, ((food_nutrition.total_carbohydrates / 100) * user_meal.serving_size * user_meal.servings) AS total_carbohydrates,
+	((food_nutrition.total_fat / 100) * user_meal.serving_size * user_meal.servings) AS total_fat,
+	((food_nutrition.protein / 100) * user_meal.serving_size * user_meal.servings) AS protein,
+	((food_nutrition.calories / 100) * user_meal.serving_size * user_meal.servings) AS calories,
+	((food_nutrition.dietary_fiber / 100) * user_meal.serving_size * user_meal.servings) AS dietary_fiber,
+	((food_nutrition.saturated_fat / 100) * user_meal.serving_size * user_meal.servings) AS saturated_fat,
+	((food_nutrition.trans_fat / 100) * user_meal.serving_size * user_meal.servings) AS trans_fat,
+	((food_nutrition.total_sugars / 100) * user_meal.serving_size * user_meal.servings) AS total_sugars,
+	((food_nutrition.cholesterol / 100) * user_meal.serving_size * user_meal.servings) AS cholesterol,
+	((food_nutrition.sodium / 100) * user_meal.serving_size * user_meal.servings) AS sodium,
+	((food_nutrition.calcium / 100) * user_meal.serving_size * user_meal.servings) AS calcium,
+	((food_nutrition.iron / 100) * user_meal.serving_size * user_meal.servings) AS iron,
+	((food_nutrition.potassium / 100) * user_meal.serving_size * user_meal.servings) AS potassium,
+	((food_nutrition.vitamin_d / 100) * user_meal.serving_size * user_meal.servings) AS vitamin_d
     FROM user_meal
     INNER JOIN food ON user_meal.fdc_id = food.fdc_id
     INNER JOIN food_nutrition ON food.fdc_id = food_nutrition.fdc_id
-    WHERE user_meal.meal_id = $1
-        `;
+    WHERE user_meal.meal_id = $1`;
 
       await t.none(userMealNutritionQuery, results.meal_id);
    });

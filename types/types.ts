@@ -35,7 +35,6 @@ type FoodSearchResult = {
    custom_food_brand_owner: string | null;
    description: string;
    fdc_id: string;
-   serving_size_conversion_factor: number;
 };
 
 type CurrentGoals = {

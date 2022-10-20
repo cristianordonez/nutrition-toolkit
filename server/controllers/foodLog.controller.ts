@@ -85,12 +85,10 @@ const createCustomItem = async (req: Request, res: Response) => {
    try {
       const body = req.body as CustomFoodInput;
       const session = req.session as unknown as Session;
-
-      const serving_size_conversion_factor = Number(body.serving_size) / 100; //used to convert to amount per serving size used from amount per 100 g
+      console.log('body in createcustomitem:', body);
       const standardized_conversion_factor = 100 / Number(body.serving_size); //used to convert the input amount to amount per 100 g
       const response = await createFood(
          body.description,
-         serving_size_conversion_factor,
          body.brand_owner,
          body.serving_size,
          body.serving_size_unit,
