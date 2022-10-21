@@ -45,10 +45,6 @@ export const FoodSearchList = ({
    const [currentId, setCurrentId] = useState<number>(0);
    const [currentDescription, setCurrentDescription] = useState<string>('');
    const [currentBrand, setCurrentBrand] = useState<string>('');
-   const [
-      currentServingSizeUnitDescription,
-      setCurrentServingSizeUnitDescription,
-   ] = useState<string | null>();
    const [currentDataType, setCurrentDataType] = useState<string>('');
    const [currentServingSizeUnit, setCurrentServingSizeUnit] =
       useState<string>('');
@@ -87,8 +83,8 @@ export const FoodSearchList = ({
                <MenuBookIcon />
                <Typography variant='body1'>
                   Click on the arrow to the left of each search result to view
-                  the nutrition facts for the item. Then click on any row to
-                  save the item to your food log.
+                  the nutrition facts for the item. Then click on the plus
+                  button to save the item to your food log.
                </Typography>
             </Stack>
             <Typography variant='h6' align='left'>
@@ -112,6 +108,7 @@ export const FoodSearchList = ({
                            <StyledTableCell align='right'>
                               Calories
                            </StyledTableCell>
+                           <StyledTableCell variant='head' />
                         </TableRow>
                      </TableHead>
                      <TableBody>

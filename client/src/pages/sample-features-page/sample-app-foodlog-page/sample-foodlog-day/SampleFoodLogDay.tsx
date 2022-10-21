@@ -39,8 +39,6 @@ export const SampleFoodLogDay = ({ sampleFoodLogItems }: Props) => {
          setShowNutrientDataForm(false);
       }, 1000);
    };
-   console.log('sampleFoodLogItems: ', sampleFoodLogItems);
-   console.log('breakfastITems:', breakfastItems);
    return (
       <>
          <div className='meal-plan-slots-container'>

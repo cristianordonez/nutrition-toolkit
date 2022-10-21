@@ -1,6 +1,6 @@
 {
    "name": "the-macro-trainer",
-   "version": "1.0.0",
+   "version": "1.2.0",
    "description": "Food Logging app to find foods with desired number of calories, carbs, protein and fat.",
    "main": "server.js",
    "scripts": {

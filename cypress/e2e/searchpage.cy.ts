@@ -9,7 +9,7 @@ describe('The Search Page', () => {
       cy.task('db:teardown');
    });
 
-   it('Allows user to search for recipes and add an item to their food log', () => {
+   it('Allows user to search for food items and add an item to their food log', () => {
       cy.findByTestId('query-text-field').type('chicken');
       cy.findAllByTestId('textfield-min-nutrient').first().type('100');
       cy.findAllByTestId('textfield-max-nutrient').first().type('1000');
@@ -21,14 +21,14 @@ describe('The Search Page', () => {
       cy.findAllByTestId('textfield-max-nutrient').last().type('25');
       cy.contains('Submit').click();
       cy.findAllByTestId('food-search-item').should('exist');
-      cy.findAllByTestId('food-search-item').first().click();
+      cy.findAllByLabelText('add to food log').first().click();
       cy.findByTestId('add-foodLog-btn').click();
       cy.contains('Item has been added to your food log!').should('be.visible');
    });
 
-   it('Allows user to use custom goals to search for items', () => {
+   it('Allows user to use simple search tab to search for items', () => {
       cy.contains('Simple').click();
-      cy.findAllByTestId('query-text-field').first().type(' salad');
+      cy.findAllByTestId('query-text-field').first().type('salad');
       cy.contains('Submit').click();
       cy.findAllByTestId('food-search-item').should('exist');
    });

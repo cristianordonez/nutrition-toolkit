@@ -193,12 +193,6 @@ const createFood = (
    VALUES ($4, $5, (SELECT fdc_id FROM getId))
    RETURNING fdc_id`;
 
-   console.log('brand_owner: ', brand_owner);
-   console.log('serving_size: ', serving_size);
-   console.log('nutrition: ', nutrition);
-   console.log('serving_size_unit: ', serving_size_unit);
-   console.log('user_id: ', user_id);
-
    return db.task(async (t: any) => {
       const fdc_id = await t.one(createFoodQuery, [
          description,

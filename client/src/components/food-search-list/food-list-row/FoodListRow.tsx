@@ -1,6 +1,7 @@
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { IconButton, TableCell, TableRow } from '@mui/material';
+import { IconButton, TableCell, TableRow, Tooltip } from '@mui/material';
 import React, { useState } from 'react';
 import { FoodSearchResult } from '../../../../../types/types';
 import { getFoodTitle } from '../../../../../utils/getFoodTitle';
@@ -77,9 +78,7 @@ export const FoodListRow = ({
       <>
          <TableRow
             data-testid='food-search-item'
-            hover={enableAddToFoodLogFeature ? true : false}
-            onClick={handleOpeningModal}
-            sx={{ '& > *': { borderBottom: 'unset' }, cursor: 'pointer' }}
+            sx={{ '& > *': { borderBottom: 'unset' } }}
          >
             <TableCell>
                <IconButton
@@ -103,6 +102,25 @@ export const FoodListRow = ({
                   (Number(nutrition.calories) / 100) * Number(serving_size)
                )}
             </TableCell>
+            {enableAddToFoodLogFeature ? (
+               <TableCell align='right'>
+                  <Tooltip
+                     enterDelay={600}
+                     enterNextDelay={1200}
+                     title={`Delete item`}
+                  >
+                     <IconButton
+                        aria-label='add to food log'
+                        size='small'
+                        onClick={(e) => handleOpeningModal(e)}
+                     >
+                        <AddCircleIcon color='success' />
+                     </IconButton>
+                  </Tooltip>
+               </TableCell>
+            ) : (
+               <TableCell></TableCell>
+            )}
          </TableRow>
          <NutritionTable
             open={open}

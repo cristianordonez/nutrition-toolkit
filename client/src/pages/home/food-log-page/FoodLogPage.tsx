@@ -74,7 +74,6 @@ const FoodLogPage = ({
             );
             setOpenAlert(true);
          }
-         console.log('dbResponse.data: ', dbResponse.data);
          setFoodLogItems(dbResponse.data.foodLogItems);
          setNutritionSummary(dbResponse.data.nutritionSummary);
          setIsSearching(false);
