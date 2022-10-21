@@ -96,12 +96,14 @@ const LandingPage = () => {
                         Log in
                      </Button>
                      <Button
-                        onClick={() => handleNavigatingToFeatures('recipes')}
+                        onClick={() =>
+                           navigate('/macro-trainer-features/search')
+                        }
                         variant='contained'
                         size='small'
                         color='secondary'
                      >
-                        Browse Recipes
+                        Browse Foods
                      </Button>
                   </div>
                </Stack>
