@@ -6,13 +6,13 @@
    "scripts": {
       "lint": "eslint . --ext .ts,.tsx --fix",
       "test": "concurrently -n 'jest,Cypress' -c 'bgGreen.bold,bgBlue.bold' \"npm:jest\" \"npm:cypress-CLI\" ",
-      "cypress-CLI": "npx cypress run --record --key 8fe96491-f3d2-4a36-93eb-6cd5688f93e0 ",
       "jest": "jest",
+      "cypress-CLI": "npx cypress run --record --key 8fe96491-f3d2-4a36-93eb-6cd5688f93e0 ",
       "cypress": "cypress open",
-      "dev": "concurrently -n 'webpack,server' -c 'bgBlue.bold,bgGreen.bold' \"npx webpack serve --config webpack.dev.js\" \"nodemon server/server.js\"",
-      "react-dev": "webpack serve --config webpack.dev.js",
-      "build": "webpack --config webpack.prod.js",
-      "start": "nodemon server/server.js"
+      "dev": "concurrently -n 'server, webpack' -c 'bgGreen.bold,bgBlue.bold' \"npm:start\" \"npx wait-on http://localhost:8080 && npm run webpack-dev\" ",
+      "webpack-dev": "webpack serve --config webpack.dev.js",
+      "start": "nodemon server/server.js",
+      "build": "webpack --config webpack.prod.js"
    },
    "repository": {
       "type": "git",
@@ -59,6 +59,7 @@
       "react-icons": "^4.4.0",
       "react-router-dom": "^6.3.0",
       "serve-favicon": "^2.5.0",
+      "wait-on": "^6.0.1",
       "webpack-bundle-analyzer": "^4.5.0",
       "webpack-merge": "^5.8.0"
    },
