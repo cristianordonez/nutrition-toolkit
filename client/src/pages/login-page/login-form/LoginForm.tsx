@@ -12,12 +12,12 @@ import './LoginForm.scss';
 interface Props {
    showSignup: boolean;
    setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
-   handleRedirectToSignup: any;
+   handleRedirectToSignup: () => void;
    showTextFieldError: boolean;
    setShowTextFieldError: Dispatch<SetStateAction<boolean>>;
    errorMessage: string;
    setErrorMessage: Dispatch<SetStateAction<string>>;
-   handleErrorAlert: any;
+   handleErrorAlert: () => void;
 }
 
 export const LoginForm = ({
@@ -31,7 +31,9 @@ export const LoginForm = ({
    handleErrorAlert,
 }: Props) => {
    const navigate = useNavigate();
-   const { setIsLoggedIn } = useAuth(); //used to check if data is still being retrieved from database
+   const { setIsLoggedIn } = useAuth() as unknown as {
+      setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
+   }; //used to check if data is still being retrieved from database
 
    const [loginValues, setLoginValues] = useState({
       username: '',
@@ -54,7 +56,7 @@ export const LoginForm = ({
    const handleLogin = async (event: React.SyntheticEvent) => {
       event.preventDefault();
       try {
-         let response = await axios.post(`/api/login`, loginValues, {
+         const response = await axios.post(`/api/login`, loginValues, {
             withCredentials: true,
          });
          if (response.status === 201) {
@@ -62,7 +64,7 @@ export const LoginForm = ({
             setShowTextFieldError(false);
             navigate(`/home`, { replace: true });
          }
-      } catch (err: any) {
+      } catch (err) {
          setAlertSeverity('error');
          setErrorMessage('No matching username and password found.'); //showTextFieldError message used in the snackbar
          setShowTextFieldError(true); //used to show showTextFieldError helper text in text field

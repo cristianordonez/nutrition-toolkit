@@ -1,9 +1,13 @@
-require('dotenv').config();
+import * as dotenv from 'dotenv';
+dotenv.config();
 
-let database =
+const database =
    process.env.NODE_ENV === 'test' ? 'test_database' : 'the_macro_trainer';
 
-const pgp = require('pg-promise')();
+// const pgp = require('pg-promise')();
+
+import pgPromise from 'pg-promise';
+const pgp = pgPromise({});
 
 const cn = {
    user: process.env.DATABASE_USER,

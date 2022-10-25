@@ -1,8 +1,8 @@
-import nodemailer from 'nodemailer';
-const { google } = require('googleapis');
+import nodemailer, { Transport, TransportOptions } from 'nodemailer';
+// const { google } = require('googleapis');
+import { google } from 'googleapis';
 const OAuth2 = google.auth.OAuth2;
-const { OAuth2Client } = require('google-auth-library');
-import SMTPTransport from 'nodemailer';
+// const { OAuth2Client } = require('google-auth-library');
 
 //function that automatically generates refresh tokens from google developer console
 // using access token and the google playground
@@ -16,12 +16,14 @@ const createTransporter = async () => {
       refresh_token: process.env.GMAIL_REFRESH_TOKEN,
    });
    const accessToken = await new Promise((resolve, reject) => {
-      oauth2Client.getAccessToken((err: any, token: any) => {
-         if (err) {
-            reject();
+      oauth2Client.getAccessToken(
+         (err: unknown, token: string | null | undefined) => {
+            if (err) {
+               reject();
+            }
+            resolve(token);
          }
-         resolve(token);
-      });
+      );
    });
    //set up nodemailer transport using OAuth2 to automatically send emails
    const transporter = nodemailer.createTransport({
@@ -30,25 +32,24 @@ const createTransporter = async () => {
          type: 'OAuth2',
          user: process.env.EMAIL_USERNAME,
          accessToken,
-         // pass: process.env.EMAIL_PASSWORD,
          clientId: process.env.GMAIL_OAUTH_CLIENT_ID,
          clientSecret: process.env.GMAIL_OAUTH_CLIENT_SECRET,
          refreshToken: process.env.GMAIL_REFRESH_TOKEN,
       },
-   } as any);
+   } as TransportOptions | Transport<unknown>);
    return transporter;
 };
 
 export const sendEmail = async (email: string, link: string) => {
    try {
-      let mailOptions = {
+      const mailOptions = {
          from: process.env.EMAIL_USERNAME,
          to: email, //receiving address
          subject: 'Account Recovery',
          text: `Hi, \n You requested to reset your password. \n Please click this link to reset your password: \n${link}`,
       };
-      let emailTransporter = await createTransporter();
-      let response = await emailTransporter.sendMail(mailOptions);
+      const emailTransporter = await createTransporter();
+      const response = await emailTransporter.sendMail(mailOptions);
       return response;
    } catch (err) {
       return err;

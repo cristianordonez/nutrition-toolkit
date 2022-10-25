@@ -10,7 +10,7 @@ import { RadioItem } from './RadioItem';
 
 interface Props {
    allergy: string;
-   handleRadioClick: MouseEventHandler<HTMLInputElement>;
+   handleRadioClick: MouseEventHandler<HTMLButtonElement>;
 }
 
 const allergies = [
@@ -37,7 +37,7 @@ export const RadioAllergyGroup = ({ allergy, handleRadioClick }: Props) => {
                   }}
                   value={allergy}
                >
-                  {allergies.map((allergen, index) => (
+                  {allergies.map((allergen) => (
                      <RadioItem
                         handleRadioClick={handleRadioClick}
                         key={allergen}

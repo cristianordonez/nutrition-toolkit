@@ -5,6 +5,7 @@ const createFoodLogItem = (
    foodLog: AddToFoodLogType,
    user_id: string | number
 ) => {
+   //eslint-disable-next-line
    return db.task(async (t: any) => {
       const dbQuery = `INSERT INTO user_meal (user_id, fdc_id, slot, 
 		data_type, servings, serving_size, serving_size_unit, date, description, brand_owner)
@@ -12,6 +13,7 @@ const createFoodLogItem = (
 		$<foodLog.servings>, $<foodLog.serving_size>, $<foodLog.serving_size_unit>,
 		$<foodLog.date>, $<foodLog.description>, $<foodLog.brand_owner>) 
 		RETURNING meal_id`;
+      //eslint-disable-next-line
       const results = await t.one(dbQuery, {
          foodLog,
          user_id,
@@ -37,7 +39,7 @@ const createFoodLogItem = (
     INNER JOIN food ON user_meal.fdc_id = food.fdc_id
     INNER JOIN food_nutrition ON food.fdc_id = food_nutrition.fdc_id
     WHERE user_meal.meal_id = $1`;
-
+      //eslint-disable-next-line
       await t.none(userMealNutritionQuery, results.meal_id);
    });
 };

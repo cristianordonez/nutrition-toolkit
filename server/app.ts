@@ -1,8 +1,9 @@
-require('dotenv').config();
 import bcrypt from 'bcryptjs';
 import bodyParser from 'body-parser';
 import compression from 'compression';
+import ConnectPg from 'connect-pg-simple';
 import cors from 'cors';
+import * as dotenv from 'dotenv';
 import express, { Request, Response } from 'express';
 import session from 'express-session';
 import passport from 'passport';
@@ -16,8 +17,12 @@ import { router as foodRoute } from './routes/food.route';
 import { router as foodLogRoute } from './routes/foodLog.route';
 import { router as goalsRoute } from './routes/goals.route';
 
+const pgSession = ConnectPg(session);
+dotenv.config();
+//eslint-disable-next-line
 const GoogleStrategy = require('passport-google-oidc');
-const pgSession = require('connect-pg-simple')(session);
+const envVariables = process.env as unknown as { SESSION_SECRET: string };
+
 const app = express();
 
 app.use(cors());
@@ -44,7 +49,7 @@ const pgStoreConfig = {
 app.use(
    session({
       store: new pgSession(pgStoreConfig),
-      secret: `${process.env.SESSION_SECRET}`,
+      secret: `${envVariables.SESSION_SECRET}`,
       saveUninitialized: false,
       resave: false,
       cookie: {
@@ -90,13 +95,12 @@ passport.use(
                });
             }
          })
-         .catch(function (err: any) {
+         .catch(function (err: unknown) {
             console.log(err);
             return cb(err);
          });
    })
 );
-
 passport.use(
    new GoogleStrategy(
       {
@@ -105,23 +109,35 @@ passport.use(
          callbackURL: '/api/oauth2/redirect/google',
          scope: ['profile', 'email'], //the data we are asking for from google
       },
-      (issuer: any, profile: any, done: any) => {
+      (
+         issuer: string,
+         profile: { displayName: string; emails: [{ value: string }] },
+         done: (
+            err?: string | null,
+            user?: Express.User,
+            info?: unknown
+         ) => void
+      ) => {
          getGoogleUser(profile.emails[0].value)
             .then((response: PassportGoogleUser | null) => {
                //if user exists, redirect
                if (response !== null && response.user_id) {
                   done(null, response.user_id);
                } else {
-                  let user = {} as PassportGoogleUser;
+                  const user = {} as PassportGoogleUser;
                   user.username = profile.displayName;
                   user.email = profile.emails[0].value;
-                  createGoogleUser(user).then((userId: number) => {
-                     user.user_id = userId;
-                     done(null, user.user_id);
-                  });
+                  createGoogleUser(user)
+                     .then((userId: number) => {
+                        user.user_id = userId;
+                        done(null, user.user_id);
+                     })
+                     .catch((err) => {
+                        done(err);
+                     });
                }
             })
-            .catch((err: any) => {
+            .catch((err) => {
                done(err);
             });
       }
@@ -129,7 +145,7 @@ passport.use(
 );
 
 //determines which data of user object should be stored in session to be accessed below in the deserializeUser function
-passport.serializeUser((userId: any, done) => {
+passport.serializeUser((userId: unknown, done) => {
    done(null, userId);
 });
 
@@ -137,10 +153,10 @@ passport.deserializeUser((userId: string, cb) => {
    db.any(`SELECT user_id, username, email FROM users WHERE user_id=$1`, [
       Number(userId),
    ])
-      .then(function (results: any) {
+      .then(function (results: string[]) {
          cb(null, results[0]);
       })
-      .catch(function (err: any) {
+      .catch(function (err: unknown) {
          return cb(err);
       });
 });

@@ -3,7 +3,7 @@ import React from 'react';
 import { useAuth } from '../../context/authContext';
 
 export const MainTitle = () => {
-   const { isLoading, isLoggedIn, username, handleLogout } = useAuth(); //used to check if data is still being retrieved from database
+   const { handleLogout } = useAuth(); //used to check if data is still being retrieved from database
 
    return (
       <Typography

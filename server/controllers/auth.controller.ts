@@ -10,8 +10,9 @@ const saltRounds = 10;
 
 const createAccount = async (req: Request, res: Response) => {
    try {
-      let checkForExistingAccount: null | { hash: string } =
-         await userModel.getHash(req.body.email);
+      const body = req.body as { email: string };
+      const checkForExistingAccount: null | { hash: string } =
+         await userModel.getHash(body.email);
       if (
          checkForExistingAccount !== null // if either email or username already exists in db, cancel the request
       ) {
@@ -19,10 +20,12 @@ const createAccount = async (req: Request, res: Response) => {
             'An account with your email or username already exists.'
          );
       } else {
-         let user = req.body as UserType;
+         const user = req.body as UserType;
          const hash: string = await bcrypt.hash(user.password, saltRounds);
          user.password = hash;
-         const dbResponse = await userModel.createUser(user);
+         const dbResponse = (await userModel.createUser(user)) as unknown as {
+            user_id: string;
+         };
          const session = req.session as unknown as Session;
          session.user_id = dbResponse.user_id; //save user_id to session so that it can be retrieved with next request when getting metrics
          res.status(201).send('You have successfully created an account!');
@@ -45,19 +48,20 @@ const checkAuthentication = async (req: Request, res: Response) => {
 
 const forgotPassword = async (req: Request, res: Response) => {
    try {
-      let user = (await userModel.getGoogleUser(
-         req.body.email
+      const body = req.body as { email: string };
+      const user = (await userModel.getGoogleUser(
+         body.email
       )) as PassportGoogleUser;
       if (!user) {
          res.status(403).send(
             'No account registered to that email exists. Would you like to create an account instead?'
          );
       } else {
-         let currentToken = await tokensModel.findOne(user.user_id);
+         const currentToken = await tokensModel.findOne(user.user_id);
          if (!currentToken) {
             await tokensModel.deleteOne(currentToken.token);
          }
-         let resetToken = crypto.randomBytes(32).toString('hex');
+         const resetToken = crypto.randomBytes(32).toString('hex');
 
          const hash = await bcrypt.hash(resetToken, Number(saltRounds));
 
@@ -66,8 +70,9 @@ const forgotPassword = async (req: Request, res: Response) => {
             token: hash,
             createdAt: format(new Date(Date.now()), 'MM/dd/yyyy'),
          });
-         //send email to user using sendEmail file that uses token to verify user, and sends to user w
-         const link = `${process.env.CLIENT_URL}/passwordReset?token=${resetToken}&id=${user.user_id}`;
+         //send email to user using sendEmail file that uses token to verify user, and sends to user
+         const envVariables = process.env as unknown as { CLIENT_URL: string };
+         const link = `${envVariables.CLIENT_URL}/passwordReset?token=${resetToken}&id=${user.user_id}`;
          await sendEmail(user.email, link);
          res.status(200).send(
             'Your account recovery link has been sent to your email.'
@@ -86,22 +91,25 @@ type ResetPasswordBody = {
 };
 
 const resetPassword = async (req: Request, res: Response) => {
-   let body: ResetPasswordBody = req.body;
+   const body = req.body as unknown as ResetPasswordBody;
    try {
-      let resetToken = await tokensModel.findOne(body.userId);
+      const resetToken = (await tokensModel.findOne(body.userId)) as unknown as
+         | null
+         | [{ token: string }];
       if (!resetToken) {
          res.status(403).send('Invalid or expired password reset token');
-      }
-      const isValidToken = await bcrypt.compare(
-         body.token,
-         resetToken[0].token
-      );
-      if (!isValidToken) {
-         res.status(403).send('Invalid or expired password reset token');
       } else {
-         const hash = await bcrypt.hash(body.password, Number(saltRounds));
-         await userModel.updatePassword(body.userId, hash);
-         res.status(200).send('Your password has been updated!');
+         const isValidToken = await bcrypt.compare(
+            body.token,
+            resetToken[0].token
+         );
+         if (!isValidToken) {
+            res.status(403).send('Invalid or expired password reset token');
+         } else {
+            const hash = await bcrypt.hash(body.password, Number(saltRounds));
+            await userModel.updatePassword(body.userId, hash);
+            res.status(200).send('Your password has been updated!');
+         }
       }
    } catch (err) {
       res.status(403).send('Unable to change password');

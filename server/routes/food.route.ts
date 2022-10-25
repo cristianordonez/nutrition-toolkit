@@ -1,4 +1,4 @@
-import { Request, Response, Router } from 'express';
+import { Request, RequestHandler, Response, Router } from 'express';
 import {
    getFoodItemsAdvanced,
    getFoodItemsAdvancedByBrand,
@@ -9,19 +9,19 @@ import {
 const router = Router();
 
 router.get('/', (req: Request, res: Response) => {
-   getFoodItemsAdvanced(req, res);
+   getFoodItemsAdvanced(req, res) as unknown as RequestHandler;
 });
 
 router.get('/all', (req: Request, res: Response) => {
-   getFoodItemsSimple(req, res);
+   getFoodItemsSimple(req, res) as unknown as RequestHandler;
 });
 
 router.get('/brand', (req: Request, res: Response) => {
-   getFoodItemsAdvancedByBrand(req, res);
+   getFoodItemsAdvancedByBrand(req, res) as unknown as RequestHandler;
 });
 
 router.get('/sample', (req: Request, res: Response) => {
-   getSampleFoodItems(req, res);
+   getSampleFoodItems(req, res) as unknown as RequestHandler;
 });
 
 export { router };

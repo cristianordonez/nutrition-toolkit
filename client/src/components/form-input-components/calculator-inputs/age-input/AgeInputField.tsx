@@ -1,9 +1,9 @@
+import { Grid, Input, Slider, Typography } from '@mui/material';
 import React, { Dispatch, SetStateAction } from 'react';
-import { Typography, Grid, Input, Slider } from '@mui/material';
 
 interface Props {
-   age: string | number | (string | number)[];
-   setAge: Dispatch<SetStateAction<string | number | (string | number)[]>>;
+   age: number | string;
+   setAge: Dispatch<SetStateAction<number | string>>;
 }
 
 export const AgeInputField = ({ age, setAge }: Props) => {
@@ -11,7 +11,8 @@ export const AgeInputField = ({ age, setAge }: Props) => {
       event: Event,
       newValue: number | number[]
    ) => {
-      setAge(newValue);
+      const currentAge = Array.isArray(newValue) ? newValue[0] : newValue;
+      setAge(currentAge);
    };
    const handleAgeInputChange = (
       event: React.ChangeEvent<HTMLInputElement>

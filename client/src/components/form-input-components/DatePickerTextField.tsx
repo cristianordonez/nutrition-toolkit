@@ -17,7 +17,7 @@ export const DatePickerTextField = ({ setData, data }: Props) => {
    const [value, setValue] = React.useState<Date | null>(startOfToday());
 
    const handleChange = (newValue: Date | null) => {
-      let inputDate = newValue as string | number | Date;
+      const inputDate = newValue as string | number | Date;
       setValue(newValue);
       // let currentDate = zonedTimeToUtc(inputDate, 'UTC'); //need to convert local time to UTC time to prevent bugs
       const result = format(inputDate, 'yyy-MM-dd') as unknown as Date;

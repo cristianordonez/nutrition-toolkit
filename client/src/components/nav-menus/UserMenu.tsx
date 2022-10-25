@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 export const UserMenu = () => {
    const navigate = useNavigate();
    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>();
-   const { isLoading, isLoggedIn, handleLogout } = useAuth(); //used to check if data is still being retrieved from database
+   const { handleLogout } = useAuth(); //used to check if data is still being retrieved from database
 
    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
       setAnchorElUser(event.currentTarget);
@@ -25,7 +25,6 @@ export const UserMenu = () => {
       setAnchorElUser(null);
    };
    const handleUserProfileClick = () => {
-      // setAnchorElUser(null);
       navigate('/home/settings');
    };
    return (

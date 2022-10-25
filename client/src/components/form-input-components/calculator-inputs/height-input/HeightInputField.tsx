@@ -1,17 +1,18 @@
 import React, { Dispatch, SetStateAction } from 'react';
 
-import { Typography, Grid, Input, Slider } from '@mui/material';
+import { Grid, Input, Slider, Typography } from '@mui/material';
 
 interface Props {
-   height: string | number | (string | number)[];
-   setHeight: Dispatch<SetStateAction<string | number | (string | number)[]>>;
+   height: string | number;
+   setHeight: Dispatch<SetStateAction<string | number>>;
 }
 export const HeightInputField = ({ height, setHeight }: Props) => {
    const handleHeightSliderChange = (
       event: Event,
       newValue: number | number[]
    ) => {
-      setHeight(newValue);
+      const currentHeight = Array.isArray(newValue) ? newValue[0] : newValue;
+      setHeight(currentHeight);
    };
    const handleHeightInputChange = (
       event: React.ChangeEvent<HTMLInputElement>

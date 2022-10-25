@@ -1,6 +1,5 @@
 import ScreenSearchDesktopIcon from '@mui/icons-material/ScreenSearchDesktop';
 import { AlertColor, Stack, Tab, Tabs, Typography } from '@mui/material';
-import { SelectChangeEvent } from '@mui/material/Select';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import {
    CurrentGoals,
@@ -44,11 +43,7 @@ export const SearchForm = ({
       setValues({ ...values, [event.target.id]: event.target.value });
    };
 
-   const handleTypeSelect = (event: SelectChangeEvent) => {
-      setValues({ ...values, category: event.target.value });
-   };
-
-   const handleRadioClick = (event: React.MouseEvent<HTMLInputElement>) => {
+   const handleRadioClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       if ((event.target as HTMLInputElement).value === values.allergy) {
          setValues({
             ...values,
@@ -92,7 +87,6 @@ export const SearchForm = ({
                values={values}
                handleSubmit={handleSubmit}
                handleInputChange={handleInputChange}
-               handleTypeSelect={handleTypeSelect}
                goals={goals}
                handleRadioClick={handleRadioClick}
             />

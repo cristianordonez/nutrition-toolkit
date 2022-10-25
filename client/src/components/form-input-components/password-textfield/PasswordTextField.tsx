@@ -1,12 +1,12 @@
-import React from 'react';
 import { TextField } from '@mui/material';
+import React from 'react';
 
 interface Props {
    showTextFieldError: boolean;
    errorMessage: string;
    showSignup: boolean;
-   handleCreateAccountChange?(event: React.SyntheticEvent): any;
-   handleLoginChange?(event: React.SyntheticEvent): any;
+   handleCreateAccountChange?(event: React.SyntheticEvent): void;
+   handleLoginChange?(event: React.SyntheticEvent): void;
 }
 
 export const PasswordTextField = ({

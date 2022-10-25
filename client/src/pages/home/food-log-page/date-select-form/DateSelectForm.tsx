@@ -11,8 +11,8 @@ interface Props {
    currentDay: string;
    setCurrentDay: Dispatch<SetStateAction<string>>;
    setDayIndex: Dispatch<SetStateAction<number>>;
-   value: Date | string;
-   setValue: Dispatch<SetStateAction<Date | string>>;
+   value: Date | string | number;
+   setValue: Dispatch<SetStateAction<Date | string | number>>;
 }
 
 export const DateSelectForm = ({
@@ -22,6 +22,7 @@ export const DateSelectForm = ({
    value,
    setValue,
 }: Props) => {
+   //eslint-disable-next-line
    const handleChange = async (newValue: any) => {
       setDayIndex(getDay(newValue));
       setValue(newValue); //update the state for date text field
@@ -37,7 +38,6 @@ export const DateSelectForm = ({
          }}
       >
          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            {/* mobile */}
             <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
                <MobileDatePicker
                   label='Current Date'
@@ -49,7 +49,6 @@ export const DateSelectForm = ({
                   )}
                />
             </Box>
-            {/* desktop */}
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                <DesktopDatePicker
                   label='Current Date'

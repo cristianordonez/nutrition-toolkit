@@ -20,19 +20,19 @@ export const GoalCardItemCardWithInput = ({
    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       if (setGoals !== undefined) {
          if (event.target.id === 'Carbohydrates') {
-            let totalCarbs = parseInt(event.target.value);
+            const totalCarbs = parseInt(event.target.value);
             setGoals({
                ...goals,
                total_carbohydrates: totalCarbs,
             });
          } else if (event.target.id == 'Protein') {
-            let totalProtein = parseInt(event.target.value);
+            const totalProtein = parseInt(event.target.value);
             setGoals({
                ...goals,
                total_protein: totalProtein,
             });
          } else if (event.target.id === 'Fat') {
-            let totalFat = parseInt(event.target.value);
+            const totalFat = parseInt(event.target.value);
             setGoals({
                ...goals,
                total_fat: totalFat,

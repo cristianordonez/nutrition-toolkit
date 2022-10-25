@@ -1,8 +1,10 @@
-const { QueryFile } = require('pg-promise');
-const { join: joinPath } = require('path');
+import { QueryFile } from 'pg-promise';
+// const { QueryFile } = require('pg-promise');
+// const { join: joinPath } = require('path');
+import * as path from 'path';
 
-function sql(file: any) {
-   const fullPath = joinPath(__dirname, file); // generating full path;
+function sql(file: string) {
+   const fullPath = path.join(__dirname, file); // generating full path;
    return new QueryFile(fullPath, { minify: true });
 }
 

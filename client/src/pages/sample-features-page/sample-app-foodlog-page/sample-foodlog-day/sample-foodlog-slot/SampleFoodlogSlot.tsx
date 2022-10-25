@@ -20,24 +20,13 @@ interface Props {
    key: number;
    slotName: string;
    meals: FoodLogItem[];
-   handleOpeningDialog: () => void;
-   slot: 1 | 2 | 3 | 4;
 }
 
-export const SampleFoodLogSlot = ({
-   slotName,
-   meals,
-   handleOpeningDialog,
-   slot,
-}: Props) => {
+export const SampleFoodLogSlot = ({ slotName, meals }: Props) => {
    const [open, setOpen] = useState<boolean>(false);
    const handleOpeningRow = (e: React.MouseEvent) => {
       e.stopPropagation();
       setOpen(!open);
-   };
-
-   const handleDialogChild = (e: React.MouseEvent) => {
-      handleOpeningDialog();
    };
 
    return (

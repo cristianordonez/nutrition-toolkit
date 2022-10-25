@@ -1,8 +1,8 @@
-import React from 'react';
 import { TextField } from '@mui/material';
+import React from 'react';
 
 interface Props {
-   handleCreateAccountChange(event: React.SyntheticEvent): any;
+   handleCreateAccountChange(event: React.SyntheticEvent): void;
 }
 
 export const EmailTextField = ({ handleCreateAccountChange }: Props) => {

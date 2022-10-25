@@ -16,16 +16,16 @@ const UserProfilePage = () => {
    const handleSubmitUpdatedGoals = async (event: React.FormEvent) => {
       event.preventDefault();
       try {
-         let totalCalories = Math.floor(
+         const totalCalories = Math.floor(
             goals.total_carbohydrates * 4 +
                goals.total_protein * 4 +
                goals.total_fat * 9
          );
-         let currentGoals = {
+         const currentGoals = {
             ...goals,
             total_calories: totalCalories,
          };
-         let updatedGoals = await axios.put('/api/goals', currentGoals);
+         const updatedGoals = await axios.put('/api/goals', currentGoals);
          if (updatedGoals.status === 201) {
             setGoals(updatedGoals.data);
             setAlertMessage('Your Macronutrient goals have been updated!');

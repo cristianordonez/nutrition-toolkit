@@ -10,7 +10,7 @@ export const getFoodTitle = (
       brand_owner !== '' &&
       brand_owner !== undefined
    ) {
-      let brandNameArr = brand_owner.split(' ');
+      const brandNameArr = brand_owner.split(' ');
       for (let i = 0; i < brandNameArr.length; i++) {
          if (brandNameArr[i] !== '') {
             brandNameArr[i] =

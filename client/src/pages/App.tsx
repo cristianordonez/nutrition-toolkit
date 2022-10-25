@@ -18,13 +18,6 @@ const MacroCalculatorPage = lazy(
       )
 );
 
-const FoodLogPage = lazy(
-   () =>
-      import(
-         /* webpackChunkName: "FoodLogPage" */ './home/food-log-page/FoodLogPage'
-      )
-);
-
 const SearchPage = lazy(
    () =>
       import(
@@ -78,18 +71,12 @@ const SampleCalculatorPage = lazy(
       )
 );
 
-const SampleFoodLogPage = lazy(
-   () =>
-      import(
-         /* webpackChunkName: "SampleFoodLogPage" */ './sample-features-page/sample-app-foodlog-page/SampleFoodLogPage'
-      )
-);
-
 const NoPageFound = lazy(
    () => import(/* webpackChunkName: "NoPageFound" */ './404-page/404')
 );
 
 export const ColorModeContext = React.createContext({
+   //eslint-disable-next-line
    toggleColorMode: () => {},
 });
 

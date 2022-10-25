@@ -1,9 +1,9 @@
-import React from 'react';
 import { TextField } from '@mui/material';
+import React from 'react';
 
 interface Props {
    showTextFieldError: boolean;
-   handleCreateAccountChange(event: React.SyntheticEvent): any;
+   handleCreateAccountChange(event: React.SyntheticEvent): void;
    errorMessage: string;
 }
 

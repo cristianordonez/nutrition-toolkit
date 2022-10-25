@@ -1,10 +1,10 @@
-import React from 'react';
 import { Box } from '@mui/material';
-import LOGO from '../../img/logo.svg';
+import React from 'react';
 import { useAuth } from '../../context/authContext';
+import LOGO from '../../img/logo.svg';
 
 export const LogoIcon = () => {
-   const { isLoading, isLoggedIn, username, handleLogout } = useAuth(); //used to check if data is still being retrieved from database
+   const { handleLogout } = useAuth(); //used to check if data is still being retrieved from database
 
    return (
       <Box

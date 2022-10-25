@@ -76,7 +76,7 @@ export const SignupForm = ({
             );
             setOpenErrorAlert(true);
             setShowNextPage(true);
-         } catch (err: any) {
+         } catch (err: unknown) {
             console.log('err:', err);
             setAlertSeverity('error');
             setErrorMessage(

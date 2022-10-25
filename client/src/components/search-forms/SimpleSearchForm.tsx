@@ -7,7 +7,7 @@ import { QueryTextField } from '../form-input-components/QueryTextField';
 interface Props {
    values: Query;
    handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-   setValues: Dispatch<SetStateAction<any>>;
+   setValues: Dispatch<SetStateAction<Query>>;
    setAlertMessage: Dispatch<SetStateAction<string>>;
    setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    setIsSearching: Dispatch<SetStateAction<boolean>>;
@@ -32,10 +32,10 @@ export const SimpleSearchForm = ({
    const handleSuggestedSubmit = async (event: React.SyntheticEvent) => {
       try {
          event.preventDefault();
-         let url = '/api/food/all';
+         const url = '/api/food/all';
          setIsSearching(true);
          setSendAdvancedRequest(false);
-         let newValues = { ...values, offset: 0 }; //declare new values so that there are no async bugs, and reset offset to 0 in case user changed it
+         const newValues = { ...values, offset: 0 }; //declare new values so that there are no async bugs, and reset offset to 0 in case user changed it
          setValues(newValues);
          const foodItems = await axios.get(url, {
             params: newValues,

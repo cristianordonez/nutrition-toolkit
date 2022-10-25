@@ -24,7 +24,7 @@ interface Props {
    setShowSignup: Dispatch<SetStateAction<boolean>>;
    setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    page?: string;
-   showNextPage?: boolean | any;
+   showNextPage?: boolean;
    setGoals?: Dispatch<SetStateAction<CurrentGoals>> | undefined;
 }
 
@@ -43,9 +43,9 @@ export const MacroCalculatorContainer = ({
    const [goal, setGoal] = React.useState<
       'weight_loss' | 'maintain' | 'gain_muscle'
    >('weight_loss');
-   const [age, setAge] = React.useState<any>(18);
-   const [height, setHeight] = React.useState<any>(60);
-   const [weight, setWeight] = React.useState<any>(200);
+   const [age, setAge] = React.useState<number | string>(18);
+   const [height, setHeight] = React.useState<number | string>(60);
+   const [weight, setWeight] = React.useState<number | string>(200);
 
    const handleGenderChange = (
       event: React.MouseEvent<HTMLElement>,
@@ -81,7 +81,7 @@ export const MacroCalculatorContainer = ({
          goal,
       });
       try {
-         const response = await axios.post(`/api/goals`, currentGoals);
+         await axios.post(`/api/goals`, currentGoals);
          if (page === 'macrocalculator' && setGoals !== undefined) {
             setGoals(currentGoals);
             setErrorMessage('You have updated your macronutrient needs.');
@@ -99,6 +99,7 @@ export const MacroCalculatorContainer = ({
       }
    };
 
+   const showConfirmDialog = showNextPage !== undefined ? showNextPage : false;
    return (
       <div className='macro-calculator-container'>
          <Paper
@@ -162,7 +163,7 @@ export const MacroCalculatorContainer = ({
                </Button>
             )}
             {page !== undefined && page === 'macrocalculator' ? (
-               <Dialog open={showNextPage}>
+               <Dialog open={showConfirmDialog}>
                   <DialogTitle>
                      Are you sure you want to update your currentGoals? This
                      will overwrite any of your current settings.

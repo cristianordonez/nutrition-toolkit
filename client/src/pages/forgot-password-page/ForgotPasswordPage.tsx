@@ -17,7 +17,7 @@ const ForgotPasswordPage = () => {
    };
 
    const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
-      let currentEmail = event.target.value.toLowerCase();
+      const currentEmail = event.target.value.toLowerCase();
       setEmail(currentEmail);
    };
 
@@ -25,7 +25,9 @@ const ForgotPasswordPage = () => {
       event.preventDefault();
 
       try {
-         let axiosResponse = await axios.post('/api/forgotPassword', { email });
+         const axiosResponse = await axios.post('/api/forgotPassword', {
+            email,
+         });
          setEmail('');
          setAlertSeverity('success');
          setAlertMessage(axiosResponse.data);
@@ -34,10 +36,12 @@ const ForgotPasswordPage = () => {
             state: { sentRecoveryEmail: true },
             replace: true,
          });
-      } catch (err: any) {
+      } catch (err: unknown) {
          console.log('err: ', err);
          setAlertSeverity('error');
-         setAlertMessage(err.response.data);
+         setAlertMessage(
+            'No account with that email exists. Did you mean to log in?'
+         );
          setOpenAlert(true);
       }
    };

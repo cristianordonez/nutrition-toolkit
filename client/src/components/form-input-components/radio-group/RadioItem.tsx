@@ -1,9 +1,9 @@
 import { FormControlLabel, Radio } from '@mui/material';
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 
 interface Props {
    allergen: string;
-   handleRadioClick: any;
+   handleRadioClick: MouseEventHandler<HTMLButtonElement>;
 }
 
 export const RadioItem = ({ allergen, handleRadioClick }: Props) => {

@@ -193,7 +193,9 @@ const createFood = (
    VALUES ($4, $5, (SELECT fdc_id FROM getId))
    RETURNING fdc_id`;
 
+   //eslint-disable-next-line
    return db.task(async (t: any) => {
+      //eslint-disable-next-line
       const fdc_id = await t.one(createFoodQuery, [
          description,
          serving_size,

@@ -1,7 +1,7 @@
 require('dotenv').config();
+const webpack = require('webpack');
 const path = require('path');
 const DIST_DIR = path.join(__dirname, '/client/dist');
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');

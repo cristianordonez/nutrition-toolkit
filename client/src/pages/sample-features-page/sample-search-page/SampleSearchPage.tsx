@@ -1,6 +1,7 @@
 import { CircularProgress, Stack } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect } from 'react';
+import { FoodSearchResult } from '../../../../../types/types';
 import { FoodSearchList } from '../../../components/food-search-list';
 import { useSampleFeaturesOutlet } from '../../../hooks/useSampleFeaturesOutlet';
 import './SampleSearchPage.scss';
@@ -19,9 +20,14 @@ const SampleSearchPage = () => {
 
    useEffect(() => {
       const sampleItems = axios.get('/api/food/sample');
-      sampleItems.then((response) => {
-         setSearchResults(response.data);
-      });
+      sampleItems
+         .then((response) => {
+            const data = response.data as unknown as FoodSearchResult[];
+            setSearchResults(data);
+         })
+         .catch((err: unknown) => {
+            console.log('err: ', err);
+         });
    }, []);
    return (
       <div className='search-page'>

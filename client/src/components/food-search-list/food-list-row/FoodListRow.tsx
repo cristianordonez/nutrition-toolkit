@@ -31,8 +31,8 @@ export const FoodListRow = ({
    enableAddToFoodLogFeature,
 }: Props) => {
    const [open, setOpen] = useState<boolean>(false);
-   let brand: string = '';
-   let servingSizesArr = [100]; //value for 1 is manually placed on DOM for correct order
+   let brand = '';
+   const servingSizesArr = [100]; //value for 1 is manually placed on DOM for correct order
    if (data_type === 'custom' && custom_food_brand_owner !== null) {
       brand = custom_food_brand_owner;
    } else if (data_type === 'branded_food' && brand_owner !== null) {
@@ -46,7 +46,7 @@ export const FoodListRow = ({
       setOpen(!open);
    };
 
-   const handleOpeningModal = (e: React.MouseEvent) => {
+   const handleOpeningModal = () => {
       if (
          serving_size !== 100 &&
          serving_size !== null &&
@@ -112,7 +112,7 @@ export const FoodListRow = ({
                      <IconButton
                         aria-label='add to food log'
                         size='small'
-                        onClick={(e) => handleOpeningModal(e)}
+                        onClick={() => handleOpeningModal()}
                      >
                         <AddCircleIcon color='success' />
                      </IconButton>

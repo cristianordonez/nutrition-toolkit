@@ -7,7 +7,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 export const Footer = () => {
-   let currentYear = getYear(new Date(Date.now()));
+   const currentYear = getYear(new Date(Date.now()));
 
    return (
       <>

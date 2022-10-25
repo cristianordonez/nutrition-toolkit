@@ -7,7 +7,6 @@ import {
    Stack,
    Typography,
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import React from 'react';
 
 interface Props {
@@ -15,15 +14,6 @@ interface Props {
    type: string;
    nutrientsInFoodLog: number;
 }
-
-const StyledLinearProgress = styled(LinearProgress)(({ theme }) => ({
-   colorPrimary: {
-      backgroundColor: 'red',
-   },
-   barColorPrimary: {
-      backgroundColor: 'red',
-   },
-}));
 
 export const GoalCardItemLinearProgress = ({
    nutrientsTotal,

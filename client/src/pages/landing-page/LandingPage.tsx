@@ -28,7 +28,7 @@ const LandingPage = () => {
    const [alertSeverity, setAlertSeverity] = useState<AlertColor>('success');
    const [openAlert, setOpenAlert] = useState(false);
    const [alertMessage, setAlertMessage] = useState(''); //message displayed on snackbar
-   let navigate = useNavigate();
+   const navigate = useNavigate();
    const location = useLocation() as unknown as LocationType;
 
    //handles showing snackbar if request to server to login is not successful

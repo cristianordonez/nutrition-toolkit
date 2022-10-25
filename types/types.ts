@@ -38,7 +38,7 @@ type FoodSearchResult = {
 };
 
 type CurrentGoals = {
-   user_id?: number;
+   user_id?: number | string;
    goal: 'weight_loss' | 'gain_muscle' | 'maintain';
    total_calories: number;
    total_carbohydrates: number;
@@ -49,6 +49,7 @@ type CurrentGoals = {
 type Session = {
    user_id: string | number;
    passport: { user: string | number };
+   destroy: () => void;
 };
 
 type Query = {
@@ -93,11 +94,11 @@ type RequestParams = {
 };
 
 type MetricsType = {
-   age: number;
+   age: number | string;
    goal: 'weight_loss' | 'gain_muscle' | 'maintain';
-   weight: number;
+   weight: number | string;
    gender: string;
-   height: any;
+   height: number | string;
    activityLevel: number;
 };
 

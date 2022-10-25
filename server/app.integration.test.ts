@@ -11,8 +11,8 @@ import { db } from './database/db';
 const { schemas } = require('./database/SQL'); //import the sql queries
 const request = supertest(app);
 
-let cookie: any; //create cookie variable to be set so that sessions are not reset
-let testCookie: any; //used for the account in the before and after hooks
+let cookie: string[]; //create cookie variable to be set so that sessions are not reset
+let testCookie: string[]; //used for the account in the before and after hooks
 
 beforeAll(async () => {
    await db.query(schemas.session);
@@ -23,7 +23,7 @@ beforeAll(async () => {
    await db.query(schemas.user_meal_nutrition);
    await db.query(schemas.sample_user_meal);
    await db.query(schemas.sample_user_meal_nutrition);
-   let beforeResponse = await request.post('/api/signup').send({
+   const beforeResponse = await request.post('/api/signup').send({
       username: 'test',
       email: 'test@email.com',
       password: 'password',
@@ -45,12 +45,12 @@ afterAll(async () => {
 
 describe('Authentication routes', () => {
    test('GET /: should allow user to access base url with no errors', async () => {
-      let currentResponse = await request.get('/api');
+      const currentResponse = await request.get('/api');
       expect(currentResponse.statusCode).toBe(200);
    });
 
    test('POST /signup: it should allow user to create an account and then set session', async () => {
-      let response = await request.post('/api/signup').send({
+      const response = await request.post('/api/signup').send({
          username: 'test_user',
          email: 'testemail@email.com',
          password: 'password',
@@ -60,13 +60,13 @@ describe('Authentication routes', () => {
    });
 
    test('POST /metrics: it should allow user to add metrics', async () => {
-      let body = {
+      const body = {
          total_carbohydrates: 200,
          total_protein: 200,
          total_fat: 200,
          total_calories: 2000,
       };
-      let metricsResponse = await request
+      const metricsResponse = await request
          .post('/api/goals')
          .set('Cookie', cookie) //need to set cookie from previous response so sessions are not reset
          .send(body);
@@ -75,7 +75,7 @@ describe('Authentication routes', () => {
    });
 
    test('POST /login: should allow user to login', async () => {
-      let loginResponse = await request
+      const loginResponse = await request
          .post('/api/login')
          .set('Cookie', testCookie)
          .send({
@@ -86,49 +86,14 @@ describe('Authentication routes', () => {
    });
 
    test('GET /metrics: should allow user to retrieve metrics from database', async () => {
-      let metricsResponse = await request
+      const metricsResponse = await request
          .get('/api/goals')
          .set('Cookie', cookie);
       expect(metricsResponse.statusCode).toBe(201);
    });
 
-   // test('Should allow user to get food items from API using advanced search', async () => {
-   //    const getFoodResponse = await request.get('/api/food').query({
-   //       query: 'spinach',
-   //       allergy: '',
-   //       minCalories: '100',
-   //       maxCalories: '600',
-   //       minCarbs: '10',
-   //       maxCarbs: '50',
-   //       minProtein: '10',
-   //       maxProtein: '100',
-   //       minFat: '10',
-   //       maxFat: '100',
-   //       number: 10, //number of items to return
-   //       offset: 0, //number of results to skip, useful for lazy loading
-   //    });
-   //    expect(getFoodResponse.statusCode).toBe(200);
-   // });
-
-   // test('Should allow user to get list of all foods', async () => {
-   //    const foodItems = await request.get('/api/food/all').query({
-   //       query: 'spaghetti',
-   //       minCalories: '',
-   //       maxCalories: '',
-   //       minCarbs: '',
-   //       maxCarbs: '',
-   //       minProtein: '',
-   //       maxProtein: '',
-   //       minFat: '',
-   //       maxFat: '',
-   //       number: '10', //number of items to return
-   //       offset: 0, //number of results to skip, useful for lazy loading
-   //    });
-   //    expect(foodItems.statusCode).toBe(200);
-   // });
-
    test('POST /logout: should allow user to logout', async () => {
-      let logoutResponse = await request
+      const logoutResponse = await request
          .post('/api/logout')
          .set('Cookie', cookie);
       expect(logoutResponse.statusCode).toBe(200);

@@ -1,10 +1,10 @@
 import React, { Dispatch, SetStateAction } from 'react';
 
-import { Typography, Grid, Input, Slider } from '@mui/material';
+import { Grid, Input, Slider, Typography } from '@mui/material';
 
 interface Props {
-   weight: string | number | (string | number)[];
-   setWeight: Dispatch<SetStateAction<string | number | (string | number)[]>>;
+   weight: string | number;
+   setWeight: Dispatch<SetStateAction<string | number>>;
 }
 
 export const WeightInputField = ({ weight, setWeight }: Props) => {
@@ -12,7 +12,8 @@ export const WeightInputField = ({ weight, setWeight }: Props) => {
       event: Event,
       newValue: number | number[]
    ) => {
-      setWeight(newValue);
+      const currentWeight = Array.isArray(newValue) ? newValue[0] : newValue;
+      setWeight(currentWeight);
    };
    const handleWeightInputChange = (
       event: React.ChangeEvent<HTMLInputElement>

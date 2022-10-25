@@ -8,40 +8,36 @@ export const getGoalsFromMetrics = ({
    activityLevel,
    goal,
 }: MetricsType): CurrentGoals => {
-   const weightInKg = weight / 2.2;
-   const heightInCm = height * 2.54;
+   const weightInKg = Number(weight) / 2.2;
+   const heightInCm = Number(height) * 2.54;
    const heightInMeters = heightInCm / 100;
    const heightInMeterSquared = heightInMeters * heightInMeters;
    const bmi = weightInKg / heightInMeterSquared;
    const additionalCalories = gender === 'female' ? -161 : 5;
    const mifflinEnergyNeeds =
-      10 * weightInKg + 6.25 * heightInCm - 5 * age + additionalCalories;
-   let total_calories,
-      total_protein,
-      total_carbohydrates,
-      total_fat,
-      ibw,
-      adjustedIBW,
-      ibwInKg,
-      adjustedIBWInKg;
+      10 * weightInKg +
+      6.25 * heightInCm -
+      5 * Number(age) +
+      additionalCalories;
+   let total_calories, total_protein, ibw;
 
    //get ideal body weight calculation and adjustedIBW for everyone
    if (gender === 'female') {
       if (height < 60) {
-         ibw = Math.floor(105 - 5 * (60 - height));
+         ibw = Math.floor(105 - 5 * (60 - Number(height)));
       } else {
-         ibw = Math.floor(105 + 5 * (height - 60));
+         ibw = Math.floor(105 + 5 * (Number(height) - 60));
       }
    } else {
       if (height < 60) {
-         ibw = Math.floor(106 - 6 * (60 - height));
+         ibw = Math.floor(106 - 6 * (60 - Number(height)));
       } else {
-         ibw = Math.floor(106 + 6 * (height - 60));
+         ibw = Math.floor(106 + 6 * (Number(height) - 60));
       }
    }
-   adjustedIBW = Math.floor((weight - ibw) * 0.25 + ibw);
-   ibwInKg = Math.floor(ibw / 2.2);
-   adjustedIBWInKg = Math.floor(adjustedIBW / 2.2);
+   const adjustedIBW = Math.floor((Number(weight) - ibw) * 0.25 + ibw);
+   const ibwInKg = Math.floor(ibw / 2.2);
+   const adjustedIBWInKg = Math.floor(adjustedIBW / 2.2);
 
    if (bmi >= 30) {
       if (goal === 'weight_loss') {
@@ -79,8 +75,8 @@ export const getGoalsFromMetrics = ({
          total_protein = Math.floor(weightInKg * 1.2);
       }
    }
-   total_carbohydrates = Math.floor((total_calories * 0.5) / 4);
-   total_fat = Math.floor(
+   const total_carbohydrates = Math.floor((total_calories * 0.5) / 4);
+   const total_fat = Math.floor(
       (total_calories - (total_protein * 4 + total_carbohydrates * 4)) / 9
    );
    return {

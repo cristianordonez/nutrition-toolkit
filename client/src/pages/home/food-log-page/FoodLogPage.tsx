@@ -35,13 +35,6 @@ interface Props {
    setIsSearching: Dispatch<SetStateAction<boolean>>;
 }
 
-const initialNutritionSummary = {
-   total_calories: '0',
-   total_protein: '0',
-   total_fat: '0',
-   total_carbohydrates: '0',
-};
-
 const FoodLogPage = ({
    setAlertMessage,
    setOpenAlert,
@@ -52,7 +45,9 @@ const FoodLogPage = ({
    foodLogItems,
 }: Props) => {
    const [dayIndex, setDayIndex] = useState<number>(getDay(Date.now()));
-   const [value, setValue] = React.useState<any>(new Date(Date.now()));
+   const [value, setValue] = React.useState<string | Date | number>(
+      new Date(Date.now())
+   );
    const [currentDay, setCurrentDay] = useState(
       format(new Date(Date.now()), 'yyyy-MM-dd')
    );
@@ -83,11 +78,9 @@ const FoodLogPage = ({
    };
 
    const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-      const prevDate = currentDay; //create variable to store the previous date and previous tab index
-      const prevDayIndex = dayIndex;
-      let differenceInDays = newValue - dayIndex; //find out how many days before or after current date is new selected date by finding difference between previous tab and current tab
+      const differenceInDays = newValue - dayIndex; //find out how many days before or after current date is new selected date by finding difference between previous tab and current tab
       let newDate: Date | number | undefined;
-      let { year, month, day } = getFormattedDay(currentDay);
+      const { year, month, day } = getFormattedDay(currentDay);
       if (differenceInDays > 0) {
          //then update current date by adding or subtracting correct number of days
          newDate = addDays(
@@ -108,10 +101,10 @@ const FoodLogPage = ({
    };
 
    const getFormattedDay = (date: string) => {
-      let dates = date.split('-');
-      let year = dates[0];
-      let month = dates[1];
-      let day = dates[2];
+      const dates = date.split('-');
+      const year = dates[0];
+      const month = dates[1];
+      const day = dates[2];
       return { year, month, day };
    };
 

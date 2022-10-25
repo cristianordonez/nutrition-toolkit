@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, {
    createContext,
    Dispatch,
+   MouseEventHandler,
    SetStateAction,
    useContext,
    useEffect,
@@ -16,24 +17,26 @@ interface Props {
 type Context = {
    isLoading: boolean;
    isLoggedIn: boolean;
-   setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
+   setIsLoggedIn: Dispatch<SetStateAction<boolean>> | null;
    username: string;
-   handleLogout: any;
+   handleLogout:
+      | MouseEventHandler<HTMLImageElement | HTMLLIElement>
+      | undefined;
 };
 
-const AuthContext = createContext<any>({
+const AuthContext = createContext<Context>({
+   isLoading: true,
    isLoggedIn: false,
    setIsLoggedIn: null,
    username: '',
-   handleLogout: null,
-   isLoading: true,
+   handleLogout: undefined,
 });
 
 //# sends request to server to see if user is still logged in or not, redirects if they are not
 const AuthProvider = ({ children }: Props) => {
    const navigate = useNavigate();
    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-   const [isLoading, setIsLoading] = useState<Context | boolean>(true);
+   const [isLoading, setIsLoading] = useState<boolean>(true);
    const [username, setUsername] = useState<string>('');
 
    const handleLogout = async () => {
@@ -81,8 +84,8 @@ const AuthProvider = ({ children }: Props) => {
       <>
          <AuthContext.Provider
             value={{
-               isLoading,
                isLoggedIn,
+               isLoading,
                username,
                handleLogout,
                setIsLoggedIn,

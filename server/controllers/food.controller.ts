@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Query } from '../../types/types';
+import { FoodSearchResult, Query } from '../../types/types';
 import {
    get,
    getAdvanced,
@@ -42,7 +42,7 @@ const getFoodItemsAdvancedByBrand = async (req: Request, res: Response) => {
 
 const getSampleFoodItems = async (req: Request, res: Response) => {
    try {
-      const foodItems = await getSampleItems();
+      const foodItems = (await getSampleItems()) as unknown as FoodSearchResult;
       res.status(200).send(foodItems);
    } catch (err) {
       console.log('err: ', err);

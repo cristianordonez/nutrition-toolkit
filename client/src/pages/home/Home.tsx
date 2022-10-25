@@ -15,14 +15,6 @@ import { SideBar } from '../../components/sidebar/SideBar';
 import { useAuth } from '../../context/authContext';
 import FoodLogPage from './food-log-page/FoodLogPage';
 
-const initialGoals = {
-   goal: 'weight_loss',
-   total_calories: 0,
-   total_carbohydrates: 0,
-   total_protein: 0,
-   total_fat: 0,
-};
-
 const Home = () => {
    const navigate = useNavigate();
    const { isLoggedIn, isLoading } = useAuth();
@@ -56,10 +48,10 @@ const Home = () => {
       offset: 0, //number of results to skip, useful for lazy isSearching
    });
 
-   const handleLoadMore = async (event: React.SyntheticEvent) => {
+   const handleLoadMore = async () => {
       try {
          setIsSearching(true);
-         let newValues = { ...values, offset: values.offset + 10 }; //update new offset so that we only receive the correct items from API
+         const newValues = { ...values, offset: values.offset + 10 }; //update new offset so that we only receive the correct items from API
          setValues(newValues);
          const searchResultItems = sendAdvancedRequest
             ? await axios.get(`/api/food`, {
@@ -83,7 +75,7 @@ const Home = () => {
       }
    };
 
-   const handleAlert = (event: React.SyntheticEvent | Event) => {
+   const handleAlert = () => {
       setOpenAlert(false);
    };
 

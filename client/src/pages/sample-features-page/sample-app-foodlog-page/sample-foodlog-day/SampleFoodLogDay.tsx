@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FoodLogItem } from '../../../../../../types/types';
 import { SampleFoodLogSlot } from './sample-foodlog-slot/SampleFoodlogSlot';
 import './SampleFoodLogDay.scss';
@@ -7,14 +7,10 @@ interface Props {
    sampleFoodLogItems: FoodLogItem[];
 }
 export const SampleFoodLogDay = ({ sampleFoodLogItems }: Props) => {
-   const [openDialog, setOpenDialog] = useState(false);
-   const [showNutrientDataForm, setShowNutrientDataForm] =
-      useState<boolean>(false);
-
-   let breakfastItems: FoodLogItem[] = [];
-   let lunchItems: FoodLogItem[] = [];
-   let dinnerItems: FoodLogItem[] = [];
-   let snackItems: FoodLogItem[] = [];
+   const breakfastItems: FoodLogItem[] = [];
+   const lunchItems: FoodLogItem[] = [];
+   const dinnerItems: FoodLogItem[] = [];
+   const snackItems: FoodLogItem[] = [];
 
    if (sampleFoodLogItems.length) {
       sampleFoodLogItems.forEach((item) => {
@@ -30,15 +26,8 @@ export const SampleFoodLogDay = ({ sampleFoodLogItems }: Props) => {
       });
    }
    const mealSlotTitles = ['Morning', 'Afternoon', 'Evening', 'Snack'];
-   const slotNumbers = [1, 2, 3, 4];
    const mealItems = [breakfastItems, lunchItems, dinnerItems, snackItems];
 
-   const handleOpeningDialog = () => {
-      setOpenDialog(!openDialog);
-      setTimeout(() => {
-         setShowNutrientDataForm(false);
-      }, 1000);
-   };
    return (
       <>
          <div className='meal-plan-slots-container'>
@@ -47,8 +36,6 @@ export const SampleFoodLogDay = ({ sampleFoodLogItems }: Props) => {
                   key={meals[0].fdc_id}
                   slotName={mealSlotTitles[index]}
                   meals={meals}
-                  handleOpeningDialog={handleOpeningDialog}
-                  slot={slotNumbers[index] as 1 | 2 | 3 | 4}
                />
             ))}
          </div>

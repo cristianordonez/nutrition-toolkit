@@ -1,0 +1,19 @@
+{
+   "verbose": true,
+   "testEnvironment": "jsdom",
+   "collectCoverage": true,
+   "coverageDirectory": "jest-coverage",
+   "moduleNameMapper": {
+      ".(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.js",
+      ".(gif|ttf|eot|svg|jpg)$": "<rootDir>/__mocks__/fileMock.js"
+   },
+   "moduleFileExtensions": ["js", "jsx", "ts", "tsx"],
+   "testMatch": [
+      "**/__tests__/**/*.+(ts|tsx|js)",
+      "**/?(*.)+(spec|test).+(ts|tsx|js)"
+   ],
+   "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+   },
+   "setupFilesAfterEnv": ["<rootDir>/jest-setup.ts"]
+}

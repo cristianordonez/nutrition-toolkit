@@ -1,4 +1,10 @@
-import { NextFunction, Request, Response, Router } from 'express';
+import {
+   NextFunction,
+   Request,
+   RequestHandler,
+   Response,
+   Router,
+} from 'express';
 import passport from 'passport';
 import { Session } from '../../types/types';
 import {
@@ -10,14 +16,13 @@ import {
 const router = Router();
 
 router.post('/forgotPassword', (req: Request, res: Response) => {
-   forgotPassword(req, res);
+   forgotPassword(req, res) as unknown as RequestHandler;
 });
 
 router.post('/resetPassword', (req: Request, res: Response) => {
-   resetPassword(req, res);
+   resetPassword(req, res) as unknown as RequestHandler;
 });
 
-//GOOGLE AUTHENTICATION////////////////////////////
 router.get('/login/federated/google', passport.authenticate('google'));
 
 //gets code from google, then exchaanges code for profile info
@@ -28,7 +33,7 @@ router.get(
       failureMessage: true,
    }), //fires second part of passport strategy
    (req: Request, res: Response) => {
-      let session = req.session as unknown as Session;
+      const session = req.session as unknown as Session;
       session.user_id = session.passport.user;
       //redirect user to the search page where session will be checked
       res.redirect(`/home`);
@@ -36,11 +41,11 @@ router.get(
 );
 
 router.get('/authentication', (req: Request, res: Response) => {
-   checkAuthentication(req, res);
+   checkAuthentication(req, res) as unknown as RequestHandler;
 });
 
 router.post('/signup', (req: Request, res: Response) => {
-   createAccount(req, res);
+   createAccount(req, res) as unknown as RequestHandler;
 });
 
 //#req.user will be just a string of the user_id for both google and email login
@@ -53,18 +58,19 @@ router.post(
    }),
    (req: Request, res: Response) => {
       const user = req.user as string;
-      let session = req.session as unknown as Session;
+      const session = req.session as unknown as Session;
       session.user_id = user;
       res.status(201).send('Successfully logged in.');
    }
 );
 
-router.post('/logout', (req: any, res: Response, next: NextFunction) => {
-   req.logout(function (err: any) {
+router.post('/logout', (req: Request, res: Response, next: NextFunction) => {
+   req.logout(function (err: unknown) {
       if (err) {
          return next(err);
       }
-      req.session.destroy();
+      const session = req.session as unknown as Session;
+      session.destroy();
       res.status(200).send('You have been logged out');
    });
 });

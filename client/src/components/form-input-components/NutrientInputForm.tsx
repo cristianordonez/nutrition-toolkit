@@ -10,7 +10,7 @@ import React from 'react';
 import { CurrentGoals } from '../../../../types/types';
 
 interface Props {
-   handleInputChange: any;
+   handleInputChange: React.ChangeEventHandler;
    measurement: string;
    nutrient: 'Calories' | 'Carbs' | 'Protein' | 'Fat';
    minValue: string | number | null;
@@ -26,7 +26,6 @@ export const NutrientInputForm = ({
    goals,
 }: Props) => {
    let currentNutrient;
-   let minGoal;
    let currentGoal;
 
    if (nutrient === 'Carbs') {

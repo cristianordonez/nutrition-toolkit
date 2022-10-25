@@ -117,7 +117,7 @@ export const AddToCartModal = ({
       });
    }, [id]);
 
-   const handleClose = (value: string) => {
+   const handleClose = () => {
       setOpenDialog(false);
    };
 
@@ -125,7 +125,7 @@ export const AddToCartModal = ({
       <Dialog
          open={openDialog}
          onClose={() => {
-            handleClose('backdropClick');
+            handleClose();
          }}
       >
          <DialogTitle align='left'>Add item to your food log</DialogTitle>

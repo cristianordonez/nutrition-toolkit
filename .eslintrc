@@ -1,0 +1,28 @@
+{
+   "env": {
+      "browser": true,
+      "es2021": true,
+      "jest": true
+   },
+   "parser": "@typescript-eslint/parser",
+   "plugins": ["@typescript-eslint", "react"],
+   "rules": {
+      "no-cond-assign": "error",
+      "no-dupe-else-if": "error",
+      "no-duplicate-case": "error",
+      "for-direction": "error"
+   },
+   "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "prettier"
+   ],
+   "parserOptions": {
+      "project": ["./tsconfig.json"],
+      "ecmaFeatures": {
+         "jsx": true
+      },
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+   }
+}

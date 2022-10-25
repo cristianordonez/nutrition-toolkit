@@ -1,5 +1,5 @@
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
-import { Button, SelectChangeEvent, Stack } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import React, { FormEventHandler, MouseEventHandler } from 'react';
 import { CurrentGoals, Query } from '../../../../types/types';
 import { NutrientInputForm } from '../form-input-components/NutrientInputForm';
@@ -10,16 +10,14 @@ interface Props {
    values: Query;
    handleSubmit: FormEventHandler<HTMLFormElement>;
    handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-   handleTypeSelect: (event: SelectChangeEvent) => void;
    goals: CurrentGoals;
-   handleRadioClick: MouseEventHandler<HTMLInputElement>;
+   handleRadioClick: MouseEventHandler<HTMLButtonElement>;
 }
 
 export const AdvancedSearchForm = ({
    values,
    handleSubmit,
    handleInputChange,
-   handleTypeSelect,
    goals,
    handleRadioClick,
 }: Props): ReactJSXElement => {

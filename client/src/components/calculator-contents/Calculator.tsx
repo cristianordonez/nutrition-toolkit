@@ -5,23 +5,24 @@ import { HeightInputField } from '../form-input-components/calculator-inputs/hei
 import { WeightInputField } from '../form-input-components/calculator-inputs/weight-input/WeightInputField';
 
 interface Props {
-   handleGenderChange: (event: MouseEvent<HTMLElement>, value: any) => void;
+   handleGenderChange: (event: MouseEvent<HTMLElement>, value: string) => void;
    activityLevel: number;
    gender: string;
    handleActivityLevelChange: (
       event: MouseEvent<HTMLElement>,
-      value: any
+      value: number
    ) => void;
-   height: string | number | (string | number)[];
-   setHeight: Dispatch<SetStateAction<string | number | (string | number)[]>>;
-   age: string | number | (string | number)[];
-   setAge: Dispatch<SetStateAction<string | number | (string | number)[]>>;
-
-   weight: string | number | (string | number)[];
-   setWeight: Dispatch<SetStateAction<string | number | (string | number)[]>>;
-
+   height: string | number;
+   setHeight: Dispatch<SetStateAction<string | number>>;
+   age: number | string;
+   setAge: Dispatch<SetStateAction<number | string>>;
+   weight: string | number;
+   setWeight: Dispatch<SetStateAction<string | number>>;
    goal: string;
-   handleGoalChange: (event: MouseEvent<HTMLElement>, value: any) => void;
+   handleGoalChange: (
+      event: MouseEvent<HTMLElement>,
+      value: 'weight_loss' | 'maintain' | 'gain_muscle'
+   ) => void;
 }
 
 export const Calculator = ({

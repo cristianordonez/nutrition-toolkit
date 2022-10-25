@@ -1,12 +1,17 @@
 import { AlertColor } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { CurrentGoals, FoodSearchResult, Query } from '../../../types/types';
+import {
+   CurrentGoals,
+   FoodSearchResult,
+   NutritionSummaryFoodLog,
+   Query,
+} from '../../../types/types';
 
 interface OutletContext {
    mobileOpen: boolean;
    handleDrawerToggle: () => void;
-   setNutritionSummary: Dispatch<SetStateAction<any>>;
+   setNutritionSummary: Dispatch<SetStateAction<NutritionSummaryFoodLog>>;
    setSearchResults: Dispatch<SetStateAction<FoodSearchResult[]>>;
    setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    openAlert: boolean;
@@ -26,11 +31,11 @@ interface OutletContext {
    age: number;
    showLoadMoreBtn: boolean;
    handleLoadMore: () => void;
-   setAge: Dispatch<SetStateAction<string | number | (string | number)[]>>;
-   height: string | number | (string | number)[];
-   setHeight: Dispatch<SetStateAction<string | number | (string | number)[]>>;
+   setAge: Dispatch<SetStateAction<string | number>>;
+   height: string | number;
+   setHeight: Dispatch<SetStateAction<string | number>>;
    weight: number;
-   setWeight: Dispatch<SetStateAction<string | number | (string | number)[]>>;
+   setWeight: Dispatch<SetStateAction<string | number>>;
    activityLevel: number;
    setActivityLevel: Dispatch<SetStateAction<number>>;
    handleSubmit: () => void;

@@ -10,8 +10,11 @@ import {
 import axios from 'axios';
 import format from 'date-fns/format';
 import getDay from 'date-fns/getDay';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { FoodLogItem } from '../../../../../types/types';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
+import {
+   FoodLogItem,
+   NutritionSummaryFoodLog,
+} from '../../../../../types/types';
 import { FoodLogWeekText } from '../../../components/foodlog-week-text/FoodLogWeekText';
 import { SampleFoodLogDay } from './sample-foodlog-day/SampleFoodLogDay';
 import './SampleFoodLogPage.scss';
@@ -26,10 +29,8 @@ const days = [
    'Saturday',
 ];
 
-const daysMobile = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
-
 interface Props {
-   setNutritionSummary: Dispatch<SetStateAction<any>>;
+   setNutritionSummary: Dispatch<SetStateAction<NutritionSummaryFoodLog>>;
    setAlertSeverity: Dispatch<SetStateAction<AlertColor>>;
    setOpenAlert: Dispatch<SetStateAction<boolean>>;
    setSampleFoodLogItems: Dispatch<SetStateAction<FoodLogItem[]>>;
@@ -45,24 +46,31 @@ const SampleFoodLogPage = ({
    sampleFoodLogItems,
    setAlertMessage,
 }: Props) => {
-   const [dayIndex, setDayIndex] = useState<number>(getDay(Date.now())); //used for tab highlighting
-   const [currentDay, setCurrentDay] = useState(
-      format(new Date(Date.now()), 'yyyy-MM-dd')
-   );
+   // const [dayIndex, setDayIndex] = useState<number>(); //used for tab highlighting
+   const dayIndex = getDay(Date.now());
+   const currentDay = format(new Date(Date.now()), 'yyyy-MM-dd');
+   // const [currentDay, setCurrentDay] = useState(
+   //    format(new Date(Date.now()), 'yyyy-MM-dd')
+   // );
 
    useEffect(() => {
       axios
          .get('/api/foodLog/sample')
          .then((response) => {
-            setNutritionSummary(response.data.nutritionSummary[0]);
-            setSampleFoodLogItems(response.data.sampleItems);
+            const data = response.data as unknown as {
+               nutritionSummary: [NutritionSummaryFoodLog];
+               sampleItems: FoodLogItem[];
+            };
+            setNutritionSummary(data.nutritionSummary[0]);
+            setSampleFoodLogItems(data.sampleItems);
          })
-         .catch((err) => {
+         .catch((err: unknown) => {
             setAlertMessage(
                'Unable to retrieve food log items. Please try again later.'
             );
             setAlertSeverity('error');
             setOpenAlert(true);
+            console.log('err: ', err);
          });
    }, [currentDay]);
 

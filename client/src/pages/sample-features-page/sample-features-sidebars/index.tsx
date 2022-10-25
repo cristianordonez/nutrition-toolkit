@@ -1,14 +1,7 @@
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import {
-   Box,
-   Drawer,
-   IconButton,
-   SelectChangeEvent,
-   Toolbar,
-} from '@mui/material';
+import { Box, Drawer, IconButton, Toolbar } from '@mui/material';
 import React, { FormEventHandler, MouseEventHandler } from 'react';
-import { useLocation } from 'react-router-dom';
 import {
    CurrentGoals,
    NutritionSummaryFoodLog,
@@ -27,11 +20,10 @@ interface Props {
    values: Query;
    handleSearch: FormEventHandler<HTMLFormElement>;
    handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-   handleTypeSelect: (event: SelectChangeEvent) => void;
    goals: CurrentGoals;
    nutritionSummary: NutritionSummaryFoodLog;
    view: 'foodLog' | 'search' | 'calculator';
-   handleRadioClick: MouseEventHandler<HTMLInputElement>;
+   handleRadioClick: MouseEventHandler<HTMLButtonElement>;
 }
 
 export const SampleFeaturesSidebar = ({
@@ -40,13 +32,11 @@ export const SampleFeaturesSidebar = ({
    values,
    handleSearch,
    handleInputChange,
-   handleTypeSelect,
    goals,
    nutritionSummary,
    view,
    handleRadioClick,
 }: Props): ReactJSXElement => {
-   const location = useLocation();
    return (
       <>
          <Drawer
@@ -84,7 +74,6 @@ export const SampleFeaturesSidebar = ({
                   values={values}
                   handleSubmit={handleSearch}
                   handleInputChange={handleInputChange}
-                  handleTypeSelect={handleTypeSelect}
                   goals={goals}
                   handleRadioClick={handleRadioClick}
                />
@@ -122,7 +111,6 @@ export const SampleFeaturesSidebar = ({
                      values={values}
                      handleSubmit={handleSearch}
                      handleInputChange={handleInputChange}
-                     handleTypeSelect={handleTypeSelect}
                      goals={goals}
                      handleRadioClick={handleRadioClick}
                   />

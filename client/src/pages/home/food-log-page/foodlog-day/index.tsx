@@ -61,10 +61,10 @@ export const FoodLogDay = ({
    const [createFoodData, setCreateFoodData] =
       useState<CustomFoodInput>(initialFoodData);
 
-   let breakfastItems: FoodLogItem[] = [];
-   let lunchItems: FoodLogItem[] = [];
-   let dinnerItems: FoodLogItem[] = [];
-   let snackItems: FoodLogItem[] = [];
+   const breakfastItems: FoodLogItem[] = [];
+   const lunchItems: FoodLogItem[] = [];
+   const dinnerItems: FoodLogItem[] = [];
+   const snackItems: FoodLogItem[] = [];
 
    if (foodLogItems.length) {
       foodLogItems.forEach((item) => {

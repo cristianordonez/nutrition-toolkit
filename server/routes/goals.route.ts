@@ -1,4 +1,4 @@
-import { Request, Response, Router } from 'express';
+import { Request, RequestHandler, Response, Router } from 'express';
 import {
    createGoals,
    getGoals,
@@ -7,15 +7,15 @@ import {
 const router = Router();
 
 router.get('/', (req: Request, res: Response) => {
-   getGoals(req, res);
+   getGoals(req, res) as unknown as RequestHandler;
 });
 
 router.post('/', (req: Request, res: Response) => {
-   createGoals(req, res);
+   createGoals(req, res) as unknown as RequestHandler;
 });
 
 router.put('/', (req: Request, res: Response) => {
-   updateGoals(req, res);
+   updateGoals(req, res) as unknown as RequestHandler;
 });
 
 export { router };

@@ -13,7 +13,6 @@ function useQuery() {
 const ResetPasswordPage = () => {
    const navigate = useNavigate();
    const [showTextFieldError, setShowTextFieldError] = useState<boolean>(false);
-   const [showSignup, setShowSignup] = useState<boolean>(true); //this is just used so that password text field uses correct handler function
    const [password, setPassword] = useState<string>('');
    const [confirmPassword, setConfirmPassword] = useState<string>('');
    const [errorMessage, setErrorMessage] = useState<string>('');
@@ -68,6 +67,7 @@ const ResetPasswordPage = () => {
       }
    };
 
+   const showSignup = true;
    return (
       <>
          <div className='signup'>

@@ -9,7 +9,7 @@ const createUser = (user: UserType) => {
           RETURNING user_id)
           INSERT INTO user_hash (user_id, hash)
           VALUES ((SELECT user_id FROM getId), $3) RETURNING user_id`;
-      let dbResponse = db.one(createQuery, [
+      const dbResponse = db.one(createQuery, [
          user.username,
          user.email,
          user.password,
@@ -17,6 +17,7 @@ const createUser = (user: UserType) => {
       return dbResponse;
    } catch (err) {
       console.log('err: ', err);
+      return err;
    }
 };
 
@@ -43,10 +44,11 @@ const createGoogleUser = async (user: GoogleUser) => {
 const updatePassword = async (userId: number, password: string) => {
    try {
       const passwordQuery = `UPDATE user_hash SET hash=$1 WHERE user_id=$2`;
-      let dbResponse = db.none(passwordQuery, [password, userId]);
+      const dbResponse = db.none(passwordQuery, [password, userId]);
       return dbResponse;
    } catch (err) {
       console.log('err: ', err);
+      return err;
    }
 };
 

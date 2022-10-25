@@ -76,7 +76,7 @@ export const FoodLogSlot = ({
    };
 
    //runs the handleopendialog function, but also updates the slot so dialog can receive it
-   const handleDialogChild = (e: React.MouseEvent) => {
+   const handleDialogChild = () => {
       setCreateFoodData({ ...createFoodData, slot: slot });
       handleOpeningDialog();
    };

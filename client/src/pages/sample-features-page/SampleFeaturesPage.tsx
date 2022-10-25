@@ -1,11 +1,5 @@
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import {
-   AlertColor,
-   IconButton,
-   SelectChangeEvent,
-   Toolbar,
-   Tooltip,
-} from '@mui/material';
+import { AlertColor, IconButton, Toolbar, Tooltip } from '@mui/material';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
@@ -90,44 +84,48 @@ const SampleFeaturesPage = () => {
       setMobileOpen(!mobileOpen);
    };
 
-   const handleSearch = async (event: React.SyntheticEvent) => {
-      try {
-         event.preventDefault();
-         const newValues = { ...values, offset: 0 }; //declare new values so that there are no async bugs, and reset offset to 0 in case user changed it
-         setValues(newValues);
-         setIsLoading(true);
-         const searchResultItems = await axios.get(`/api/food`, {
+   const handleSearch = (event: React.SyntheticEvent) => {
+      event.preventDefault();
+      const newValues = { ...values, offset: 0 }; //declare new values so that there are no async bugs, and reset offset to 0 in case user changed it
+      setValues(newValues);
+      setIsLoading(true);
+      axios
+         .get(`/api/food`, {
             params: newValues,
             withCredentials: true,
-         });
-         if (searchResultItems.data.length === 0) {
-            setAlertMessage(
-               'No options matched your search. Try again with a broader search'
-            );
-            setAlertSeverity('warning');
-            setOpenAlert(true);
-            setShowLoadMoreBtn(false);
-         } else {
-            setAlertSeverity('success');
-            setAlertMessage('Success! Here are your matching items.');
-            setOpenAlert(true);
-            if (searchResultItems.data.length < 10) {
+         })
+         .then((searchResultItems) => {
+            const data =
+               searchResultItems.data as unknown as FoodSearchResult[];
+            if (data.length === 0) {
+               setAlertMessage(
+                  'No options matched your search. Try again with a broader search'
+               );
+               setAlertSeverity('warning');
+               setOpenAlert(true);
                setShowLoadMoreBtn(false);
             } else {
-               setShowLoadMoreBtn(true);
+               setAlertSeverity('success');
+               setAlertMessage('Success! Here are your matching items.');
+               setOpenAlert(true);
+               if (data.length < 10) {
+                  setShowLoadMoreBtn(false);
+               } else {
+                  setShowLoadMoreBtn(true);
+               }
+               setSearchResults(data);
             }
-            setSearchResults(searchResultItems.data);
-         }
-         setIsLoading(false);
-      } catch (err) {
-         setIsLoading(false);
-         setAlertSeverity('error');
-         setAlertMessage(
-            'Unable to get search results. Please try again later.'
-         );
-         setOpenAlert(true);
-         console.log(err);
-      }
+            setIsLoading(false);
+         })
+         .catch((err: unknown) => {
+            setIsLoading(false);
+            setAlertSeverity('error');
+            setAlertMessage(
+               'Unable to get search results. Please try again later.'
+            );
+            setOpenAlert(true);
+            console.log(err);
+         });
    };
 
    const handleSubmit = (event: React.SyntheticEvent) => {
@@ -148,22 +146,22 @@ const SampleFeaturesPage = () => {
       setOpenAlert(true);
    };
 
-   const handleLoadMore = async (event: React.SyntheticEvent) => {
+   const handleLoadMore = async () => {
       try {
          setIsLoading(true);
-         let newValues = { ...values, offset: values.offset + 10 }; //update new offset so that we only receive the correct items from API
+         const newValues = { ...values, offset: values.offset + 10 }; //update new offset so that we only receive the correct items from API
          setValues(newValues);
          const searchResultItems = await axios.get(`/api/food`, {
             params: newValues,
             withCredentials: true,
          });
-
-         if (searchResultItems.data.length < 10) {
+         const data = searchResultItems.data as unknown as FoodSearchResult[];
+         if (data.length < 10) {
             setShowLoadMoreBtn(false);
          } else {
             setShowLoadMoreBtn(true);
          }
-         setSearchResults(searchResults.concat(searchResultItems.data));
+         setSearchResults(searchResults.concat(data));
          setIsLoading(false);
       } catch (err) {
          setIsLoading(false);
@@ -175,14 +173,10 @@ const SampleFeaturesPage = () => {
       setOpenAlert(!openAlert);
    };
 
-   const handleTypeSelect = (event: SelectChangeEvent) => {
-      setValues({ ...values, category: event.target.value });
-   };
-
    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setValues({ ...values, [event.target.id]: event.target.value });
    };
-   const handleRadioClick = (event: React.MouseEvent<HTMLInputElement>) => {
+   const handleRadioClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       if ((event.target as HTMLInputElement).value === values.allergy) {
          setValues({
             ...values,
@@ -225,7 +219,6 @@ const SampleFeaturesPage = () => {
                            values={values}
                            handleSearch={handleSearch}
                            handleInputChange={handleInputChange}
-                           handleTypeSelect={handleTypeSelect}
                            goals={initialFoodLogGoals}
                            nutritionSummary={nutritionSummary}
                            view={'foodLog'}
@@ -251,7 +244,6 @@ const SampleFeaturesPage = () => {
                         values={values}
                         handleSearch={handleSearch}
                         handleInputChange={handleInputChange}
-                        handleTypeSelect={handleTypeSelect}
                         goals={goals}
                         nutritionSummary={nutritionSummary}
                         view={'search'}
@@ -268,7 +260,6 @@ const SampleFeaturesPage = () => {
                         values={values}
                         handleSearch={handleSearch}
                         handleInputChange={handleInputChange}
-                        handleTypeSelect={handleTypeSelect}
                         goals={goals}
                         nutritionSummary={nutritionSummary}
                         view={'calculator'}

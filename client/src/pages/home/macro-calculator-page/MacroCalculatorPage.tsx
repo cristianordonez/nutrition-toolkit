@@ -13,14 +13,14 @@ const MacroCalculatorPage = () => {
 
    const { isLoading } = useAuth();
    const [showNextPage, setShowNextPage] = useState(false);
-   const [showSignup, setShowSignup] = useState(false);
+
    useEffect(() => {
       getGoals();
    }, []);
 
    const getGoals = async () => {
       try {
-         let currentGoals = await axios.get('/api/goals');
+         const currentGoals = await axios.get('/api/goals');
          if (currentGoals.data !== '') {
             setGoals(currentGoals.data);
          }
@@ -42,7 +42,7 @@ const MacroCalculatorPage = () => {
                setOpenErrorAlert={setOpenAlert}
                setErrorMessage={setAlertMessage}
                setShowNextPage={setShowNextPage}
-               setShowSignup={setShowSignup}
+               setShowSignup={setShowNextPage}
                setAlertSeverity={setAlertSeverity}
                page={'macrocalculator'}
                showNextPage={showNextPage}

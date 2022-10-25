@@ -1,4 +1,4 @@
-import { Request, Response, Router } from 'express';
+import { Request, RequestHandler, Response, Router } from 'express';
 import {
    addFoodLogItem,
    createCustomItem,
@@ -10,23 +10,23 @@ import {
 const router = Router();
 
 router.post('/', (req: Request, res: Response) => {
-   addFoodLogItem(req, res);
+   addFoodLogItem(req, res) as unknown as RequestHandler;
 });
 
 router.get('/day', (req: Request, res: Response) => {
-   getFoodLogDay(req, res);
+   getFoodLogDay(req, res) as unknown as RequestHandler;
 });
 
 router.delete('/:id', (req: Request, res: Response) => {
-   deleteItem(req, res);
+   deleteItem(req, res) as unknown as RequestHandler;
 });
 
 router.post('/custom', (req: Request, res: Response) => {
-   createCustomItem(req, res);
+   createCustomItem(req, res) as unknown as RequestHandler;
 });
 
 router.get('/sample', (req: Request, res: Response) => {
-   getSampleFoodLogDay(req, res);
+   getSampleFoodLogDay(req, res) as unknown as RequestHandler;
 });
 
 export { router };

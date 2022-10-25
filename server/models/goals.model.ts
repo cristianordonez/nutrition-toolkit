@@ -1,7 +1,7 @@
 import { CurrentGoals } from '../../types/types';
 import { db } from '../database/db';
 
-const get = (user_id: string) => {
+const get = (user_id: string | number) => {
    const dbQuery = `SELECT total_carbohydrates,
     total_protein, total_fat, total_calories,
     user_id FROM user_daily_goals WHERE user_id = $1`;
