@@ -153,7 +153,6 @@ export const SideBar = ({
                   </Typography>
                ) : null}
             </Drawer>
-
             {/* DESKTOP */}
             <Drawer
                open

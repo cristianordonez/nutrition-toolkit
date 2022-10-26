@@ -1,4 +1,4 @@
-# The Macro Trainer
+# The MacroTrainer
 
 A full-stack food logging application that allows users to calculate their recommended calories and macronutrient needs based on their metrics. They can then search from a list of over 350,000 foods to find any that match their desired macronutrient ranges.
 

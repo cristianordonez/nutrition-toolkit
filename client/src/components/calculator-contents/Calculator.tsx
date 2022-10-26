@@ -41,7 +41,6 @@ export const Calculator = ({
 }: Props) => {
    return (
       <>
-         {/* ACTIVITY LEVEL */}
          <ToggleButtonGroup
             color='primary'
             fullWidth={true}
@@ -75,9 +74,8 @@ export const Calculator = ({
          >
             <ToggleButton value='male'>Male</ToggleButton>
             <ToggleButton value='female'>Female</ToggleButton>
-            <ToggleButton value='other'>Other</ToggleButton>
+            <ToggleButton value='other'>Non-binary</ToggleButton>
          </ToggleButtonGroup>
-         {/* AGE HEIGHT AND WEIGHT*/}
          <AgeInputField age={age} setAge={setAge} />
          <HeightInputField height={height} setHeight={setHeight} />
          <WeightInputField weight={weight} setWeight={setWeight} />

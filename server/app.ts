@@ -166,7 +166,7 @@ app.get('/', (req: Request, res: Response) => {
    res.status(200).json({
       status: 'success',
       data: {
-         name: 'Macro Trainer API',
+         name: 'MacroTrainer API',
          version: '1.2.0',
       },
    });

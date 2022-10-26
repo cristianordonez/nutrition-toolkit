@@ -37,7 +37,7 @@ module.exports = {
    },
    plugins: [
       new HtmlWebpackPlugin({
-         title: 'The Macro Trainer',
+         title: 'The MacroTrainer',
          template: 'template.html',
          favicon: './favicon_io/favicon.ico',
       }),

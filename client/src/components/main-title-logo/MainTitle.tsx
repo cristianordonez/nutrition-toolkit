@@ -15,6 +15,7 @@ export const MainTitle = () => {
          sx={{
             fontWeight: 700,
             letterSpacing: '.3rem',
+            fontFamily: 'Lato',
             textDecoration: 'none',
             '&:hover': {
                cursor: 'pointer',

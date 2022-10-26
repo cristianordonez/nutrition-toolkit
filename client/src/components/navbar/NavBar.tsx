@@ -28,7 +28,7 @@ const NavBar = () => {
    const theme = useTheme();
    const colorMode = useContext(ColorModeContext);
    const navigate = useNavigate();
-   const { isLoading, isLoggedIn } = useAuth(); //used to check if data is still being retrieved from database
+   const { isLoading, isLoggedIn } = useAuth();
 
    return (
       <AppBar
