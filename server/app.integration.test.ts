@@ -2,7 +2,6 @@
  * @jest-environment node
  */
 //# Supertest cannot be used to find req.user when using passport, so avoid these tests
-
 process.env.NODE_ENV = 'test'; //set NODE_ENV to 'test' so that test database is used
 import supertest from 'supertest';
 import { expect } from '../jestGlobals';
@@ -58,7 +57,6 @@ describe('Authentication routes', () => {
       expect(response.statusCode).toBe(201);
       cookie = response.headers['set-cookie']; //update cookie here so session is saved
    });
-
    test('POST /metrics: it should allow user to add metrics', async () => {
       const body = {
          total_carbohydrates: 200,
@@ -73,7 +71,6 @@ describe('Authentication routes', () => {
 
       expect(metricsResponse.statusCode).toBe(201);
    });
-
    test('POST /login: should allow user to login', async () => {
       const loginResponse = await request
          .post('/api/login')
@@ -84,14 +81,12 @@ describe('Authentication routes', () => {
          });
       expect(loginResponse.statusCode).toBe(201);
    });
-
    test('GET /metrics: should allow user to retrieve metrics from database', async () => {
       const metricsResponse = await request
          .get('/api/goals')
          .set('Cookie', cookie);
       expect(metricsResponse.statusCode).toBe(201);
    });
-
    test('POST /logout: should allow user to logout', async () => {
       const logoutResponse = await request
          .post('/api/logout')

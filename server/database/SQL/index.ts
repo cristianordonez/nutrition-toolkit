@@ -11,8 +11,10 @@ function sql(file: string) {
 //when importing query from another file, only need to use db.query(db.users);
 module.exports = {
    schemas: {
-      create_db: sql('./create_database.sql'),
-      drop_db: sql('./delete_database.sql'),
+      food: sql('./food.sql'),
+      custom_food: sql('./custom_food.sql'),
+      food_nutrition: sql('./food_nutrition.sql'),
+      branded_food: sql('./branded_food.sql'),
       users: sql('./users.schema.sql'),
       user_daily_goals: sql('./user_daily_goals.schema.sql'),
       session: sql('./session.schema.sql'),
