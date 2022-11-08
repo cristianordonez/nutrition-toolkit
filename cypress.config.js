@@ -7,7 +7,7 @@ module.exports = defineConfig({
    projectId: 'kure77',
    video: false,
    e2e: {
-      baseUrl: 'http://localhost:3000/',
+      baseUrl: 'http://localhost:8080/',
       setupNodeEvents(on, config) {
          require('@cypress/code-coverage/task')(on, config);
          on('task', {

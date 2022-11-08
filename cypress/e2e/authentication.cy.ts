@@ -13,7 +13,7 @@ describe('The Login Page', () => {
       cy.findByPlaceholderText('Confirm Password').type('password');
       cy.contains('Almost done').click();
       cy.contains('Female').click();
-      cy.contains('Other').click();
+      cy.contains('Non-binary').click();
       cy.findByTestId('age-input').type('{backspace}{backspace}27');
       cy.findByTestId('height-input').type('{backspace}{backspace}67');
       cy.findByTestId('weight-input').type(
