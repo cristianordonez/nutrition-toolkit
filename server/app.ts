@@ -9,18 +9,18 @@ import session from 'express-session';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import path from 'path';
-import { PassportGoogleUser } from '../types/types';
 import { db } from './database/db';
-import { createGoogleUser, getGoogleUser } from './models/auth.model';
 import { router as authRoute } from './routes/auth.route';
 import { router as foodRoute } from './routes/food.route';
 import { router as foodLogRoute } from './routes/foodLog.route';
 import { router as goalsRoute } from './routes/goals.route';
+// import GoogleStrategy from 'passport-google-oidc';
+import { customGoogleStrategy } from './auth/googleStrategy';
+// const GoogleStrategy = require('passport-google-oidc');
 
 const pgSession = ConnectPg(session);
 dotenv.config();
-//eslint-disable-next-line
-const GoogleStrategy = require('passport-google-oidc');
+
 const envVariables = process.env as unknown as { SESSION_SECRET: string };
 
 const app = express();
@@ -68,6 +68,8 @@ type HashResponse = {
    user_id: string;
 };
 
+passport.use('google', customGoogleStrategy);
+
 passport.use(
    new LocalStrategy((username, password, cb) => {
       //expects key in body called username, but will check email instead for authentication
@@ -101,48 +103,48 @@ passport.use(
          });
    })
 );
-passport.use(
-   new GoogleStrategy(
-      {
-         clientID: process.env['GOOGLE_SIGNIN_CLIENT_ID'],
-         clientSecret: process.env['GOOGLE_SIGNIN_CLIENT_SECRET'],
-         callbackURL: '/api/oauth2/redirect/google',
-         scope: ['profile', 'email'], //the data we are asking for from google
-      },
-      (
-         issuer: string,
-         profile: { displayName: string; emails: [{ value: string }] },
-         done: (
-            err?: string | null,
-            user?: Express.User,
-            info?: unknown
-         ) => void
-      ) => {
-         getGoogleUser(profile.emails[0].value)
-            .then((response: PassportGoogleUser | null) => {
-               //if user exists, redirect
-               if (response !== null && response.user_id) {
-                  done(null, response.user_id);
-               } else {
-                  const user = {} as PassportGoogleUser;
-                  user.username = profile.displayName;
-                  user.email = profile.emails[0].value;
-                  createGoogleUser(user)
-                     .then((userId: number) => {
-                        user.user_id = userId;
-                        done(null, user.user_id);
-                     })
-                     .catch((err) => {
-                        done(err);
-                     });
-               }
-            })
-            .catch((err) => {
-               done(err);
-            });
-      }
-   )
-);
+// passport.use(
+//    new GoogleStrategy(
+//       {
+//          clientID: process.env['GOOGLE_SIGNIN_CLIENT_ID'],
+//          clientSecret: process.env['GOOGLE_SIGNIN_CLIENT_SECRET'],
+//          callbackURL: '/api/oauth2/redirect/google',
+//          scope: ['profile', 'email'], //the data we are asking for from google
+//       },
+//       (
+//          issuer: string,
+//          profile: { displayName: string; emails: [{ value: string }] },
+//          done: (
+//             err?: string | null,
+//             user?: Express.User,
+//             info?: unknown
+//          ) => void
+//       ) => {
+//          getGoogleUser(profile.emails[0].value)
+//             .then((response: PassportGoogleUser | null) => {
+//                //if user exists, redirect
+//                if (response !== null && response.user_id) {
+//                   done(null, response.user_id);
+//                } else {
+//                   const user = {} as PassportGoogleUser;
+//                   user.username = profile.displayName;
+//                   user.email = profile.emails[0].value;
+//                   createGoogleUser(user)
+//                      .then((userId: number) => {
+//                         user.user_id = userId;
+//                         done(null, user.user_id);
+//                      })
+//                      .catch((err) => {
+//                         done(err);
+//                      });
+//                }
+//             })
+//             .catch((err) => {
+//                done(err);
+//             });
+//       }
+//    )
+// );
 
 //determines which data of user object should be stored in session to be accessed below in the deserializeUser function
 passport.serializeUser((userId: unknown, done) => {
