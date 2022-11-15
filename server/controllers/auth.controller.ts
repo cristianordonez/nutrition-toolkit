@@ -10,20 +10,19 @@ const saltRounds = 10;
 
 const createAccount = async (req: Request, res: Response) => {
    try {
-      const body = req.body as { email: string };
+      const body = req.body as UserType;
       const checkForExistingAccount: null | { hash: string } =
          await userModel.getHash(body.email);
       if (
          checkForExistingAccount !== null // if either email or username already exists in db, cancel the request
       ) {
-         res.status(500).send(
+         res.status(401).send(
             'An account with your email or username already exists.'
          );
       } else {
-         const user = req.body as UserType;
-         const hash: string = await bcrypt.hash(user.password, saltRounds);
-         user.password = hash;
-         const dbResponse = (await userModel.createUser(user)) as unknown as {
+         const hash: string = await bcrypt.hash(body.password, saltRounds);
+         body.password = hash;
+         const dbResponse = (await userModel.createUser(body)) as unknown as {
             user_id: string;
          };
          const session = req.session as unknown as Session;
@@ -32,7 +31,7 @@ const createAccount = async (req: Request, res: Response) => {
       }
    } catch (err) {
       console.log('error creating an account:', err);
-      res.status(500).send('Unable to create an account.');
+      res.status(401).send('Unable to create an account.');
    }
 };
 

@@ -13,42 +13,17 @@ import {
    forgotPassword,
    resetPassword,
 } from '../controllers/auth.controller';
+
 const router = Router();
-
-router.post('/forgotPassword', (req: Request, res: Response) => {
-   forgotPassword(req, res) as unknown as RequestHandler;
-});
-
-router.post('/resetPassword', (req: Request, res: Response) => {
-   resetPassword(req, res) as unknown as RequestHandler;
-});
-
-router.get('/login/federated/google', passport.authenticate('google'));
-
-//gets code from google, then exchaanges code for profile info
-router.get(
-   '/oauth2/redirect/google',
-   passport.authenticate('google', {
-      failureRedirect: `/login`,
-      failureMessage: true,
-   }), //fires second part of passport strategy
-   (req: Request, res: Response) => {
-      const session = req.session as unknown as Session;
-      session.user_id = session.passport.user;
-      //redirect user to the search page where session will be checked
-      res.redirect(`/home`);
-   }
-);
 
 router.get('/authentication', (req: Request, res: Response) => {
    checkAuthentication(req, res) as unknown as RequestHandler;
 });
 
 router.post('/signup', (req: Request, res: Response) => {
+   console.log('here in signup route');
    createAccount(req, res) as unknown as RequestHandler;
 });
-
-//#req.user will be just a string of the user_id for both google and email login
 
 router.post(
    '/login',
@@ -63,6 +38,30 @@ router.post(
       res.status(201).send('Successfully logged in.');
    }
 );
+
+router.get('/login/federated/google', passport.authenticate('google'));
+
+//gets code from google, then exchaanges code for profile info
+router.get(
+   '/oauth2/redirect/google',
+   passport.authenticate('google', {
+      failureRedirect: `/login`,
+      failureMessage: true,
+   }), //fires second part of passport strategy
+   (req: Request, res: Response) => {
+      const session = req.session as unknown as Session;
+      session.user_id = session.passport.user;
+      res.redirect(`/home`);
+   }
+);
+
+router.post('/forgotPassword', (req: Request, res: Response) => {
+   forgotPassword(req, res) as unknown as RequestHandler;
+});
+
+router.post('/resetPassword', (req: Request, res: Response) => {
+   resetPassword(req, res) as unknown as RequestHandler;
+});
 
 router.post('/logout', (req: Request, res: Response, next: NextFunction) => {
    req.logout(function (err: unknown) {

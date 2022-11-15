@@ -128,8 +128,20 @@ type NutritionSummaryFoodLog = {
    total_protein: string;
 };
 
+type CalculateGoalsArgs = {
+   goal: 'weight_loss' | 'maintain' | 'weight_gain' | '';
+   activityLevel: 1 | 1.2 | 1.5;
+   gender: 'male' | 'female' | 'non_binary' | '';
+   age: number;
+   height: number;
+   heightMetric: 'ft' | 'cm';
+   weight: number;
+   weightMetric: 'lb' | 'kg';
+};
+
 export {
    CurrentGoals,
+   CalculateGoalsArgs,
    Session,
    Query,
    UserType,

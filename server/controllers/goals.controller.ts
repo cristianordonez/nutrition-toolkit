@@ -1,6 +1,20 @@
 import { Request, Response } from 'express';
-import { CurrentGoals, Session } from '../../types/types';
+import { CalculateGoalsArgs, CurrentGoals, Session } from '../../types/types';
 import { create, get, update } from '../models/goals.model';
+import { calculate } from '../utils/calculateGoals';
+
+const calculateGoals = async (req: Request, res: Response) => {
+   try {
+      const data = req.query as unknown as CalculateGoalsArgs;
+      console.log('body in calculate goals: ', data);
+      const goals = calculate(data);
+      console.log('goals calculated: ', goals);
+      res.status(201).send(goals);
+   } catch (err) {
+      console.log(err);
+      res.status(500).send('Unable to calculate goals.');
+   }
+};
 
 const getGoals = async (req: Request, res: Response) => {
    try {
@@ -42,4 +56,4 @@ const updateGoals = async (req: Request, res: Response) => {
    }
 };
 
-export { getGoals, createGoals, updateGoals };
+export { calculateGoals, getGoals, createGoals, updateGoals };
