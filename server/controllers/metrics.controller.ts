@@ -29,7 +29,6 @@ const createMetrics = async (req: Request, res: Response) => {
             : Number(data.weight);
       data.height = height;
       data.weight = weight;
-      console.log('data in createmetrics controller: ', data);
       await create(data, user_id);
       res.status(201).send('Successfully saved user metrics.');
    } catch (err) {

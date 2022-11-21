@@ -43,8 +43,6 @@ export const calculate = ({
    const ibwInKg = Math.round(ibw / 2.2);
    const adjustedIBWInKg = Math.round(adjustedIBW / 2.2);
 
-   console.log('bmi: ', bmi);
-
    let nonObeseActivityLevelCalories;
 
    switch (activityLevel) {

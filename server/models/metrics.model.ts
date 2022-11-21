@@ -9,7 +9,6 @@ const get = (user_id: string | number) => {
 };
 
 const create = (metrics: CalculateGoalsArgs, user_id: string | number) => {
-   console.log('user_id: ', user_id);
    const dbQuery = `
    INSERT INTO user_metrics (height, weight, age, gender, activity_level, goal_name, user_id)
    VALUES ($<metrics.height>, 

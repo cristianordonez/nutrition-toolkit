@@ -21,7 +21,6 @@ router.get('/authentication', (req: Request, res: Response) => {
 });
 
 router.post('/signup', (req: Request, res: Response) => {
-   console.log('here in signup route');
    createAccount(req, res) as unknown as RequestHandler;
 });
 
