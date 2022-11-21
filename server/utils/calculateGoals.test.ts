@@ -222,4 +222,21 @@ describe('calculate goals util ', () => {
       expect(values.total_protein).toBe(133);
       expect(values.total_fat).toBe(86);
    });
+   test('Calculates correct values when goal is weight gain, height is standard and weight is metric', async () => {
+      const goalsWeightGain: CalculateGoalsArgs = {
+         goal: 'weight_loss',
+         activityLevel: 1,
+         gender: 'male',
+         age: 18,
+         height: 60,
+         heightMetric: 'ft',
+         weight: 200,
+         weightMetric: 'lb',
+      };
+      const values = calculate(goalsWeightGain);
+      expect(values.total_calories).toBe(1527);
+      expect(values.total_carbohydrates).toBe(172);
+      expect(values.total_protein).toBe(106);
+      expect(values.total_fat).toBe(46);
+   });
 });

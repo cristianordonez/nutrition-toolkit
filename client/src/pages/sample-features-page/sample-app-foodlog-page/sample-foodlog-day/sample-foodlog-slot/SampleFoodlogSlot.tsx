@@ -13,9 +13,9 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import { FoodLogItem } from '../../../../../../../types/types';
-import { getFoodTitle } from '../../../../../../../utils/getFoodTitle';
 import { NutritionTable } from '../../../../../components/nutrition-table';
 import { StyledTableCell } from '../../../../../components/styled-table-components/StyledTableCell';
+import { getFoodTitle } from '../../../../../utils/getFoodTitle';
 interface Props {
    key: number;
    slotName: string;

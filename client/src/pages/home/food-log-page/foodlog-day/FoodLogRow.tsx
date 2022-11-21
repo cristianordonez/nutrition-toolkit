@@ -4,8 +4,8 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { IconButton, TableCell, TableRow, Tooltip } from '@mui/material';
 import React, { useState } from 'react';
 import { FoodLogItem } from '../../../../../../types/types';
-import { getFoodTitle } from '../../../../../../utils/getFoodTitle';
 import { NutritionTable } from '../../../../components/nutrition-table';
+import { getFoodTitle } from '../../../../utils/getFoodTitle';
 
 interface Props {
    meal: FoodLogItem;

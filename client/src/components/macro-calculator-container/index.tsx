@@ -14,7 +14,6 @@ import axios from 'axios';
 import React, { Dispatch, SetStateAction } from 'react';
 import { BsCalculatorFill } from 'react-icons/bs';
 import { CurrentGoals } from '../../../../types/types';
-import { getGoalsFromMetrics } from '../../utils/get-goals-from-metrics/getGoalsFromMetrics';
 import { Calculator } from '../calculator-contents/Calculator';
 import './index.scss';
 interface Props {
@@ -72,28 +71,34 @@ export const MacroCalculatorContainer = ({
    //handles submission of currentGoals, then navigates to search page
    const handleSubmit = async (event: React.SyntheticEvent) => {
       event.preventDefault();
-      const currentGoals = getGoalsFromMetrics({
-         gender,
-         age,
-         height,
-         weight,
-         activityLevel,
-         goal,
+      const currentGoals = await axios.get('/api/goals/calculate', {
+         params: {
+            gender,
+            age,
+            height,
+            weight,
+            weightMetric: 'lb',
+            heightMetric: 'ft',
+            activityLevel,
+            goal,
+         },
       });
+      const calculatedGoals = currentGoals.data;
+      calculatedGoals.goal = goal;
       try {
-         //TODO update metrics herer
-         const createGoalsReq = axios.post(`/api/goals`, currentGoals);
+         const createGoalsReq = axios.post(`/api/goals`, calculatedGoals);
          const createMetricsReq = axios.post('/api/metrics', {
             gender,
             age,
             height,
             weight,
+
             activityLevel,
             goal,
          });
          await axios.all([createGoalsReq, createMetricsReq]);
          if (page === 'macrocalculator' && setGoals !== undefined) {
-            setGoals(currentGoals);
+            setGoals(calculatedGoals);
             setErrorMessage('You have updated your macronutrient needs.');
          } else {
             setErrorMessage(

@@ -11,7 +11,6 @@ import {
    Query,
 } from '../../../../types/types';
 import { CustomAlert } from '../../components/custom-alert/CustomAlert';
-import { getGoalsFromMetrics } from '../../utils/get-goals-from-metrics/getGoalsFromMetrics';
 import SampleFoodLogPage from './sample-app-foodlog-page/SampleFoodLogPage';
 import { SampleFeaturesSidebar } from './sample-features-sidebars';
 
@@ -128,17 +127,23 @@ const SampleFeaturesPage = () => {
          });
    };
 
-   const handleSubmit = (event: React.SyntheticEvent) => {
+   const handleSubmit = async (event: React.SyntheticEvent) => {
       event.preventDefault();
-      const currentGoals = getGoalsFromMetrics({
-         gender,
-         age,
-         height,
-         weight,
-         activityLevel,
-         goal,
+      const currentGoals = await axios.get('/api/goals/calculate', {
+         params: {
+            gender,
+            age,
+            height,
+            weight,
+            weightMetric: 'lb',
+            heightMetric: 'ft',
+            activityLevel,
+            goal,
+         },
       });
-      setGoals(currentGoals);
+      const calculatedGoals = currentGoals.data;
+      calculatedGoals.goals = goal;
+      setGoals(calculatedGoals);
       setAlertSeverity('success');
       setAlertMessage(
          'Your custom macronutrient values have been calculated! View the sidebar to see your calculations'

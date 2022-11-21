@@ -4,7 +4,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { IconButton, TableCell, TableRow, Tooltip } from '@mui/material';
 import React, { useState } from 'react';
 import { FoodSearchResult } from '../../../../../types/types';
-import { getFoodTitle } from '../../../../../utils/getFoodTitle';
+import { getFoodTitle } from '../../../utils/getFoodTitle';
 import { NutritionTable } from '../../nutrition-table';
 import './FoodListRow.scss';
 interface Props extends FoodSearchResult {
