@@ -129,7 +129,7 @@ type NutritionSummaryFoodLog = {
 };
 
 type CalculateGoalsArgs = {
-   goal: 'weight_loss' | 'maintain' | 'weight_gain' | '';
+   goal: 'weight_loss' | 'maintain' | 'gain_muscle' | '';
    activityLevel: 1 | 1.2 | 1.5;
    gender: 'male' | 'female' | 'non_binary' | '';
    age: number;

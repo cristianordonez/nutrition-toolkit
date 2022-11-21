@@ -81,7 +81,17 @@ export const MacroCalculatorContainer = ({
          goal,
       });
       try {
-         await axios.post(`/api/goals`, currentGoals);
+         //TODO update metrics herer
+         const createGoalsReq = axios.post(`/api/goals`, currentGoals);
+         const createMetricsReq = axios.post('/api/metrics', {
+            gender,
+            age,
+            height,
+            weight,
+            activityLevel,
+            goal,
+         });
+         await axios.all([createGoalsReq, createMetricsReq]);
          if (page === 'macrocalculator' && setGoals !== undefined) {
             setGoals(currentGoals);
             setErrorMessage('You have updated your macronutrient needs.');

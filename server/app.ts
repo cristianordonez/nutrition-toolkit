@@ -14,6 +14,7 @@ import { router as authRoute } from './routes/auth.route';
 import { router as foodRoute } from './routes/food.route';
 import { router as foodLogRoute } from './routes/foodLog.route';
 import { router as goalsRoute } from './routes/goals.route';
+import { router as metricsRoute } from './routes/metrics.route';
 dotenv.config();
 
 const pgSession = ConnectPg(session);
@@ -81,6 +82,7 @@ app.use('/api', authRoute);
 app.use('/api/goals', goalsRoute);
 app.use('/api/foodLog', foodLogRoute);
 app.use('/api/food', foodRoute);
+app.use('/api/metrics', metricsRoute);
 
 //ROUTES
 app.get('/', (req: Request, res: Response) => {

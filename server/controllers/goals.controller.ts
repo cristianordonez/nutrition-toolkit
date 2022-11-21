@@ -6,10 +6,10 @@ import { calculate } from '../utils/calculateGoals';
 const calculateGoals = async (req: Request, res: Response) => {
    try {
       const data = req.query as unknown as CalculateGoalsArgs;
-      console.log('body in calculate goals: ', data);
       const goals = calculate(data);
-      console.log('goals calculated: ', goals);
-      res.status(201).send(goals);
+      setTimeout(() => {
+         res.status(201).send(goals);
+      }, 1000);
    } catch (err) {
       console.log(err);
       res.status(500).send('Unable to calculate goals.');
