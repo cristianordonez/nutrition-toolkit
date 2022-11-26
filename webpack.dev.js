@@ -2,7 +2,7 @@ const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const path = require('path');
 
-const DIST_DIR = path.join(__dirname, '/client/dist');
+const DIST_DIR = path.join(__dirname, '/dist/client');
 
 module.exports = merge(common, {
    mode: 'development',
@@ -22,7 +22,7 @@ module.exports = merge(common, {
       allowedHosts: 'auto',
       port: 3000,
       proxy: {
-         '/api': {
+         '/api/*': {
             target: 'http://localhost:8080',
          },
       },

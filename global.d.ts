@@ -7,6 +7,8 @@ declare module '*.png' {
    export default content;
 }
 
+declare module '*.scss';
+
 declare global {
    namespace Express {
       export interface User {

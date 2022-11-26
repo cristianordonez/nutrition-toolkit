@@ -1,7 +1,7 @@
 require('dotenv').config();
 const webpack = require('webpack');
 const path = require('path');
-const DIST_DIR = path.join(__dirname, '/client/dist');
+const DIST_DIR = path.join(__dirname, '/dist/client');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
@@ -12,7 +12,7 @@ module.exports = {
    resolve: {
       extensions: ['.js', '.json', '.ts', '.tsx'],
    },
-   entry: `${path.join(__dirname, '/client/src')}/index.tsx`,
+   entry: `${path.join(__dirname, '/src/client')}/index.tsx`,
    output: {
       filename: 'bundle.js',
       path: DIST_DIR,

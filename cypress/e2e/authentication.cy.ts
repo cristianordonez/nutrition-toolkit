@@ -7,7 +7,6 @@ describe('The Login Page', () => {
       cy.visit('/');
       cy.contains('Log in').click();
       cy.contains('Create Account').click();
-      cy.findByPlaceholderText('Username').type('test_username01');
       cy.findByPlaceholderText('Email').type('currenttestemail@email.com');
       cy.findByPlaceholderText('Password').type('password');
       cy.findByPlaceholderText('Confirm Password').type('password');
