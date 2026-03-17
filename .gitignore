@@ -5,3 +5,5 @@
 /cypress-coverage
 .nyc_output
 personal-aws-key-pair.pem
+client/dist
+cypress/.DS_Store

@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 const database =
-   process.env.NODE_ENV === 'test' ? 'test_database' : 'the_macro_trainer';
+   process.env.NODE_ENV === 'prod' ? 'the_macro_trainer' : 'test_database';
 
 // const pgp = require('pg-promise')();
 
