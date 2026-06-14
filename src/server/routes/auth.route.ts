@@ -51,7 +51,6 @@ router.get(
    }), //fires second part of passport strategy
    (req: Request, res: Response) => {
       const session = req.session as unknown as Session;
-      console.log('sessino: ', session);
       session.user_id = session.passport.user;
       res.redirect(`/home`);
    }

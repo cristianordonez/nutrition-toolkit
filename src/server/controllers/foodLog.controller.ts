@@ -44,7 +44,7 @@ const addFoodLogItem = async function (req: Request, res: Response) {
       await createFoodLogItem(body, session.user_id);
       res.status(201).send('Successfully posted food log item');
    } catch (err) {
-      console.log('error', err);
+      console.error(err);
       res.status(400).send('Error adding item to foodlog');
    }
 };

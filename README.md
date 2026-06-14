@@ -148,13 +148,13 @@ createdb the_macro_trainer_test
 - Run unit tests with Jest/React Testing Library:
 
 ```bash
-npm run jest
+npm run test:jest
 ```
 
 -Then run end to end tests with Cypress:
 
 ```bash
-npm run cypress
+npm run test:cypress
 ```
 
 -Or run both tests concurrently:
@@ -164,6 +164,16 @@ npm run test
 ```
 
 ## Deployment
+
+- ssh into digital ocean droplet
+
+```bash
+ssh -i ~/.ssh/id_digital_ocean root@64.227.17.191
+```
+
+- Create ssh key on droplet and add to github account
+
+- Clone repository to /var/www
 
 - When application is ready for production, have webpack build your bundle and minimize your files and then start the Express server:
 

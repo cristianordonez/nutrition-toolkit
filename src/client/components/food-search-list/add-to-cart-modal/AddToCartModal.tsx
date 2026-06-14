@@ -97,7 +97,7 @@ export const AddToCartModal = ({
          setOpenSnackbar(true);
          setOpenDialog(false);
       } catch (err) {
-         console.log(err);
+         console.error(err);
       }
    };
 
