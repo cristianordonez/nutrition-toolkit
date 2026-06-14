@@ -9,6 +9,4 @@
 cypress/.DS_Store
 
 # build
-build
-client/dist
-server/dist
+dist
