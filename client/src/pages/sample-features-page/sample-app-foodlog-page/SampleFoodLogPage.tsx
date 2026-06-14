@@ -46,12 +46,8 @@ const SampleFoodLogPage = ({
    sampleFoodLogItems,
    setAlertMessage,
 }: Props) => {
-   // const [dayIndex, setDayIndex] = useState<number>(); //used for tab highlighting
    const dayIndex = getDay(Date.now());
    const currentDay = format(new Date(Date.now()), 'yyyy-MM-dd');
-   // const [currentDay, setCurrentDay] = useState(
-   //    format(new Date(Date.now()), 'yyyy-MM-dd')
-   // );
 
    useEffect(() => {
       axios

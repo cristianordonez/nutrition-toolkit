@@ -37,11 +37,24 @@ const ForgotPasswordPage = () => {
             replace: true,
          });
       } catch (err: unknown) {
-         console.log('err: ', err);
+         let msg = '';
+         if (axios.isAxiosError(err)) {
+            if (err.response) {
+               console.error('Server Error Data:', err.response.data);
+               console.error('Status Code:', err.response.status);
+               msg = err.response.data as string;
+            } else if (err.request) {
+               console.error('Network Error (No Response):', err.request);
+               msg = err.message;
+            } else {
+               console.error('Request Setup Error:', err.message);
+               msg = err.message;
+            }
+         } else {
+            msg = 'Unexpected error occured. Please try again later.';
+         }
          setAlertSeverity('error');
-         setAlertMessage(
-            'No account with that email exists. Did you mean to log in?'
-         );
+         setAlertMessage(msg);
          setOpenAlert(true);
       }
    };

@@ -1,1 +1,0 @@
-ssh -i "personal-aws-key-pair.pem" ubuntu@ec2-34-238-83-14.compute-1.amazonaws.com

@@ -152,7 +152,6 @@ const FoodLogPage = ({
                      ))}
                   </Tabs>
                </div>
-
                <FoodLogDay
                   setFoodLogItems={setFoodLogItems}
                   currentDay={currentDay}

@@ -81,11 +81,15 @@ export const SampleFoodLogSlot = ({ slotName, meals }: Props) => {
                               {getFoodTitle(meal.brand_owner, meal.description)}
                            </TableCell>
                            <TableCell className='hide-on-mobile'>
-                              {Number(meal.serving_size) *
-                                 Number(meal.servings)}{' '}
+                              {Math.floor(
+                                 Number(meal.serving_size) *
+                                    Number(meal.servings)
+                              )}{' '}
                               {meal.serving_size_unit}
                            </TableCell>
-                           <TableCell>{meal.nutrition.calories} kcal</TableCell>
+                           <TableCell>
+                              {Math.floor(Number(meal.nutrition.calories))} kcal
+                           </TableCell>
                         </TableRow>
                         <NutritionTable
                            open={open}

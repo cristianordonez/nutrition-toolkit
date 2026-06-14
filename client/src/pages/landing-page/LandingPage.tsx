@@ -49,6 +49,10 @@ const LandingPage = () => {
    const cardImages = [ScheduleSvg, MaleChefSvg, CalculateSvg];
    const featureView = ['calculator', 'search', 'foodLog'];
 
+   /**
+    * Navigate to calculator, search or food log sample tabs
+    * @param featureView name of feature to navigate to
+    */
    const handleNavigatingToFeatures = (featureView: string) => {
       if (featureView === 'foodLog') {
          navigate(`/macro-trainer-features`);
@@ -65,6 +69,7 @@ const LandingPage = () => {
          window.history.replaceState({}, document.title);
       }
    }, []);
+
    return (
       <>
          <div className='home-page'>

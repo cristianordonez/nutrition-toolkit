@@ -103,10 +103,8 @@ export const App = () => {
          <ColorModeContext.Provider value={colorMode}>
             <ThemeProvider theme={theme}>
                <CssBaseline />
-
                <AuthProvider>
                   <NavBar />
-
                   <Suspense fallback={<></>}>
                      <Routes>
                         <Route path='/' element={<LandingPage />} />
@@ -130,7 +128,6 @@ export const App = () => {
                               element={<UserSettingsPage />}
                            />
                         </Route>
-
                         <Route
                            path='/macro-trainer-features/*'
                            element={<SampleFeaturesPage />}
@@ -144,7 +141,6 @@ export const App = () => {
                               element={<SampleCalculatorPage />}
                            />
                         </Route>
-
                         <Route path='*' element={<NoPageFound />} />
                      </Routes>
                   </Suspense>

@@ -20,18 +20,25 @@ const LoginPage = () => {
    const [openErrorAlert, setOpenErrorAlert] = useState(false);
    const [errorMessage, setErrorMessage] = useState(''); //message displayed on snackbar
 
-   //handles showing snackbar if request to server to login is not successful
+   /**
+    * Handles showing snackbar if request to server to login is not successful
+    */
    const handleAlert = () => {
       setOpenErrorAlert(!openErrorAlert);
    };
 
-   //toggles showSignup state so user can either login or see the signup component
+   /**
+    * Toggles showSignup state so user can either login or see the signup component
+    */
    const handleRedirectToSignup = () => {
       setShowSignup(!showSignup);
    };
 
    const location = useLocation() as unknown as LocationType;
-   // //when logged out, react router sends state saying log out was successful to show alert
+
+   /**
+    * When logged out, react router sends state saying log out was successful to show alert
+    */
    useEffect(() => {
       if (location.state && location.state.resetPassword) {
          setAlertSeverity('success');

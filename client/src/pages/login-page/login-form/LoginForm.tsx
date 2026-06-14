@@ -34,12 +34,16 @@ export const LoginForm = ({
       setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
    };
 
-   //# state value must be called 'username' for passport local strategy to work
+   // state value must be called 'username' for passport local strategy to work
    const [loginValues, setLoginValues] = useState({
       username: '',
       password: '',
    });
 
+   /**
+    * Update state with login/password information
+    * @param event event triggered on login button click
+    */
    const handleLoginChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       let currentValue;
       if (event.target.name === 'username') {
@@ -53,6 +57,10 @@ export const LoginForm = ({
       });
    };
 
+   /**
+    * Handle user login and navigation
+    * @param event user clicks on login btn
+    */
    const handleLogin = async (event: React.SyntheticEvent) => {
       event.preventDefault();
       try {
@@ -65,8 +73,8 @@ export const LoginForm = ({
             navigate(`/home`, { replace: true });
          }
       } catch (err) {
+         console.error(err);
          setAlertSeverity('error');
-         console.log('err: ', err);
          setErrorMessage('No matching username and password found.'); //showTextFieldError message used in the snackbar
          setShowTextFieldError(true); //used to show showTextFieldError helper text in text field
          handleErrorAlert();
