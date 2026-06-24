@@ -1,4 +1,4 @@
-describe('The MacroCalculator Page', () => {
+describe('Nutrition Toolkit Page', () => {
    //create user before all tests
    before(() => {
       cy.signup();
@@ -12,7 +12,7 @@ describe('The MacroCalculator Page', () => {
    });
 
    it('Allows user to update their metrics', () => {
-      cy.contains('Macro Calculator').click();
+      cy.contains('Nutrition Toolkit').click();
       cy.contains('Female').click();
       cy.contains('Non-binary').click();
       cy.findByTestId('age-input').type('{backspace}{backspace}27');

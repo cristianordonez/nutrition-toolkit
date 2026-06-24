@@ -6,6 +6,7 @@ import { calculate } from '../utils/calculateGoals';
 const calculateGoals = async (req: Request, res: Response) => {
    try {
       const data = req.query as unknown as CalculateGoalsArgs;
+      console.log('data: ', data);
       const goals = calculate(data);
       setTimeout(() => {
          res.status(201).send(goals);

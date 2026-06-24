@@ -36,8 +36,9 @@ module.exports = {
       ],
    },
    plugins: [
+      new webpack.DefinePlugin({"process.env.REACT_APP_VERSION": JSON.stringify(process.env.npm_package_version)}),
       new HtmlWebpackPlugin({
-         title: 'The MacroTrainer',
+         title: 'Nutrition Toolkit',
          template: 'template.html',
          favicon: './favicon_io/favicon.ico',
       }),
