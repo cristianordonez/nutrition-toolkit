@@ -1,6 +1,6 @@
 {
-   "name": "the-macro-trainer",
-   "version": "1.3.0",
+   "name": "nutrition-toolkit",
+   "version": "1.3.1",
    "description": "Food Logging app to find foods with desired number of calories, carbs, protein and fat.",
    "main": "server.js",
    "scripts": {
@@ -20,18 +20,18 @@
       "build:server": "tsc --project tsconfig.server.json",
       "build": "concurrently -n 'frontend,server' -c 'bgGreen.bold,bgBlue.bold' \"npm:build:frontend\" \"npm:build:server\"",
       "start": "node ./dist/server/server.js",
-      "pm2": "pm2 start npm --name 'themacrotrainer' -- start "
+      "pm2": "pm2 start npm --name 'nutritiontoolkit' -- start "
    },
    "repository": {
       "type": "git",
-      "url": "git+https://github.com/cristianordonez/the-macro-trainer.git"
+      "url": "git+https://github.com/cristianordonez/nutrition-toolkit.git"
    },
    "author": "Cristian Ordonez",
    "license": "ISC",
    "bugs": {
-      "url": "https://github.com/cristianordonez/the-macro-trainer/issues"
+      "url": "https://github.com/cristianordonez/nutrition-toolkit/issues"
    },
-   "homepage": "https://github.com/cristianordonez/the-macro-trainer#readme",
+   "homepage": "https://github.com/cristianordonez/nutrition-toolkit#readme",
    "overrides": {
       "@emotion/react": "11.13.5",
       "@emotion/styled": "11.13.5"

@@ -21,6 +21,6 @@ describe('Landing Page', () => {
    test('Correctly renders the landing page', async () => {
       const user = userEvent.setup();
       render(<App />);
-      expect(screen.getByText('The MacroTrainer')).toBeInTheDocument();
+      expect(screen.getByText('Nutrition Toolkit')).toBeInTheDocument();
    });
 });

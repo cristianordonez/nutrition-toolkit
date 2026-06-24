@@ -85,7 +85,7 @@ const LandingPage = () => {
                      variant='h2'
                      sx={{ fontFamily: 'Lato' }}
                   >
-                     The MacroTrainer
+                     Nutrition Toolkit
                   </Typography>
                   <Typography variant='body1' component='h5'>
                      Calculate your macronutrient needs and find food products

@@ -9,6 +9,18 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 export const Footer = () => {
    const currentYear = getYear(new Date(Date.now()));
 
+   // let version: string;
+   // if (VERSION) {
+   //    version = VERSION;
+   // } else {
+   //    version = '0.1.0';
+   // }
+   console.log(
+      'process.env.REACT_APP_VERSION: ',
+      process.env.REACT_APP_VERSION
+   );
+   const version = process.env.REACT_APP_VERSION;
+
    return (
       <>
          <Box
@@ -16,7 +28,6 @@ export const Footer = () => {
                display: 'flex',
                width: '100%',
                bottom: '0',
-               //    position: 'absolute',
                justifyContent: 'center',
                alignItems: 'center',
                flexDirection: 'column',
@@ -47,8 +58,9 @@ export const Footer = () => {
             </Stack>
             <Typography variant='body2'>
                {' '}
-               Created by Cristian Ordonez © {currentYear}{' '}
+               Created by Cristian Ordonez © {currentYear}
             </Typography>
+            <Typography variant='body2'>v{version}</Typography>
          </Box>
       </>
    );

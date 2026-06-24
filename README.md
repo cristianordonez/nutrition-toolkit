@@ -1,10 +1,10 @@
-# The MacroTrainer
+# Nutrition Toolkit
 
 A full-stack food logging application that allows users to calculate their recommended calories and macronutrient needs based on their metrics. They can then search from a list of over 350,000 foods to find any that match their desired macronutrient ranges.
 
 ## Live Link
 
-View live deployment here at [themacrotrainer.com](https://themacrotrainer.com) or see the demo below.
+View live deployment here at [nutritiontoolkit.com](https://nutritiontoolkit.com) or see the demo below.
 
 ## Features & Usage
 
@@ -58,46 +58,49 @@ npm install
 
 ### Set up postgreSQL database
 
+- Install postgresl
+
+```bash
+brew install postgresql
+sudo apt install postgresql
+```
+
 - Make sure service is running:
 
 ```bash
-brew services list
-```
-
-- if not, start it using homebrew:
-
-```bash
 brew services start postgresql
+sudo systemctl start postgresql
 ```
 
-- make sure the_macro_trainer and the_macro_trainer_test databases both exist on local install
-
-- use command line to connect to postgresql instance and check databases
+- create new role called cristianordonez (postgres uses current user for peer authentication so make sure you are logged in as cristianordonez when connecting)
 
 ```bash
+sudo -u postgres psql
+create database nutrition_toolkit;
+create database nutrition_toolkit_test;
+create role cristianordonez with login;
+```
+
+- login as cristianordonez if not already done so and then connect
+
+```bash
+su - cristianordonez
 psql postgres
 \l # list databases
-\c the_macro_trainer # connect to database
+\c nutrition_toolkit # connect to database
 \dt # list all tables
-```
-
-- create database if needed
-
-```bash
-createdb the_macro_trainer
-createdb the_macro_trainer_dev
 ```
 
 - create backup if needed
 
 ```bash
-pg_dump -U cristianordonez -d the_macro_trainer_dev > ~/Workspace/the_macro_trainer.sql
+pg_dump -U cristianordonez -d nutrition_toolkit_dev > ~/Workspace/the_macro_trainer.sql
 ```
 
 - restore from backup
 
 ```bash
-psql -U cristianordonez -d the_macro_trainer_dev -f ~/Workspace/the_macro_trainer.sql
+psql -U cristianordonez -d nutrition_toolkit < ~/nutritionToolkit.sql
 ```
 
 ### Set up Google Sign in
@@ -142,7 +145,7 @@ npm run dev
 - Make sure test database is created before running test suite
 
 ```bash
-createdb the_macro_trainer_test
+createdb nutrition_toolkit_test
 ```
 
 - Run unit tests with Jest/React Testing Library:
@@ -171,9 +174,28 @@ npm run test
 ssh -i ~/.ssh/id_digital_ocean root@64.227.17.191
 ```
 
+- create new user
+
+```bash
+sudo adduser cristianordonez
+```
+
+- login as new user
+
+```bash
+su - cristianordonez
+```
+
 - Create ssh key on droplet and add to github account
 
 - Clone repository to /var/www
+
+- install node and npm
+
+```bash
+sudo apt install nodejs
+sudo apt install npm
+```
 
 - When application is ready for production, have webpack build your bundle and minimize your files and then start the Express server:
 
@@ -182,10 +204,12 @@ npm run build
 npm start
 ```
 
+- Make sure .env file exists
+
 - Then restart PM2 process
 
 ```bash
-sudo pm2 restart themacrotrainer
+sudo pm2 restart nutrition-toolkit
 ```
 
 - And also restart Nginx
@@ -195,6 +219,14 @@ sudo systemctl restart nginx
 ```
 
 Then navigate to port 8080 in your browser to view your application.
+
+## Known issues
+
+- Issues starting postgres service. Delete postmaster.pid
+
+```bash
+rm /usr/local/var/postgresql@18/postmaster.pid
+```
 
 ## Resources
 
@@ -207,6 +239,7 @@ Then navigate to port 8080 in your browser to view your application.
 - [Setting up custom domain when using Nginx][nginx]
 - [Passport node.js][passport]
 - [Google Dev Console][google-dev]
+- [Digital Ocean Droplet][digital-ocean]
 
 [passport]: https://www.passportjs.org/packages/passport-google-oauth20/
 [react]: https://reactjs.org/docs/code-splitting.html
@@ -218,3 +251,4 @@ Then navigate to port 8080 in your browser to view your application.
 [nginx]: https://stackoverflow.com/questions/32467541/link-a-google-domain-to-amazon-ec2-server#:~:text=In%20your%20google%20domain%20admin,from%20the%20amazon%20EC2%20instance.
 [google-dev]: https://console.cloud.google.com/welcome?project=macrotrainer
 [register-google]: https://www.passportjs.org/tutorials/google/register/
+[digital-ocean]: https://cloud.digitalocean.com/droplets/577653788?i=5ac0da

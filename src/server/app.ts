@@ -85,8 +85,8 @@ app.get('/', (req: Request, res: Response) => {
    res.status(200).json({
       status: 'success',
       data: {
-         name: 'MacroTrainer API',
-         version: '1.3.0',
+         name: 'NutritionToolkit API',
+         version: process.env.npm_package_version,
       },
    });
 });

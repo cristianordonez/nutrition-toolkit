@@ -22,7 +22,7 @@ export const MainTitle = () => {
             },
          }}
       >
-         MacroTrainer
+         NutritionToolkit
       </Typography>
    );
 };
