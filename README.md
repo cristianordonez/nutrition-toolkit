@@ -197,14 +197,21 @@ sudo apt install nodejs
 sudo apt install npm
 ```
 
+- Make sure .env file exists and most recent version is available on droplet
+
 - When application is ready for production, have webpack build your bundle and minimize your files and then start the Express server:
 
 ```bash
-npm run build
+npm run build:frontend
+npm run build:server
 npm start
 ```
 
-- Make sure .env file exists
+
+
+
+
+
 
 - Then restart PM2 process
 
@@ -240,6 +247,7 @@ rm /usr/local/var/postgresql@18/postmaster.pid
 - [Passport node.js][passport]
 - [Google Dev Console][google-dev]
 - [Digital Ocean Droplet][digital-ocean]
+- [Deploy on droplet][digital-ocean-deploy]
 
 [passport]: https://www.passportjs.org/packages/passport-google-oauth20/
 [react]: https://reactjs.org/docs/code-splitting.html
@@ -252,3 +260,4 @@ rm /usr/local/var/postgresql@18/postmaster.pid
 [google-dev]: https://console.cloud.google.com/welcome?project=macrotrainer
 [register-google]: https://www.passportjs.org/tutorials/google/register/
 [digital-ocean]: https://cloud.digitalocean.com/droplets/577653788?i=5ac0da
+[digital-ocean-deploy]: https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-20-04

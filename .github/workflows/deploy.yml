@@ -1,0 +1,57 @@
+name: Deploy to DigitalOcean Droplet
+on:
+   push:
+      branches:
+         - poc
+jobs:
+   build:
+      runs-on: ubuntu-latest
+      steps:
+         - name: Checkout Source Code
+           uses: actions/checkout@v4
+         - name: Set up Node.js
+           uses: actions/setup-node@v4
+           with:
+              node-version: '20'
+              cache: 'npm'
+         - name: Install Dependencies
+           run: npm ci
+         - name: Build Production Package
+           run: npm run build
+         - name: Tar the Build Artifact
+           run: tar -czf release.tar.gz dist/ package.json package-lock.json
+         - name: Upload Artifact for Deployment
+           uses: actions/upload-artifact@v4
+           with:
+              name: production-package
+              path: release.tar.gz
+              retention-days: 1
+   # JOB 2: Securely transfer the package and restart the Droplet service
+   deploy:
+      needs: build # Ensures deploy only runs if the build succeeds
+      runs-on: ubuntu-latest
+      steps:
+         - name: Download Build Artifact
+           uses: actions/download-artifact@v4
+           with:
+              name: production-package
+         - name: Copy Package to Droplet via SCP
+           uses: appleboy/scp-action@master
+           with:
+              host: ${{ secrets.HOST }}
+              username: ${{ secrets.USERNAME }}
+              key: ${{ secrets.SSH_KEY }}
+              source: 'release.tar.gz'
+              target: '/var/www/nutrition-toolkit' # Path on your Droplet
+         - name: Extract Package and Restart Service via SSH
+           uses: appleboy/ssh-action@master
+           with:
+              host: ${{ secrets.HOST }}
+              username: ${{ secrets.USERNAME }}
+              key: ${{ secrets.SSH_KEY }}
+              script: |
+                 cd /var/www/nutrition-toolkit
+                 tar -xzf release.tar.gz --overwrite
+                 rm release.tar.gz
+                 npm install --production
+                 pm2 restart nutrition-toolkit || pm2 start dist/server/index.js --name "my-app"
