@@ -112,6 +112,7 @@ export const calculate = ({
             total_protein = Math.round(weightInKg * 1.2);
       }
    }
+
    const total_carbohydrates = Math.round((total_calories * 0.45) / 4);
    const total_fat = Math.round(
       (total_calories - (total_protein * 4 + total_carbohydrates * 4)) / 9

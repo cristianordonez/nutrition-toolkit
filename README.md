@@ -72,19 +72,19 @@ brew services start postgresql
 sudo systemctl start postgresql
 ```
 
-- create new role called cristianordonez (postgres uses current user for peer authentication so make sure you are logged in as cristianordonez when connecting)
+- create new role called cristian (postgres uses current user for peer authentication so make sure you are logged in as cristian when connecting)
 
 ```bash
 sudo -u postgres psql
 create database nutrition_toolkit;
 create database nutrition_toolkit_test;
-create role cristianordonez with login;
+create role cristian with login;
 ```
 
-- login as cristianordonez if not already done so and then connect
+- login as cristian if not already done so and then connect
 
 ```bash
-su - cristianordonez
+su - cristian
 psql postgres
 \l # list databases
 \c nutrition_toolkit # connect to database
@@ -94,13 +94,13 @@ psql postgres
 - create backup if needed
 
 ```bash
-pg_dump -U cristianordonez -d nutrition_toolkit_dev > ~/Workspace/the_macro_trainer.sql
+pg_dump -U cristian -d nutrition_toolkit_dev > ~/Workspace/the_macro_trainer.sql
 ```
 
 - restore from backup
 
 ```bash
-psql -U cristianordonez -d nutrition_toolkit < ~/nutritionToolkit.sql
+psql -U cristian -d nutrition_toolkit < ~/nutritionToolkit.sql
 ```
 
 ### Set up Google Sign in
@@ -177,13 +177,13 @@ ssh -i ~/.ssh/id_digital_ocean root@64.227.17.191
 - create new user
 
 ```bash
-sudo adduser cristianordonez
+sudo adduser cristian
 ```
 
 - login as new user
 
 ```bash
-su - cristianordonez
+su - cristian
 ```
 
 - Create ssh key on droplet and add to github account
@@ -207,16 +207,10 @@ npm run build:server
 npm start
 ```
 
-
-
-
-
-
-
 - Then restart PM2 process
 
 ```bash
-sudo pm2 restart nutrition-toolkit
+sudo pm2 restart nutritiontoolkit
 ```
 
 - And also restart Nginx

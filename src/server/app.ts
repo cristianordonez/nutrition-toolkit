@@ -23,7 +23,7 @@ const app = express();
 
 app.use(cors());
 app.use(compression());
-app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use(express.static(path.join(__dirname, '../../dist/client')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -81,7 +81,7 @@ app.use('/api/foodLog', foodLogRoute);
 app.use('/api/food', foodRoute);
 app.use('/api/metrics', metricsRoute);
 
-app.get('/', (req: Request, res: Response) => {
+app.get('/api', (req: Request, res: Response) => {
    res.status(200).json({
       status: 'success',
       data: {
@@ -92,7 +92,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.get('/*', (req, res) => {
-   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+   res.sendFile(path.join(__dirname, '../../dist/client/index.html'));
 });
 
 export default app;
