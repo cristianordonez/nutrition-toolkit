@@ -13,7 +13,7 @@ const getFoodItemsSimple = async (req: Request, res: Response) => {
       const foodItemsSimple = await get(query);
       res.status(200).send(foodItemsSimple);
    } catch (err) {
-      console.log(err);
+      console.error(err);
       res.status(400).send('Unable to retrieve search results.');
    }
 };
@@ -24,7 +24,7 @@ const getFoodItemsAdvanced = async (req: Request, res: Response) => {
       const foodItems = await getAdvanced(query);
       res.status(200).send(foodItems);
    } catch (err) {
-      console.log(err);
+      console.error(err);
       res.status(400).send('Unable to retrieve search results.');
    }
 };
@@ -35,7 +35,7 @@ const getFoodItemsAdvancedByBrand = async (req: Request, res: Response) => {
       const foodItems = await getAdvancedByBrand(query);
       res.status(200).send(foodItems);
    } catch (err) {
-      console.log(err);
+      console.error(err);
       res.status(400).send('Unable to retrieve search results.');
    }
 };
@@ -45,7 +45,7 @@ const getSampleFoodItems = async (req: Request, res: Response) => {
       const foodItems = (await getSampleItems()) as unknown as FoodSearchResult;
       res.status(200).send(foodItems);
    } catch (err) {
-      console.log('err: ', err);
+      console.error(err);
       res.status(400).send('Unable to retrieve search results.');
    }
 };

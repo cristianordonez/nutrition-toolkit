@@ -8,7 +8,6 @@ import {
 const router = Router();
 
 router.get('/calculate', (req: Request, res: Response) => {
-   console.log('here in calculate request');
    calculateGoals(req, res) as unknown as RequestHandler;
 });
 

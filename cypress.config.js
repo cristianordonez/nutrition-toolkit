@@ -1,6 +1,6 @@
 //! Cypress tests use the real database, not test database;
 const { defineConfig } = require('cypress');
-import { db } from './server/database/db';
+import { db } from './src/server/database/db';
 
 // tasks are called with cy.task(taskName)
 module.exports = defineConfig({

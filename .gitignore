@@ -8,3 +8,5 @@
 personal-aws-key-pair.pem
 cypress/screenshots
 dist
+
+cypress/screenshots
