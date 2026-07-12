@@ -1,5 +1,4 @@
 import GoogleStrategy from 'passport-google-oidc';
-import { VerifyFunction } from 'passport-local';
 import { PassportGoogleUser } from '../../shared/types';
 import { createGoogleUser, getGoogleUser } from '../models/auth.model';
 
