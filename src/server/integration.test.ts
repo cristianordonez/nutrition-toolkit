@@ -1,7 +1,7 @@
 /**
  * @jest-environment node
  */
-process.env.DATABASE_NAME = 'the_macro_trainer_test';
+process.env.DATABASE_NAME = 'nutrition_toolkit_test';
 import { expect } from '../shared/jestGlobals';
 import supertest from 'supertest';
 import app from './app';

@@ -10,3 +10,5 @@ cypress/.DS_Store
 
 # build
 dist
+
+cypress/screenshots

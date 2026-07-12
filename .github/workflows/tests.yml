@@ -18,7 +18,7 @@ jobs:
             # Provide the password for postgres
             env:
                POSTGRES_PASSWORD: postgres
-               POSTGRES_DB: the_macro_trainer_test
+               POSTGRES_DB: nutrition_toolkit_test
             # Set health checks to wait until postgres has started
             options: >-
                --health-cmd pg_isready
@@ -59,7 +59,7 @@ jobs:
               DATABASE_HOST: localhost
               DATABASE_USER: postgres
               DATABASE_PASSWORD: postgres
-              DATABASE_NAME: the_macro_trainer_test
+              DATABASE_NAME: nutrition_toolkit_test
               # The default PostgreSQL port
               POSTGRES_PORT: 5432
          - name: run tests

@@ -55,7 +55,7 @@ const updateMetrics = async (req: Request, res: Response) => {
       await update(data, user_id);
       res.status(201).send('Metrics have been updated.');
    } catch (err) {
-      console.error('err: ', err);
+      console.error(err);
       res.status(400).send('Metrics could not be updated.');
    }
 };
@@ -67,7 +67,7 @@ const deleteUserMetrics = async (req: Request, res: Response) => {
       await deleteMetrics(user_id);
       res.status(201).send('Metrics have been deleted.');
    } catch (err) {
-      console.error('err: ', err);
+      console.error(err);
       res.status(400).send('Metrics could not be deleted.');
    }
 };

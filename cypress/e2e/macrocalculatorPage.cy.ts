@@ -12,7 +12,7 @@ describe('Nutrition Toolkit Page', () => {
    });
 
    it('Allows user to update their metrics', () => {
-      cy.contains('Nutrition Toolkit').click();
+      cy.visit(`/home/macrocalculator`);
       cy.contains('Female').click();
       cy.contains('Non-binary').click();
       cy.findByTestId('age-input').type('{backspace}{backspace}27');
