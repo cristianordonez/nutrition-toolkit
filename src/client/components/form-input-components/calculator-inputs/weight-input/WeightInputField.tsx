@@ -21,9 +21,9 @@ export const WeightInputField = ({ weight, setWeight }: Props) => {
       setWeight(event.target.value === '' ? '' : Number(event.target.value));
    };
    const handleWeightBlur = () => {
-      if (weight < 70) {
+      if (Number(weight) < 70) {
          setWeight(70);
-      } else if (weight > 400) {
+      } else if (Number(weight) > 400) {
          setWeight(400);
       }
    };

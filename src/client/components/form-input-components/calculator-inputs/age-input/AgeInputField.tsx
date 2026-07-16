@@ -20,9 +20,9 @@ export const AgeInputField = ({ age, setAge }: Props) => {
       setAge(event.target.value === '' ? '' : Number(event.target.value));
    };
    const handleAgeBlur = () => {
-      if (age < 18) {
+      if (Number(age) < 18) {
          setAge(18);
-      } else if (age > 100) {
+      } else if (Number(age) > 100) {
          setAge(100);
       }
    };

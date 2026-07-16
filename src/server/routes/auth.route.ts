@@ -51,7 +51,6 @@ router.get(
    }), //fires second part of passport strategy
    (req: Request, res: Response) => {
       const session = req.session as unknown as Session;
-      console.log('session: ', session);
       session.user_id = session.passport.user;
       res.redirect(`/home`);
    }
@@ -68,7 +67,7 @@ router.post('/resetPassword', (req: Request, res: Response) => {
 router.post('/logout', (req: Request, res: Response, next: NextFunction) => {
    req.logout(function (err: unknown) {
       if (err) {
-         console.error('err in router.post logout: ', err);
+         req.log.error(err);
          return next(err);
       }
       const session = req.session as unknown as Session;
