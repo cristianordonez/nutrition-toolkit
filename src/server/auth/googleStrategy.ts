@@ -30,10 +30,12 @@ export const customGoogleStrategy = new GoogleStrategy(
       },
       done: (err?: Error | null, user?: Express.User, info?: unknown) => void
    ) => {
+      console.log('profile: ', profile);
       if (!profile.emails) {
          throw new Error('Email is not provided.');
       }
       const email = profile.emails[0].value;
+      console.log('email: ', email);
       getGoogleUser(email)
          .then((response: PassportGoogleUser | null) => {
             //if user exists, redirect

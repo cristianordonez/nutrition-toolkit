@@ -7,6 +7,7 @@ import express, { Request, Response } from 'express';
 import session from 'express-session';
 import passport from 'passport';
 import path from 'path';
+import pinoHttp from 'pino-http';
 import { customGoogleStrategy } from './auth/googleStrategy';
 import { customLocalStrategy } from './auth/localStrategy';
 import { db } from './database/db';
@@ -15,12 +16,14 @@ import { router as foodRoute } from './routes/food.route';
 import { router as foodLogRoute } from './routes/foodLog.route';
 import { router as goalsRoute } from './routes/goals.route';
 import { router as metricsRoute } from './routes/metrics.route';
+import { logger } from './logger';
 dotenv.config();
 
 const pgSession = ConnectPg(session);
 const envVariables = process.env as unknown as { SESSION_SECRET: string };
 const app = express();
 
+app.use(pinoHttp({ logger }));
 app.use(cors());
 app.use(compression());
 app.use(express.static(path.join(__dirname, '../../dist/client')));
@@ -61,16 +64,27 @@ passport.use('local', customLocalStrategy);
 /**
  * determines which data of user object should be stored in session to be accessed below in the deserializeUser function
  */
-passport.serializeUser((userId: unknown, done) => {
-   done(null, userId);
+passport.serializeUser((user: unknown, done) => {
+   logger.info(`Serializing user with ID: ${user}`);
+   done(null, user);
 });
 
+type User = {
+   user_id: string;
+   email: string;
+};
+
 passport.deserializeUser((userId: string, cb) => {
+   logger.info(`Deserializing user with ID: ${userId}`);
    db.any(`SELECT user_id, email FROM users WHERE user_id=$1`, [Number(userId)])
-      .then(function (results: string[]) {
+      .then(function (results: User[]) {
+         logger.info(
+            `User retrieved from database: ${JSON.stringify(results[0])}`
+         );
          cb(null, results[0]);
       })
       .catch(function (err: unknown) {
+         logger.error(`${err}`);
          return cb(err);
       });
 });
