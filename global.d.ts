@@ -12,7 +12,7 @@ declare module '*.scss';
 declare global {
    namespace Express {
       export interface User {
-         id: string;
+         user_id: string;
       }
    }
 }

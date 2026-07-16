@@ -20,9 +20,9 @@ export const HeightInputField = ({ height, setHeight }: Props) => {
       setHeight(event.target.value === '' ? '' : Number(event.target.value));
    };
    const handleHeightBlur = () => {
-      if (height < 54) {
+      if (Number(height) < 54) {
          setHeight(54);
-      } else if (height > 84) {
+      } else if (Number(height) > 84) {
          setHeight(84);
       }
    };
