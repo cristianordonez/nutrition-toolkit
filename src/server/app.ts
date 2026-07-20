@@ -65,8 +65,17 @@ passport.use('local', customLocalStrategy);
  * determines which data of user object should be stored in session to be accessed below in the deserializeUser function
  */
 passport.serializeUser((user: unknown, done) => {
-   logger.info(`Serializing user with ID: ${user}`);
-   done(null, user);
+   if (typeof user === 'object' && user !== null && 'user_id' in user) {
+      const userId = (user as { user_id: string }).user_id;
+      logger.info(`Serializing user from object: ${JSON.stringify(user)}`);
+      done(null, userId);
+   } else if (Number.isFinite(parseFloat(user as string))) {
+      logger.info(`Serializing user with ID: ${user}`);
+      done(null, user);
+   } else {
+      logger.error('User object is not a valid type');
+      done(new Error('User object is not a valid type'));
+   }
 });
 
 type User = {
