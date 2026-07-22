@@ -167,6 +167,36 @@ npm run test
 
 ## Deployment
 
+- Use docker to build image. Dockerfile is split into two stages: one for build the artifact, and the second will copy the built artifact from the previous stage into this new stage so that none of the build tools required to build the application are included in the final image.
+
+```bash
+docker build -t nutrition-toolkit .
+```
+
+- Run the image passing in the .env file as an argument to the running container:
+
+```bash
+docker run --env DATABASE_HOST=host.docker.internal --rm -it --env-file .env -p 8080:8080 --name nutrition-toolkit-container nutrition-toolkit
+```
+
+NOTE: --rm will automatically remove the container when it exists, -i keeps STDIN open so you can interact with the container and -t allocates a pseudo terminal to get a normal shell experience
+
+- To run the image on production, use the following command:
+
+```bash
+docker run -d --env DATABASE_HOST=host.docker.internal --env-file .env -p 8080:8080 --name nutrition-toolkit-container nutrition-toolkit
+```
+
+NOTE: you must delete and rerun the container when changes are made
+
+- To view logs, use this command:
+
+```bash
+docker logs nutrition-toolkit-container
+```
+
+## Droplet Setup
+
 - ssh into digital ocean droplet
 
 ```bash
@@ -185,32 +215,7 @@ sudo adduser cristian
 su - cristian
 ```
 
-- Create ssh key on droplet and add to github account
-
-- Clone repository to /var/www
-
-- install node and npm
-
-```bash
-sudo apt install nodejs
-sudo apt install npm
-```
-
 - Make sure .env file exists and most recent version is available on droplet
-
-- When application is ready for production, have webpack build your bundle and minimize your files and then start the Express server:
-
-```bash
-npm run build:frontend
-npm run build:server
-npm start
-```
-
-- Then restart PM2 process
-
-```bash
-sudo pm2 restart nutritiontoolkit
-```
 
 - And also restart Nginx
 
@@ -219,14 +224,6 @@ sudo systemctl restart nginx
 ```
 
 Then navigate to port 8080 in your browser to view your application.
-
-## Known issues
-
-- Issues starting postgres service. Delete postmaster.pid
-
-```bash
-rm /usr/local/var/postgresql@18/postmaster.pid
-```
 
 ## Resources
 
@@ -241,6 +238,7 @@ rm /usr/local/var/postgresql@18/postmaster.pid
 - [Google Dev Console][google-dev]
 - [Digital Ocean Droplet][digital-ocean]
 - [Deploy on droplet][digital-ocean-deploy]
+- [Install Docker on Ubuntu][digital-ocean-docker]
 
 [passport]: https://www.passportjs.org/packages/passport-google-oauth20/
 [react]: https://reactjs.org/docs/code-splitting.html
@@ -254,3 +252,4 @@ rm /usr/local/var/postgresql@18/postmaster.pid
 [register-google]: https://www.passportjs.org/tutorials/google/register/
 [digital-ocean]: https://cloud.digitalocean.com/droplets/577653788?i=5ac0da
 [digital-ocean-deploy]: https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-20-04
+[digital-ocean-docker]: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04
