@@ -21,7 +21,7 @@
       "build": "concurrently -n 'frontend,server' -c 'bgGreen.bold,bgBlue.bold' \"npm:build:frontend\" \"npm:build:server\"",
       "start": "node ./dist/server/server.js",
       "pm2": "pm2 start npm --name 'nutritiontoolkit' -- start ",
-      "prepare": "husky"
+      "prepare": "command -v husky >/dev/null 2>&1 && husky || true"
    },
    "repository": {
       "type": "git",
