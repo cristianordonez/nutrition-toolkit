@@ -81,7 +81,7 @@ jobs:
               key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
               source: 'scripts/pull-run-container.sh'
               target: '~/deploy'
-         - name: ssh to server
+         - name: ssh to server and run deployment script
            env:
               DOCKER_IMAGE: ${{ env.REGISTRY }}/${{ github.repository }}:${{ needs.check-version.outputs.release-version }}
               PORT: ${{ secrets.DIGITALOCEAN_PORT }}

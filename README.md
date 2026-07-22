@@ -55,6 +55,23 @@ npm install
 
 - use sample.env to create .env file
 
+### Set up pre commit hooks
+
+- Husky and lint-staged have been included as dev dependencies. After install the prepare script in package.json will run, which installs Git hooks into the .git/hooks folder. After this, commits should run the pre-commit hook defined in .husky/pre-commit, which is the following command:
+
+```bash
+npx lint-staged
+```
+
+This runs the lint-staged block defined in the package.json.
+
+```bash
+npx husky init
+```
+
+This will create the .husky folder 
+
+
 ### Set up postgreSQL database
 
 - Install postgresl

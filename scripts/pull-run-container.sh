@@ -10,8 +10,7 @@ echo "DOCKER_IMAGE: ${DOCKER_IMAGE}"
 echo "PORT: ${PORT}"
 echo "IMAGE_NAME: ${IMAGE_NAME}"
 
-echo
-echo "Arguments passed to script:"
-echo "Arg 1: ${1:-<not provided>}"
-echo "Arg 2: ${2:-<not provided>}"
-echo "Arg 3: ${3:-<not provided>}"
+docker pull "${DOCKER_IMAGE}"
+docker stop "${IMAGE_NAME}" || true
+docker rm "${IMAGE_NAME}" || true
+docker run -d --env DATABASE_HOST=host.docker.internal --env-file ~/.env -p ${PORT}:8080 --name "${IMAGE_NAME}" 
