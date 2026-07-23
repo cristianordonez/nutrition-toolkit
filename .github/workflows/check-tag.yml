@@ -1,4 +1,4 @@
-name: Check Release Tag
+name: Check Tag
 on:
    pull_request:
       branches:

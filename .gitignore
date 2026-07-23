@@ -9,3 +9,4 @@ personal-aws-key-pair.pem
 cypress/screenshots
 dist
 cypress/screenshots
+.DS_Store
