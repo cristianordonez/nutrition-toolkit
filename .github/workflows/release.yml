@@ -4,8 +4,6 @@ on:
       branches: [main, poc]
 env:
    REGISTRY: ghcr.io
-   CONTAINER_NAME: ${{ github.repository }}
-
 jobs:
    check-version:
       runs-on: ubuntu-latest
@@ -60,9 +58,9 @@ jobs:
               username: ${{ github.actor }}
               password: ${{ secrets.GITHUB_TOKEN }}
          - name: docker build
-           run: docker build -t ${{ env.REGISTRY }}/${{ env.CONTAINER_NAME }}:${{ needs.check-version.outputs.release-version }} .
+           run: docker build -t ${{ env.REGISTRY }}/${{ github.repository }}:${{ needs.check-version.outputs.release-version }} .
          - name: docker push
-           run: docker push ${{ env.REGISTRY }}/${{ env.CONTAINER_NAME }}:${{ needs.check-version.outputs.release-version }}
+           run: docker push ${{ env.REGISTRY }}/${{ github.repository }}:${{ needs.check-version.outputs.release-version }}
    # copy the deployment script to the server and run it with the necessary environment variables
    deploy:
       runs-on: ubuntu-latest
@@ -85,7 +83,7 @@ jobs:
            env:
               DOCKER_IMAGE: ${{ env.REGISTRY }}/${{ github.repository }}:${{ needs.check-version.outputs.release-version }}
               PORT: ${{ secrets.DIGITALOCEAN_PORT }}
-              CONTAINER_NAME: ${{ github.repository }}
+              CONTAINER_NAME: nutrition-toolkit
            uses: appleboy/ssh-action@v1.0.0
            with:
               host: ${{ secrets.DIGITALOCEAN_HOST }}
