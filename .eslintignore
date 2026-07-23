@@ -1,5 +1,6 @@
 node_modules
-client/dist
+dist
+jest-coverage
 cypress
 *.test.ts
 *.test.tsx

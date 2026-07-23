@@ -1,8 +1,13 @@
 {
-   "verbose": true,
+   "verbose": false,
    "testEnvironment": "jsdom",
    "collectCoverage": true,
    "coverageDirectory": "jest-coverage",
+   "coverageThreshold": {
+      "global": {
+         "lines": 55
+      }
+   },
    "moduleNameMapper": {
       ".(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.js",
       ".(gif|ttf|eot|svg|jpg)$": "<rootDir>/__mocks__/fileMock.js"
@@ -12,6 +17,7 @@
       "**/__tests__/**/*.+(ts|tsx|js)",
       "**/?(*.)+(spec|test).+(ts|tsx|js)"
    ],
+   "testPathIgnorePatterns": ["<rootDir>/node_modules/", "<rootDir>/dist/"],
    "transform": {
       "^.+\\.(ts|tsx)$": "ts-jest"
    },

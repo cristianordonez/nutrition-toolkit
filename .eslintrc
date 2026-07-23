@@ -5,12 +5,13 @@
       "jest": true
    },
    "parser": "@typescript-eslint/parser",
-   "plugins": ["@typescript-eslint", "react"],
+   "plugins": ["@typescript-eslint", "react", "no-commented-code"],
    "rules": {
       "no-cond-assign": "error",
       "no-dupe-else-if": "error",
       "no-duplicate-case": "error",
-      "for-direction": "error"
+      "for-direction": "error",
+      "no-commented-code/no-commented-code": "error",
    },
    "extends": [
       "eslint:recommended",

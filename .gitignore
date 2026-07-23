@@ -1,7 +1,14 @@
 /node_modules
-/coverage
 .env
+.nyc_output
+
+# testing
+/coverage
 /jest-coverage
 /cypress-coverage
-.nyc_output
-personal-aws-key-pair.pem
+cypress/.DS_Store
+
+# build
+dist
+
+cypress/screenshots
