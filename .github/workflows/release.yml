@@ -94,4 +94,4 @@ jobs:
               envs: DOCKER_IMAGE,PORT,CONTAINER_NAME
               script: |
                  chmod +x ~/deploy/scripts/pull-run-container.sh
-                 ~/deploy/scripts/pull-run-container.sh $DOCKER_IMAGE $PORT $CONTAINER_NAME
+                 ~/deploy/scripts/pull-run-container.sh
