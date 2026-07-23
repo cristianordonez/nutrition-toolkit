@@ -1,7 +1,7 @@
 name: Release
 on:
    push:
-      branches: [main, poc]
+      branches: [main]
 env:
    REGISTRY: ghcr.io
 jobs:

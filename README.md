@@ -187,13 +187,13 @@ npm run test
 - Use docker to build image. Dockerfile is split into two stages: one for build the artifact, and the second will copy the built artifact from the previous stage into this new stage so that none of the build tools required to build the application are included in the final image.
 
 ```bash
-docker build -t nutrition-toolkit .
+docker build -t nutrition-toolkit-image .
 ```
 
 - Run the image passing in the .env file as an argument to the running container:
 
 ```bash
-docker run --env DATABASE_HOST=host.docker.internal --rm -it --env-file .env -p 8080:8080 --name nutrition-toolkit-container nutrition-toolkit
+docker run --env DATABASE_HOST=host.docker.internal --add-host=host.docker.internal:host-gateway --rm -it --env-file .env -p 8080:8080 --name nutrition-toolkit
 ```
 
 NOTE: --rm will automatically remove the container when it exists, -i keeps STDIN open so you can interact with the container and -t allocates a pseudo terminal to get a normal shell experience
@@ -201,7 +201,7 @@ NOTE: --rm will automatically remove the container when it exists, -i keeps STDI
 - To run the image on production, use the following command:
 
 ```bash
-docker run -d --env DATABASE_HOST=host.docker.internal --env-file .env -p 8080:8080 --name nutrition-toolkit-container nutrition-toolkit
+docker run -d --env DATABASE_HOST=host.docker.internal --add-host=host.docker.internal:host-gateway --env-file .env -p 8080:8080 --name nutrition-toolkit
 ```
 
 NOTE: you must delete and rerun the container when changes are made
@@ -209,7 +209,7 @@ NOTE: you must delete and rerun the container when changes are made
 - To view logs, use this command:
 
 ```bash
-docker logs nutrition-toolkit-container
+docker logs nutrition-toolkit
 ```
 
 ## Droplet Setup
@@ -241,6 +241,27 @@ sudo systemctl restart nginx
 ```
 
 Then navigate to port 8080 in your browser to view your application.
+
+## Docker Setup
+
+- Ubuntu firewall defaults to denying forwarded traffic, which causes an issue with Docker as manipulates iptables directly. The docker bridge network connects to each container through a virtual Ethernet pair. Since the container has different IP than PostgreSQL database running locally (not local traffic of 127.0.0.1) then firewall rules block this request. To allow run the following command:
+
+```bash
+sudo ufw allow from 172.17.0.0/16 to any port 5432
+```
+
+- In the /etc/postgresql/16/main/postgresql.conf add the following line:
+
+```bash
+listen_addresses = '*'      
+```
+
+- Add the following to /etc/postgresql/16/main/pg_hba.conf:
+
+```bash
+host    all    all    172.17.0.0/16    scram-sha-256
+```
+
 
 ## Resources
 
