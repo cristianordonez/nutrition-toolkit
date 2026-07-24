@@ -5,6 +5,43 @@ on:
 env:
    REGISTRY: ghcr.io
 jobs:
+   get-latest-version:
+      runs-on: ubuntu-latest
+      outputs:
+         release-version: v${{ steps.get_version.outputs.RELEASE_VERSION }}
+      steps:
+         - name: Checkout repository
+           uses: actions/checkout@v4
+         - name: Get version from package.json
+           id: get_version
+           run: |
+              RELEASE_VERSION=$(npm v ./ version)
+              echo "RELEASE_VERSION=$RELEASE_VERSION" >> "$GITHUB_OUTPUT"
+   get-pr-title:
+      runs-on: ubuntu-latest
+      outputs:
+         release-version: v${{ steps.get_version.outputs.RELEASE_VERSION }}
+      steps:
+         - name: Checkout repository
+           uses: actions/checkout@v4
+         - name: Get version from package.json
+           id: get_version
+           run: |
+              RELEASE_VERSION=$(npm v ./ version)
+              echo "RELEASE_VERSION=$RELEASE_VERSION" >> "$GITHUB_OUTPUT"
+   get-pr-title:
+      runs-on: ubuntu-latest
+      outputs:
+         release-version: v${{ steps.get_version.outputs.RELEASE_VERSION }}
+      steps:
+         - name: Checkout repository
+           uses: actions/checkout@v4
+         - name: Get version from package.json
+           id: get_version
+           run: |
+              RELEASE_VERSION=$(npm v ./ version)
+              echo "RELEASE_VERSION=$RELEASE_VERSION" >> "$GITHUB_OUTPUT"
+
    check-version:
       runs-on: ubuntu-latest
       outputs:
