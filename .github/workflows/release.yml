@@ -1,132 +1,135 @@
 name: Release
 on:
    push:
-      branches: [main]
+      branches: [main, github-actions]
 env:
    REGISTRY: ghcr.io
 jobs:
    get-latest-version:
       runs-on: ubuntu-latest
       outputs:
-         release-version: v${{ steps.get_version.outputs.RELEASE_VERSION }}
+         latest-version: v${{ steps.get_latest_version.outputs.LATEST_VERSION }}
       steps:
          - name: Checkout repository
            uses: actions/checkout@v4
          - name: Get version from package.json
-           id: get_version
+           id: get_latest_version
            run: |
-              RELEASE_VERSION=$(npm v ./ version)
-              echo "RELEASE_VERSION=$RELEASE_VERSION" >> "$GITHUB_OUTPUT"
+              LATEST_VERSION=$(gh release view --json tagName --jq '.tagName')
+              echo "LATEST_VERSION=$LATEST_VERSION" >> "$GITHUB_OUTPUT"
    get-pr-title:
       runs-on: ubuntu-latest
       outputs:
-         release-version: v${{ steps.get_version.outputs.RELEASE_VERSION }}
+         pr-title: v${{ steps.get_pr_title.outputs.PR_TITLE }}
       steps:
          - name: Checkout repository
            uses: actions/checkout@v4
          - name: Get version from package.json
-           id: get_version
+           id: get_pr_title
            run: |
-              RELEASE_VERSION=$(npm v ./ version)
-              echo "RELEASE_VERSION=$RELEASE_VERSION" >> "$GITHUB_OUTPUT"
-   get-pr-title:
+              PR_TITLE=$(gh pr view --json title --jq '.title')
+              echo "PR_TITLE=$PR_TITLE" >> "$GITHUB_OUTPUT"
+   update-version:
       runs-on: ubuntu-latest
-      outputs:
-         release-version: v${{ steps.get_version.outputs.RELEASE_VERSION }}
+      needs:
+         - get-latest-version
+         - get-pr-title
       steps:
          - name: Checkout repository
            uses: actions/checkout@v4
-         - name: Get version from package.json
+         - name: Use Pull Request title to determine new version
            id: get_version
            run: |
-              RELEASE_VERSION=$(npm v ./ version)
-              echo "RELEASE_VERSION=$RELEASE_VERSION" >> "$GITHUB_OUTPUT"
+              echo "LATEST_VERSION=${{ needs.get-latest-version.outputs.latest-version }}"
+              echo "PR_TITLE=${{ needs.get-pr-title.outputs.pr-title }}" >> "$GITHUB_OUTPUT"
 
-   check-version:
-      runs-on: ubuntu-latest
-      outputs:
-         release-version: v${{ steps.get_version.outputs.RELEASE_VERSION }}
-      steps:
-         - name: Checkout repository
-           uses: actions/checkout@v4
-         - name: Get version from package.json
-           id: get_version
-           run: |
-              RELEASE_VERSION=$(npm v ./ version)
-              echo "RELEASE_VERSION=$RELEASE_VERSION" >> "$GITHUB_OUTPUT"
-   tag:
-      runs-on: ubuntu-latest
-      permissions: write-all
-      needs:
-         - check-version
-      steps:
-         - name: Checkout repository
-           uses: actions/checkout@v7
-         - name: Create and Push Git Tag
-           run: |
-              git config --local user.email "github-actions[bot]@users.noreply.github.com"
-              git config --local user.name "github-actions[bot]"
-              echo "Creating annotated tag: ${{ needs.check-version.outputs.release-version }}"
-              git tag -a "${{ needs.check-version.outputs.release-version }}" -m "Release ${{ needs.check-version.outputs.release-version }} via GitHub Actions"
-              git push origin "${{ needs.check-version.outputs.release-version }}"
-         - name: Create Release
-           id: create_release
-           uses: actions/create-release@latest
-           env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-           with:
-              tag_name: ${{ needs.check-version.outputs.release-version }}
-              release_name: ${{ needs.check-version.outputs.release-version }}
-              prerelease: false
-              draft: false
-   build-push-image:
-      runs-on: ubuntu-latest
-      needs:
-         - check-version
-         - tag
-      permissions: write-all
-      steps:
-         - name: Checkout repository
-           uses: actions/checkout@v7
-         - name: Log into registry ${{ env.REGISTRY }}
-           uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d
-           with:
-              registry: ${{ env.REGISTRY }}
-              username: ${{ github.actor }}
-              password: ${{ secrets.GITHUB_TOKEN }}
-         - name: docker build
-           run: docker build -t ${{ env.REGISTRY }}/${{ github.repository }}:${{ needs.check-version.outputs.release-version }} .
-         - name: docker push
-           run: docker push ${{ env.REGISTRY }}/${{ github.repository }}:${{ needs.check-version.outputs.release-version }}
-   # copy the deployment script to the server and run it with the necessary environment variables
-   deploy:
-      runs-on: ubuntu-latest
-      needs:
-         - build-push-image
-         - check-version
-      permissions: write-all
-      steps:
-         - name: Checkout repository
-           uses: actions/checkout@v7
-         - name: Copy deployment script
-           uses: appleboy/scp-action@v1.0.0
-           with:
-              host: ${{ secrets.DIGITALOCEAN_HOST }}
-              username: ${{ secrets.DIGITALOCEAN_USERNAME }}
-              key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
-              source: 'scripts/pull-run-container.sh'
-              target: '~/deploy'
-         - name: ssh to server and run deployment script
-           env:
-              DOCKER_IMAGE: ${{ env.REGISTRY }}/${{ github.repository }}:${{ needs.check-version.outputs.release-version }}
-              PORT: ${{ secrets.DIGITALOCEAN_PORT }}
-              CONTAINER_NAME: nutrition-toolkit
-           uses: appleboy/ssh-action@v1.0.0
-           with:
-              host: ${{ secrets.DIGITALOCEAN_HOST }}
-              username: ${{ secrets.DIGITALOCEAN_USERNAME }}
-              key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
-              envs: DOCKER_IMAGE,PORT,CONTAINER_NAME
-              script: |
-                 chmod +x ~/deploy/scripts/pull-run-container.sh
-                 ~/deploy/scripts/pull-run-container.sh
+
+
+   # check-version:
+   #    runs-on: ubuntu-latest
+   #    outputs:
+   #       release-version: v${{ steps.get_version.outputs.RELEASE_VERSION }}
+   #    steps:
+   #       - name: Checkout repository
+   #         uses: actions/checkout@v4
+   #       - name: Get version from package.json
+   #         id: get_version
+   #         run: |
+   #            RELEASE_VERSION=$(npm v ./ version)
+   #            echo "RELEASE_VERSION=$RELEASE_VERSION" >> "$GITHUB_OUTPUT"
+   # tag:
+   #    runs-on: ubuntu-latest
+   #    permissions: write-all
+   #    needs:
+   #       - check-version
+   #    steps:
+   #       - name: Checkout repository
+   #         uses: actions/checkout@v7
+   #       - name: Create and Push Git Tag
+   #         run: |
+   #            git config --local user.email "github-actions[bot]@users.noreply.github.com"
+   #            git config --local user.name "github-actions[bot]"
+   #            echo "Creating annotated tag: ${{ needs.check-version.outputs.release-version }}"
+   #            git tag -a "${{ needs.check-version.outputs.release-version }}" -m "Release ${{ needs.check-version.outputs.release-version }} via GitHub Actions"
+   #            git push origin "${{ needs.check-version.outputs.release-version }}"
+   #       - name: Create Release
+   #         id: create_release
+   #         uses: actions/create-release@latest
+   #         env:
+   #            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+   #         with:
+   #            tag_name: ${{ needs.check-version.outputs.release-version }}
+   #            release_name: ${{ needs.check-version.outputs.release-version }}
+   #            prerelease: false
+   #            draft: false
+   # build-push-image:
+   #    runs-on: ubuntu-latest
+   #    needs:
+   #       - check-version
+   #       - tag
+   #    permissions: write-all
+   #    steps:
+   #       - name: Checkout repository
+   #         uses: actions/checkout@v7
+   #       - name: Log into registry ${{ env.REGISTRY }}
+   #         uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d
+   #         with:
+   #            registry: ${{ env.REGISTRY }}
+   #            username: ${{ github.actor }}
+   #            password: ${{ secrets.GITHUB_TOKEN }}
+   #       - name: docker build
+   #         run: docker build -t ${{ env.REGISTRY }}/${{ github.repository }}:${{ needs.check-version.outputs.release-version }} .
+   #       - name: docker push
+   #         run: docker push ${{ env.REGISTRY }}/${{ github.repository }}:${{ needs.check-version.outputs.release-version }}
+   # # copy the deployment script to the server and run it with the necessary environment variables
+   # deploy:
+   #    runs-on: ubuntu-latest
+   #    needs:
+   #       - build-push-image
+   #       - check-version
+   #    permissions: write-all
+   #    steps:
+   #       - name: Checkout repository
+   #         uses: actions/checkout@v7
+   #       - name: Copy deployment script
+   #         uses: appleboy/scp-action@v1.0.0
+   #         with:
+   #            host: ${{ secrets.DIGITALOCEAN_HOST }}
+   #            username: ${{ secrets.DIGITALOCEAN_USERNAME }}
+   #            key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
+   #            source: 'scripts/pull-run-container.sh'
+   #            target: '~/deploy'
+   #       - name: ssh to server and run deployment script
+   #         env:
+   #            DOCKER_IMAGE: ${{ env.REGISTRY }}/${{ github.repository }}:${{ needs.check-version.outputs.release-version }}
+   #            PORT: ${{ secrets.DIGITALOCEAN_PORT }}
+   #            CONTAINER_NAME: nutrition-toolkit
+   #         uses: appleboy/ssh-action@v1.0.0
+   #         with:
+   #            host: ${{ secrets.DIGITALOCEAN_HOST }}
+   #            username: ${{ secrets.DIGITALOCEAN_USERNAME }}
+   #            key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
+   #            envs: DOCKER_IMAGE,PORT,CONTAINER_NAME
+   #            script: |
+   #               chmod +x ~/deploy/scripts/pull-run-container.sh
+   #               ~/deploy/scripts/pull-run-container.sh
