@@ -1,7 +1,8 @@
 name: Release
 on:
    push:
-      branches: [main, github-actions]
+      branches:
+         - main
 env:
    REGISTRY: ghcr.io
 jobs:
@@ -15,7 +16,7 @@ jobs:
          - name: Get version from package.json
            id: get_latest_version
            env:
-               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
            run: |
               LATEST_VERSION=$(gh release view --json tagName --jq '.tagName')
               echo "LATEST_VERSION=$LATEST_VERSION" >> "$GITHUB_OUTPUT"
@@ -29,7 +30,7 @@ jobs:
          - name: Get version from package.json
            id: get_pr_title
            env:
-               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
            run: |
               PR_TITLE=$(gh pr list --base main --state merged --limit 1 --json title --jq '.[].title')
               echo "PR_TITLE=$PR_TITLE" >> "$GITHUB_OUTPUT"
@@ -46,7 +47,7 @@ jobs:
          - name: Use Pull Request title to determine new version
            id: get_version
            run: |
-              IFS=' ' read -ra title_array <<< "${{ needs.get-pr-title.outputs.pr-title }}"
+              IFS=':' read -ra title_array <<< "${{ needs.get-pr-title.outputs.pr-title }}"
               PR_TITLE_ID="${title_array[0]}"
               LATEST_VERSION="${{ needs.get-latest-version.outputs.latest-version }}"
               version=${LATEST_VERSION#v}
@@ -54,9 +55,9 @@ jobs:
               if [[ -z "$PR_TITLE_ID" ]]; then
                echo "Pull request title ${{ needs.get-pr-title.outputs.pr-title}} must start with 'fix:', 'feature:', or 'BREAKING CHANGE:'"
                exit 1
-              elif grep -iq "$PR_TITLE_ID" <<< "fix"; then
+              elif [[ $PR_TITLE_ID == fix* ]]; then
                patch=$((patch + 1))
-              elif grep -iq "$PR_TITLE_ID" <<< "finalized"; then
+              elif [[ $PR_TITLE_ID == feature* ]]; then
                minor=$((minor + 1))
               elif [[ $PR_TITLE_ID == "BREAKING CHANGE" ]]; then
                major=$((major + 1))
@@ -103,12 +104,12 @@ jobs:
          - name: Setup Node
            uses: actions/setup-node@v4
            with:
-               node-version: '20'
+              node-version: '20'
          - name: Update package.json version
            run: |
-            INPUT="${{ needs.update-version.outputs.release-version }}"
-            VERSION=${INPUT#v}
-            npm version $VERSIONj --no-git-tag-version
+              INPUT="${{ needs.update-version.outputs.release-version }}"
+              VERSION=${INPUT#v}
+              npm version $VERSIONj --no-git-tag-version
          - name: Log into registry ${{ env.REGISTRY }}
            uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d
            with:
