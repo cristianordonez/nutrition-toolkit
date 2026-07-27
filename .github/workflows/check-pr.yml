@@ -18,7 +18,7 @@ jobs:
            env:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
            run: |
-              PR_TITLE=$(gh pr view --json title --jq '.[].title')
+              PR_TITLE=$(gh pr view ${{ github.event.pull_request.number }} --json title --jq '.[].title')
               IFS=':' read -ra title_array <<< "$PR_TITLE"
               PR_TITLE_ID="${title_array[0]}"
               echo "PR_TITLE_ID=$PR_TITLE_ID" >> "$GITHUB_OUTPUT"
