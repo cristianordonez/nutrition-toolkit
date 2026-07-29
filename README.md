@@ -69,8 +69,7 @@ This runs the lint-staged block defined in the package.json.
 npx husky init
 ```
 
-This will create the .husky folder 
-
+This will create the .husky folder
 
 ### Set up postgreSQL database
 
@@ -193,7 +192,7 @@ docker build -t nutrition-toolkit-image .
 - Run the image passing in the .env file as an argument to the running container:
 
 ```bash
-docker run --env DATABASE_HOST=host.docker.internal --add-host=host.docker.internal:host-gateway --rm -it --env-file .env -p 8080:8080 --name nutrition-toolkit
+docker run --env DATABASE_HOST=host.docker.internal --add-host=host.docker.internal:host-gateway --rm -it --env-file .env -p 8080:8080 --name nutrition-toolkit nutrition-toolkit-image
 ```
 
 NOTE: --rm will automatically remove the container when it exists, -i keeps STDIN open so you can interact with the container and -t allocates a pseudo terminal to get a normal shell experience
@@ -201,7 +200,7 @@ NOTE: --rm will automatically remove the container when it exists, -i keeps STDI
 - To run the image on production, use the following command:
 
 ```bash
-docker run -d --env DATABASE_HOST=host.docker.internal --add-host=host.docker.internal:host-gateway --env-file .env -p 8080:8080 --name nutrition-toolkit
+docker run -d --env DATABASE_HOST=host.docker.internal --add-host=host.docker.internal:host-gateway --env-file .env -p 8080:8080 --name nutrition-toolkit nutrition-toolkit-image
 ```
 
 NOTE: you must delete and rerun the container when changes are made
@@ -261,7 +260,6 @@ listen_addresses = '*'
 ```bash
 host    all    all    172.17.0.0/16    scram-sha-256
 ```
-
 
 ## Resources
 
